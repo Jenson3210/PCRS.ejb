@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+        <div class="ui-g-4"></div>
+        <div class="ui-g-4">
+			<h:form id="myform">
+				<p:messages globalOnly="true" style="color:red;margin:8px;" />
+				<div class="ui-g">
+					<div class="ui-g-4">
+						<p:outputLabel value="#{msgs['login.user.mail']}"/>
+					</div>
+					<div class="ui-g-8">
+						<p:inputText label="Email" value="#{logonView.email}" />
+					</div>
+				</div>
+				<div class="ui-g">
+					<div class="ui-g-4">
+						<p:outputLabel value="#{msgs['login.user.password']}"/>
+					</div>
+					<div class="ui-g-8">
+						<p:password value="#{logonView.password}" />
+					</div>
+					<div class="ui-g-2">
+						<p:commandButton value="#{msgs['login.user.login']}" action="#{logonView.login}" ajax="false"/>
+					</div>
+				</div> 
+			</h:form>
+		</div> 
+        <div class="ui-g-4"></div>
+
+
+
+</ui:composition>

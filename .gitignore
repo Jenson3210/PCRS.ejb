@@ -1,0 +1,10 @@
+target/
+.classpath
+.project
+.settings/
+.DS_Store
+.apt_generated/
+.factorypath
+build/
+.metadata
+server.xml

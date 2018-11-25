@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	#{localeView.languageViaFlow()}
+	<f:view  contentType="text/html"
+		encoding="UTF-8">
+	
+		<!-- insert metadata tags so that we can load GET parameters into the bean -->
+		<ui:insert name="metadata" />
+	
+		<h:head>
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+			<meta name="viewport"
+				content="width=device-width, initial-scale=1, shrink-to-fit=no, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+			<title>#{msgs['application.title']}</title>
+			<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" />
+			<h:outputStylesheet name="c-layout.css" library="css" />
+			<h:outputStylesheet name="application.css" library="css" />
+			<h:outputScript library="js" name="application.js" />
+			<h:outputScript library="js" name="app.js" />
+			<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"/>
+		</h:head>
+	
+		<h:body id="c-layout">
+	
+			<!-- *********************************************************************************************************************
+				**                                                      HEADERS
+				********************************************************************************************************************* -->
+		<div id="c-header">
+			<!-- Colruyt Group header -->
+			<div id="c-header-mainbar" class="#{appContext.promotionLevel}">
+				<div class="c-header-mainbar-left">
+					<!-- <div class="c-header-logo" onclick="#{logonView.portalURL}" /> -->
+					<div class="c-header-logo" />
+					<!--  <div class="c-header-env">#{webutillibmsgs['environment.'.concat(appContext.promotionLevel)]}</div> -->
+					<div class="c-header-env">#{msgs['environment.'.concat(appContext.promotionLevel)]}</div>
+				</div>
+				<div class="c-header-mainbar-right">
+					<div class="c-header-help">
+						<a href="#"
+							onclick="javascript:openHelp('help.xhtml?currentPage=#{view.viewId}&amp;lang=#{localeView.locale}');return false;">
+							<i class="fa fa-question-circle"></i> <!-- <div>#{webutillibmsgs['help']}</div> -->
+							<div>#{msgs['help']}</div>
+						</a>
+					</div>
+					<script>
+						function setLanguage(language) {
+							domain = window.location.href
+									.indexOf('colruyt.int') === -1 ? ''
+									: ' Domain=.colruyt.int;';
+							document.cookie = 'f_languageKey=' + language
+									+ '; Path=/;' + domain;
+							window.location.href = window.location.href;
+						}
+					</script>
+					<h:panelGroup rendered="#{webUser.hasUser()}">
+						<div class="c-header-profile">
+							<i class="fa fa-user"></i>
+							<div>
+								<h:outputText
+									value="#{webUser.getUser().firstName.concat(' ').concat(webUser.getUser().lastName)}"
+									rendered="#{webUser.hasUser()}"></h:outputText>
+							</div>
+							<i class="fa fa-angle-down"></i>
+							<div class="c-header-dropdown">
+								<div>
+									<!-- <h:link outcome="/sessionContext">#{webutillibmsgs.changeSettings}</h:link> -->
+									<h:link outcome="/profile.xhtml">#{msgs['changeSettings']}</h:link>
+								</div>
+
+
+								<div>
+									<div class="c-header-language" style="padding-left: 1.87rem;">
+										<ui:repeat value="#{appContext.supportedLanguages}" var="lang">
+											<a href="javascript:setLanguage('#{lang}');"
+												class="#{appContext.currentLanguage == lang ? 'actvlang' : ''}"
+												style="padding: 0.3rem 0.3rem 0.3rem 0.5rem; border-style: solid; margin: -0.1rem; border-width: 0.01rem">#{lang}</a>
+
+										</ui:repeat>
+									</div>
+
+
+								</div>
+
+								<div>
+									<!-- <h:outputLink onclick="PF('popup').show();return false;">#{webutillibmsgs.logout}</h:outputLink>-->
+									<h:outputLink onclick="PF('popup').show();return false;">#{msgs['logout']}</h:outputLink>
+								</div>
+
+
+
+							</div>
+						</div>
+					</h:panelGroup>
+				</div>
+			</div>
+
+			<!-- Horizontal menu -->
+			<div id="c-header-menubar">
+				<ui:include src="appMenu.xhtml" />
+
+			</div>
+
+			<p:messages id="messages" showDetail="true" globalOnly="false"
+				showSummary="false" style="margin: 10px;" />
+
+		</div>
+
+
+		<!-- *********************************************************************************************************************
+				**                                                   PAGE CONTENT
+				********************************************************************************************************************* -->
+		<h:panelGroup id="appContentPanel" class="c-body" layout="block">
+
+			<ui:insert name="pageContent" />
+		</h:panelGroup>
+
+		<!-- *********************************************************************************************************************
+				**                                                      DIALOGS
+				********************************************************************************************************************* -->
+
+		<!-- General loading dialog for ajax calls -->
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+				oncomplete="PF('statusDialog').hide();" />
+			<p:dialog id="statusDialog" widgetVar="statusDialog" modal="true"
+				draggable="false" closable="false" resizable="false"
+				showHeader="false" width="200" height="100">
+				<div class="c-spinner" />
+			</p:dialog>
+
+		<!-- General confirm dialog -->
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<div class="right">
+				<p:commandButton value="#{msgs['general.button.no']}" type="button"
+					styleClass="ui-confirmdialog-no btn btn-link" />
+				<p:commandButton value="#{msgs['general.button.yes']}" type="button"
+					styleClass="ui-confirmdialog-yes btn btn-primary" />
+			</div>
+		</p:confirmDialog>
+
+		<!-- Logout dialog -->
+		<h:form id="logoutForm">
+			<p:dialog widgetVar="popup" modal="true" autosized="true"
+				resizeable="false" responsive="true"
+				onShow="$('#logoutForm\\:okButton').focus();">
+				<f:facet name="header">
+					<!-- <h:outputText value="#{webutillibmsgs.logoffPopupTitle}" /> -->
+					<h:outputText value="#{msgs['logoffPopupTitle']}" />
+				</f:facet>
+				<f:facet name="controls">
+					<h:outputLink value="#" onclick="PF('popup').hide(); return false;"> 
+								X
+						</h:outputLink>
+				</f:facet>
+				<p>
+					<!-- <h:outputText value="#{webutillibmsgs.logoffConfirmMessage}" /> -->
+					<h:outputText value="#{msgs.logoffconfirmmessage}" />
+				</p>
+				<br></br>
+				<br></br>
+				<div align="right">
+					<!-- <p:commandButton styleClass="btn btn-link" -->
+					<!-- value="#{webutillibmsgs.cancel}" onclick="PF('popup').hide()" /> -->
+					<!-- <p:commandButton id="okButton" styleClass="btn btn-primary" -->
+					<!-- value="#{webutillibmsgs.ok}" onclick="#{logonView.logoutURL}" /> -->
+					<p:commandButton styleClass="btn btn-link" value="#{msgs.cancel}"
+						onclick="PF('popup').hide()" />
+					<p:commandButton id="okButton" styleClass="btn btn-primary"
+						value="#{msgs.ok}" action="#{logonView.logoutURL}" ajax="false" />
+				</div>
+			</p:dialog>
+		</h:form>
+
+	</h:body>
+</f:view>
+</html>

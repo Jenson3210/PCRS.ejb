@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ul>
+		<h:panelGroup rendered="#{webUser.hasUser()}">
+			<h:panelGroup rendered="#{webUser.hasPrivilege('Team member')}">
+				<li class="#{view.viewId.contains('overview') ? 'c-active' : ''}">
+					<h:link value="#{msgs['menu.overview']}" outcome="/teammember/overview.xhtml" />
+				</li>
+			</h:panelGroup>
+			<h:panelGroup rendered="#{webUser.hasPrivilege('Team member')}">
+				<li class="#{view.viewId.contains('history') ? 'c-active' : ''}">
+					<div>#{msgs['menu.history']}</div>
+					<ul>
+						<li
+							class="#{request.getParameter('target') == '2015' ? 'c-active' : ''}">
+							<h:link value="2015" outcome="/history?target=2015" />
+						</li>
+						<li
+							class="#{request.getParameter('target') == '2016' ? 'c-active' : ''}">
+							<h:link value="2016" outcome="/history?target=2016" />
+						</li>
+						<li
+							class="#{request.getParameter('target') == '2017' ? 'c-active' : ''}">
+							<h:link value="2017" outcome="/history?target=2017" />
+						</li>
+					</ul>
+				</li>
+			</h:panelGroup>
+			<h:panelGroup rendered="#{webUser.hasPrivilege('Team manager')}">
+				<li class="#{view.viewId.contains('myteam') ? 'c-active' : ''}">
+					<h:link value="#{msgs['menu.myteam']}" outcome="/teammanager/myteam.xhtml" />
+				</li>
+			</h:panelGroup>
+			<h:panelGroup rendered="#{webUser.hasPrivilege('Director')}">
+				<li
+					class="#{view.viewId.contains('behavioralDirector') ? 'c-active' : ''}">
+					<h:link value="#{msgs['menu.behavioraldirector']}"
+						outcome="/director/behavioral.xhtml" />
+				</li>
+			</h:panelGroup>
+			<h:panelGroup
+				rendered="#{webUser.hasPrivilege('Function Responsible')}">
+				<li>
+					<div>#{msgs['menu.craftfunctionresponsible']}</div>
+					<ul>
+						<li
+							class="#{request.getParameter('target') == 'craftmanagement' ? 'c-active' : ''}">
+							<h:link value="#{msgs['menu.craftmanagement']}"
+								outcome="/functionresponsible/crafts.xhtml" />
+						</li>
+						<li
+							class="#{request.getParameter('target') == 'rolemanagement' ? 'c-active' : ''}">
+							<h:link value="#{msgs['menu.rolemanagement']}"
+								outcome="/functionresponsible/manage_roles_for_function.xhtml" />
+						</li>
+					</ul>
+				</li>
+			</h:panelGroup>
+			<h:panelGroup
+				rendered="#{webUser.hasPrivilege('Function Responsible')}">
+				<li
+					class="#{view.viewId.contains('behavioralFunctionResponsible') ? 'c-active' : ''}">
+					<h:link value="#{msgs['menu.behavioralfunctionresponsible']}"
+						outcome="/functionresponsible/behavioral.xhtml" />
+				</li>
+			</h:panelGroup>
+			<h:panelGroup rendered="#{webUser.hasPrivilege('Administrator')}">
+				<li>
+					<div>#{msgs['menu.craftadmin']}</div>
+					<ul>
+						<li
+							class="#{request.getParameter('target') == 'craftmanagement' ? 'c-active' : ''}">
+							<h:link value="#{msgs['menu.craftmanagement']}"
+								outcome="/admin/crafts.xhtml" />
+						</li>
+					</ul>
+				</li>
+			</h:panelGroup>
+			<h:panelGroup rendered="#{webUser.hasPrivilege('Administrator')}">
+				<li>
+					<div>#{msgs['menu.dbadmin']}</div>
+					<ul>
+						<li
+							class="#{request.getParameter('target') == 'users' ? 'c-active' : ''}">
+							<h:link value="#{msgs['menu.users']}" outcome="/admin/users.xhtml" />
+						</li>
+						<li
+							class="#{request.getParameter('target') == 'teamsOfManager' ? 'c-active' : ''}">
+							<h:link value="#{msgs['menu.teamsOfManager']}" outcome="/admin/teams.xhtml" />
+						</li>
+						<li
+							class="#{request.getParameter('target') == 'functionresponsibles' ? 'c-active' : ''}">
+							<h:link value="#{msgs['menu.functionresponsibles']}"
+								outcome="/admin/functionresponsibles.xhtml" />
+						</li>
+						<li
+							class="#{request.getParameter('target') == 'functions' ? 'c-active' : ''}">
+							<h:link value="#{msgs['menu.functions']}"
+								outcome="/admin/functions.xhtml" />
+						</li>
+						<li
+							class="#{request.getParameter('target') == 'role' ? 'c-active' : ''}">
+							<h:link value="#{msgs['menu.rol']}" outcome="/admin/role.xhtml" />
+						</li>
+					</ul>
+				</li>
+			</h:panelGroup>
+		</h:panelGroup>
+	</ul>
+
+
+</ui:composition>

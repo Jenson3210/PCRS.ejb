@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <div class="ui-g">
+        <div class="ui-g-1"/>
+        <div class="ui-g-10">
+            <h:form id="form">
+                <p:dataTable var="team" value="#{teamsView.teams}"
+                             styleClass="teamOverviewTable" sortBy="#{team.name}"
+                             expandableRowGroups="true" expandedRow="false">
+                    <f:facet name="header"><h:outputText value="#{msgs['team.header']}"/></f:facet>
+                    <p:headerRow>
+                        <p:column styleClass="ui-g-6">
+                            <h:outputText value="#{team.name}"/>
+                        </p:column>
+                        <p:column styleClass="ui-g-6">
+                            <h:outputText value="#{team.enrolmentsBoHashSet.size()}"/>
+                        </p:column>
+                    </p:headerRow>
+                    <p:column>
+                        <p:dataTable var="enrolment" value="#{team.enrolmentsBoHashSet}">
+                            <p:column style="width: 16px"/>
+                            <p:column styleClass="ui-g-6">
+                                <h:outputText value="#{enrolment.userBo.fullName}"/>
+                            </p:column>
+                            <p:column styleClass="ui-g-6">
+                                <h:outputText value="#{enrolment.privilegeBo.privilegeType.fullName}"/>
+                            </p:column>
+                            <p:column style="width:65px; text-align: center">
+                                <p:commandLink update=":editEnrolment:editEnrolmentFormDetail" id="edit" action="#{teamsView.selectedEnrolment}"
+                                               oncomplete="PF('editEnrolmentFormDialog').show()">
+                                    <i class="fas fa-pencil-alt"></i>
+                                    <f:setPropertyActionListener value="#{enrolment}"
+                                                                 target="#{teamsView.manipulatedEnrolmentBo}"/>
+                                </p:commandLink>
+                            </p:column>
+                        </p:dataTable>
+                    </p:column>
+                </p:dataTable>
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <p:commandButton id="add" action="#{teamsView.newTeam}" styleClass="ui-priority-primary"
+                                         process="@this" update=":addForm:addTeamDetail"
+                                         oncomplete="PF('addTeamDialog').show();"/>
+                    </div>
+                </div>
+            </h:form>
+            <h:form id="editEnrolment">
+                <div class="ui-g" id="editEnrolmentForm">
+                    <p:dialog id="editEnrolmentFormTitle" header="Edit Team"
+                              widgetVar="editEnrolmentFormDialog" modal="true">
+                        <p:outputPanel id="editEnrolmentFormDetail">
+                            <div class="ui-g">
+                                <div class="ui-g-4">
+                                    <p:outputLabel value="#{msgs['teams.role']}"/>
+                                </div>
+                                <div class="ui-g-8">
+                                    <p:selectOneMenu id="role" value="#{teamsView.manipulatedEnrolmentBo.roleBo}">
+                                        <f:selectItems value="#{teamsView.possibleRolesBo}" />
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                            <div class="ui-g-2">
+                                <p:commandButton value="#{msgs['teams.edit']}" update=":form"
+                                                 action="#{teamsView.editEnrolment}"
+                                                 oncomplete="PF('editTeamDialog').hide();" />
+                            </div>
+                        </p:outputPanel>
+                    </p:dialog>
+                </div>
+            </h:form>
+            <h:form id="addForm">
+                <div class="ui-g" id="addTeamForm">
+                    <p:dialog id="addTeamFormTitle" header="#{msgs['Team.add']}"
+                              widgetVar="addTeamDialog" modal="true">
+                        <p:outputPanel id="addTeamDetail">
+                            <!--TODO team name enzo...-->
+                            <div class="ui-g-2">
+                                <p:commandButton value="#{msgs['Team.add']}" update=":form"
+                                                 action="#{TeamsView.addTeam}"
+                                                 oncomplete="PF('addTeamDialog').hide();" />
+                            </div>
+                        </p:outputPanel>
+                    </p:dialog>
+                </div>
+            </h:form>
+        </div>
+    </div>
+
+</ui:composition>

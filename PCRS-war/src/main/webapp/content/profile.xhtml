@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div class="ui-g-1"></div>
+
+	<div class="ui-g-10">
+
+		<div class="ui-g-4">
+			<img width="400px" height="400px"
+				src="https://i.ytimg.com/vi/JrR1mBwsFhE/maxresdefault.jpg"
+				alt="Danny"></img>
+
+			</div>
+
+		<div class="ui-g-8">
+			<p:tabView>
+
+				<p:tab title="#{msgs['profile.title']}">
+
+					
+					<h:panelGrid columns="2">
+
+						<h:outputText value="#{msgs['profile.name']}:"></h:outputText>
+						<h:outputText
+							value="#{userProfileview.user.firstName} #{userProfileview.user.lastName}"></h:outputText>
+
+						<h:outputText value="#{msgs['profile.function']}:"></h:outputText>
+						<h:outputText value="#{userProfileview.function.title}" />
+						<h:outputText value="#{msgs['profile.team']}:"></h:outputText>
+						<h:outputText value="#{userProfileview.teamnaam}" />
+
+						<h:form style="margin-top:10%">
+							<p:commandButton Styleclass="btn btn-outline-primary"
+								onclick="PF('dlg3').show()"  
+								value="#{msgs['profile.button.changepass']}" ajax="true"  />
+						</h:form>
+
+
+					</h:panelGrid>
+
+				</p:tab>
+
+				<p:tab title="#{msgs['profile.progress']}">
+
+					<h:panelGrid columns="2">
+
+						<h:outputText value="#{userProfileview.user.firstName} #{userProfileview.user.lastName}"></h:outputText>
+						<p:progressBar id="progressBarEmployee" widgetVar="pbClient"
+							style="width:300px" />
+							
+							
+						<h:outputText value="#{userProfileview.teamLeaderNaam}"></h:outputText>
+						<p:progressBar id="progressBarBoss" widgetVar="pbClient"
+							style="width:300px" />
+
+					</h:panelGrid>
+
+				</p:tab>
+
+			</p:tabView>
+		</div>
+	</div>
+
+	<div class="ui-g-1"></div>
+	
+	
+	<!-- Dialog ChangePAss -->
+	
+	 <p:dialog header="#{msgs['title.changepass']}" widgetVar="dlg3" modal="true" height="200">
+   		
+	 <h:form id="form1">
+
+		
+	 
+	<div class="ui-g">
+
+		 <div class="ui-g-4">
+   			 <p>#{msgs['profile.currentpass']}</p>
+   			 <p>#{msgs['profile.newpass']}</p>
+   			 <p>#{msgs['profile.repeatnewpass']}</p>
+   			 
+   			 </div>
+   		<div class="ui-g-4">
+   			 	
+   			<h:messages id="errors" globalOnly="false" layout="table" errorStyle="color:red" infoStyle="color:red"/>
+   			
+   			<p:inputText id="currentpass" value="#{userProfileview.currentpass}"
+   			required="true"
+   			>
+
+   			<f:validateLength maximum="14" />
+   			</p:inputText>
+   			
+   		
+   				
+   			<p:inputText id="newpass" value="#{userProfileview.newpassword}"
+   			required="true">
+   
+   			
+   			<f:validateLength maximum="14" />
+   			</p:inputText>
+   			
+   			
+   			
+   			<p:inputText id="repeatpass" value="#{userProfileview.repeatpassword}"
+   			required="true"
+   			
+   			>
+   			
+   			<f:validateLength maximum="14" />
+   			</p:inputText>
+   			
+
+   			
+   			 
+   		</div>
+   	
+   	</div>
+   		
+   		<div class="ui-g">
+   		
+   		
+   		<div class="ui-g-1">
+   		<p:commandButton value="cancel" styleClass="btn btn-outline-primary" ajax="false" onclick="PF('dlg3').hide();"  />
+   		</div>
+   		
+   		<div class="ui-g-1"></div>
+   		
+   		<div class="ui-g-1">
+   		<p:commandButton value="confirm"  ajax="false" action="#{userProfileview.changePass}" oncompleted="PF('dlg3').hide();" />
+   		
+   		</div>
+   		
+   		</div>
+   		
+   	</h:form>
+
+	</p:dialog>
+	
+
+</ui:composition>
