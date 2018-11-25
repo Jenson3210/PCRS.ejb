@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="PCRS-ear">
+
+	<!-- Enable features -->
+	<featureManager>
+		<feature>adminCenter-1.0</feature>
+		<feature>javaee-8.0</feature>
+		<feature>localConnector-1.0</feature>
+	</featureManager>
+
+	<!-- Allow remote acces to admin section to write in this XML -->
+	<remoteFileAccess>
+		<writeDir>${server.config.dir}</writeDir>
+	</remoteFileAccess>
+
+	<!-- Encoded password can be generated using bin/securityUtility -->
+	<keyStore password="pcrsKeystore" />
+
+	<basicRegistry id="basic" realm="BasicRealm">
+		<user name="user" password="user" />
+		<user name="admin" password="admin" />
+	</basicRegistry>
+	<administrator-role>
+		<user>admin</user>
+	</administrator-role>
+
+	<!-- To access this server from a remote client add a host attribute to 
+		the following element, e.g. host="*" -->
+	<httpEndpoint id="defaultHttpEndpoint" httpPort="9080"
+		httpsPort="9443" />
+	<!-- Automatically expand WAR files and EAR files -->
+	<applicationManager autoExpand="true" />
+	<applicationMonitor updateTrigger="mbean" />
+	
+	
+	<!-- 
+	
+		PCRS SPECIFIC SETTINGS... DO NOT CHANGE THIS UNLESS YOU KNOW WHAT YOU'RE DOING!!!
+	
+	 -->
+	<enterpriseApplication id="PCRS-ear" location="PCRS-ear.ear" name="PCRS-ear">
+		<classloader commonLibraryRef="OracleLib" />
+	</enterpriseApplication>
+	<dataSource id="OracleDS" jndiName="jdbc/OracleDS" type="javax.sql.XADataSource">
+		<jdbcDriver libraryRef="OracleLib">
+		</jdbcDriver>
+		<properties.oracle URL="jdbc:oracle:thin:@URL:PORT/DBNAME" databaseName="DBNAME" password="PASSWORD" user="USER"/>
+	</dataSource>
+	<library id="OracleLib">
+		<file name="${server.config.dir}/lib/oracle/ojdbc8.jar"/>
+	</library>
+	<!-- 
+	
+		THIS IS FOR TESTING WITHOUT A CONNECTION TO THE ORACLE DATABASE AND MUST BE DELETED THE MOMENT WE GO LIVE!!! 
+	
+	-->
+	<dataSource id="MySQL" jndiName="jdbc/MYSQL" transactional="false">
+    	<jdbcDriver libraryRef="MySQLLib"/>
+    	<properties URL="jdbc:mysql://localhost:3306/jpa" password="" user="root"/>
+    </dataSource>
+
+    <library id="MySQLLib">
+    	<file name="${server.config.dir}/lib/mysql/mysql-connector-java-8.0.13.jar"/>
+    </library>
+</server>
