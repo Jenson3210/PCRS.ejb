@@ -10,7 +10,7 @@ import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
 import colruyt.pcrsejb.converter.user.UserConverter;
 import colruyt.pcrsejb.converter.user.privilege.PrivilegeTypeTranslator;
-import colruyt.pcrsejb.service.bl.user.UserServiceBl;
+import colruyt.pcrsejb.service.bl.user.IUserServiceBl;
 
 @Stateless
 public class UserFacade implements Serializable, IUserFacade {
@@ -20,7 +20,7 @@ public class UserFacade implements Serializable, IUserFacade {
 	 */
 	private static final long serialVersionUID = 1L;
 	@EJB
-	private UserServiceBl userServiceBl;
+	private IUserServiceBl userServiceBl;
 	private UserConverter userConverter = new UserConverter();
 	private PrivilegeTypeTranslator privilegeTypeTranslator= new PrivilegeTypeTranslator();
 
