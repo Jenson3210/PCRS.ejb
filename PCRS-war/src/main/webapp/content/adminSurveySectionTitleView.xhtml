@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:dataTable var="surveySectionTitle"
+		value="#{adminSurveySectionTitleView.surveySectionTitles}">
+		<p:column headerText="Color">
+			<h:outputText value="#{surveySectionTitle.title}" />
+		</p:column>
+	</p:dataTable>
+	<div class="ui-g">
+		<div class="ui-g-12">
+			<p:commandButton value="#{msgs['surveySectionTitle.add']}"
+				action="#{surveySectionTitleView.newSurveySectionTitle}" styleClass="ui-priority-primary"
+				process="@this" update=":addForm:addSurveySectionTitleDetail"
+				oncomplete="PF('addSurveySectionTitleDialog').show();" />
+		</div>
+	</div>
+
+	<h:form id="addForm">
+		<div class="ui-g" id="addUserForm">
+			<p:dialog id="adduserFormTitle" header="#{msgs['surveySectionTitle.add']}"
+				widgetVar="addSurveySectionTitleDialog" modal="true">
+				<p:outputPanel id="addSurveySectionTitleDetail">
+					<div class="ui-g">
+						<div class="ui-g-4">
+							<p:outputLabel value="#{msgs['user.firstname']}"></p:outputLabel>
+						</div>
+						<div class="ui-g-8">
+							<p:inputText id="fn" value="#{usersView.addedUser.firstName}" />
+						</div>
+					</div>
+					<div class="ui-g-2">
+						<p:commandButton value="#{msgs['surveySectionTitle.add']}" update=":form"
+							action="#{usersView.addUser}"
+							oncomplete="PF('addSurveySectionTitleDialog').hide();" />
+					</div>
+				</p:outputPanel>
+			</p:dialog>
+		</div>
+	</h:form>
+
+
+
+</ui:composition>
