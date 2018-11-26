@@ -96,18 +96,14 @@
 							<h:link value="#{msgs['menu.teamsOfManager']}" outcome="/admin/teams.xhtml" />
 						</li>
 						<li
-							class="#{request.getParameter('target') == 'functionresponsibles' ? 'c-active' : ''}">
-							<h:link value="#{msgs['menu.functionresponsibles']}"
-								outcome="/admin/functionresponsibles.xhtml" />
+							class="#{request.getParameter('target') == 'surveyDefinitionresponsibles' ? 'c-active' : ''}">
+							<h:link value="#{msgs['menu.surveyDefinitionresponsibles']}"
+								outcome="/admin/surveyDefinitionresponsibles.xhtml" />
 						</li>
 						<li
-							class="#{request.getParameter('target') == 'functions' ? 'c-active' : ''}">
-							<h:link value="#{msgs['menu.functions']}"
-								outcome="/admin/functions.xhtml" />
-						</li>
-						<li
-							class="#{request.getParameter('target') == 'role' ? 'c-active' : ''}">
-							<h:link value="#{msgs['menu.rol']}" outcome="/admin/role.xhtml" />
+							class="#{request.getParameter('target') == 'competences' ? 'c-active' : ''}">
+							<h:link value="#{msgs['menu.competences']}"
+								outcome="/admin/competences.xhtml" />
 						</li>
 					</ul>
 				</li>
