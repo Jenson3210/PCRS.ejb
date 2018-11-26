@@ -3,7 +3,7 @@
 	<persistence-unit name="PCRSEJB"
 		transaction-type="JTA">
 		<!-- <jta-data-source>jdbc/OracleDS</jta-data-source> -->
-		<jta-data-source>jdbc/MYSQL</jta-data-source>
+		<jta-data-source>jdbc/OracleDS</jta-data-source>
 		<properties>
 			<property
 				name="javax.persistence.schema-generation.database.action"
