@@ -1,17 +1,19 @@
-package colruyt.pcrsejb.service.bl.surveyDefinition.strategy;
+package colruyt.pcrsejb.service.dl.surveyDefinition.strategy;
 
 import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import colruyt.pcrsejb.entity.surveyDefinition.strategy.SurveySectionStrategy;
 
 @Stateless
-public class SurveySectionStrategyServiceBl implements Serializable, ISurveySectionStrategyServiceBl {
-	/**
-	 * 
-	 */
+public class DbSurveySectionStrategyServiceDl implements Serializable, ISurveySectionStrategyServiceDL{
+	@PersistenceContext(unitName = "PCRSEJB")
+	private EntityManager em;
+	
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -37,4 +39,6 @@ public class SurveySectionStrategyServiceBl implements Serializable, ISurveySect
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
 }

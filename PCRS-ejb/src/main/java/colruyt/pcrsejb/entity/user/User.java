@@ -40,7 +40,7 @@ public class User extends AbstractEntity implements Serializable {
     private String password="";
     @Column(name="HOMECOUNTRY")
     private String country;
-    @OneToMany(cascade=CascadeType.PERSIST)
+    @OneToMany(cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name="USER_ID")
     private Set<UserPrivilege> privileges = new HashSet<>();
     /*
