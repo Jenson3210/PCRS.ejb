@@ -91,5 +91,5 @@ public class UserBo extends AbstractBo implements Serializable {
 	}
 	public void setPrivileges(Set<UserPrivilegeBo> privileges) {
 		this.privileges = privileges;
-	}    
+	}
 }
