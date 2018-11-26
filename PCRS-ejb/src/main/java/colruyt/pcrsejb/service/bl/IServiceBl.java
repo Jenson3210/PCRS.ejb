@@ -2,6 +2,7 @@ package colruyt.pcrsejb.service.bl;
 
 import java.util.List;
 
+
 public interface IServiceBl<T> {
 
 	

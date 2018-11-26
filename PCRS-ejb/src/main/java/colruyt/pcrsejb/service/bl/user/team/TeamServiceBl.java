@@ -1,14 +1,18 @@
 package colruyt.pcrsejb.service.bl.user.team;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import colruyt.pcrsejb.entity.user.User;
+import colruyt.pcrsejb.entity.user.team.Team;
 import colruyt.pcrsejb.service.dl.user.team.ITeamServiceDl;
+import colruyt.pcrsejb.util.exceptions.UserIsNotMemberOfTeamException;
 
 @Stateless
-public class TeamServiceBl implements Serializable {
+public class TeamServiceBl implements Serializable,ITeamServiceBl {
 
 	/**
 	 * 
@@ -23,6 +27,54 @@ public class TeamServiceBl implements Serializable {
 
 	
 	
+	public User getManagerOfUser(User u) {
+		return null;
+		
+	}
+
+
+
+	@Override
+	public Team save(Team element) {
+		return this.dlService.save(element);
+	}
+
+
+
+	@Override
+	public Team get(Team element) {
+		return this.dlService.get(element);
+	}
+
+
+
+	@Override
+	public List<Team> getAll() {
+		return this.dlService.getAll();
+	}
+
+
+
+	@Override
+	public void delete(Team element) {
+		 this.dlService.delete(element);
+		
+	}
+
+
+
+	@Override
+	public User getManagerForUser(User user) throws UserIsNotMemberOfTeamException {
+		return this.dlService.getManagerForUser(user);
+	}
+
+
+
+	@Override
+	public Team getTeamForUser(User user) throws UserIsNotMemberOfTeamException{
+		
+		return this.dlService.getTeamForUser(user);
+	}
 	
 	
 }
