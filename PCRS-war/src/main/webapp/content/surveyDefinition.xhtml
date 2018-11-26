@@ -11,16 +11,19 @@
 		<div class="ui-g-1" />
 		<div class="ui-g-10">
 			<h:form id="form">
-				<p:dataTable var="user" value="#{usersView.users}">
-					<f:facet name="header">
-						<h:outputText value="#{msgs['user.title']}" />
+				<p:dataTable var="surveyDefinition" value="#{adminSurveyDefinitionView.surveyDefinitions}">
+					 <f:facet name="header">
+						<h:outputText value="#{msgs['surveyDefinition.title']}" />
 					</f:facet>
-					<p:column headerText="#{msgs['user.firstname']}">
-						<h:outputText value="#{user.firstName}" />
+					
+					<p:column headerText="#{msgs['surveyDefinition.title']}">
+						<h:outputText value="#{surveyDefinition.name}" />
 					</p:column>
-					<p:column headerText="#{msgs['user.lastname']}">
+					
+					<p:column headerText="#{msgs['surveyDefinition.responsible']}">
 						<h:outputText value="#{user.lastName}" />
 					</p:column>
+					<!--
 					<p:column headerText="#{msgs['user.email']}">
 						<h:outputText value="#{user.email}" />
 					</p:column>
@@ -50,18 +53,20 @@
 							<f:setPropertyActionListener value="#{user}"
 								target="#{usersView.addedUser}" />
 						</p:commandLink>
-					</p:column>
+					</p:column> -->
 				</p:dataTable>
-				<div class="ui-g">
+				<!-- <div class="ui-g">
 					<div class="ui-g-12">
 						<p:commandButton value="#{msgs['user.add']}"
 							action="#{usersView.newUser}" styleClass="ui-priority-primary"
 							process="@this" update=":addForm:addUserDetail"
 							oncomplete="PF('addUserDialog').show();" />
 					</div>
-				</div>
+				</div> -->
 			</h:form>
-			<h:form id="addForm">
+			
+			
+			<!-- <h:form id="addForm">
 				<div class="ui-g" id="addUserForm">
 					<p:dialog id="adduserFormTitle" header="#{msgs['user.add']}"
 						widgetVar="addUserDialog" modal="true">
@@ -129,6 +134,7 @@
 					</p:dialog>
 				</div>
 			</h:form>
+			
 			<h:form id="editForm">
 				<div class="ui-g" id="editUserForm">
 					<p:dialog id="editUserFormTitle" header="Edit User"
@@ -197,6 +203,7 @@
 					</p:dialog>
 				</div>
 			</h:form>
+			
 			<h:form id="deleteForm">
 				<div class="ui-g" id="deleteUserForm">
 					<p:dialog id="deleteUserFormTitle" header="#{msgs['user.delete']}"
@@ -226,7 +233,8 @@
 
 				</div>
 			</h:form>
+			 -->
 		</div>
-		<div class="ui-g-1"></div>
+		<div class="ui-g-1"/>
 	</div>
 </ui:composition>
