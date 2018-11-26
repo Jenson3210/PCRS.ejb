@@ -11,7 +11,7 @@ import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 import colruyt.pcrsejb.service.dl.user.IUserServiceDl;
 
 @Stateless
-public class UserServiceBl {
+public class UserServiceBl implements IUserServiceBl {
 
 	@EJB
 	private IUserServiceDl usersDb;

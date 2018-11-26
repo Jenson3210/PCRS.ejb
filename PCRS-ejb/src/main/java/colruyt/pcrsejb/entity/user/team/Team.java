@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -18,12 +20,15 @@ import colruyt.pcrsejb.entity.AbstractEntity;
 
 @Entity
 @Table(name = "TEAMS")
-//@NamedQueries({ @NamedQuery(name = "Team.getAllElements", query = "select t from Team t"),
-//		@NamedQuery(name = "Team.getTeamOfUser", query = "select t from users us join userprivileges up "
-//				+ "on US.ID = UP.USER_ID join teamenrolments te on UP.id = TE.USERPRIVILEGE_ID "
-//				+ "join teams t on te.team_id = t.id where us.id = :id"),
-//		@NamedQuery(name = "Team.getTeamOfEnrolment", query = "select t from teamenrolments te "
-//				+ "join teams t on te.team_id = T.ID where te.id = :id") })
+@NamedQueries({ @NamedQuery(name = "Team.getAllElements", query = "select t from Team t"),
+//	@NamedQuery(name = "Team.getTeamOfUser", query = "select t from users us join userprivileges up "
+//			+ "on US.ID = UP.USER_ID join teamenrolments te on UP.id = TE.USERPRIVILEGE_ID "
+//			+ "join teams t on te.team_id = t.id where us.id = :id"),
+//	@NamedQuery(name = "Team.getTeamOfEnrolment", query = "select t from teamenrolments te "
+//			+ "join teams t on te.team_id = T.ID where te.id = :id"),
+	
+
+})
 public class Team extends AbstractEntity implements Serializable {
 	/*
 	 * PROPERTIES
