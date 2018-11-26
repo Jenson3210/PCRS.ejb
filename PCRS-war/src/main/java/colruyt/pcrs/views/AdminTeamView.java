@@ -71,5 +71,20 @@ public class AdminTeamView implements Serializable {
     public void newTeam() {
         manipulatedTeamBo = new TeamBo();
     }
+    
+    public void deleteEnrolment() {
+    	EnrolmentBo e = null;
+    	for(TeamBo team : teams) {
+        	for (EnrolmentBo enrolment : team.getEnrolments()) {
+        		if(enrolment.getId() == manipulatedEnrolmentBo.getId()) {
+        			e = enrolment;
+        		}
+        	}
+    	}
+    	
+
+    	System.out.println(e.getUser().getFirstName());
+    	//enrolmentFacade.delete(manipulatedEnrolmentBo);
+    }
 	
 }

@@ -13,7 +13,8 @@
             <h:form id="form">
                 <p:dataTable var="team" value="#{adminTeamView.teams}"
                              styleClass="teamOverviewTable" sortBy="#{team.name}"
-                             expandableRowGroups="true" expandedRow="false">
+                             expandableRowGroups="true" expandedRow="false"
+                             id="teamDetail">
                     <f:facet name="header"><h:outputText value="#{msgs['team.header']}"/></f:facet>
                     <p:headerRow>
                         <p:column styleClass="ui-g-6">
@@ -32,7 +33,14 @@
                             <p:column styleClass="ui-g-6">
                                 <h:outputText value="#{enrolment.userPrivilege.privilegeType.fullName}"/>
                             </p:column>
-
+							<p:column headerText="#{msgs['delete']}"
+								style="width:65px; text-align: center">
+								<p:commandLink id="delete" oncomplete="PF('deleteUserDialog').show()">
+									<i class="fas fa-trash-alt"></i>
+		     						<f:setPropertyActionListener value="#{enrolment}"
+										target="#{adminTeamView.manipulatedEnrolmentBo}" /> 
+		     					</p:commandLink>
+							</p:column>
                         </p:dataTable>
                     </p:column>
                 </p:dataTable>
@@ -40,6 +48,34 @@
                     <div class="ui-g-12"/>
                 </div>
             </h:form>
+            <h:form id="deleteForm">
+				<div class="ui-g" id="deleteEnrolmentForm">
+					<p:dialog id="deleteEnrolmentFormTitle" header="#{msgs['enrolment.delete']}"
+						widgetVar="deleteEnrolmentDialog" modal="true">
+						<f:facet name="header">
+							<h:outputText value="#{msgs['enrolment.delete']}" />
+						</f:facet>
+						<f:facet name="controls">
+							<h:outputLink value="#"
+								onclick="PF('deleteEnrolmentFormTitle').hide(); return false;">X</h:outputLink>
+						</f:facet>
+						<p>
+							<h:outputText
+								value="Ben je zeker dat je #{manipulatedEnrolmentBo.userBo.firstName} uit het team wilt verwijderen?" />
+						</p>
+						<br></br>
+						<br></br>
+						<div align="right">
+							<p:commandButton styleClass="btn btn-link" value="#{msgs['button.no']}"
+								onclick="PF('deleteEnrolmentDialog').hide()" />
+							<p:commandButton styleClass="btn btn-primary" update=":form"
+								value="#{msgs['button.yes']}" action="#{adminTeamView.deleteEnrolment}"
+								oncomplete="PF('deleteEnrolmentDialog').hide();" />
+						</div>
+					</p:dialog>
+
+				</div>
+			</h:form>
 
         </div>
     </div>
