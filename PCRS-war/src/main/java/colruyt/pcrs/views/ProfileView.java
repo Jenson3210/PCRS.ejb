@@ -13,6 +13,7 @@ import colruyt.pcrs.utillibs.WebUser;
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.facade.user.IUserFacade;
 import colruyt.pcrsejb.facade.user.team.ITeamFacade;
+import colruyt.pcrsejb.util.exceptions.UserIsNotMemberOfTeamException;
 
 @Named
 @SessionScoped
@@ -38,7 +39,7 @@ public class ProfileView implements Serializable{
 
 	public String getTeamLeaderNaam() {
 		try {
-		  return this.teamFacade.getManager()
+		  return this.teamFacade.getManagerForUser(webuser.getUser()).getFirstName();
 		}
 		catch(Exception e) {
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -76,15 +77,8 @@ public class ProfileView implements Serializable{
 
 
 	public String getTeamnaam(){
-		try {
-		return this.teamFacade.getTeam(this.getUser()).getName(); 
-		}
-		catch(UserIsNotMemberOfTeamException e) {
-			
-			FacesContext context = FacesContext.getCurrentInstance();
-			return  context.getApplication().evaluateExpressionGet(context, "#{msgs['error.noteam']}",
-					String.class);
-		}
+		//return this.teamFacade.getTeam(this.getUser()).getName(); 
+		return null;
 	}
 
 	public UserBo getUser() {
