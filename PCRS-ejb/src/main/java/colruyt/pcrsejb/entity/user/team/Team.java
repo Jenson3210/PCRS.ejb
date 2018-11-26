@@ -20,10 +20,13 @@ import colruyt.pcrsejb.entity.AbstractEntity;
 
 @Entity
 @Table(name = "TEAMS")
-@NamedQueries({ @NamedQuery(name = "Team.getAllElements", query = "select t from Team t"),
-//	@NamedQuery(name = "Team.getTeamOfUser", query = "select t from users us join userprivileges up "
-//			+ "on US.ID = UP.USER_ID join teamenrolments te on UP.id = TE.USERPRIVILEGE_ID "
-//			+ "join teams t on te.team_id = t.id where us.id = :id"),
+@NamedQueries({ 
+	
+	@NamedQuery(name = "Team.getAllElements", query = "select t from Team t"),
+	
+
+
+
 //	@NamedQuery(name = "Team.getTeamOfEnrolment", query = "select t from teamenrolments te "
 //			+ "join teams t on te.team_id = T.ID where te.id = :id"),
 	
