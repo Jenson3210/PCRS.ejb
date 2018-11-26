@@ -22,7 +22,7 @@ import colruyt.pcrsejb.entity.AbstractEntity;
 @Entity
 @Table(name="USERPRIVILEGES")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="PRIVILEGEDISCRIMINATOR")
+@DiscriminatorColumn(name="P_DISCRIMINATOR")
 @DiscriminatorValue(value="NON-FUNCTIONHOLDING")
 public class UserPrivilege extends AbstractEntity implements Serializable {
 	/*
