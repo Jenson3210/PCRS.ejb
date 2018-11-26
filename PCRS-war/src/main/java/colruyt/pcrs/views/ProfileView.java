@@ -39,7 +39,7 @@ public class ProfileView implements Serializable{
 
 	public String getTeamLeaderNaam() {
 		try {
-		  return null;
+		  return this.teamFacade.getManagerForUser(webuser.getUser()).getFirstName();
 		}
 		catch(Exception e) {
 			FacesContext context = FacesContext.getCurrentInstance();

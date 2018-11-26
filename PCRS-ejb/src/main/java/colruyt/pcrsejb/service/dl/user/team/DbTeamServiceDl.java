@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import colruyt.pcrsejb.entity.user.User;
+import colruyt.pcrsejb.entity.user.privilege.PrivilegeType;
 import colruyt.pcrsejb.entity.user.team.Enrolment;
 import colruyt.pcrsejb.entity.user.team.Team;
 import colruyt.pcrsejb.util.exceptions.UserIsNotMemberOfTeamException;
@@ -47,7 +48,9 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 
 	@Override
 	public User getManagerForUser(User user) throws UserIsNotMemberOfTeamException{
-		return null;
+		Team team = this.getTeamForUser(user);
+		return team.getEnrolments().stream().filter(x-> x.getUserPrivilege().getPrivilegeType().equals(PrivilegeType.TEAMMANAGER) && x.isActive() )
+											.findFirst().get().getUser();
 	}
 
 	@Override
@@ -56,8 +59,13 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 		TypedQuery<Team> query = em.createQuery("select t from Team t join t.enrolments enrolment where enrolment.user = ?1 and enrolment.active = ?2",Team.class);
 		query.setParameter(1, user);
 		query.setParameter(2, true);
-		return	query.getSingleResult();
-		
+		try {
+		Team team = query.getSingleResult();
+		return team;
+		}
+		catch(Exception e) {
+			throw new UserIsNotMemberOfTeamException();
+		}
 	
 		
 	}
