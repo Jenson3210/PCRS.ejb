@@ -34,7 +34,7 @@
                                 <h:outputText value="#{enrolment.userPrivilege.privilegeType.fullName}"/>
                             </p:column>
 							<p:column style="width:65px; text-align: center">
-								<p:commandLink id="delete" oncomplete="PF('deleteUserDialog').show()">
+								<p:commandLink id="delete" oncomplete="PF('deleteEnrolmentDialog').show()">
 									<i class="fas fa-trash-alt"></i>
 		     						<f:setPropertyActionListener value="#{enrolment}"
 										target="#{adminTeamView.manipulatedEnrolmentBo}" /> 
@@ -44,19 +44,27 @@
                     </p:column>
                 </p:dataTable>
                 <div class="ui-g">
+					<div class="ui-g-12">
+						<p:commandButton value="#{msgs['team.add']}"
+							action="#{adminTeamView.newTeam}" styleClass="ui-priority-primary"
+							process="@this" update=":addForm:addTeamDetail"
+							oncomplete="PF('addTeamDialog').show();" />
+					</div>
+				</div>
+                <div class="ui-g">
                     <div class="ui-g-12"/>
                 </div>
             </h:form>
             <h:form id="deleteForm">
-				<div class="ui-g" id="deleteUserForm">
-					<p:dialog id="deleteUserFormTitle" header="#{msgs['enrolment.delete']}"
-						widgetVar="deleteUserDialog" modal="true">
+				<div class="ui-g" id="deleteEnrolmentForm">
+					<p:dialog id="deleteEnrolmentFormTitle" header="#{msgs['enrolment.delete']}"
+						widgetVar="deleteEnrolmentDialog" modal="true">
 						<f:facet name="header">
 							<h:outputText value="#{msgs['enrolment.delete']}" />
 						</f:facet>
 						<f:facet name="controls">
 							<h:outputLink value="#"
-								onclick="PF('deleteUserFormTitle').hide(); return false;">X</h:outputLink>
+								onclick="PF('deleteEnrolmentFormTitle').hide(); return false;">X</h:outputLink>
 						</f:facet>
 						<p>
 							<h:outputText
@@ -66,16 +74,37 @@
 						<br></br>
 						<div align="right">
 							<p:commandButton styleClass="btn btn-link" value="#{msgs['general.button.no']}"
-								onclick="PF('deleteUserDialog').hide()" />
+								onclick="PF('deleteEnrolmentDialog').hide()" />
 							<p:commandButton styleClass="btn btn-primary" update=":form"
 								value="#{msgs['general.button.yes']}" action="#{adminTeamView.deleteEnrolment}"
-								oncomplete="PF('deleteUserDialog').hide();" />
+								oncomplete="PF('deleteEnrolmentDialog').hide();" />
 						</div>
 					</p:dialog>
 
 				</div>
 			</h:form>
-
+			<h:form id="addForm">
+				<div class="ui-g" id="addTeamForm">
+					<p:dialog id="addTeamFormTitle" header="#{msgs['team.add']}"
+						widgetVar="addTeamDialog" modal="true">
+						<p:outputPanel id="addTeamDetail">
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['team.name']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:inputText id="fn" value="#{adminTeamView.manipulatedTeamBo.name}" />
+								</div>
+							</div>
+							<div class="ui-g-2">
+								<p:commandButton value="#{msgs['team.add']}" update=":form"
+									action="#{adminTeamView.addTeam}"
+									oncomplete="PF('addTeamDialog').hide();" />
+							</div>
+						</p:outputPanel>
+					</p:dialog>
+				</div>
+			</h:form>
         </div>
     </div>
 

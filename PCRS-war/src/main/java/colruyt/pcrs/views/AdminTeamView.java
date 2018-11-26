@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import colruyt.pcrsejb.bo.user.team.EnrolmentBo;
@@ -62,7 +62,11 @@ public class AdminTeamView implements Serializable {
     }
 
     public void newTeam() {
-        manipulatedTeamBo = new TeamBo();
+        manipulatedTeamBo = new TeamBo(); 
+    }
+    
+    public void addTeam() {
+    	teams.add(teamFacade.save(manipulatedTeamBo));
     }
     
     public void deleteEnrolment() {
@@ -73,10 +77,10 @@ public class AdminTeamView implements Serializable {
         			e = enrolment;
         		}
         	}
+        	team.getEnrolments().remove(e);
+        	
     	}
-    	
-    	System.out.println(e.getUser().getFirstName());
-    	//enrolmentFacade.delete(manipulatedEnrolmentBo);
+    	enrolmentFacade.delete(manipulatedEnrolmentBo);
     }
 	
 }
