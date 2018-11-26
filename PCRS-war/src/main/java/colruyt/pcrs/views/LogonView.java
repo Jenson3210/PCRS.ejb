@@ -28,7 +28,7 @@ public class LogonView implements Serializable {
 	@EJB
 	private IUserFacade userFacade;
 
-	private String email;
+	private String email; 
 	private String password;
 	
 	@PostConstruct
