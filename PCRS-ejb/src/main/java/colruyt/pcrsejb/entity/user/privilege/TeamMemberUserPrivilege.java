@@ -21,7 +21,7 @@ public class TeamMemberUserPrivilege extends SurveyUserPrivilege implements Seri
 	 * PROPERTIES
 	 */
 	private static final long serialVersionUID = 1L;
-	@Column(name="STARTDATECURRENTSURVEYDEFINITION")
+	@Column(name="STARTDATE")
 	private LocalDate startDateCurrentSurveyDefinition; 
 	@OneToMany
 	@JoinColumn(name="USERPRIVILEGE_ID")
