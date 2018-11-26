@@ -48,7 +48,7 @@
 				</p:dataTable>
 				<div class="ui-g">
 					<div class="ui-g-12">
-						<p:commandButton value="#{msgs['user.add']}"
+						<p:commandgeneral.button value="#{msgs['user.add']}"
 							action="#{usersView.newUser}" styleClass="ui-priority-primary"
 							process="@this" update=":addForm:addUserDetail"
 							oncomplete="PF('addUserDialog').show();" />
@@ -114,7 +114,7 @@
 								</div>
 							</div>
 							<div class="ui-g-2">
-								<p:commandButton value="#{msgs['user.add']}" update=":form"
+								<p:commandgeneral.button value="#{msgs['user.add']}" update=":form"
 									action="#{usersView.addUser}"
 									oncomplete="PF('addUserDialog').hide();" />
 							</div>
@@ -181,7 +181,7 @@
 								</div>
 							</div>
 							<div class="ui-g-2">
-								<p:commandButton value="Wijzigen" update=":form"
+								<p:commandgeneral.button value="Wijzigen" update=":form"
 									action="#{usersView.editUser}"
 									oncomplete="PF('editUserDialog').hide();" />
 							</div>
@@ -207,10 +207,10 @@
 						<br></br>
 						<br></br>
 						<div align="right">
-							<p:commandButton styleClass="btn btn-link" value="#{msgs['button.no']}"
+							<p:commandgeneral.button styleClass="btn btn-link" value="#{msgs['general.button.no']}"
 								onclick="PF('deleteUserDialog').hide()" />
-							<p:commandButton styleClass="btn btn-primary" update=":form"
-								value="#{msgs['button.yes']}" action="#{usersView.deleteUser}"
+							<p:commandgeneral.button styleClass="btn btn-primary" update=":form"
+								value="#{msgs['general.button.yes']}" action="#{usersView.deleteUser}"
 								oncomplete="PF('deleteUserDialog').hide();" />
 						</div>
 					</p:dialog>
