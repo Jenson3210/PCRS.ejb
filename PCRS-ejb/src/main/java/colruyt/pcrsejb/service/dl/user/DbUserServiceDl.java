@@ -46,8 +46,8 @@ public class DbUserServiceDl implements Serializable, IUserServiceDl {
 	
 	@Override
 	public void delete(User element) {
-		User user = em.find(User.class, element);
-		if (user != null) {
+		element = em.merge(element);
+		if (element != null) {
 			em.remove(element);
 		}
 		else {
