@@ -23,7 +23,7 @@ public class AdminCompetenceView implements Serializable{
 	
 	
 	public List<CompetenceBo> getUsers() {
-		return competences;
+		return competences; 
 	}
 	
 	public void addUser() {

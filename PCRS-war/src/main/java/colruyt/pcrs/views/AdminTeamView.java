@@ -54,7 +54,7 @@ public class AdminTeamView implements Serializable {
     }
 
     public TeamBo getManipulatedTeamBo() {
-        return manipulatedTeamBo;
+    	return manipulatedTeamBo;
     }
 
     public void setManipulatedTeamBo(TeamBo manipulatedTeamBo) {
