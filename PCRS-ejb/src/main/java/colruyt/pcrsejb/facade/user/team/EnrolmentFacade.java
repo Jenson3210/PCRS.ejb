@@ -40,6 +40,6 @@ public class EnrolmentFacade implements Serializable, IEnrolmentFacade {
 	@Override
 	public void delete(EnrolmentBo enrolment) {
 		enrolmentServiceBl.delete(enrolmentConverter.convertToEntity(enrolment));
-	} 
+	}
 	
 }

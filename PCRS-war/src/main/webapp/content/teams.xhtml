@@ -33,8 +33,7 @@
                             <p:column styleClass="ui-g-6">
                                 <h:outputText value="#{enrolment.userPrivilege.privilegeType.fullName}"/>
                             </p:column>
-							<p:column headerText="#{msgs['delete']}"
-								style="width:65px; text-align: center">
+							<p:column style="width:65px; text-align: center">
 								<p:commandLink id="delete" oncomplete="PF('deleteUserDialog').show()">
 									<i class="fas fa-trash-alt"></i>
 		     						<f:setPropertyActionListener value="#{enrolment}"
@@ -49,28 +48,28 @@
                 </div>
             </h:form>
             <h:form id="deleteForm">
-				<div class="ui-g" id="deleteEnrolmentForm">
-					<p:dialog id="deleteEnrolmentFormTitle" header="#{msgs['enrolment.delete']}"
-						widgetVar="deleteEnrolmentDialog" modal="true">
+				<div class="ui-g" id="deleteUserForm">
+					<p:dialog id="deleteUserFormTitle" header="#{msgs['enrolment.delete']}"
+						widgetVar="deleteUserDialog" modal="true">
 						<f:facet name="header">
 							<h:outputText value="#{msgs['enrolment.delete']}" />
 						</f:facet>
 						<f:facet name="controls">
 							<h:outputLink value="#"
-								onclick="PF('deleteEnrolmentFormTitle').hide(); return false;">X</h:outputLink>
+								onclick="PF('deleteUserFormTitle').hide(); return false;">X</h:outputLink>
 						</f:facet>
 						<p>
 							<h:outputText
-								value="Ben je zeker dat je #{manipulatedEnrolmentBo.userBo.firstName} uit het team wilt verwijderen?" />
+								value="Ben je zeker dat je deze persoon uit het team wilt verwijderen?" />
 						</p>
 						<br></br>
 						<br></br>
 						<div align="right">
-							<p:commandButton styleClass="btn btn-link" value="#{msgs['button.no']}"
-								onclick="PF('deleteEnrolmentDialog').hide()" />
+							<p:commandButton styleClass="btn btn-link" value="#{msgs['general.button.no']}"
+								onclick="PF('deleteUserDialog').hide()" />
 							<p:commandButton styleClass="btn btn-primary" update=":form"
-								value="#{msgs['button.yes']}" action="#{adminTeamView.deleteEnrolment}"
-								oncomplete="PF('deleteEnrolmentDialog').hide();" />
+								value="#{msgs['general.button.yes']}" action="#{adminTeamView.deleteEnrolment}"
+								oncomplete="PF('deleteUserDialog').hide();" />
 						</div>
 					</p:dialog>
 

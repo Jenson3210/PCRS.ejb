@@ -1,6 +1,5 @@
 package colruyt.pcrs.views;
 
-import java.util.Iterator;
 import java.util.List;
 import java.io.Serializable;
 
@@ -20,22 +19,16 @@ public class AdminTeamView implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@EJB 
-	ITeamFacade teamFacade;
-	
+	private ITeamFacade teamFacade;
 	@EJB
-	IEnrolmentFacade enrolmentFacade;
-	
+	private IEnrolmentFacade enrolmentFacade;
 	private List<TeamBo> teams; 
-	
     private TeamBo manipulatedTeamBo;
     private EnrolmentBo manipulatedEnrolmentBo;
 
     @PostConstruct
     private void fillList() {
         teams = teamFacade.getAll();
-        for (TeamBo teamBo : teams) {
-			System.out.println(teamBo.getName());
-		}
     }
 
 
@@ -82,7 +75,6 @@ public class AdminTeamView implements Serializable {
         	}
     	}
     	
-
     	System.out.println(e.getUser().getFirstName());
     	//enrolmentFacade.delete(manipulatedEnrolmentBo);
     }
