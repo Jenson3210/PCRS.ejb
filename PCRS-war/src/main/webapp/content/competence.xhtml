@@ -11,7 +11,7 @@
 		<div class="ui-g-1"/>
 		<div class="ui-g-10">
 			<h:form id="form">
-				<p:dataTable var="competence" value="#{competenceView.competence}">
+				<p:dataTable var="competence" value="#{adminCompetenceView.competences}">
 					<f:facet name="header"><h:outputText value="#{msgs['competence.title']}"/></f:facet>
 					<p:column headerText="#{msgs['competence.name']}">
 						<h:outputText value="#{competence.name}" />
