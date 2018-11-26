@@ -21,7 +21,7 @@
 					</p:column>
 					
 					<p:column headerText="#{msgs['surveyDefinition.responsible']}">
-						<h:outputText value="#{user.lastName}" />
+						<h:outputText value="#{surveyDefinition.responsibleUser.firstName} #{surveyDefinition.responsibleUser.lastName}" />
 					</p:column>
 					<!--
 					<p:column headerText="#{msgs['user.email']}">
