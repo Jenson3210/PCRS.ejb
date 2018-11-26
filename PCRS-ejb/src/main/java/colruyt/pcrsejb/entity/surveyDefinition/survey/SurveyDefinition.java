@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -20,6 +21,7 @@ import colruyt.pcrsejb.entity.user.User;
 
 @Entity
 @Table(name="SURVEYDEFINITIONS")
+@NamedQuery(name="SurveyDefinition.getAllSurveyDefinitions", query="Select sd From SurveyDefinition sd")
 public class SurveyDefinition extends AbstractEntity implements Serializable {
 	/*
 	 * PROPERTIES
