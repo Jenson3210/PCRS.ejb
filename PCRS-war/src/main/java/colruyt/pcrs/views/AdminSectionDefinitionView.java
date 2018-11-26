@@ -6,6 +6,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Named;
+
+import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveyDefinitionFacade;
 import colruyt.pcrsejb.facade.surveyDefinition.survey.SurveyDefinitionFacade;
 
 
@@ -17,7 +19,7 @@ public class AdminSectionDefinitionView implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@EJB
-	private SurveyDefinitionFacade surveyDefinitionFacade;
+	private ISurveyDefinitionFacade surveyDefinitionFacade;
 
 	
 	public AdminSectionDefinitionView() {
@@ -30,14 +32,6 @@ public class AdminSectionDefinitionView implements Serializable{
 		
 	}
 	
-	
-
-
-	
-	
-	
-	
-
 	
 }
 

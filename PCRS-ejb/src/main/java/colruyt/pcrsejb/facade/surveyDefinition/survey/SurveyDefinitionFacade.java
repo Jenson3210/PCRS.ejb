@@ -3,9 +3,12 @@ package colruyt.pcrsejb.facade.surveyDefinition.survey;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveyDefinitionBo;
+import colruyt.pcrsejb.converter.surveyDefinition.survey.SurveyDefinitionConverter;
+import colruyt.pcrsejb.service.bl.surveyDefinition.survey.ISurveyDefinitionServiceBl;
 
 @Stateless
 public class SurveyDefinitionFacade implements Serializable, ISurveyDefinitionFacade {
@@ -13,28 +16,27 @@ public class SurveyDefinitionFacade implements Serializable, ISurveyDefinitionFa
 	
 	private static final long serialVersionUID = 1L;
 
+	@EJB
+	private ISurveyDefinitionServiceBl surveyDefinitionServiceBl;
+	private SurveyDefinitionConverter surveyDefinitionConverter = new SurveyDefinitionConverter();
 	
 	@Override
 	public SurveyDefinitionBo save(SurveyDefinitionBo entityBo) {
-		// TODO Auto-generated method stub
-		return null;
+		return surveyDefinitionConverter.convertToBo(surveyDefinitionServiceBl.save(surveyDefinitionConverter.convertToEntity(entityBo)));
 	}
 
 	@Override
 	public SurveyDefinitionBo get(SurveyDefinitionBo entityBo) {
-		// TODO Auto-generated method stub
-		return null;
+		return surveyDefinitionConverter.convertToBo(surveyDefinitionServiceBl.get(surveyDefinitionConverter.convertToEntity(entityBo)));
 	}
 
 	@Override
 	public List<SurveyDefinitionBo> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return surveyDefinitionConverter.convertToBos(surveyDefinitionServiceBl.getAll());
 	}
 
 	@Override
 	public void delete(SurveyDefinitionBo entityBo) {
-		// TODO Auto-generated method stub
-		
+		surveyDefinitionServiceBl.delete(surveyDefinitionConverter.convertToEntity(entityBo));
 	}
 }
