@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,7 +44,7 @@ public class Team extends AbstractEntity implements Serializable {
 	@Column(name = "ID")
 	private Integer id;
 	private String name;
-	@OneToMany
+	@OneToMany(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "TEAM_ID")
 	private Set<Enrolment> enrolments = new HashSet<>();
 	/*

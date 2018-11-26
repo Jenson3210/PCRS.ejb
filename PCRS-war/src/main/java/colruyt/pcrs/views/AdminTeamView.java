@@ -1,5 +1,6 @@
 package colruyt.pcrs.views;
 
+import java.util.Iterator;
 import java.util.List;
 import java.io.Serializable;
 
@@ -32,6 +33,9 @@ public class AdminTeamView implements Serializable {
     @PostConstruct
     private void fillList() {
         teams = teamFacade.getAll();
+        for (TeamBo teamBo : teams) {
+			System.out.println(teamBo.getName());
+		}
     }
 
 

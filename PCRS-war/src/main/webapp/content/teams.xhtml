@@ -11,7 +11,7 @@
         <div class="ui-g-1"/>
         <div class="ui-g-10">
             <h:form id="form">
-                <p:dataTable var="team" value="#{teamsView.teams}"
+                <p:dataTable var="team" value="#{adminTeamView.teams}"
                              styleClass="teamOverviewTable" sortBy="#{team.name}"
                              expandableRowGroups="true" expandedRow="false">
                     <f:facet name="header"><h:outputText value="#{msgs['team.header']}"/></f:facet>
@@ -20,62 +20,24 @@
                             <h:outputText value="#{team.name}"/>
                         </p:column>
                         <p:column styleClass="ui-g-6" style="float: right">
-                            <h:outputText value="#{team.enrolmentsBoHashSet.size()}"/>
+                            <h:outputText value="#{team.enrolments.size()}"/>
                         </p:column>
                     </p:headerRow>
                     <p:column>
-                        <p:dataTable var="enrolment" value="#{team.enrolmentsBoHashSet}">
+                        <p:dataTable var="enrolment" value="#{team.enrolments}">
                             <p:column style="width: 16px"/>
-                            <p:column styleClass="ui-g-4">
-                                <h:outputText value="#{enrolment.userBo.fullName}"/>
+                            <p:column styleClass="ui-g-6">
+                                <h:outputText value="#{enrolment.user.firstName}  #{enrolment.user.lastName}"/>
                             </p:column>
-                            <p:column styleClass="ui-g-4">
-                                <h:outputText value="#{enrolment.privilegeBo.privilegeType.fullName}"/>
+                            <p:column styleClass="ui-g-6">
+                                <h:outputText value="#{enrolment.userPrivilege.privilegeType.fullName}"/>
                             </p:column>
-                            <p:column styleClass="ui-g-4">
-                                <h:outputText value="#{enrolment.roleBo.name}"/>
-                            </p:column>
-                            <p:column style="width:65px; text-align: center">
-                                <p:commandLink update=":editEnrolment:editEnrolmentFormDetail" id="edit" action="#{teamsView.selectedEnrolment}"
-                                               oncomplete="PF('editEnrolmentFormDialog').show()">
-                                    <i class="fas fa-pencil-alt"/>
-                                    <f:setPropertyActionListener value="#{enrolment}"
-                                                                 target="#{teamsView.manipulatedEnrolmentBo}"/>
-                                </p:commandLink>
-                            </p:column>
+
                         </p:dataTable>
                     </p:column>
                 </p:dataTable>
                 <div class="ui-g">
-                    <div class="ui-g-12">
-                        <p:commandButton value="#{msgs['team.add']}" id="add" action="#{teamsView.newTeam}"
-                                         styleClass="ui-priority-primary" process="@this" update=":addForm:addTeamDetail"
-                                         oncomplete="PF('addTeamDialog').show();"/>
-                    </div>
-                </div>
-            </h:form>
-            <h:form id="editEnrolment">
-                <div class="ui-g" id="editEnrolmentForm">
-                    <p:dialog id="editEnrolmentFormTitle" header="Edit Enrolment"
-                              widgetVar="editEnrolmentFormDialog" modal="true">
-                        <p:outputPanel id="editEnrolmentFormDetail">
-                            <div class="ui-g">
-                                <div class="ui-g-4">
-                                    <p:outputLabel value="#{msgs['teams.role']}"/>
-                                </div>
-                                <div class="ui-g-8">
-                                    <p:selectOneMenu id="role" value="#{teamsView.manipulatedEnrolmentBo}">
-                                        <f:selectItems var="roleBo" itemLabel="#{roleBo.name}" value="#{teamsView.possibleRolesBo}" />
-                                    </p:selectOneMenu>
-                                </div>
-                            </div>
-                            <div class="ui-g-12">
-                                <p:commandButton value="#{msgs['enrolment.edit']}"
-                                                 action="#{teamsView.editEnrolment}"
-                                                 oncomplete="PF('editEnrolmentFormDialog').hide();" />
-                            </div>
-                        </p:outputPanel>
-                    </p:dialog>
+                    <div class="ui-g-12"/>
                 </div>
             </h:form>
 
