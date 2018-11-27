@@ -1,9 +1,7 @@
 package colruyt.pcrs.views;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
@@ -22,16 +20,16 @@ public class AdminCompetenceView implements Serializable{
 	private List<CompetenceBo> competences; 
 	
 	
-	public List<CompetenceBo> getUsers() {
-		return competences; 
+	public List<CompetenceBo> getCompetences() {
+		return competences;
 	}
 	
-	public void addUser() {
+	public void addCompetence() {
 		
 		competences.add(competenceFasade.save(competenceBo));
     }
 	
-	public void editUser() {
+	public void editCompetence() {
 		CompetenceBo c = null;
 		for (CompetenceBo competence : competences) {
 			if (competence.getId() == competenceBo.getId()) {
@@ -42,7 +40,7 @@ public class AdminCompetenceView implements Serializable{
 		competenceFasade.save(c); 
 	}
 	
-	public void deleteUser() {
+	public void deleteCompetence() {
 		CompetenceBo c = null;
 		for (CompetenceBo competence : competences) {
 			if (competence.getId() == competenceBo.getId()) {
