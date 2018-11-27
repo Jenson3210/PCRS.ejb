@@ -83,10 +83,12 @@
 							<p>#{msgs['profile.currentpass']}</p>
 						</div>
 						<div class="ui-g-8">
-							<p:inputText id="currentpass" value="#{userProfileview.currentpass}" 
-								required="true" validator="#{userProfileview.isCurrentPassword}">
-								<f:validateLength maximum="14" />
-							</p:inputText>
+							<div>
+								<p:inputText id="currentpass" value="#{userProfileview.currentpass}" 
+									required="true" validator="#{userProfileview.isCurrentPassword}">
+									<f:validateLength maximum="14" />
+								</p:inputText>
+							</div>
 						</div> 
 					</div>
 					<div class="ui-g">
