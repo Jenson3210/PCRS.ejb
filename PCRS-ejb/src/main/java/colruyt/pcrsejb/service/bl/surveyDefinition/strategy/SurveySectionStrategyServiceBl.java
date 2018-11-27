@@ -36,7 +36,6 @@ public class SurveySectionStrategyServiceBl implements Serializable, ISurveySect
 
 	@Override
 	public void delete(SurveySectionStrategy element) {
-		surveySectionStrategyServiceDL.delete(element);
-		
+		surveySectionStrategyServiceDL.delete(element);	
 	}
 }

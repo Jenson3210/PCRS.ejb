@@ -109,6 +109,10 @@
 							class="#{request.getParameter('target') == 'surveysectiontitle' ? 'c-active' : ''}">
 							<h:link value="#{msgs['menu.adminSurveySectionTitle']}" outcome="/admin/adminSurveySectionTitleView.xhtml" />
 						</li>
+						<li
+							class="#{request.getParameter('target') == 'adminstrategy' ? 'c-active' : ''}">
+							<h:link value="#{msgs['menu.adminStrategy']}" outcome="/admin/adminStrategy.xhtml" />
+						</li>
 					</ul>
 				</li>
 			</h:panelGroup>
