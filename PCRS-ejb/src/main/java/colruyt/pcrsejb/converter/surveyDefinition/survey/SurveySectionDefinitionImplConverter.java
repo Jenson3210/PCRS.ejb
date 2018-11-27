@@ -18,14 +18,14 @@ public class SurveySectionDefinitionImplConverter implements GenericConverter<Su
 			entity = new SurveySectionDefinitionImpl();
 			ConverterUtils.setIfNotNull(bo::getId, entity::setId);
 			switch (bo.getSurveySectionRequirementLevelBo()) {
-			case Optional:
-				entity.setSurveySectionRequirementLevel(SurveySectionRequirementLevel.Optional);
+			case OPTIONAL:
+				entity.setSurveySectionRequirementLevel(SurveySectionRequirementLevel.OPTIONAL);
 				break;
-			case Expected:
-				entity.setSurveySectionRequirementLevel(SurveySectionRequirementLevel.Expected);
+			case EXPECTED:
+				entity.setSurveySectionRequirementLevel(SurveySectionRequirementLevel.EXPECTED);
 				break;
-			case Obligated:
-				entity.setSurveySectionRequirementLevel(SurveySectionRequirementLevel.Obligated);
+			case OBLIGATED:
+				entity.setSurveySectionRequirementLevel(SurveySectionRequirementLevel.OBLIGATED);
 				break;
 			}
 			entity.setSurveySectionDefinition(surveySectionDefinitionConverter.convertToEntity(bo.getSurveySectionDefinitionBo()));
@@ -40,14 +40,14 @@ public class SurveySectionDefinitionImplConverter implements GenericConverter<Su
 			bo = new SurveySectionDefinitionImplBo();
 			ConverterUtils.setIfNotNull(entity::getId, bo::setId);
 			switch (entity.getSurveySectionRequirementLevel()) {
-			case Optional:
-				bo.setSurveySectionRequirementLevelBo(SurveySectionRequirementLevelBo.Optional);
+			case OPTIONAL:
+				bo.setSurveySectionRequirementLevelBo(SurveySectionRequirementLevelBo.OPTIONAL);
 				break;
-			case Expected:
-				bo.setSurveySectionRequirementLevelBo(SurveySectionRequirementLevelBo.Expected);
+			case EXPECTED:
+				bo.setSurveySectionRequirementLevelBo(SurveySectionRequirementLevelBo.EXPECTED);
 				break;
-			case Obligated:
-				bo.setSurveySectionRequirementLevelBo(SurveySectionRequirementLevelBo.Obligated);
+			case OBLIGATED:
+				bo.setSurveySectionRequirementLevelBo(SurveySectionRequirementLevelBo.OBLIGATED);
 				break;
 			}
 			bo.setSurveySectionDefinitionBo(surveySectionDefinitionConverter.convertToBo(entity.getSurveySectionDefinition()));
