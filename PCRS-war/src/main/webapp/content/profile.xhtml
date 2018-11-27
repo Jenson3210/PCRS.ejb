@@ -89,33 +89,27 @@
    			 <p>#{msgs['profile.currentpass']}</p>
    			 <p>#{msgs['profile.newpass']}</p>
    			 <p>#{msgs['profile.repeatnewpass']}</p>
-   			 
    			 </div>
    		<div class="ui-g-4">
    			 	
    			
    			
    			
-   			<p:inputText id="currentpass" value="#{userProfileView.currentpass}"
+   			<p:inputSecret id="currentpass" value="#{userProfileView.currentpass}"
    			 maxlength="14" >
-		
-   		
-   			</p:inputText>
+   			</p:inputSecret>
    			
    		
    				
-   			<p:inputText id="newpass" value="#{userProfileView.newpassword}"
+   			<p:inputSecret id="newpass" value="#{userProfileView.newpassword}"
    			 maxlength="14">
-   		
-   		
-   			</p:inputText>
+   			</p:inputSecret>
    			
    			
    			
-   			<p:inputText id="repeatpass" value="#{userProfileView.repeatpassword}"
+   			<p:inputSecret id="repeatpass" value="#{userProfileView.repeatpassword}"
    			 maxlength="14">
-   			
-   			</p:inputText>
+   			</p:inputSecret>
    			
 
    			
@@ -125,8 +119,6 @@
    	</div>
    		
    		<div class="ui-g">
-   		
-   		
    		<div class="ui-g-1">
    		<p:commandButton value="#{msgs['msgs.cancel']}" styleClass="btn btn-outline-primary" ajax="false" onclick="PF('dlg3').hide();"  />
    		</div>
