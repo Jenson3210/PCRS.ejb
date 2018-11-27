@@ -1,6 +1,7 @@
 package colruyt.pcrsejb.service.bl.competence;
 
 import java.io.Serializable;
+
 import java.util.List;
 
 import javax.ejb.EJB;

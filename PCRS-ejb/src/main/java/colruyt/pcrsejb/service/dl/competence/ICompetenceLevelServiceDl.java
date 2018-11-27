@@ -7,4 +7,6 @@ import javax.ejb.Local;
 
 @Local
 public interface ICompetenceLevelServiceDl extends IDbService<CompetenceLevel> {
+
+	CompetenceLevel save(CompetenceLevel element);
 }
