@@ -28,10 +28,10 @@
 					</p:column>
 					<p:column headerText="#{msgs['delete']}"
 						style="width:65px; text-align: center">
-						<p:commandLink id="delete" oncomplete="PF('deleteUserDialog').show()">
+						<p:commandLink id="delete" oncomplete="PF('deleteSurveySectionStrategyDialog').show()">
 							<i class="fas fa-trash-alt"></i>
-     						<f:setPropertyActionListener value="#{user}"
-								target="#{usersView.addedUser}" /> 
+     						<f:setPropertyActionListener value="#{strategy}"
+								target="#{surveySectionStragiesView.surveySectionStrategyBo}" /> 
      					</p:commandLink>
 					</p:column>
 					<p:rowExpansion>
