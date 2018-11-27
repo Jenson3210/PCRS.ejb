@@ -64,8 +64,9 @@ public class DbUserServiceDl implements Serializable, IUserServiceDl {
 
 	@Override
 	public List<User> getUsersByShortName(String shortName) {
-		Query q = em.createQuery("SELECT u from User u where UPPER(u.shortname) = UPPER(:shortname)");
+		Query q = em.createQuery("SELECT u from User u where UPPER(u.shortName) LIKE UPPER(:shortname)");
 		q.setParameter("shortname", shortName);
-		return (List<User>) q.getResultList();
+		List<User> resultList = q.getResultList();
+		return resultList;
 	}
 }

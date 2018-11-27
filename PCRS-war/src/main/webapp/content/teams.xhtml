@@ -26,6 +26,8 @@
              			<p:column style="width:65px; text-align: center">
 							<p:commandLink id="addEnrolment" oncomplete="PF('addEnrolmentDialog').show()">
 								<i class="fas fa-user-plus"/>
+								<f:setPropertyActionListener value="#{team}"
+										target="#{adminTeamView.manipulatedTeamBo}" /> 
 	     					</p:commandLink>
 						</p:column>
                     </p:headerRow>
@@ -117,13 +119,28 @@
 						<p:outputPanel id="addEnrolmentDetail">
 							<div class="ui-g">
 								<div class="ui-g-4">
-									<p:outputLabel value="#{msgs['enrolment.user']}"></p:outputLabel>
+									<p:outputLabel value="#{msgs['enrolment.user']}"/>
 								</div>
 								<div class="ui-g-8">
-                                    <p:autoComplete id="user" value="#{adminTeamView.user}" completeMethod="#{adminTeamView.completeUser}"/>
+                                    <p:autoComplete id="user" value="#{adminTeamView.user}" maxResults="5" 
+                                    			completeMethod="#{adminTeamView.completeUser}" var="user" 
+                                    			itemValue="#{user}" itemLabel="#{user.firstName} #{user.lastName}"
+                                    			forceSelection="true" converter="userBoConverter"/>
                                 </div>
 							</div>
-							<div class="ui-g-2">
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['enrolment.user.privilege']}"/>
+								</div>
+	                            <div class="ui-g-8">
+									<p:selectOneMenu id="privilege"
+										value="#{adminTeamView.userPrivilege}">
+										<f:selectItem itemLabel="TeamMember" itemValue="TEAMMEMBER" />
+										<f:selectItem itemLabel="TeamManager" itemValue="TEAMMANAGER" />
+									</p:selectOneMenu>
+	                            </div>
+                            </div>
+							<div class="ui-g-8">
 								<p:commandButton value="#{msgs['enrolment.add']}" update=":form"
 									action="#{adminTeamView.addEnrolment}"
 									oncomplete="PF('addEnrolmentDialog').hide();" />
