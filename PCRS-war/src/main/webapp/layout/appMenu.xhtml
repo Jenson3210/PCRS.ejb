@@ -108,6 +108,9 @@
 						<li
 							class="#{request.getParameter('target') == 'role' ? 'c-active' : ''}">
 							<h:link value="#{msgs['menu.rol']}" outcome="/admin/role.xhtml" />
+						</li>						<li
+							class="#{request.getParameter('target') == 'surveysectiontitle' ? 'c-active' : ''}">
+							<h:link value="#{msgs['menu.adminSurveySectionTitle']}" outcome="/admin/adminSurveySectionTitleView.xhtml" />
 						</li>
 					</ul>
 				</li>
