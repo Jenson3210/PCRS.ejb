@@ -13,6 +13,7 @@ import javax.inject.Named;
 import colruyt.pcrs.utillibs.WebUser;
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.entity.user.User;
+import colruyt.pcrsejb.facade.surveys.surveySet.ISurveySetFacade;
 import colruyt.pcrsejb.facade.user.IUserFacade;
 import colruyt.pcrsejb.facade.user.team.ITeamFacade;
 import colruyt.pcrsejb.util.exceptions.UserIsNotMemberOfTeamException;
@@ -28,6 +29,19 @@ public class UserProfileView implements Serializable{
 	@EJB
 	private ITeamFacade teamFacade; 
 	
+	@EJB
+	private ISurveySetFacade surveyFacade;
+	
+	
+	
+	public ISurveySetFacade getSurveyFacade() {
+		return surveyFacade; 
+	}
+
+	public void setSurveyFacade(ISurveySetFacade surveyFacade) {
+		this.surveyFacade = surveyFacade;
+	}
+
 	@Inject
 	private WebUser webuser;
 	
@@ -93,18 +107,27 @@ public class UserProfileView implements Serializable{
 
 	public void changePass() {
 
+		FacesContext context = FacesContext.getCurrentInstance();
 		if (this.isCurrentPassword() && this.isSamePassword()) {
 
 			this.getUser().setPassword(newpassword);	
 
 			this.setUser(userfac.save(this.getUser()));
 			
-			FacesContext context = FacesContext.getCurrentInstance();
+			
 			String message = context.getApplication().evaluateExpressionGet(context, "#{msgs['error.passmissmatch']}",
 					String.class);
-			FacesMessage myFacesMessage = new FacesMessage(message);
+			FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO,"succes!!",message);
 
-			context.addMessage("Succes!!", myFacesMessage);
+			context.addMessage(null, myFacesMessage);
+		}
+		else {
+			String message = context.getApplication().evaluateExpressionGet(context, "#{msgs['error.passmissmatch']}",
+					String.class);
+			FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR,"succes!!",message); 
+			context.addMessage(null, myFacesMessage);
+			
+			
 		}
 	}
 
@@ -114,10 +137,10 @@ public class UserProfileView implements Serializable{
 			FacesContext context = FacesContext.getCurrentInstance();
 			String message = context.getApplication().evaluateExpressionGet(context, "#{msgs['error.passmissmatch']}",
 					String.class);
-			FacesMessage myFacesMessage = new FacesMessage(message);
+			FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR,"",message);
 
 			context.addMessage(null, myFacesMessage);
-			context.validationFailed();
+			
 			return  false;
 		}
 		else {
@@ -129,10 +152,10 @@ public class UserProfileView implements Serializable{
 		if(!this.currentpass.equals(this.getUser().getPassword())) {
 			   FacesContext context = FacesContext.getCurrentInstance();
 			   String message = context.getApplication().evaluateExpressionGet(context, "#{msgs['error.wrongpassword']}", String.class);
-			   FacesMessage myFacesMessage = new FacesMessage(message);
+			   FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR,"",message);
 			   context.addMessage(null,myFacesMessage);
 
-			   context.validationFailed();
+			  
 
 
 			return false;

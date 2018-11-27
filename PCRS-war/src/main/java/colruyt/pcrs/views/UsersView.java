@@ -13,6 +13,7 @@ import javax.inject.Named;
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
+import colruyt.pcrsejb.facade.surveys.surveySet.ISurveySetFacade;
 import colruyt.pcrsejb.facade.user.IUserFacade;
 
 @Named
@@ -24,6 +25,8 @@ public class UsersView implements Serializable{
 	private UserBo addedUser;
 	private List<UserBo> users; 
 	private Boolean adminSelected;
+	
+
 
 	@PostConstruct 
 	private void fillusers() {
