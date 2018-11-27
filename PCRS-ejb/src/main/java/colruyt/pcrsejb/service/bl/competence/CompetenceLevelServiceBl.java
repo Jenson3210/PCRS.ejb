@@ -1,6 +1,7 @@
 package colruyt.pcrsejb.service.bl.competence;
 
 import java.io.Serializable;
+
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -9,7 +10,7 @@ import javax.ejb.Stateless;
 import colruyt.pcrsejb.entity.competence.CompetenceLevel;
 import colruyt.pcrsejb.service.dl.competence.ICompetenceLevelServiceDl;
 @Stateless
-public class CompetenceLevelServiceBl implements Serializable, ICompetenceLevelServiceDl{
+public class CompetenceLevelServiceBl implements Serializable, ICompetenceLevelServiceBl{
 	/**
 	 * 
 	 */

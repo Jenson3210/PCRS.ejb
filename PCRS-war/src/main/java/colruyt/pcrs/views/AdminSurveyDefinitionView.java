@@ -2,17 +2,19 @@ package colruyt.pcrs.views;
 
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveyDefinitionBo;
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveyDefinitionFacade;
+import colruyt.pcrsejb.facade.user.UserFacade;
+
+
 
 
 @Named
@@ -22,21 +24,14 @@ public class AdminSurveyDefinitionView implements Serializable{
 	
 	private static final long serialVersionUID = 5L;
 	
+	@EJB
+	private UserFacade userFacade;
+	
 	private List<SurveyDefinitionBo> surveyDefinitions;
 	
 	private SurveyDefinitionBo addedSurveyDefinitionBo;
-	private UserBo addedUser;
+	private UserBo addedUserBo;
 	
-	
-	
-	public UserBo getAddedUser() {
-		return this.addedUser;
-	}
-
-
-	public void setAddedUser(UserBo addedUser) {
-		this.addedUser = addedUser;
-	}
 
 	@EJB
 	private ISurveyDefinitionFacade surveyDefinitionFacade;
@@ -49,24 +44,32 @@ public class AdminSurveyDefinitionView implements Serializable{
 	
 	@PostConstruct
 	public void setup() {
-//		System.out.println("Inside @PostConstruct");
-//		surveyDefinitions = surveyDefinitionFacade.getAll();
-//		for (SurveyDefinitionBo bo : surveyDefinitions) {
-//			System.out.println("BO: " + bo);
-//			System.out.println("--------------");
-//		}
-		
+		System.out.println("Inside @PostConstruct");
+		surveyDefinitions = surveyDefinitionFacade.getAll();
+		for (SurveyDefinitionBo bo : surveyDefinitions) {
+			System.out.println("BO: " + bo);
+		}
 	}
 	
 	
 	public void newSurveyDefinition() {
 		System.out.println("Inside newSurveyDefinition()");
-		//surveyDefinitionBo = new SurveyDefinitionBo();
-		//userBo = new UserBo();
+		addedSurveyDefinitionBo = new SurveyDefinitionBo();
+		addedUserBo = new UserBo();
 	}
 	
+
 	
-	
+	public UserBo getAddedUserBo() {
+		return addedUserBo;
+	}
+
+
+	public void setAddedUserBo(UserBo addedUserBo) {
+		this.addedUserBo = addedUserBo;
+	}
+
+
 	public List<SurveyDefinitionBo> getSurveyDefinitions() {
 		return this.surveyDefinitions;
 	}
@@ -85,6 +88,15 @@ public class AdminSurveyDefinitionView implements Serializable{
 
 	public void addSurveyDefinition() {
 		System.out.println("Inside addSurveyDefinition()");
+	}
+	
+	public List<String> completeShortName(String query){
+		List<String> matchingUsers = new ArrayList<>();
+		
+		// look for users with that shortname
+		matchingUsers = userFacade.getUserByShortName(query);
+		
+		return matchingUsers;
 	}
 	
 }
