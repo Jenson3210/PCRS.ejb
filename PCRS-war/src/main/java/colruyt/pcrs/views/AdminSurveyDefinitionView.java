@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -102,5 +104,14 @@ public class AdminSurveyDefinitionView implements Serializable{
 		surveyDefinitionFacade.delete(addedSurveyDefinitionBo);
 	}
 	
+	public void editSurveyDefinition() {
+		for (SurveyDefinitionBo bo : surveyDefinitions) {
+			if (bo.getId() == addedSurveyDefinitionBo.getId()) {
+				bo.setName(addedSurveyDefinitionBo.getName());
+				bo.setResponsibleUser(addedSurveyDefinitionBo.getResponsibleUser());
+			}
+		}
+		surveyDefinitionFacade.save(addedSurveyDefinitionBo);
+	}
 }
 
