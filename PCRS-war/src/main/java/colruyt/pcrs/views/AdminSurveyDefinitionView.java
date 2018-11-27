@@ -87,6 +87,9 @@ public class AdminSurveyDefinitionView implements Serializable{
 
 	public void addSurveyDefinition() {
 		System.out.println("Inside addSurveyDefinition()");
+		System.out.println("---------");
+		System.out.println("Title " + addedSurveyDefinitionBo.getName());
+		System.out.println("User " + addedUserBo.getEmail());
 	}
 	
 	public List<String> completeShortName(String query){
