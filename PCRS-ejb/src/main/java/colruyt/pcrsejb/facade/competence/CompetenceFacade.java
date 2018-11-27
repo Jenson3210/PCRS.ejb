@@ -22,25 +22,23 @@ public class CompetenceFacade implements Serializable, ICompetenceFacade {
 
 	@Override
 	public CompetenceBo save(CompetenceBo entityBo) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return competenceConverter.convertToBo(competenceServiceBl.save(competenceConverter.convertToEntity(entityBo)));
 	}
 
 	@Override
 	public CompetenceBo get(CompetenceBo entityBo) {
-		// TODO Auto-generated method stub
-		return null;
+		return competenceConverter.convertToBo(competenceServiceBl.get(competenceConverter.convertToEntity(entityBo)));
 	}
 
 	@Override
 	public List<CompetenceBo> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return competenceConverter.convertToBos(competenceServiceBl.getAll());
 	}
 
 	@Override
 	public void delete(CompetenceBo entityBo) {
-		// TODO Auto-generated method stub
+		competenceServiceBl.delete(competenceConverter.convertToEntity(entityBo));
 		
 	}
 }

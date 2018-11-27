@@ -11,7 +11,7 @@ import colruyt.pcrsejb.entity.competence.Competence;
 import colruyt.pcrsejb.service.dl.competence.ICompetenceServiceDl;
 
 @Stateless
-public class CompetenceServiceBl implements Serializable, ICompetenceServiceDl {
+public class CompetenceServiceBl implements Serializable, ICompetenceServiceBl {
 	/**
 	 * 
 	 */
