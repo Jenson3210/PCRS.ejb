@@ -125,9 +125,10 @@
 							</div> 
 							
 							<div class="ui-g-2">
-								<p:commandButton value="Wijzigen" update=":form"/>
-								<!-- action="#{adminUserView.editUser}"
-									oncomplete="PF('editUserDialog').hide();"  -->
+								<p:commandButton value="#{msgs['surveyDefinition.edit']}" update=":form"
+												oncomplete="PF('editSurveyDefinitionDialog').hide();"
+												action="#{adminSurveyDefinitionView.editSurveyDefinition}"
+												validateClient="true"/>
 							</div>
 						</p:outputPanel>
 					</p:dialog>

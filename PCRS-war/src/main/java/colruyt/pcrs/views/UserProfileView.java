@@ -136,16 +136,9 @@ public class UserProfileView implements Serializable{
 
 			context.addMessage(null, myFacesMessage);
 		}
-		else {
-			String message = context.getApplication().evaluateExpressionGet(context, "#{msgs['error.passmissmatch']}",
-					String.class);
+		
 			
-			String title = context.getApplication().evaluateExpressionGet(context, "#{msgs['succes.changepass.title']}",String.class);
-			FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR,title,message); 
-			context.addMessage(null, myFacesMessage);
-			
-			
-		}
+		
 	}
 
 	public boolean isSamePassword() {
@@ -184,7 +177,7 @@ public class UserProfileView implements Serializable{
 	public boolean isCurrentPassword() {
 		
 		if(this.currentpass.isEmpty()) {
-			FacesContext context = FacesContext.getCurrentInstance();
+			   FacesContext context = FacesContext.getCurrentInstance();
 			   String message = context.getApplication().evaluateExpressionGet(context, "#{msgs['error.required']}", String.class);
 			   FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR,"",message);
 			   context.addMessage(null,myFacesMessage);
