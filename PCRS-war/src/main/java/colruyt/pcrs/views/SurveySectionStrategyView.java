@@ -9,12 +9,11 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import colruyt.pcrsejb.bo.surveyDefinition.strategy.SurveySectionStrategyBo;
-import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionTitleBo;
 import colruyt.pcrsejb.facade.surveyDefinition.strategy.ISurveySectionStrategyFacade;
 
 @Named
 @ViewScoped
-public class SurveySectionStragiesView implements Serializable {
+public class SurveySectionStrategyView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -25,7 +24,7 @@ public class SurveySectionStragiesView implements Serializable {
 	private List<SurveySectionStrategyBo> strategies;
 	
 	@PostConstruct 
-	private void fillstrategies() {
+	private void fillStrategies() {
 		strategies = surveySectionStrategyFacade.getAll();
 	}
 	
