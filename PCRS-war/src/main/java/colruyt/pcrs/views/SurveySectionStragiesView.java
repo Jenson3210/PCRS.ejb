@@ -8,6 +8,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import colruyt.pcrsejb.bo.surveyDefinition.strategy.SurveySectionStrategyBo;
+import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionTitleBo;
 import colruyt.pcrsejb.facade.surveyDefinition.strategy.ISurveySectionStrategyFacade;
 
 @Named
@@ -19,6 +20,7 @@ public class SurveySectionStragiesView implements Serializable {
 	@EJB
 	private ISurveySectionStrategyFacade surveySectionStrategyFacade; 
 	private SurveySectionStrategyBo surveySectionStrategyBo;
+	
 	private List<SurveySectionStrategyBo> strategies;
 	
 	public SurveySectionStrategyBo getSurveySectionStrategyBo() {
@@ -34,4 +36,41 @@ public class SurveySectionStragiesView implements Serializable {
 		this.strategies = strategies;
 	}
 
+	public void addSurveySectionStrategy()
+	{
+		strategies.add(surveySectionStrategyFacade.save(surveySectionStrategyBo));
+	}
+	
+	public void newSurveySectionStrategy() {
+        surveySectionStrategyBo = new SurveySectionStrategyBo();
+    }
+	
+	public void editSurveySectionStrategy() {
+		SurveySectionStrategyBo s = null;
+		for (SurveySectionStrategyBo strategy : strategies) {
+			if (strategy.getId() == surveySectionStrategyBo.getId()) {
+				strategy.setAmountOfLevels(surveySectionStrategyBo.getAmountOfLevels());
+				strategy.setDescriptionRequired(surveySectionStrategyBo.getDescriptionRequired());
+				strategy.setEnergyRated(surveySectionStrategyBo.getEnergyRated());
+				strategy.setFlexibleDescription(surveySectionStrategyBo.getFlexibleDescription());
+				strategy.setInterestRated(surveySectionStrategyBo.getInterestRated());
+				strategy.setName(surveySectionStrategyBo.getName());
+				strategy.setHasMinimumLevel(surveySectionStrategyBo.getHasMinimumLevel());
+				s = strategy;
+			}
+		}
+		surveySectionStrategyFacade.save(s); 
+	}
+	
+	public void deleteSurveySectionStrategy()
+	{
+		SurveySectionStrategyBo s = null;
+		for (SurveySectionStrategyBo strategy : strategies) {
+			if (strategy.getId() == surveySectionStrategyBo.getId()) {
+				s = strategy;
+			}
+		}
+		strategies.remove(s);
+		surveySectionStrategyFacade.delete(s);
+	}
 }
