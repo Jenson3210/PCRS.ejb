@@ -38,7 +38,7 @@ public class DbSurveySectionStrategyServiceDl implements Serializable, ISurveySe
 
 	@Override
 	public List<SurveySectionStrategy> getAll() {
-		TypedQuery<SurveySectionStrategy> q = em.createQuery("SELECT s from SurveySectionStrategy s", SurveySectionStrategy.class);
+		TypedQuery<SurveySectionStrategy> q = em.createNamedQuery("SURVEYSECTIONSTRATEGY.GETALL", SurveySectionStrategy.class);
 		List<SurveySectionStrategy> surveySectionStrategyList = q.getResultList();
 		return surveySectionStrategyList;
 	}
