@@ -5,12 +5,13 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.privilege.PrivilegeType;
-import colruyt.pcrsejb.entity.user.team.Enrolment;
 import colruyt.pcrsejb.entity.user.team.Team;
 import colruyt.pcrsejb.util.exceptions.UserIsNotMemberOfTeamException;
 
@@ -64,10 +65,12 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 		Team team = query.getSingleResult();
 		return team;
 		}
-		catch(Exception e) {
+		catch(NoResultException e) {
 			throw new UserIsNotMemberOfTeamException();
 		}
-	
+		catch(NonUniqueResultException ex) {
+			throw new IllegalArgumentException("User mag maar in 1 team zitten");
+		}
 		
 	}
 
