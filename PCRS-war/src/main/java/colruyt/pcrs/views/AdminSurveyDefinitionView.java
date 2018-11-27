@@ -21,6 +21,7 @@ import colruyt.pcrsejb.facade.user.IUserFacade;
 public class AdminSurveyDefinitionView implements Serializable{
 	
 	
+	
 	private static final long serialVersionUID = 5L;
 	
 	@EJB
@@ -33,6 +34,7 @@ public class AdminSurveyDefinitionView implements Serializable{
 	private UserBo addedUserBo;
 	
 
+	
 	@EJB
 	private ISurveyDefinitionFacade surveyDefinitionFacade;
 
@@ -116,6 +118,11 @@ public class AdminSurveyDefinitionView implements Serializable{
 		}
 		
 		return autoCompleteList;
+	}
+	
+	
+	public void deleteSurveyDefinition(){
+		surveyDefinitionFacade.delete(addedSurveyDefinitionBo);
 	}
 	
 }
