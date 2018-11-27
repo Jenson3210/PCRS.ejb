@@ -26,7 +26,7 @@ public class UserProfileView implements Serializable{
 	@EJB
 	private IUserFacade userfac; 
 	@EJB
-	private ITeamFacade teamFacade;
+	private ITeamFacade teamFacade; 
 	
 	@Inject
 	private WebUser webuser;
@@ -88,6 +88,8 @@ public class UserProfileView implements Serializable{
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.getExternalContext().getSessionMap().put("user", user);
 	}
+	
+
 
 	public void changePass() {
 
@@ -96,6 +98,13 @@ public class UserProfileView implements Serializable{
 			this.getUser().setPassword(newpassword);	
 
 			this.setUser(userfac.save(this.getUser()));
+			
+			FacesContext context = FacesContext.getCurrentInstance();
+			String message = context.getApplication().evaluateExpressionGet(context, "#{msgs['error.passmissmatch']}",
+					String.class);
+			FacesMessage myFacesMessage = new FacesMessage(message);
+
+			context.addMessage("Succes!!", myFacesMessage);
 		}
 	}
 

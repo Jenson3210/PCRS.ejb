@@ -53,7 +53,7 @@
 							style="width:300px" />
 							
 							
-						<h:outputText value="#{userProfileview.teamLeaderNaam}"></h:outputText>
+						<h:outputText value="#{userProfileView.teamLeaderNaam}"></h:outputText>
 						<p:progressBar id="progressBarBoss" widgetVar="pbClient"
 							style="width:300px" />
 
@@ -63,6 +63,8 @@
 
 			</p:tabView>
 		</div>
+		
+		 <p:growl id="growl" showDetail="true" sticky="true" />  
 	</div>
 
 	<div class="ui-g-1"></div>
@@ -74,8 +76,6 @@
    		
 	 <h:form id="form1">
 
-		
-	 
 	<div class="ui-g">
 
 		 <div class="ui-g-4">
@@ -88,7 +88,7 @@
    			 	
    			<h:messages id="errors" globalOnly="false" layout="table" errorStyle="color:red" infoStyle="color:red"/>
    			
-   			<p:inputText id="currentpass" value="#{userProfileview.currentpass}"
+   			<p:inputText id="currentpass" value="#{userProfileView.currentpass}"
    			required="true"
    			>
 
@@ -97,7 +97,7 @@
    			
    		
    				
-   			<p:inputText id="newpass" value="#{userProfileview.newpassword}"
+   			<p:inputText id="newpass" value="#{userProfileView.newpassword}"
    			required="true">
    
    			
@@ -106,7 +106,7 @@
    			
    			
    			
-   			<p:inputText id="repeatpass" value="#{userProfileview.repeatpassword}"
+   			<p:inputText id="repeatpass" value="#{userProfileView.repeatpassword}"
    			required="true"
    			
    			>
@@ -131,7 +131,7 @@
    		<div class="ui-g-1"></div>
    		
    		<div class="ui-g-1">
-   		<p:commandButton value="confirm"  ajax="false" action="#{userProfileview.changePass}" oncompleted="PF('dlg3').hide();" />
+   		<p:commandButton value="confirm"  ajax="false" action="#{userProfileView.changePass}" oncompleted="PF('dlg3').hide();" />
    		
    		</div>
    		
