@@ -1,11 +1,13 @@
 package colruyt.pcrsejb.service.dl.surveyDefinition.strategy;
 
 import java.io.Serializable;
+import java.util.EmptyStackException;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import colruyt.pcrsejb.entity.surveyDefinition.strategy.SurveySectionStrategy;
 
@@ -18,25 +20,36 @@ public class DbSurveySectionStrategyServiceDl implements Serializable, ISurveySe
 
 	@Override
 	public SurveySectionStrategy save(SurveySectionStrategy element) {
-		// TODO Auto-generated method stub
-		return null;
+		SurveySectionStrategy surveySectionStrategy = em.merge(element);
+		if (surveySectionStrategy == null) {
+			throw new EmptyStackException();
+		}
+		return surveySectionStrategy;
 	}
 
 	@Override
 	public SurveySectionStrategy get(SurveySectionStrategy element) {
-		// TODO Auto-generated method stub
-		return null;
+		SurveySectionStrategy surveySectionStrategy = em.find(SurveySectionStrategy.class, element.getId());
+		if (surveySectionStrategy == null) {
+			throw new EmptyStackException();
+		}
+		return surveySectionStrategy;
 	}
 
 	@Override
 	public List<SurveySectionStrategy> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		TypedQuery<SurveySectionStrategy> q = em.createQuery("SELECT s from SurveySectionStrategy s", SurveySectionStrategy.class);
+		List<SurveySectionStrategy> surveySectionStrategyList = q.getResultList();
+		return surveySectionStrategyList;
 	}
 
 	@Override
 	public void delete(SurveySectionStrategy element) {
-		// TODO Auto-generated method stub
+		SurveySectionStrategy surveySectionStrategy = em.find(SurveySectionStrategy.class, element);
+		if (surveySectionStrategy == null) {
+			throw new EmptyStackException();
+		}
+		em.remove(element);
 		
 	}
 	
