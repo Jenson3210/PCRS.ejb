@@ -23,14 +23,14 @@ public class SurveySectionDefinitionConverter implements GenericConverter<Survey
 			ConverterUtils.setIfNotNull(bo::getId, entity::setId);
 			ConverterUtils.setIfNotNull(bo::getAdministratorCreated, entity::setAdministratorCreated);
 			switch (bo.getSurveySectionRequirementLevel()) {
-			case Optional:
-				entity.setSurveySectionRequirementLevel(SurveySectionRequirementLevel.Optional);
+			case OPTIONAL:
+				entity.setSurveySectionRequirementLevel(SurveySectionRequirementLevel.OPTIONAL);
 				break;
-			case Expected:
-				entity.setSurveySectionRequirementLevel(SurveySectionRequirementLevel.Expected);
+			case EXPECTED:
+				entity.setSurveySectionRequirementLevel(SurveySectionRequirementLevel.EXPECTED);
 				break;
-			case Obligated:
-				entity.setSurveySectionRequirementLevel(SurveySectionRequirementLevel.Obligated);
+			case OBLIGATED:
+				entity.setSurveySectionRequirementLevel(SurveySectionRequirementLevel.OBLIGATED);
 				break;
 			}
 			entity.setSurveySectionTitle(surveySectionTitleConverter.convertToEntity(bo.getSurveySectionTitle()));
@@ -48,14 +48,14 @@ public class SurveySectionDefinitionConverter implements GenericConverter<Survey
 			ConverterUtils.setIfNotNull(entity::getId, bo::setId);
 			ConverterUtils.setIfNotNull(entity::getAdministratorCreated, bo::setAdministratorCreated);
 			switch (entity.getSurveySectionRequirementLevel()) {
-			case Optional:
-				bo.setSurveySectionRequirementLevel(SurveySectionRequirementLevelBo.Optional);
+			case OPTIONAL:
+				bo.setSurveySectionRequirementLevel(SurveySectionRequirementLevelBo.OPTIONAL);
 				break;
-			case Expected:
-				bo.setSurveySectionRequirementLevel(SurveySectionRequirementLevelBo.Expected);
+			case EXPECTED:
+				bo.setSurveySectionRequirementLevel(SurveySectionRequirementLevelBo.EXPECTED);
 				break;
-			case Obligated:
-				bo.setSurveySectionRequirementLevel(SurveySectionRequirementLevelBo.Obligated);
+			case OBLIGATED:
+				bo.setSurveySectionRequirementLevel(SurveySectionRequirementLevelBo.OBLIGATED);
 				break;
 			}
 			bo.setSurveySectionTitle(surveySectionTitleConverter.convertToBo(entity.getSurveySectionTitle()));

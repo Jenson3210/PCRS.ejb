@@ -19,6 +19,7 @@ public class UserBo extends AbstractBo implements Serializable {
     private String email;
     private String password="";
     private String country;
+    private String shortName;
     private Set<UserPrivilegeBo> privileges = new HashSet<>();
     /*
      * CONSTRUCTORS
@@ -26,7 +27,7 @@ public class UserBo extends AbstractBo implements Serializable {
     public UserBo() {
     	super();
     }
-	public UserBo(String firstName, String lastName, String email, String password, String country,
+	public UserBo(String firstName, String lastName, String email, String password, String country, String shortName,
 			Set<UserPrivilegeBo> privileges) {
 		super();
 		this.firstName = firstName;
@@ -34,10 +35,11 @@ public class UserBo extends AbstractBo implements Serializable {
 		this.email = email;
 		this.password = password;
 		this.country = country;
+		this.shortName = shortName;
 		this.privileges = privileges;
 	}
 	public UserBo(Integer id, String firstName, String lastName, String email, String password,
-			String country, Set<UserPrivilegeBo> privileges) {
+			String country, String shortName, Set<UserPrivilegeBo> privileges) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -45,6 +47,7 @@ public class UserBo extends AbstractBo implements Serializable {
 		this.email = email;
 		this.password = password;
 		this.country = country;
+		this.shortName = shortName;
 		this.privileges = privileges;
 	}
 	/*
@@ -85,6 +88,12 @@ public class UserBo extends AbstractBo implements Serializable {
 	}
 	public void setCountry(String country) {
 		this.country = country;
+	}
+	public String getShortName() {
+		return shortName;
+	}
+	public void setShortName(String shortName) {
+		this.shortName = shortName;
 	}
 	public Set<UserPrivilegeBo> getPrivileges() {
 		return privileges;

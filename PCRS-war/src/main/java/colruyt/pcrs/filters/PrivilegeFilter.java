@@ -16,6 +16,7 @@ import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 
+
 public abstract class PrivilegeFilter implements Filter {
 	
 	private PrivilegeTypeBo minimumPrivilege;
@@ -48,13 +49,12 @@ public abstract class PrivilegeFilter implements Filter {
 
 	@Override
 	public final void init(FilterConfig arg0) throws ServletException {
-		// TODO Auto-generated method stub
+
 		
 	}
 	
 	@Override
 	public final void destroy() {
-		// TODO Auto-generated method stub
 		
 	}
 	

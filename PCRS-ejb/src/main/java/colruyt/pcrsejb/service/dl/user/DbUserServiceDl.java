@@ -61,4 +61,11 @@ public class DbUserServiceDl implements Serializable, IUserServiceDl {
 		q.setParameter("email", email);
 		return (User) q.getSingleResult();
 	}
+
+	@Override
+	public List<User> getUsersByShortName(String shortName) {
+		Query q = em.createQuery("SELECT u from User u where UPPER(u.shortname) = UPPER(:shortname)");
+		q.setParameter("shortname", shortName);
+		return (List<User>) q.getResultList();
+	}
 }

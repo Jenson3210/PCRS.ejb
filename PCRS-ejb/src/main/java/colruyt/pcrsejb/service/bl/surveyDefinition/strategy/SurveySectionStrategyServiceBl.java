@@ -3,9 +3,11 @@ package colruyt.pcrsejb.service.bl.surveyDefinition.strategy;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import colruyt.pcrsejb.entity.surveyDefinition.strategy.SurveySectionStrategy;
+import colruyt.pcrsejb.service.dl.surveyDefinition.strategy.ISurveySectionStrategyServiceDL;
 
 @Stateless
 public class SurveySectionStrategyServiceBl implements Serializable, ISurveySectionStrategyServiceBl {
@@ -13,28 +15,27 @@ public class SurveySectionStrategyServiceBl implements Serializable, ISurveySect
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	@EJB
+	private ISurveySectionStrategyServiceDL surveySectionStrategyServiceDL;
 
 	@Override
 	public SurveySectionStrategy save(SurveySectionStrategy element) {
-		// TODO Auto-generated method stub
-		return null;
+		return surveySectionStrategyServiceDL.save(element);
 	}
 
 	@Override
 	public SurveySectionStrategy get(SurveySectionStrategy element) {
-		// TODO Auto-generated method stub
-		return null;
+		return surveySectionStrategyServiceDL.get(element);
 	}
 
 	@Override
 	public List<SurveySectionStrategy> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return surveySectionStrategyServiceDL.getAll();
 	}
 
 	@Override
 	public void delete(SurveySectionStrategy element) {
-		// TODO Auto-generated method stub
-		
+		surveySectionStrategyServiceDL.delete(element);	
 	}
 }

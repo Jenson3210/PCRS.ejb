@@ -36,7 +36,7 @@ public class LogonView implements Serializable {
 		if (userFacade.getAll().isEmpty()) {
 			Set<UserPrivilegeBo> privs = new HashSet<>();
 			privs.add(new UserPrivilegeBo(PrivilegeTypeBo.ADMINISTRATOR, true));
-			UserBo user = new UserBo("Root", "Woot", "Root.Woot@gmail.com", "RootWoot", "BE", privs);
+			UserBo user = new UserBo("Root", "Woot", "Root.Woot@gmail.com", "RootWoot", "BE", "RoWoo", privs);
 			userFacade.save(user);
 		}
 	}
