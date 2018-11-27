@@ -4,4 +4,6 @@ import colruyt.pcrsejb.entity.competence.CompetenceLevel;
 import colruyt.pcrsejb.service.dl.IDbService;
 
 public interface ICompetenceLevelServiceDl extends IDbService<CompetenceLevel> {
+
+	CompetenceLevel save(CompetenceLevel element);
 }

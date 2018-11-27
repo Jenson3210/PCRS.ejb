@@ -9,6 +9,7 @@ import javax.inject.Named;
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 
+
 @Named
 @SessionScoped
 public class WebUser implements Serializable{
