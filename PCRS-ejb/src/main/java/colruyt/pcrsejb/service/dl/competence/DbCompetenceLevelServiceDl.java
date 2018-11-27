@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.EmptyStackException;
 import java.util.List;
 
-public class DbCompetenceServiceDl implements ICompetenceLevelServiceDl, Serializable {
+public class DbCompetenceLevelServiceDl implements ICompetenceLevelServiceDl, Serializable {
     private static final long serialVersionUID = 1L;
 
     @PersistenceContext(unitName = "PCRSEJB")

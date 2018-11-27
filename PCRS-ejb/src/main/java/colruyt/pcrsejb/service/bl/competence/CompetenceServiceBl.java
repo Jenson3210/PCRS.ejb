@@ -7,6 +7,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import colruyt.pcrsejb.bo.competence.CompetenceBo;
+import colruyt.pcrsejb.entity.competence.Competence;
 import colruyt.pcrsejb.service.dl.competence.ICompetenceServiceDl;
 
 @Stateless
@@ -16,29 +17,26 @@ public class CompetenceServiceBl implements Serializable, ICompetenceServiceBl {
 	 */
 	private static final long serialVersionUID = 1L;
 	@EJB
-	private ICompetenceServiceDl ICompetenceServicDl;
+	private ICompetenceServiceDl competencedb;
 
 	@Override
-	public CompetenceBo save(CompetenceBo element) {
-		// TODO Auto-generated method stub
-		return null;
+	public Competence save(Competence element) {
+		return competencedb.save(element);
 	}
 
 	@Override
-	public CompetenceBo get(CompetenceBo element) {
-		// TODO Auto-generated method stub
-		return null;
+	public Competence get(Competence element) {
+		return competencedb.get(element);
 	}
 
 	@Override
-	public List<CompetenceBo> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Competence> getAll() {
+		return competencedb.getAll();
 	}
 
 	@Override
-	public void delete(CompetenceBo element) {
-		// TODO Auto-generated method stub
+	public void delete(Competence element) {
+		competencedb.delete(element);
 		
 	}
 }

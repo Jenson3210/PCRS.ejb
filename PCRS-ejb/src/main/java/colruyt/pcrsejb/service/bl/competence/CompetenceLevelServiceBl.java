@@ -25,19 +25,17 @@ public class CompetenceLevelServiceBl implements Serializable, ICompetenceLevelS
 
 	@Override
 	public CompetenceLevel get(CompetenceLevel element) {
-		// TODO Auto-generated method stub
-		return null;
+		return competencelevelDb.get(element);
 	}
 
 	@Override
 	public List<CompetenceLevel> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return competencelevelDb.getAll();
 	}
 
 	@Override
 	public void delete(CompetenceLevel element) {
-		// TODO Auto-generated method stub
+		competencelevelDb.delete(element);
 		
 	}
 }
