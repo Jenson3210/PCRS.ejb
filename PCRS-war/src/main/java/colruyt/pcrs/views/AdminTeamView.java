@@ -13,6 +13,7 @@ import javax.inject.Named;
 
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
+import colruyt.pcrsejb.bo.user.privilege.TeamMemberUserPrivilegeBo;
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.bo.user.team.EnrolmentBo;
 import colruyt.pcrsejb.bo.user.team.TeamBo;
@@ -98,6 +99,10 @@ public class AdminTeamView implements Serializable {
     	teams.add(teamFacade.save(manipulatedTeamBo));
     }
     
+    public void newEnrolment() {
+    	manipulatedEnrolmentBo = new EnrolmentBo();
+    }
+    
     public void deleteEnrolment() {
     	EnrolmentBo e = null;
     	for(TeamBo team : teams) {
@@ -113,11 +118,26 @@ public class AdminTeamView implements Serializable {
     }
     
     public void addEnrolment() {
+    	UserPrivilegeBo privilege;
+    	EnrolmentBo enrolment = new EnrolmentBo();
     	
-    	System.out.println(user.getFirstName());
-    	System.out.println(manipulatedTeamBo.getName());
-    	System.out.println(userPrivilege);
+    	if(PrivilegeTypeBo.TEAMMEMBER.getShortName().equals(userPrivilege)) {
+    		privilege = new TeamMemberUserPrivilegeBo();
+    		privilege.setPrivilegeType(PrivilegeTypeBo.TEAMMEMBER);
+    	}else {
+    		privilege = new UserPrivilegeBo();
+    		privilege.setPrivilegeType(PrivilegeTypeBo.TEAMMANAGER);
+    	}
     	
+		privilege.setActive(true);
+		
+    	enrolment.setUser(user);
+    	enrolment.setUserPrivilege(privilege);
+    	enrolment.setActive(true);
+    	
+    	manipulatedTeamBo.getEnrolments().add(enrolment);
+    	teamFacade.save(manipulatedTeamBo);
+
     }
     
 	

@@ -2,6 +2,7 @@ package colruyt.pcrsejb.entity.user.team;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,7 +30,7 @@ public class Enrolment extends AbstractEntity implements Serializable {
     private Integer id;
     @ManyToOne
     private User user;
-    @ManyToOne
+    @ManyToOne(cascade= {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.PERSIST})
     private UserPrivilege userPrivilege;
     private Boolean active;
     /*
