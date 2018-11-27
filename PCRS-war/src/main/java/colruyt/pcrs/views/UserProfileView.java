@@ -2,6 +2,7 @@ package colruyt.pcrs.views;
 
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -11,34 +12,30 @@ import javax.inject.Named;
 
 import colruyt.pcrs.utillibs.WebUser;
 import colruyt.pcrsejb.bo.user.UserBo;
+import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.facade.user.IUserFacade;
 import colruyt.pcrsejb.facade.user.team.ITeamFacade;
+import colruyt.pcrsejb.util.exceptions.UserIsNotMemberOfTeamException;
 
 @Named
 @SessionScoped
-public class ProfileView implements Serializable{
-
-	/**
-	 * 
-	 */
+public class UserProfileView implements Serializable{
 	
 	private String newpassword, repeatpassword, currentpass;
 
 	@EJB
-	private IUserFacade userfac;
+	private IUserFacade userfac; 
 	@EJB
 	private ITeamFacade teamFacade;
 	
 	@Inject
 	private WebUser webuser;
-
-	
 	
 	private static final long serialVersionUID = 1L;
 
 	public String getTeamLeaderNaam() {
 		try {
-		  return this.teamFacade.getManager()
+		  return this.teamFacade.getManagerForUser(webuser.getUser()).getFirstName();
 		}
 		catch(Exception e) {
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -71,20 +68,16 @@ public class ProfileView implements Serializable{
 		this.currentpass = currentpass;
 	}
 
-	
-
-
 
 	public String getTeamnaam(){
 		try {
-		return this.teamFacade.getTeam(this.getUser()).getName(); 
-		}
-		catch(UserIsNotMemberOfTeamException e) {
-			
+			return this.teamFacade.getTeamForUser(this.getUser()).getName();
+		} catch (UserIsNotMemberOfTeamException e) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			return  context.getApplication().evaluateExpressionGet(context, "#{msgs['error.noteam']}",
 					String.class);
 		}
+		
 	}
 
 	public UserBo getUser() {

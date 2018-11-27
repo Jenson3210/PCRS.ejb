@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div class="ui-g">
+		<div class="ui-g-1"/>
+		<div class="ui-g-10">
+			<h:form id="form">
+				<p:dataTable var="competence" value="#{adminCompetenceView.competences}">
+					<f:facet name="header"><h:outputText value="#{msgs['competence.title']}"/></f:facet>
+					<p:column headerText="#{msgs['competence.name']}">
+						<h:outputText value="#{competence.name}" />
+					</p:column>
+					<p:column headerText="#{msgs['edit']}" style="width:65px; text-align: center">
+						<p:commandLink update=":editForm:editUserDetail" id="edit" oncomplete="PF('editCompetenceDialog').show()">
+							<i class="fas fa-pencil-alt"></i>
+     						<f:setPropertyActionListener value="#{competence}"
+								target="#{competenceView.addedCompetence}" /> 
+     					</p:commandLink>
+					</p:column>
+					<p:column headerText="#{msgs['delete']}"
+						style="width:65px; text-align: center">
+						<p:commandLink id="delete" oncomplete="PF('deleteCompetenceDialog').show()">
+							<i class="fas fa-trash-alt"></i>
+     						<f:setPropertyActionListener value="#{competence}"
+								target="#{competenceView.addedCompetence}" /> 
+     					</p:commandLink>
+					</p:column>
+				</p:dataTable>
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<p:commandButton value="#{msgs['competence.add']}"
+							action="#{competenceView.newUser}" styleClass="ui-priority-primary"
+							process="@this" update=":addForm:addCompetenceDetail"
+							oncomplete="PF('addCompetenceDialog').show();" />
+					</div>
+				</div>
+			</h:form>
+			<h:form id="addForm">
+				<div class="ui-g" id="addCompetenceForm">
+					<p:dialog id="addcompetenceFormTitle" header="#{msgs['competence.add']}"
+						widgetVar="addCompetenceDialog" modal="true">
+						<p:outputPanel id="addCompetenceDetail">
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['competence.name']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:inputText id="fn" value="#{competenceView.addedCompetence.name}" />
+								</div>
+							</div>
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['competence.description']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:inputText id="ln" value="#{competenceView.addedCompetence.description}" />
+								</div>
+							</div>
+							<div class="ui-g-2">
+								<p:commandButton value="#{msgs['competence.add']}" update=":form"
+									action="#{competenceView.addUser}"
+									oncomplete="PF('addCompetenceDialog').hide();" />
+							</div>
+						</p:outputPanel>
+					</p:dialog>
+				</div>
+			</h:form>
+			<h:form id="editForm">
+				<div class="ui-g" id="editCompetenceForm">
+					<p:dialog id="editCompetenceFormTitle" header="#{msgs['competence.edit']}"
+						widgetVar="editCompetenceDialog" modal="true">
+						<p:outputPanel id="editCompetenceDetail">
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['competence.name']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:inputText id="fn" value="#{competenceView.addedCompetence.name}" />
+								</div>
+							</div>
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['competence.description']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:inputText id="ln" value="#{competenceView.addedCompetence.description}" />
+								</div>
+							</div>
+							<div class="ui-g-2">
+								<p:commandButton value="#{msgs['competence.edit']}" update=":form"
+									action="#{competenceView.editCompetence}"
+									oncomplete="PF('editCompetenceDialog').hide();" />
+							</div>
+						</p:outputPanel>
+					</p:dialog>
+				</div>
+			</h:form>
+			<h:form id="deleteForm">
+				<div class="ui-g" id="deleteCompetenceForm">
+					<p:dialog id="deleteCompetenceFormTitle" header="#{msgs['competence.delete']}"
+						widgetVar="deleteCompetenceDialog" modal="true">
+						<f:facet name="header">
+							<h:outputText value="#{msgs['competence.delete']}" />
+						</f:facet>
+						<f:facet name="controls">
+							<h:outputLink value="#"
+								onclick="PF('deleteCompetenceFormTitle').hide(); return false;">X</h:outputLink>
+						</f:facet>
+						<p>
+							<h:outputText
+								value="#{msgs['competence.deleteConfirmMessage']}" />
+						</p>
+						<br></br>
+						<br></br>
+						<div align="right">
+							<p:commandButton styleClass="btn btn-link" value="#{msgs['button.no']}"
+								onclick="PF('deleteCompetenceDialog').hide()" />
+							<p:commandButton styleClass="btn btn-primary" update=":form"
+								value="#{msgs['button.yes']}" action="#{competenceView.deleteCompetence}"
+								oncomplete="PF('deleteCompetenceDialog').hide();" />
+						</div>
+					</p:dialog>
+
+				</div>
+			</h:form>
+		</div>
+		<div class="ui-g-1"></div>
+	</div>
+</ui:composition>

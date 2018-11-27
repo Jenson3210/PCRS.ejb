@@ -35,6 +35,7 @@ public class UserServiceBl implements IUserServiceBl {
 	public User get(User user) {
 		return usersDb.get(user);
 	}
+	
 
 	public Boolean hasPrivilege(User user, PrivilegeType privilegeType, Boolean active) {
 		Boolean hasPrivilege = false;
