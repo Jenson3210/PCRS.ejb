@@ -42,7 +42,7 @@ public class User extends AbstractEntity implements Serializable {
     private String country;
     @Column(name="SHORTNAME")
     private String shortName;
-    @OneToMany(cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(cascade= {CascadeType.REMOVE, CascadeType.PERSIST})
     @JoinColumn(name="USER_ID")
     private Set<UserPrivilege> privileges = new HashSet<>();
     /*
