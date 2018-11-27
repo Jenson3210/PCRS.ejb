@@ -6,46 +6,46 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import colruyt.pcrsejb.bo.surveyDefinition.strategy.SurveySectionStrategyBo;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionBo;
-import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionTitleBo;
 import colruyt.pcrsejb.converter.surveyDefinition.survey.SurveySectionDefinitionConverter;
-import colruyt.pcrsejb.converter.surveyDefinition.survey.SurveySectionTitleConverter;
-import colruyt.pcrsejb.entity.surveyDefinition.strategy.SurveySectionStrategy;
-import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionRequirementLevel;
-import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionTitle;
 import colruyt.pcrsejb.service.bl.surveyDefinition.survey.ISurveySectionDefinitionServiceBl;
 
 @Stateless
-public class SurveySectionDefinitionFacade implements Serializable, ISurveySectionDefinitionFacade {
-
+public class SurveySectionDefinitionFacade implements Serializable,ISurveySectionDefinition {
+	/** 
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 	
 	@EJB
-	private ISurveySectionDefinitionServiceBl surveySectionDefinitionServiceBl;
+	private ISurveySectionDefinitionServiceBl sdserv;
 	
-	private SurveySectionDefinitionConverter surveySectionDefinitionConverter = new SurveySectionDefinitionConverter();
+	private SurveySectionDefinitionConverter sdconv;
+	
 
 	@Override
 	public SurveySectionDefinitionBo save(SurveySectionDefinitionBo entityBo) {
-		return surveySectionDefinitionConverter.convertToBo(
-				surveySectionDefinitionServiceBl.save(surveySectionDefinitionConverter.convertToEntity(entityBo)));
+
+		return sdconv.convertToBo(sdserv.save(sdconv.convertToEntity(entityBo)));
 	}
 
 	@Override
 	public SurveySectionDefinitionBo get(SurveySectionDefinitionBo entityBo) {
-		return surveySectionDefinitionConverter.convertToBo(
-				surveySectionDefinitionServiceBl.get(surveySectionDefinitionConverter.convertToEntity(entityBo)));
+		return sdconv.convertToBo(this.sdserv.get(sdconv.convertToEntity(entityBo)));
 	}
 
 	@Override
 	public List<SurveySectionDefinitionBo> getAll() {
-		return surveySectionDefinitionConverter.convertToBos(surveySectionDefinitionServiceBl.getAll());
+	return sdconv.convertToBos(this.sdserv.getAll());
 	}
 
 	@Override
 	public void delete(SurveySectionDefinitionBo entityBo) {
-		surveySectionDefinitionServiceBl.delete(surveySectionDefinitionConverter.convertToEntity(entityBo));	
+		this.sdserv.delete(this.sdconv.convertToEntity(entityBo));
+		
 	}
+	
+
+	
 	
 }

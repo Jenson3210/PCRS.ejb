@@ -57,5 +57,10 @@ public class TeamFacade implements Serializable, ITeamFacade {
 	public TeamBo getTeamForUser(UserBo user) throws UserIsNotMemberOfTeamException{
 		return this.teamConv.convertToBo(this.teamBl.getTeamForUser(this.userConv.convertToEntity(user)));
 	}
+
+	@Override
+	public List<TeamBo> getTeamsOfManager(UserBo manager) {
+		return this.teamConv.convertToBos(this.teamBl.getTeamsOfManager(manager));
+	}
 	
 }

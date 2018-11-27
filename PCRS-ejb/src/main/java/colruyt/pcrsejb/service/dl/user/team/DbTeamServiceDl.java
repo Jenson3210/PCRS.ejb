@@ -8,8 +8,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.privilege.PrivilegeType;
 import colruyt.pcrsejb.entity.user.team.Team;
@@ -72,6 +74,15 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 			throw new IllegalArgumentException("User mag maar in 1 team zitten");
 		}
 		
+	}
+
+	@Override
+	public List<Team> getTeamsOfManager(UserBo manager) {
+		Query q = em.createQuery("select t from Team t, Enrolment e, UserPrivilege up where up.privilegeType = :privilegeType and e.user.id = :teamManager");
+		q.setParameter("privilegeType", PrivilegeType.TEAMMANAGER);
+		q.setParameter("teamManager", manager.getId());
+		
+		return (List<Team>)q.getResultList();
 	}
 
 }

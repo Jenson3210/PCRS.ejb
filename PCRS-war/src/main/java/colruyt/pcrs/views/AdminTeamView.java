@@ -43,19 +43,13 @@ public class AdminTeamView implements Serializable {
         teams = teamFacade.getAll();
     }
 
-
-    public void editEnrolment() {
-        enrolmentFacade.save(manipulatedEnrolmentBo);
-    }
-
-
     public List<TeamBo> getTeams() {
         return teams;
     }
 
-    public void setTeams(List<TeamBo> teams) {
+    public void setTeams(List<TeamBo> teams) { 
         this.teams = teams;
-    }
+    } 
 
     public EnrolmentBo getManipulatedEnrolmentBo() {
         return manipulatedEnrolmentBo;
@@ -73,7 +67,6 @@ public class AdminTeamView implements Serializable {
         this.manipulatedTeamBo = manipulatedTeamBo;
     }
     
-
 	public UserBo getUser() {
 		return user;
 	}
@@ -90,7 +83,6 @@ public class AdminTeamView implements Serializable {
 		this.userPrivilege = userPrivilege;
 	}
 
-
 	public void newTeam() {
         manipulatedTeamBo = new TeamBo(); 
     }
@@ -104,6 +96,7 @@ public class AdminTeamView implements Serializable {
     }
     
     public void deleteEnrolment() {
+    	System.out.println(manipulatedEnrolmentBo.getUser().getFirstName());
     	EnrolmentBo e = null;
     	for(TeamBo team : teams) {
         	for (EnrolmentBo enrolment : team.getEnrolments()) {
@@ -112,9 +105,8 @@ public class AdminTeamView implements Serializable {
         		}
         	}
         	team.getEnrolments().remove(e);
-        	
+        	enrolmentFacade.delete(e);
     	}
-    	enrolmentFacade.delete(manipulatedEnrolmentBo);
     }
     
     public void addEnrolment() {
@@ -131,13 +123,13 @@ public class AdminTeamView implements Serializable {
     	
 		privilege.setActive(true);
 		
-    	enrolment.setUser(user);
+    	enrolment.setUser(user); 
     	enrolment.setUserPrivilege(privilege);
     	enrolment.setActive(true);
     	
+    	manipulatedEnrolmentBo.setUser(user);
     	manipulatedTeamBo.getEnrolments().add(enrolment);
     	teamFacade.save(manipulatedTeamBo);
-
     }
     
 	
