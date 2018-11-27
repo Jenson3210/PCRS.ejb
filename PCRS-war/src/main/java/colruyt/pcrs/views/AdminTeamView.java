@@ -62,6 +62,7 @@ public class AdminTeamView implements Serializable {
     }
 
     public void setManipulatedEnrolmentBo(EnrolmentBo manipulatedEnrolmentBo) {
+    	newEnrolment();
         this.manipulatedEnrolmentBo = manipulatedEnrolmentBo;
     }
 
@@ -104,6 +105,9 @@ public class AdminTeamView implements Serializable {
     }
     
     public void deleteEnrolment() {
+    	System.out.println("----------------------------------");
+    	
+    	System.out.println(manipulatedEnrolmentBo.getUser().getFirstName());
     	EnrolmentBo e = null;
     	for(TeamBo team : teams) {
         	for (EnrolmentBo enrolment : team.getEnrolments()) {
@@ -114,6 +118,7 @@ public class AdminTeamView implements Serializable {
         	team.getEnrolments().remove(e);
         	
     	}
+
     	enrolmentFacade.delete(manipulatedEnrolmentBo);
     }
     

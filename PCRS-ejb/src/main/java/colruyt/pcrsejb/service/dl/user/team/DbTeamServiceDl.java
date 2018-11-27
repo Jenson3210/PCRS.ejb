@@ -6,8 +6,10 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.privilege.PrivilegeType;
 import colruyt.pcrsejb.entity.user.team.Enrolment;
@@ -69,6 +71,15 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 		}
 	
 		
+	}
+
+	@Override
+	public List<Team> getTeamsOfManager(UserBo manager) {
+		Query q = em.createQuery("select t from Team t, Enrolment e, UserPrivilege up where up.privilegeType = :privilegeType and e.user.id = :teamManager");
+		q.setParameter("privilegeType", PrivilegeType.TEAMMANAGER);
+		q.setParameter("teamManager", manager.getId());
+		
+		return (List<Team>)q.getResultList();
 	}
 
 }
