@@ -34,8 +34,9 @@ public class DbCompetenceLevelServiceDl implements ICompetenceLevelServiceDl, Se
 
     @Override
     public List<CompetenceLevel> getAll() {
-        TypedQuery<CompetenceLevel> q = em.createQuery("SELECT c from CompetenceLevel c", CompetenceLevel.class);
-        return q.getResultList();
+        TypedQuery<CompetenceLevel> q = em.createNamedQuery("COMPETENCELEVEL.GETALL", CompetenceLevel.class);
+        List<CompetenceLevel> listOfCompetenceLevels = q.getResultList();
+        return listOfCompetenceLevels;
     }
 
     @Override
