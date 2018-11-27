@@ -16,6 +16,7 @@ import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 
+
 public abstract class PrivilegeFilter implements Filter {
 	
 	private PrivilegeTypeBo minimumPrivilege;
