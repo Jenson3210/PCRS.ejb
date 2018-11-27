@@ -40,6 +40,8 @@ public class User extends AbstractEntity implements Serializable {
     private String password="";
     @Column(name="HOMECOUNTRY")
     private String country;
+    @Column(name="SHORTNAME")
+    private String shortName;
     @OneToMany(cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name="USER_ID")
     private Set<UserPrivilege> privileges = new HashSet<>();
@@ -50,7 +52,7 @@ public class User extends AbstractEntity implements Serializable {
     	super();
     }
 	public User(String firstName, String lastName, String email, String password, String country,
-			Set<UserPrivilege> privileges) {
+			Set<UserPrivilege> privileges, String shortName) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -58,9 +60,10 @@ public class User extends AbstractEntity implements Serializable {
 		this.password = password;
 		this.country = country;
 		this.privileges = privileges;
+		this.shortName = shortName;
 	}
 	public User(Integer id, String firstName, String lastName, String email, String password,
-			String country, Set<UserPrivilege> privileges) {
+			String country, Set<UserPrivilege> privileges, String shortName) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -69,6 +72,7 @@ public class User extends AbstractEntity implements Serializable {
 		this.password = password;
 		this.country = country;
 		this.privileges = privileges;
+		this.shortName = shortName;
 	}
 	/*
 	 * GETTERS AND SETTERS
@@ -108,6 +112,13 @@ public class User extends AbstractEntity implements Serializable {
 	}
 	public void setCountry(String country) {
 		this.country = country;
+	}
+	
+	public String getShortName() {
+		return shortName;
+	}
+	public void setShortName(String shortName) {
+		this.shortName = shortName;
 	}
 	public Set<UserPrivilege> getPrivileges() {
 		return privileges;

@@ -50,4 +50,6 @@ public class AdminCompetenceView implements Serializable{
 		competences.remove(c);
 		competenceFasade.delete(c);
 	}
+	
+	
 }
