@@ -13,34 +13,61 @@ import javax.inject.Named;
 import colruyt.pcrs.utillibs.WebUser;
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.entity.user.User;
+import colruyt.pcrsejb.facade.surveys.surveySet.ISurveySetFacade;
 import colruyt.pcrsejb.facade.user.IUserFacade;
 import colruyt.pcrsejb.facade.user.team.ITeamFacade;
 import colruyt.pcrsejb.util.exceptions.UserIsNotMemberOfTeamException;
 
 @Named
 @SessionScoped
-public class UserProfileView implements Serializable{
-	
+public class UserProfileView implements Serializable {
+
 	private String newpassword, repeatpassword, currentpass;
 
 	@EJB
-	private IUserFacade userfac; 
+	private IUserFacade userfac;
 	@EJB
-	private ITeamFacade teamFacade; 
-	
+	private ITeamFacade teamFacade;
+
+	@EJB
+	private ISurveySetFacade surveyFacade;
+
+	private boolean hasTeam = true;
+
+	@PostConstruct
+	public void init() {
+		this.setHasTeam(true);
+
+	}
+
+	public boolean isHasTeam() {
+		return hasTeam;
+	}
+
+	public void setHasTeam(boolean hasTeam) {
+		this.hasTeam = hasTeam;
+	}
+
+	public ISurveySetFacade getSurveyFacade() {
+		return surveyFacade;
+	}
+
+	public void setSurveyFacade(ISurveySetFacade surveyFacade) {
+		this.surveyFacade = surveyFacade;
+	}
+
 	@Inject
 	private WebUser webuser;
-	
+
 	private static final long serialVersionUID = 1L;
 
 	public String getTeamLeaderNaam() {
 		try {
-		  return this.teamFacade.getManagerForUser(webuser.getUser()).getFirstName();
-		}
-		catch(Exception e) {
+			return this.teamFacade.getManagerForUser(webuser.getUser()).getFirstName();
+		} catch (Exception e) {
 			FacesContext context = FacesContext.getCurrentInstance();
-			return  context.getApplication().evaluateExpressionGet(context, "#{msgs['error.noteam']}",
-					String.class);
+			return context.getApplication().evaluateExpressionGet(context, "#{msgs['error.noteam']}", String.class);
+
 		}
 	}
 
@@ -68,16 +95,16 @@ public class UserProfileView implements Serializable{
 		this.currentpass = currentpass;
 	}
 
-
-	public String getTeamnaam(){
+	public String getTeamnaam() {
 		try {
 			return this.teamFacade.getTeamForUser(this.getUser()).getName();
 		} catch (UserIsNotMemberOfTeamException e) {
 			FacesContext context = FacesContext.getCurrentInstance();
-			return  context.getApplication().evaluateExpressionGet(context, "#{msgs['error.noteam']}",
-					String.class);
+			this.setHasTeam(false);
+			return context.getApplication().evaluateExpressionGet(context, "#{msgs['error.noteam']}", String.class);
+
 		}
-		
+
 	}
 
 	public UserBo getUser() {
@@ -88,65 +115,78 @@ public class UserProfileView implements Serializable{
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.getExternalContext().getSessionMap().put("user", user);
 	}
-	
-
 
 	public void changePass() {
 
+		FacesContext context = FacesContext.getCurrentInstance();
 		if (this.isCurrentPassword() && this.isSamePassword()) {
 
-			this.getUser().setPassword(newpassword);	
+			this.getUser().setPassword(newpassword);
 
 			this.setUser(userfac.save(this.getUser()));
-			
-			FacesContext context = FacesContext.getCurrentInstance();
-			String message = context.getApplication().evaluateExpressionGet(context, "#{msgs['error.passmissmatch']}",
-					String.class);
-			FacesMessage myFacesMessage = new FacesMessage(message);
 
-			context.addMessage("Succes!!", myFacesMessage);
+			String message = context.getApplication().evaluateExpressionGet(context, "#{msgs['succes.changepass']}",
+					String.class);
+			String title = context.getApplication().evaluateExpressionGet(context, "#{msgs['succes.changepass.title']}",
+					String.class);
+			FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, title, message);
+
+			context.addMessage(null, myFacesMessage);
 		}
 	}
 
 	public boolean isSamePassword() {
-		if (!this.newpassword.equals(this.repeatpassword)) {
+		if (this.newpassword.isEmpty() || this.repeatpassword.isEmpty()) {
 
 			FacesContext context = FacesContext.getCurrentInstance();
-			String message = context.getApplication().evaluateExpressionGet(context, "#{msgs['error.passmissmatch']}",
+			String message = context.getApplication().evaluateExpressionGet(context, "#{msgs['error.required']}",
 					String.class);
-			FacesMessage myFacesMessage = new FacesMessage(message);
+			FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "", message);
 
 			context.addMessage(null, myFacesMessage);
-			context.validationFailed();
-			return  false;
-		}
-		else {
-			return true;
-		}
-	}
-	
-	public boolean isCurrentPassword() {
-		if(!this.currentpass.equals(this.getUser().getPassword())) {
-			   FacesContext context = FacesContext.getCurrentInstance();
-			   String message = context.getApplication().evaluateExpressionGet(context, "#{msgs['error.wrongpassword']}", String.class);
-			   FacesMessage myFacesMessage = new FacesMessage(message);
-			   context.addMessage(null,myFacesMessage);
-
-			   context.validationFailed();
-
-
 			return false;
 		} else {
 
-			return true;
+			if (!this.newpassword.equals(this.repeatpassword)) {
+
+				FacesContext context = FacesContext.getCurrentInstance();
+				String message = context.getApplication().evaluateExpressionGet(context,
+						"#{msgs['error.passmissmatch']}", String.class);
+				FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "", message);
+
+				context.addMessage(null, myFacesMessage);
+
+				return false;
+			} else {
+				return true;
+			}
 		}
 	}
 
-	
-	
-	
-	
-	
-	
-	
+	public boolean isCurrentPassword() {
+
+		if (this.currentpass.isEmpty()) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			String message = context.getApplication().evaluateExpressionGet(context, "#{msgs['error.required']}",
+					String.class);
+			FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "", message);
+			context.addMessage(null, myFacesMessage);
+			return false;
+		} else {
+
+			if (!this.currentpass.equals(this.getUser().getPassword())) {
+				FacesContext context = FacesContext.getCurrentInstance();
+				String message = context.getApplication().evaluateExpressionGet(context,
+						"#{msgs['error.wrongpassword']}", String.class);
+				FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "", message);
+				context.addMessage(null, myFacesMessage);
+
+				return false;
+			} else {
+
+				return true;
+			}
+		}
+	}
+
 }

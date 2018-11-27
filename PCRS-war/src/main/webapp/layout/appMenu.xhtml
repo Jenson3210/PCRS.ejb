@@ -35,7 +35,7 @@
 			</h:panelGroup>
 			<h:panelGroup rendered="#{webUser.hasPrivilege('Team manager')}">
 				<li class="#{view.viewId.contains('myteam') ? 'c-active' : ''}">
-					<h:link value="#{msgs['menu.myteam']}" outcome="/teammanager/myteam.xhtml" />
+					<h:link value="#{msgs['menu.myteam']}" outcome="/teammanager/teamManagerTeam.xhtml" />
 				</li>
 			</h:panelGroup>
 			<h:panelGroup rendered="#{webUser.hasPrivilege('Director')}">
@@ -88,12 +88,13 @@
 					<div>#{msgs['menu.dbadmin']}</div>
 					<ul>
 						<li
-							class="#{request.getParameter('target') == 'users' ? 'c-active' : ''}">
-							<h:link value="#{msgs['menu.users']}" outcome="/admin/adminUser.xhtml" />
+							class="#{request.getParameter('target') == 'competences' ? 'c-active' : ''}">
+							<h:link value="#{msgs['menu.competences']}"
+									outcome="/admin/adminCompetence.xhtml" />
 						</li>
 						<li
-							class="#{request.getParameter('target') == 'teamsOfManager' ? 'c-active' : ''}">
-							<h:link value="#{msgs['menu.teamsOfManager']}" outcome="/admin/adminTeam.xhtml" />
+							class="#{request.getParameter('target') == 'adminstrategy' ? 'c-active' : ''}">
+							<h:link value="#{msgs['menu.adminStrategy']}" outcome="/admin/adminStrategy.xhtml" />
 						</li>
 						<li
 							class="#{request.getParameter('target') == 'surveyDefinitionresponsibles' ? 'c-active' : ''}">
@@ -101,13 +102,16 @@
 								outcome="/admin/surveyDefinition.xhtml" />
 						</li>
 						<li
-							class="#{request.getParameter('target') == 'competences' ? 'c-active' : ''}">
-							<h:link value="#{msgs['menu.competences']}"
-								outcome="/admin/competence.xhtml" />
+							class="#{request.getParameter('target') == 'teamsOfManager' ? 'c-active' : ''}">
+							<h:link value="#{msgs['menu.teamsOfManager']}" outcome="/admin/adminTeam.xhtml" />
 						</li>
 						<li
 							class="#{request.getParameter('target') == 'surveysectiontitle' ? 'c-active' : ''}">
 							<h:link value="#{msgs['menu.adminSurveySectionTitle']}" outcome="/admin/adminSurveySectionTitleView.xhtml" />
+						</li>
+						<li
+							class="#{request.getParameter('target') == 'users' ? 'c-active' : ''}">
+							<h:link value="#{msgs['menu.users']}" outcome="/admin/adminUser.xhtml" />
 						</li>
 					</ul>
 				</li>
