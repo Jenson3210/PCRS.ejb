@@ -1,7 +1,9 @@
 package colruyt.pcrs.views;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
@@ -10,6 +12,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import colruyt.pcrsejb.bo.user.UserBo;
+import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
+import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.bo.user.team.EnrolmentBo;
 import colruyt.pcrsejb.bo.user.team.TeamBo;
 import colruyt.pcrsejb.facade.user.IUserFacade;
@@ -96,6 +100,10 @@ public class AdminTeamView implements Serializable {
         	
     	}
     	enrolmentFacade.delete(manipulatedEnrolmentBo);
+    }
+    
+    public void addEnrolment() {
+    	System.out.println(user.getFirstName());
     }
     
 	

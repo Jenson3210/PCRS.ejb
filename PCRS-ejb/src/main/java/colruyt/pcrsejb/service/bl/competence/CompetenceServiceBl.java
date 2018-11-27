@@ -11,7 +11,7 @@ import colruyt.pcrsejb.entity.competence.Competence;
 import colruyt.pcrsejb.service.dl.competence.ICompetenceServiceDl;
 
 @Stateless
-public class CompetenceServiceBl implements Serializable, ICompetenceServiceBl {
+public class CompetenceServiceBl implements Serializable, ICompetenceServiceDl {
 	/**
 	 * 
 	 */
@@ -21,7 +21,8 @@ public class CompetenceServiceBl implements Serializable, ICompetenceServiceBl {
 
 	@Override
 	public Competence save(Competence element) {
-		return competencedb.save(element);
+		competencedb.save(element);
+		return element;
 	}
 
 	@Override
