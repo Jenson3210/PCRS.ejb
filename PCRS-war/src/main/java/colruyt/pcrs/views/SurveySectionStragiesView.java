@@ -21,13 +21,6 @@ public class SurveySectionStragiesView implements Serializable {
 	private SurveySectionStrategyBo surveySectionStrategyBo;
 	private List<SurveySectionStrategyBo> strategies;
 	
-	
-	public ISurveySectionStrategyFacade getSurveySectionStrategyFacade() {
-		return surveySectionStrategyFacade;
-	}
-	public void setSurveySectionStrategyFacade(ISurveySectionStrategyFacade surveySectionStrategyFacade) {
-		this.surveySectionStrategyFacade = surveySectionStrategyFacade;
-	}
 	public SurveySectionStrategyBo getSurveySectionStrategyBo() {
 		return surveySectionStrategyBo;
 	}
