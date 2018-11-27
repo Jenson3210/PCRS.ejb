@@ -6,81 +6,58 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-
-	
 	<div class="ui-g">
-	
-	<div class="ui-g-1"></div>
-	
-	
-	<div class="ui-g-10">
-	<div class="ui-g">
-	<!--  Kruisje .?? -->
+		<div class="ui-g-1"/>
+		<div class="ui-g-10">
+			<div class="ui-g">
+				<h2>#{msgs['title.changepass']}</h2>
+			</div>
+			<h:form>
+				<div class="ui-g">
+					<div class="ui-g-4">
+						<p>#{msgs['profile.currentpass']}</p>
+					</div>
+					<div class="ui-g-8">
+						<p:inputText id="currentpass" value="#{userProfileview.currentpass}" 
+							required="true" validator="#{userProfileview.isCurrentPassword}">
+							<f:validateLength maximum="14" />
+						</p:inputText>
+					</div>
+				</div>
+				<div class="ui-g">
+					<div class="ui-g-4">
+						<p>#{msgs['profile.newpass']}</p>
+					</div>
+					<div class="ui-g-8">
+						<p:inputText id="newpass" value="#{userprofileview.newpass}"
+							required="true" validator="#{userProfileview.isSamePassword}">
+							<f:validateLength maximum="14" />
+						</p:inputText>
+					</div>
+				</div>
+				<div class="ui-g">
+					<div class="ui-g-4">
+						<p>#{msgs['profile.repeatnewpass']}</p>
+					</div>
+					<div class="ui-g-8">
+						<p:inputText id="repeatpass" value="#{userProfileview.repeatpass}"
+							required="true" validator="#{userProfileview.isSamePassword}">
+							<f:validateLength maximum="14" />
+						</p:inputText>
+					</div>
+				</div>
+				<div class="ui-g">
+					<div class="ui-g-4"/>
+					<div class="ui-g-4">
+						<p:commandButton value="cancel" />
+					</div>
+					<div class="ui-g-4">
+						<p:commandButton value="confirm" ajax="true"
+							action="#{userProfileviewchangePass}" />
+					</div>
+				</div>
+			</h:form>
+		</div>
 	</div>
-	
-	<div class="ui-g">
-	<h2>#{msgs['title.changepass']}</h2>
-	</div>
-	
-	 <h:form>
-	<div class="ui-g">
-
-		 <div class="ui-g-4">
-   			 <p>#{msgs['profile.currentpass']}</p>
-   			 <p>#{msgs['profile.newpass']}</p>
-   			 <p>#{msgs['profile.repeatnewpass']}</p>
-   			 
-   			 </div>
-   		<div class="ui-g-6">
-   			 	
-   			
-   			<p:inputText id="currentpass" value="#{userProfileview.currentpass}"
-   			required="true"
-   			validator="#{userProfileview.isCurrentPassword}"
-   			>
-   			<f:validateLength maximum="14" />
-   			</p:inputText>
-   			<p:inputText id="newpass" value="#{userprofileview.newpass}"
-   			required="true"
-   			validator="#{userProfileview.isSamePassword}"
-   			>
-   			<f:validateLength maximum="14" />
-   			</p:inputText>
-   			<p:inputText id="repeatpass" value="#{userProfileview.repeatpass}"
-   			required="true"
-   			
-   			validator="#{userProfileview.isSamePassword}"
-   			>
-   			<f:validateLength maximum="14" />
-   			</p:inputText>
-   			
-   			
-   			 
-   		</div>
-   	
-   	</div>
-   		
-   		<div class="ui-g">
-   		
-   		<p:commandButton value="cancel" />
-   		<p:commandButton value="confirm"  ajax="true" action="#{userProfileviewchangePass}" />
-   		
-   		</div>
-   		
-   	</h:form>
-
-			
-		
-	</div>
-	
-	
-	
-	
-	</div>
-	
-	<div class="ui-g-1">
-	
-	</div>
-	
-
+	<div class="ui-g-1"/>
 </ui:composition>
