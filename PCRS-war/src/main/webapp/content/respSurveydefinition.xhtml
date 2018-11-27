@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div class="ui-g-1"></div>
+
+	<div class="ui-g-10">
+		
+		<h:form id="form">
+				<p:dataTable var="surveyDefinition" value="#{respSurveyDefinition.surveyDefinitionList}">
+					 <f:facet name="header">
+						<h:outputText value="#{msgs['surveyDefinition.title']}" />
+					</f:facet>
+					
+					<p:column headerText="#{msgs['surveyDefinition.title']}">
+						<h:outputText value="#{surveyDefinition.name}" />
+					</p:column>
+					
+					<p:column headerText="#{msgs['surveyDefinition.responsible']}">
+						<h:outputText value="#{surveyDefinition.responsibleUser.firstName} #{surveyDefinition.responsibleUser.lastName}" />
+					</p:column>
+					
+					<!-- <p:column headerText="#{msgs['edit']}"
+						style="width:65px; text-align: center">
+						<p:commandLink update=":editForm:editSurveyDefinition" id="edit"
+							oncomplete="PF('editSurveyDefinitionDialog').show()">
+							<i class="fas fa-pencil-alt"></i>
+							<f:setPropertyActionListener value="#{surveyDefinition}"
+								target="#{adminSurveyDefinitionView.addedSurveyDefinitionBo}" />
+						</p:commandLink>
+					</p:column>
+					
+					<p:column headerText="#{msgs['delete']}"
+						style="width:65px; text-align: center">
+						<p:commandLink id="delete" oncomplete="PF('deleteSurveyDefinitionDialog').show()">
+							<i class="fas fa-trash-alt"></i>
+							<f:setPropertyActionListener value="#{surveyDefinition}"
+								target="#{adminSurveyDefinitionView.addedSurveyDefinitionBo}" />
+						</p:commandLink>
+					</p:column> -->
+				</p:dataTable>
+				<!-- <div class="ui-g">
+					<div class="ui-g-12">
+						<p:commandButton value="#{msgs['surveyDefinition.add']}"
+							action="#{adminSurveyDefinitionView.newSurveyDefinition}" styleClass="ui-priority-primary"
+							process="@this" update=":addForm:addSurveyDefinition"
+							oncomplete="PF('addSurveyDefinitionDialog').show();" />
+					</div>
+				</div> -->
+			</h:form>
+			
+	</div>
+	
+	<div class="ui-g-1"></div>
+
+</ui:composition>

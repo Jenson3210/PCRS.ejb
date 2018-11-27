@@ -46,25 +46,25 @@
 				</li>
 			</h:panelGroup>
 			<h:panelGroup
-				rendered="#{webUser.hasPrivilege('Function Responsible')}">
+				rendered="#{webUser.hasPrivilege('Survey Definition Responsible')}">
 				<li>
 					<div>#{msgs['menu.craftfunctionresponsible']}</div>
 					<ul>
 						<li
 							class="#{request.getParameter('target') == 'craftmanagement' ? 'c-active' : ''}">
 							<h:link value="#{msgs['menu.craftmanagement']}"
-								outcome="/functionresponsible/crafts.xhtml" />
+								outcome="/responsible/respSurveyDefinition.xhtml" />
 						</li>
 						<li
 							class="#{request.getParameter('target') == 'rolemanagement' ? 'c-active' : ''}">
 							<h:link value="#{msgs['menu.rolemanagement']}"
-								outcome="/functionresponsible/manage_roles_for_function.xhtml" />
+								outcome="/responsible/manage_roles_for_function.xhtml" />
 						</li>
 					</ul>
 				</li>
 			</h:panelGroup>
 			<h:panelGroup
-				rendered="#{webUser.hasPrivilege('Function Responsible')}">
+				rendered="#{webUser.hasPrivilege('Survey Definition Responsible')}">
 				<li
 					class="#{view.viewId.contains('behavioralFunctionResponsible') ? 'c-active' : ''}">
 					<h:link value="#{msgs['menu.behavioralfunctionresponsible']}"
@@ -99,7 +99,7 @@
 						<li
 							class="#{request.getParameter('target') == 'surveyDefinitionresponsibles' ? 'c-active' : ''}">
 							<h:link value="#{msgs['menu.surveyDefinition']}"
-								outcome="/admin/surveyDefinition.xhtml" />
+								outcome="/admin/adminSurveyDefinition.xhtml" />
 						</li>
 						<li
 							class="#{request.getParameter('target') == 'teamsOfManager' ? 'c-active' : ''}">
