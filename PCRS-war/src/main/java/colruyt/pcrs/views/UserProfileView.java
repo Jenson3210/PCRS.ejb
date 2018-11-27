@@ -102,7 +102,7 @@ public class UserProfileView implements Serializable {
 			FacesContext context = FacesContext.getCurrentInstance();
 			this.setHasTeam(false);
 			return context.getApplication().evaluateExpressionGet(context, "#{msgs['error.noteam']}", String.class);
-
+			
 		}
 
 	}
