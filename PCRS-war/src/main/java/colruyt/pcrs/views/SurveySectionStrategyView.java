@@ -3,17 +3,17 @@ package colruyt.pcrs.views;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import colruyt.pcrsejb.bo.surveyDefinition.strategy.SurveySectionStrategyBo;
-import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionTitleBo;
 import colruyt.pcrsejb.facade.surveyDefinition.strategy.ISurveySectionStrategyFacade;
 
 @Named
 @ViewScoped
-public class SurveySectionStragiesView implements Serializable {
+public class SurveySectionStrategyView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -22,6 +22,11 @@ public class SurveySectionStragiesView implements Serializable {
 	private SurveySectionStrategyBo surveySectionStrategyBo;
 	
 	private List<SurveySectionStrategyBo> strategies;
+	
+	@PostConstruct 
+	private void fillStrategies() {
+		strategies = surveySectionStrategyFacade.getAll();
+	}
 	
 	public SurveySectionStrategyBo getSurveySectionStrategyBo() {
 		return surveySectionStrategyBo;
