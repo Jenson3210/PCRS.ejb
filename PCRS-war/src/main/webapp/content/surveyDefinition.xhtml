@@ -63,18 +63,21 @@
 									<p:outputLabel value="#{msgs['surveyDefinition.title']}"></p:outputLabel>
 								</div>
 								<div class="ui-g-8">
-									<p:inputText id="fn" value="#{adminSurveyDefinitionView.addedSurveyDefinitionBo.name}" />
+									<p:inputText id="surveyTitle" value="#{adminSurveyDefinitionView.addedSurveyDefinitionBo.name}" required="true"/>
+									<p:message for="surveyTitle"/>
 								</div> 
 							</div> 
 							
 							<div class="ui-g">
 								<div class="ui-g-4">
-									<p:outputLabel value="#{msgs['user.shortName']}"></p:outputLabel>
+									<p:outputLabel value="#{msgs['user.shortName']}">
+									</p:outputLabel>
 								</div>
 								<div class="ui-g-8">
-									 <p:autoComplete completeMethod="#{adminSurveyDefinitionView.completeShortName}" 
+									 <p:autoComplete id="shortName" completeMethod="#{adminSurveyDefinitionView.completeShortName}" 
 									 				forceSelection="true" maxlength="5" emptyMessage="#{msgs['surveyDefinition.noResults']}"
-									 				value="#{adminSurveyDefinitionView.addedUserBo.email}"/>
+									 				value="#{adminSurveyDefinitionView.addedUserBo.email}" required="true"/>
+									 <p:message for="shortName"/>
 								</div> 
 							</div> 
 							
