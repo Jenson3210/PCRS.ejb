@@ -12,8 +12,8 @@
 
 		<div class="ui-g-4">
 			<img width="400px" height="400px"
-				src="https://i.ytimg.com/vi/JrR1mBwsFhE/maxresdefault.jpg"
-				alt="Danny"></img>
+				src="https://i.ytimg.com/vi/JrR1mBwsFhE/maxresdefault.jpg" alt="Danny"></img>
+				
 
 			</div>
 
@@ -27,12 +27,11 @@
 
 						<h:outputText value="#{msgs['profile.name']}:"></h:outputText>
 						<h:outputText
-							value="#{userProfileview.user.firstName} #{userProfileview.user.lastName}"></h:outputText>
+							value="#{webUser.getUser().firstName.concat(' ').concat(webUser.getUser().lastName)}"></h:outputText>
 
-						<h:outputText value="#{msgs['profile.function']}:"></h:outputText>
-						<h:outputText value="#{userProfileview.function.title}" />
+						
 						<h:outputText value="#{msgs['profile.team']}:"></h:outputText>
-						<h:outputText value="#{userProfileview.teamnaam}" />
+						<h:outputText value="#{userProfileView.getTeamnaam()}" />
 
 						<h:form style="margin-top:10%">
 							<p:commandButton Styleclass="btn btn-outline-primary"
@@ -49,7 +48,7 @@
 
 					<h:panelGrid columns="2">
 
-						<h:outputText value="#{userProfileview.user.firstName} #{userProfileview.user.lastName}"></h:outputText>
+						<h:outputText value="#{webUser.getUser().firstName.concat(' ').concat(webUser.getUser().lastName)}"></h:outputText>
 						<p:progressBar id="progressBarEmployee" widgetVar="pbClient"
 							style="width:300px" />
 							

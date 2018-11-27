@@ -78,7 +78,7 @@
 						<li
 							class="#{request.getParameter('target') == 'craftmanagement' ? 'c-active' : ''}">
 							<h:link value="#{msgs['menu.craftmanagement']}"
-								outcome="/admin/crafts.xhtml" />
+								outcome="/admin/competence.xhtml" />
 						</li>
 					</ul>
 				</li>
@@ -96,21 +96,14 @@
 							<h:link value="#{msgs['menu.teamsOfManager']}" outcome="/admin/teams.xhtml" />
 						</li>
 						<li
-							class="#{request.getParameter('target') == 'functionresponsibles' ? 'c-active' : ''}">
-							<h:link value="#{msgs['menu.functionresponsibles']}"
-								outcome="/admin/functionresponsibles.xhtml" />
+							class="#{request.getParameter('target') == 'surveyDefinitionresponsibles' ? 'c-active' : ''}">
+							<h:link value="#{msgs['menu.surveyDefinition']}"
+								outcome="/admin/surveyDefinition.xhtml" />
 						</li>
 						<li
-							class="#{request.getParameter('target') == 'functions' ? 'c-active' : ''}">
-							<h:link value="#{msgs['menu.functions']}"
-								outcome="/admin/functions.xhtml" />
-						</li>
-						<li
-							class="#{request.getParameter('target') == 'role' ? 'c-active' : ''}">
-							<h:link value="#{msgs['menu.rol']}" outcome="/admin/role.xhtml" />
-						</li>						<li
-							class="#{request.getParameter('target') == 'surveysectiontitle' ? 'c-active' : ''}">
-							<h:link value="#{msgs['menu.adminSurveySectionTitle']}" outcome="/admin/adminSurveySectionTitleView.xhtml" />
+							class="#{request.getParameter('target') == 'competences' ? 'c-active' : ''}">
+							<h:link value="#{msgs['menu.competences']}"
+								outcome="/admin/competence.xhtml" />
 						</li>
 					</ul>
 				</li>

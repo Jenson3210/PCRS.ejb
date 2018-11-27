@@ -8,51 +8,56 @@ import javax.ejb.Stateless;
 
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.team.TeamBo;
-import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
-import colruyt.pcrsejb.service.bl.user.team.TeamServiceBl;
+import colruyt.pcrsejb.converter.user.UserConverter;
+import colruyt.pcrsejb.converter.user.team.TeamConverter;
+import colruyt.pcrsejb.service.bl.user.team.ITeamServiceBl;
+import colruyt.pcrsejb.util.exceptions.UserIsNotMemberOfTeamException;
 
 @Stateless
 public class TeamFacade implements Serializable, ITeamFacade {
 
 	/**
-	 * 
+	 * Wie dit lees is gay
 	 */
 	
 	@EJB
-	private TeamServiceBl facade;
+	private ITeamServiceBl teamBl;
 	
+	private TeamConverter teamConv = new TeamConverter();
+	private UserConverter userConv = new UserConverter();
 	
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	public TeamBo save(TeamBo entityBo) {
-		// TODO Auto-generated method stub
-		return null;
+			return teamConv.convertToBo(this.teamBl.save(teamConv.convertToEntity(entityBo)));
 	}
 
 	@Override
 	public TeamBo get(TeamBo entityBo) {
-		// TODO Auto-generated method stub
-		return null;
+		
+			return teamConv.convertToBo(this.teamBl.get(teamConv.convertToEntity(entityBo)));
 	}
 
 	@Override
 	public List<TeamBo> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return teamConv.convertToBos(this.teamBl.getAll());
 	}
 
 	@Override
 	public void delete(TeamBo entityBo) {
-		// TODO Auto-generated method stub
+		this.teamBl.delete(teamConv.convertToEntity(entityBo));
 		
 	}
 
 	@Override
-	public UserBo getManagerForUser(UserBo user) {
-		
-		
-		return null;
+	public UserBo getManagerForUser(UserBo user)  throws UserIsNotMemberOfTeamException{
+		return this.userConv.convertToBo(this.teamBl.getManagerForUser(this.userConv.convertToEntity(user)));
+	}
+
+	@Override
+	public TeamBo getTeamForUser(UserBo user) throws UserIsNotMemberOfTeamException{
+		return this.teamConv.convertToBo(this.teamBl.getTeamForUser(this.userConv.convertToEntity(user)));
 	}
 	
 }
