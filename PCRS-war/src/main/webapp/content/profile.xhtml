@@ -11,8 +11,8 @@
 	<div class="ui-g-10">
 
 		<div class="ui-g-4">
-			<img width="400px" height="400px"
-				src="https://i.ytimg.com/vi/JrR1mBwsFhE/maxresdefault.jpg" alt="Danny"></img>
+			<img width="350px" height="350px"
+				src="https://d2e03lv76xdi59.cloudfront.net/sets/b88a9def-0431-4b4f-a8b8-6c1803b0ec58/xl-sinterklaas.jpg" alt="Profiel Foto"></img>
 				
 
 			</div>
@@ -44,17 +44,17 @@
 
 				</p:tab>
 
-				<p:tab title="#{msgs['profile.progress']}">
+				<p:tab title="#{msgs['profile.progress']}" rendered="userProfileView.isHasTeam()">
 
-					<h:panelGrid columns="2">
+					<h:panelGrid columns="2" >
 
 						<h:outputText value="#{webUser.getUser().firstName.concat(' ').concat(webUser.getUser().lastName)}"></h:outputText>
-						<p:progressBar id="progressBarEmployee" widgetVar="pbClient"
+						<p:progressBar id="progressBarEmployee" value="#{userProfileView.getSurveyFacade().getPercentageCompleteForMemberSurvey(webUser.getUser())}"  widgetVar="pbClient"
 							style="width:300px" />
 							
 							
 						<h:outputText value="#{userProfileView.teamLeaderNaam}"></h:outputText>
-						<p:progressBar id="progressBarBoss" widgetVar="pbClient"
+						<p:progressBar id="progressBarBoss" widgetVar="pbClient" value="#{userProfileView.getSurveyFacade().getPercentageCompleteForManagerSurvey(webUser.getUser())}"
 							style="width:300px" />
 
 					</h:panelGrid>
@@ -64,7 +64,7 @@
 			</p:tabView>
 		</div>
 		
-		 <p:growl id="growl" showDetail="true" sticky="true" />  
+		 <p:growl id="growl" showDetail="false" sticky="false" />  
 	</div>
 
 	<div class="ui-g-1"></div>
@@ -72,11 +72,18 @@
 	
 	<!-- Dialog ChangePAss -->
 	
-	 <p:dialog header="#{msgs['title.changepass']}" widgetVar="dlg3" modal="true" height="200">
+	 <p:dialog header="#{msgs['profile.changepass']}" widgetVar="dlg3" modal="true" >
    		
 	 <h:form id="form1">
-
+	 
+	   			<p:messages id="errors"  showDetail="false" closable="true">
+   				<p:autoUpdate />
+   			</p:messages>
+	   			
+   			
 	<div class="ui-g">
+
+						
 
 		 <div class="ui-g-4">
    			 <p>#{msgs['profile.currentpass']}</p>
@@ -86,32 +93,28 @@
    			 </div>
    		<div class="ui-g-4">
    			 	
-   			<h:messages id="errors" globalOnly="false" layout="table" errorStyle="color:red" infoStyle="color:red"/>
+   			
+   			
    			
    			<p:inputText id="currentpass" value="#{userProfileView.currentpass}"
-   			required="true"
-   			>
-
-   			<f:validateLength maximum="14" />
+   			 maxlength="14" >
+		
+   		
    			</p:inputText>
    			
    		
    				
    			<p:inputText id="newpass" value="#{userProfileView.newpassword}"
-   			required="true">
-   
-   			
-   			<f:validateLength maximum="14" />
+   			 maxlength="14">
+   		
+   		
    			</p:inputText>
    			
    			
    			
    			<p:inputText id="repeatpass" value="#{userProfileView.repeatpassword}"
-   			required="true"
+   			 maxlength="14">
    			
-   			>
-   			
-   			<f:validateLength maximum="14" />
    			</p:inputText>
    			
 
@@ -125,13 +128,13 @@
    		
    		
    		<div class="ui-g-1">
-   		<p:commandButton value="cancel" styleClass="btn btn-outline-primary" ajax="false" onclick="PF('dlg3').hide();"  />
+   		<p:commandButton value="#{msgs['msgs.cancel']}" styleClass="btn btn-outline-primary" ajax="false" onclick="PF('dlg3').hide();"  />
    		</div>
    		
    		<div class="ui-g-1"></div>
    		
    		<div class="ui-g-1">
-   		<p:commandButton value="confirm"  ajax="false" action="#{userProfileView.changePass}" oncompleted="PF('dlg3').hide();" />
+   		<p:commandButton value="#{msgs['msgs.ok']}"  ajax="true" action="#{userProfileView.changePass}" oncompleted="PF('dlg3').hide();" />
    		
    		</div>
    		

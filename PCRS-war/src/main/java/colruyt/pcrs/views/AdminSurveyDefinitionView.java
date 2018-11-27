@@ -27,6 +27,7 @@ public class AdminSurveyDefinitionView implements Serializable{
 	private IUserFacade userFacade;
 	
 	private List<SurveyDefinitionBo> surveyDefinitions;
+	private List<UserBo> matchingUsers;
 	
 	private SurveyDefinitionBo addedSurveyDefinitionBo;
 	private UserBo addedUserBo;
@@ -87,18 +88,28 @@ public class AdminSurveyDefinitionView implements Serializable{
 
 	public void addSurveyDefinition() {
 		System.out.println("Inside addSurveyDefinition()");
-		System.out.println("---------");
 		System.out.println("Title " + addedSurveyDefinitionBo.getName());
 		System.out.println("User " + addedUserBo.getEmail());
+		
+		// search in the matchingUsers list for the selected user by comparing the
+		// email addresses
+		for (UserBo userBo : matchingUsers) {
+			if (userBo.getEmail().equals(addedUserBo.getEmail())) {
+				addedUserBo = userBo;
+			}
+		}
+		addedSurveyDefinitionBo.setResponsibleUser(addedUserBo);
+		surveyDefinitionFacade.save(addedSurveyDefinitionBo);
+		
 	}
 	
 	public List<String> completeShortName(String query){
-		List<UserBo> matchingUsers = new ArrayList<>();
+		matchingUsers = new ArrayList<>();
 		
 		List<String> autoCompleteList = new ArrayList<>();
 		
 		// look for users with short name = query
-		//matchingUsers = userFacade.getUsersByShortName(query);
+		matchingUsers = userFacade.getUsersByShortName(query);
 		
 		for (UserBo userBo : matchingUsers) {
 			autoCompleteList.add(userBo.getEmail());
