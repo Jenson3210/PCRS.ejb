@@ -10,7 +10,7 @@
 	<div class="ui-g">
 		<div class="ui-g-1" />
 		<div class="ui-g-10">
-			<h:form>
+			<h:form id="form">
 				<p:dataTable var="strategy"
 					value="#{surveySectionStrategyView.strategies}">
 					<f:facet name="header">
@@ -47,47 +47,162 @@
 							<i class="fas fa-check"></i>
 						</p:outputPanel>
 					</p:column>
-					<p:column headerText="#{msgs['edit']}"
-						style="width:65px; text-align: center">
-						<!-- 						<p:commandLink update=":editForm:editSurveySectionStrategy" id="edit" oncomplete="PF('editSurveySectionStrategyDialog').show()"> -->
-						<!-- 							<i class="fas fa-pencil-alt"></i> -->
-						<!--      						<f:setPropertyActionListener value="#{strategy}" -->
-						<!-- 								target="#{surveySectionStrategyView.surveySectionStrategyBo}" /> -->
-						<!--      					</p:commandLink> -->
-					</p:column>
-					<p:column headerText="#{msgs['delete']}"
-						style="width:65px; text-align: center">
-						<!-- 						<p:commandLink id="delete" oncomplete="PF('deleteSurveySectionStrategyDialog').show()"> -->
-						<!-- 							<i class="fas fa-trash-alt"></i> -->
-						<!--      						<f:setPropertyActionListener value="#{strategy}" -->
-						<!-- 								target="#{surveySectionStrategyView.surveySectionStrategyBo}" />  -->
-						<!--      					</p:commandLink> -->
-					</p:column>
-					<!-- 					<p:rowExpansion> -->
-					<!-- 						<p:panelGrid columns="2"> -->
-
-					<!-- 							<h:outputText value="#{msgs['strategy.amountOfLevels']}" /> -->
-					<!-- 							<h:outputText value="#{strategy.amountOfLevels}" /> -->
-
-					<!-- 							<h:outputText value="#{msgs['strategy.energyRated']}" /> -->
-					<!-- 							<p:selectBooleanButton id="energy" value="#{strategy.energyRated}" onLabel="#{msgs['general.button.yes']}" offLabel="#{msgs['general.button.no']}"  style="width:65px" /> -->
-
-					<!-- 							<h:outputText value="#{msgs['strategy.interestRated']}" /> -->
-					<!-- 							<p:selectBooleanButton id="interest" value="#{strategy.interestRated}" onLabel="#{msgs['general.button.yes']}" offLabel="#{msgs['general.button.no']}"  style="width:65px" /> -->
-
-					<!-- 							<h:outputText value="#{msgs['strategy.descriptionRequired']}" /> -->
-					<!-- 							<p:selectBooleanButton id="description" value="#{strategy.descriptionRequired}" onLabel="#{msgs['general.button.yes']}" offLabel="#{msgs['general.button.no']}"  style="width:65px" /> -->
-
-					<!-- 							<h:outputText value="#{msgs['strategy.hasMinimumLevel']}" /> -->
-					<!-- 							<p:selectBooleanButton id="minLevel" value="#{strategy.hasMinimumLevel}" onLabel="#{msgs['general.button.yes']}" offLabel="#{msgs['general.button.no']}"  style="width:65px" /> -->
-
-					<!-- 							<h:outputText value="#{msgs['strategy.flexibleDescription']}" /> -->
-					<!-- 							<p:selectBooleanButton id="flexDesc" value="#{strategy.flexibleDescription}" onLabel="#{msgs['general.button.yes']}" offLabel="#{msgs['general.button.no']}"  style="width:65px" /> -->
-
-
-					<!-- 						</p:panelGrid> -->
-					<!-- 					</p:rowExpansion> -->
+										<p:column headerText="#{msgs['edit']}"
+											style="width:65px; text-align: center">
+																	<p:commandLink update=":editForm:editStrategyDetail" id="edit" oncomplete="PF('editStrategyDialog').show()">
+																		<i class="fas fa-pencil-alt"></i>
+											     						<f:setPropertyActionListener value="#{strategy}"
+																			target="#{surveySectionStrategyView.surveySectionStrategyBo}" />
+											     					</p:commandLink>
+										</p:column>
+										<p:column headerText="#{msgs['delete']}"
+											style="width:65px; text-align: center">
+																	<p:commandLink id="delete" oncomplete="PF('deleteStrategyDialog').show()">
+																		<i class="fas fa-trash-alt"></i>
+											     						<f:setPropertyActionListener value="#{strategy}"
+																			target="#{surveySectionStrategyView.surveySectionStrategyBo}" /> 
+											     					</p:commandLink>
+										</p:column>
 				</p:dataTable>
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<p:commandButton value="#{msgs['strategy.add']}"
+							action="#{surveySectionStrategyView.newSurveySectionStrategy}"
+							styleClass="ui-priority-primary" process="@this"
+							update=":addForm:addStrategyDetail"
+							oncomplete="PF('addStrategyDialog').show();" />
+					</div>
+				</div>
+			</h:form>
+
+			<h:form id="addForm">
+				<div class="ui-g" id="addStrategyForm">
+					<p:dialog id="addStrategyFormTitle"
+						header="#{msgs['strategy.add']}" widgetVar="addStrategyDialog"
+						modal="true">
+						<p:outputPanel id="addStrategyDetail">
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['strategy.name']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:inputText id="name"
+										value="#{surveySectionStrategyView.surveySectionStrategyBo.name}" />
+								</div>
+							</div>
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['strategy.amountOfLevels']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:inputText id="amount"
+										value="#{surveySectionStrategyView.surveySectionStrategyBo.amountOfLevels}" />
+								</div>
+							</div>
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['strategy.energyRated']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:inputSwitch value="#{surveySectionStrategyView.surveySectionStrategyBo.energyRated}" />
+								</div>
+							</div>
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['strategy.interestRated']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:inputSwitch 
+										value="#{surveySectionStrategyView.surveySectionStrategyBo.interestRated}" />
+								</div>
+							</div>
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['strategy.descriptionRequired']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:inputSwitch 
+										value="#{surveySectionStrategyView.surveySectionStrategyBo.descriptionRequired}" />
+								</div>
+							</div>
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['strategy.hasMinimumLevel']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:inputSwitch 
+										value="#{surveySectionStrategyView.surveySectionStrategyBo.hasMinimumLevel}" />
+								</div>
+							</div>
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['strategy.flexibleDescription']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:inputSwitch 
+										value="#{surveySectionStrategyView.surveySectionStrategyBo.flexibleDescription}" />
+								</div>
+							</div>
+							<div class="ui-g-2">
+								<p:commandButton value="#{msgs['strategy.add']}" update=":form"
+									action="#{surveySectionStrategyView.addSurveySectionStrategy}"
+									oncomplete="PF('addStrategyDialog').hide();" />
+							</div>
+						</p:outputPanel>
+					</p:dialog>
+				</div>
+			</h:form>
+			<h:form id="editForm">
+				<div class="ui-g" id="editStrategyForm">
+					<p:dialog id="editStrategyFormTitle" header="#{msgs['strategy.edit']}"
+						widgetVar="editStrategyDialog" modal="true">
+						<p:outputPanel id="editStrategyDetail">
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['strategy.name']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:inputText id="name"
+										value="#{surveySectionStrategyView.surveySectionStrategyBo.name}" />
+								</div>
+							</div>
+							<div class="ui-g-2">
+								<p:commandButton value="#{msgs['strategy.edit']}" update=":form"
+									action="#{surveySectionStrategyView.addSurveySectionStrategy}"
+									oncomplete="PF('editStrategyDialog').hide();" />
+							</div>
+						</p:outputPanel>
+					</p:dialog>
+				</div>
+			</h:form>
+			<h:form id="deleteForm">
+				<div class="ui-g" id="deleteStrategyForm">
+					<p:dialog id="deleteStrategy" header="#{msgs['strategy.delete']}"
+						widgetVar="deleteStrategyDialog" modal="true">
+						<f:facet name="header">
+							<h:outputText value="#{msgs['strategy.delete']}" />
+						</f:facet>
+						<f:facet name="controls">
+							<h:outputLink value="#"
+								onclick="PF('deleteStrategy').hide(); return false;">X</h:outputLink>
+						</f:facet>
+						<p>
+							<h:outputText
+								value="Ben je zeker dat je deze strategie wilt verwijderen?" />
+						</p>
+						<br></br>
+						<br></br>
+						<div align="right">
+							<p:commandButton styleClass="btn btn-link"
+								value="#{msgs['general.button.no']}"
+								onclick="PF('deleteStrategyDialog').hide()" />
+							<p:commandButton styleClass="btn btn-primary" update=":form"
+								value="#{msgs['general.button.yes']}" action="#{surveySectionStrategyView.deleteSurveySectionStrategy}"
+								oncomplete="PF('deleteStrategyDialog').hide();" />
+						</div>
+					</p:dialog>
+
+				</div>
 			</h:form>
 		</div>
 		<div class="ui-g-1"></div>
