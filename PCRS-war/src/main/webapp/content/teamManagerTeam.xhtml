@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <div class="ui-g">
+        <div class="ui-g-1"/>
+        <div class="ui-g-10">
+            <h:form id="form">
+                <p:dataTable var="team" value="#{managerTeamView.teams}"
+                             styleClass="teamOverviewTable" sortBy="#{team.name}"
+                             expandableRowGroups="true" expandedRow="false"
+                             id="teamDetail">
+                    <f:facet name="header"><h:outputText value="#{msgs['team.header']}"/></f:facet>
+                    <p:headerRow>
+                        <p:column styleClass="ui-g-6">
+                            <h:outputText value="#{team.name}"/>
+                        </p:column>
+                        <p:column styleClass="ui-g-4" style="float: right">
+                            <h:outputText value="#{team.enrolments.size()}"/>
+                        </p:column>
+                    </p:headerRow>
+                    <p:column>
+                        <p:dataTable var="enrolment" value="#{team.enrolments}">
+                            <p:column style="width: 16px"/>
+                            <p:column styleClass="ui-g-6">
+                                <h:outputText value="#{enrolment.user.firstName}  #{enrolment.user.lastName}"/>
+                            </p:column>
+                            <p:column styleClass="ui-g-4">
+                                <h:outputText value="#{enrolment.userPrivilege.privilegeType.fullName}"/>
+                            </p:column>
+							<p:column styleClass="ui-g-2">
+								<p:commandButton value="Generate survey"/>
+							</p:column>
+                        </p:dataTable>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </div>
+    </div>
+
+</ui:composition>
+
+
+
+
+
+

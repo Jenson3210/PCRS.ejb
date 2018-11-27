@@ -11,7 +11,7 @@
 	<div class="ui-g-10">
 
 		<div class="ui-g-4">
-			<img width="350px" height="350px"
+			<img width="300px" height="300px"
 				src="https://d2e03lv76xdi59.cloudfront.net/sets/b88a9def-0431-4b4f-a8b8-6c1803b0ec58/xl-sinterklaas.jpg" alt="Profiel Foto"></img>
 				
 
@@ -44,7 +44,7 @@
 
 				</p:tab>
 
-				<p:tab title="#{msgs['profile.progress']}" rendered="userProfileView.isHasTeam()">
+				<p:tab title="#{msgs['profile.progress']}" rendered="#{userProfileView.isHasTeam()}">
 
 					<h:panelGrid columns="2" >
 
@@ -89,33 +89,27 @@
    			 <p>#{msgs['profile.currentpass']}</p>
    			 <p>#{msgs['profile.newpass']}</p>
    			 <p>#{msgs['profile.repeatnewpass']}</p>
-   			 
    			 </div>
    		<div class="ui-g-4">
    			 	
    			
    			
    			
-   			<p:inputText id="currentpass" value="#{userProfileView.currentpass}"
+   			<p:password id="currentpass" value="#{userProfileView.currentpass}"
    			 maxlength="14" >
-		
-   		
-   			</p:inputText>
+   			</p:password>
    			
    		
    				
-   			<p:inputText id="newpass" value="#{userProfileView.newpassword}"
+   			<p:password id="newpass" value="#{userProfileView.newpassword}"
    			 maxlength="14">
-   		
-   		
-   			</p:inputText>
+   			</p:password>
    			
    			
    			
-   			<p:inputText id="repeatpass" value="#{userProfileView.repeatpassword}"
+   			<p:password id="repeatpass" value="#{userProfileView.repeatpassword}"
    			 maxlength="14">
-   			
-   			</p:inputText>
+   			</p:password>
    			
 
    			
@@ -125,8 +119,6 @@
    	</div>
    		
    		<div class="ui-g">
-   		
-   		
    		<div class="ui-g-1">
    		<p:commandButton value="#{msgs['msgs.cancel']}" styleClass="btn btn-outline-primary" ajax="false" onclick="PF('dlg3').hide();"  />
    		</div>

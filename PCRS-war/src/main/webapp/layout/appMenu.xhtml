@@ -35,7 +35,7 @@
 			</h:panelGroup>
 			<h:panelGroup rendered="#{webUser.hasPrivilege('Team manager')}">
 				<li class="#{view.viewId.contains('myteam') ? 'c-active' : ''}">
-					<h:link value="#{msgs['menu.myteam']}" outcome="/teammanager/myteam.xhtml" />
+					<h:link value="#{msgs['menu.myteam']}" outcome="/teammanager/teamManagerTeam.xhtml" />
 				</li>
 			</h:panelGroup>
 			<h:panelGroup rendered="#{webUser.hasPrivilege('Director')}">

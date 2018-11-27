@@ -74,9 +74,11 @@
 									</p:outputLabel>
 								</div>
 								<div class="ui-g-8">
-									 <p:autoComplete id="shortName" completeMethod="#{adminSurveyDefinitionView.completeShortName}" 
-									 				forceSelection="true" maxlength="5" emptyMessage="#{msgs['surveyDefinition.noResults']}"
-									 				value="#{adminSurveyDefinitionView.addedUserBo.email}" required="true"/>
+									  <p:autoComplete id="shortName" completeMethod="#{adminSurveyDefinitionView.completeShortName}" 
+									  				var="user" itemLabel="#{user.email}" itemValue="#{user}" forceSelection="true" 
+									  				maxlength="5" emptyMessage="#{msgs['surveyDefinition.noResults']}"
+									 				value="#{adminSurveyDefinitionView.addedSurveyDefinitionBo.responsibleUser}" 
+									 				required="true" converter="userBoConverter"/>
 									 <p:message for="shortName"/>
 								</div> 
 							</div> 
@@ -93,14 +95,40 @@
 				
 			<h:form id="editForm">
 				<div class="ui-g" id="editUserForm">
-					<p:dialog id="editUserFormTitle" header="#{msgs['surveyDefinition.modify']}"
+					<p:dialog id="editUserFormTitle" header="#{msgs['surveyDefinition.edit']}"
 						widgetVar="editSurveyDefinitionDialog" modal="true" draggable="false">
 						<p:outputPanel id="editSurveyDefinition">
 							
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['surveyDefinition.title']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:inputText id="surveyTitle" value="#{adminSurveyDefinitionView.addedSurveyDefinitionBo.name}" required="true"/>
+									<p:message for="surveyTitle"/>
+								</div> 
+							</div> 
+							
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['user.shortName']}">
+									</p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									  <p:autoComplete id="shortName" completeMethod="#{adminSurveyDefinitionView.completeShortName}" 
+									  				var="user" itemLabel="#{user.email}" itemValue="#{user}" forceSelection="true" 
+									  				maxlength="5" emptyMessage="#{msgs['surveyDefinition.noResults']}"
+									 				value="#{adminSurveyDefinitionView.addedSurveyDefinitionBo.responsibleUser}" 
+									 				required="true" converter="userBoConverter"/>
+									 <p:message for="shortName"/>
+								</div> 
+							</div> 
+							
 							<div class="ui-g-2">
-								<p:commandButton value="Wijzigen" update=":form"/>
-								<!-- action="#{adminUserView.editUser}"
-									oncomplete="PF('editUserDialog').hide();"  -->
+								<p:commandButton value="#{msgs['surveyDefinition.edit']}" update=":form"
+												oncomplete="PF('editSurveyDefinitionDialog').hide();"
+												action="#{adminSurveyDefinitionView.editSurveyDefinition}"
+												validateClient="true"/>
 							</div>
 						</p:outputPanel>
 					</p:dialog>
@@ -112,7 +140,7 @@
 					<p:dialog id="deleteUserFormTitle" header="#{msgs['surveyDefinition.delete']}"
 						widgetVar="deleteSurveyDefinitionDialog" modal="true" draggable="false">
 						<f:facet name="header">
-							<h:outputText value="#{msgs['surveyDefinition.modify']}" />
+							<h:outputText value="#{msgs['surveyDefinition.delete']}" />
 						</f:facet>
 						<f:facet name="controls">
 							<h:outputLink value="#"
@@ -129,8 +157,8 @@
 								onclick="PF('deleteSurveyDefinitionDialog').hide()" />
 							<p:commandButton styleClass="btn btn-primary" update=":form"
 								value="#{msgs['general.button.yes']}" 
-								oncomplete="PF('deleteSurveyDefinitionDialog').hide();" />
-								<!--  action="#{adminUserView.deleteUser}" -->
+								oncomplete="PF('deleteSurveyDefinitionDialog').hide();" action="#{adminSurveyDefinitionView.deleteSurveyDefinition}"/>
+								
 						</div>
 					</p:dialog>
 

@@ -5,7 +5,9 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveyDefinitionBo;
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveyDefinition;
+import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.service.dl.surveyDefinition.survey.ISurveyDefinitionDl;
 
 @Stateless
@@ -33,6 +35,12 @@ public class SurveyDefinitionServiceBl implements ISurveyDefinitionServiceBl {
 	@Override
 	public void delete(SurveyDefinition element) {
 		surveyDefinitionDl.delete(element);
+	}
+
+	@Override
+	public List<SurveyDefinition> getSurveyDefinitionsOfUser(User user) {
+		
+		return surveyDefinitionDl.getSurveyDefinitionsOfUser(user);
 	}
 	
 	

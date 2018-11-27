@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -20,6 +22,9 @@ import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 
 @Entity
 @Table(name="USERS")
+@NamedQueries({ @NamedQuery(name="USER.GETALL", query="select u from User u"), 
+				@NamedQuery(name="USER.GETBYEMAIL", query="SELECT u from User u where UPPER(u.email) = UPPER(:email)"), 
+				@NamedQuery(name="USER.GETBYSHORTNAME", query="SELECT u from User u where UPPER(u.shortName) LIKE UPPER(:shortname)")})
 public class User extends AbstractEntity implements Serializable {
 	/*
 	 * PROPERTIES
@@ -42,7 +47,7 @@ public class User extends AbstractEntity implements Serializable {
     private String country;
     @Column(name="SHORTNAME")
     private String shortName;
-    @OneToMany(cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(cascade= {CascadeType.REMOVE, CascadeType.PERSIST})
     @JoinColumn(name="USER_ID")
     private Set<UserPrivilege> privileges = new HashSet<>();
     /*
