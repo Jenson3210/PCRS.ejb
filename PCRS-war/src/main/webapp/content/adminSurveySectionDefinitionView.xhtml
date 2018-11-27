@@ -26,10 +26,26 @@
 						<h:outputText
 							value="#{surveySectionDefinition.surveySectionStrategy.name}" />
 					</p:column>
-					<p:column
-						headerText="#{msgs['surveySectionDefinition.surveySectionRequirementLevel']}">
-						<h:outputText
-							value="#{surveySectionDefinition.surveySectionRequirementLevel}" />
+
+					<p:column headerText="#{msgs['edit']}"
+						style="width:65px; text-align: center">
+<!-- 						<p:commandLink
+							update=":editForm:editSurveySectionDefinitionDetail" id="edit"
+							oncomplete="PF('editSurveySectionDefinitionDialog').show()">
+							<i class="fas fa-pencil-alt"></i>
+							<f:setPropertyActionListener value="#{surveySectionDefinition}"
+								target="#{adminSurveySectionDefinitionView.addedSurveySectionDefinition}" />
+						</p:commandLink> -->
+					</p:column>
+
+					<p:column headerText="#{msgs['delete']}"
+						style="width:65px; text-align: center">
+						<p:commandLink id="delete"
+							oncomplete="PF('deleteSurveySectionDefinitionDialog').show()">
+							<i class="fas fa-trash-alt"></i>
+							<f:setPropertyActionListener value="#{surveySectionDefinition}"
+								target="#{adminSurveySectionDefinitionView.addedSurveySectionDefinition}" />
+						</p:commandLink>
 					</p:column>
 				</p:dataTable>
 
@@ -53,39 +69,32 @@
 
 							<div class="ui-g">
 								<div class="ui-g-4">
-									<p:outputLabel value="#{msgs['surveySectionDefinition.title']}"></p:outputLabel>
+									<p:outputLabel
+										value="#{msgs['surveySectionDefinition.surveySectionTitle.title']}"></p:outputLabel>
 								</div>
 								<div class="ui-g-8">
-									<p:selectOneMenu id="surveySectionDefinitionTitle">
+					            <p:selectOneMenu id="surveySectionDefinitionTitle" value="#{adminSurveySectionDefinitionView.title}" style="width:150px">
+					                <f:selectItem itemLabel="Select Title" itemValue="" noSelectionOption="true" />
+					                <f:selectItems value="#{adminSurveySectionDefinitionView.titles}" />
+					            </p:selectOneMenu>
+					            
+									<!-- <p:selectOneMenu id="surveySectionDefinitionTitle">
 										<f:selectItem
 											itemValue="#{adminSurveySectionDefinitionView.addedSurveySectionDefinition.title}" />
-									</p:selectOneMenu>
+									</p:selectOneMenu> -->
 								</div>
 							</div>
 
 							<div class="ui-g">
 								<div class="ui-g-4">
 									<p:outputLabel
-										value="#{msgs['surveySectionDefinition.surveySectionStrategy']}"></p:outputLabel>
+										value="#{msgs['surveySectionDefinition.surveySectionStrategy.name']}"></p:outputLabel>
 								</div>
 								<div class="ui-g-8">
-									<p:selectOneMenu id="surveySectionDefinitionSectionStrategy">
+									<!-- <p:selectOneMenu id="surveySectionDefinitionSectionStrategy">
 										<f:selectItem
-											itemValue="#{adminSurveySectionDefinitionView.surveySectionStrategies.name}" />
-									</p:selectOneMenu>
-								</div>
-							</div>
-
-							<div class="ui-g">
-								<div class="ui-g-4">
-									<p:outputLabel
-										value="#{msgs['surveySectionDefinition.surveySectionRequirementLevel']}"></p:outputLabel>
-								</div>
-								<div class="ui-g-8">
-									<p:selectOneMenu id="surveySectionDefinitionRequirementLevel">
-										<f:selectItem
-											itemValue="#{adminSurveySectionDefinitionView.addedSurveySectionDefinition.surveySectionRequirementLevel}" />
-									</p:selectOneMenu>
+											itemValue="#{adminSurveySectionDefinitionView.getSurveySectionStrategies.name}" />
+									</p:selectOneMenu> -->
 								</div>
 							</div>
 
@@ -97,6 +106,39 @@
 							</div>
 						</p:outputPanel>
 					</p:dialog>
+				</div>
+			</h:form>
+
+			
+			<h:form id="deleteForm">
+				<div class="ui-g" id="deleteSurveySectionDefinitionForm">
+					<p:dialog id="deleteSurveySectionDefinitionForm"
+						header="#{msgs['user.delete']}"
+						widgetVar="deleteSurveySectionDefinitionDialog" modal="true">
+						<f:facet name="header">
+							<h:outputText value="#{msgs['user.delete']}" />
+						</f:facet>
+						<f:facet name="controls">
+							<h:outputLink value="#"
+								onclick="PF('deleteSurveySectionDefinitionForm').hide(); return false;">X</h:outputLink>
+						</f:facet>
+						<p>
+							<h:outputText
+								value="Ben je zeker dat je deze sectie wilt verwijderen?" />
+						</p>
+						<br></br>
+						<br></br>
+						<div align="right">
+							<p:commandButton styleClass="btn btn-link"
+								value="#{msgs['button.no']}"
+								onclick="PF('deleteSurveySectionDefinitionDialog').hide()" />
+							<p:commandButton styleClass="btn btn-primary" update=":form"
+								value="#{msgs['button.yes']}"
+								action="#{adminSurveySectionDefinitionView.deleteSurveySectionDefinition}"
+								oncomplete="PF('deleteSurveySectionDefinitionDialog').hide();" />
+						</div>
+					</p:dialog>
+
 				</div>
 			</h:form>
 

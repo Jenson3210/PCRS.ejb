@@ -10,6 +10,7 @@ import colruyt.pcrsejb.bo.surveyDefinition.strategy.SurveySectionStrategyBo;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionBo;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionTitleBo;
 import colruyt.pcrsejb.converter.surveyDefinition.survey.SurveySectionDefinitionConverter;
+import colruyt.pcrsejb.converter.surveyDefinition.survey.SurveySectionTitleConverter;
 import colruyt.pcrsejb.entity.surveyDefinition.strategy.SurveySectionStrategy;
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionRequirementLevel;
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionTitle;
@@ -18,11 +19,12 @@ import colruyt.pcrsejb.service.bl.surveyDefinition.survey.ISurveySectionDefiniti
 @Stateless
 public class SurveySectionDefinitionFacade implements Serializable, ISurveySectionDefinitionFacade {
 
+	private static final long serialVersionUID = 1L;
+	
 	@EJB
 	private ISurveySectionDefinitionServiceBl surveySectionDefinitionServiceBl;
+	
 	private SurveySectionDefinitionConverter surveySectionDefinitionConverter = new SurveySectionDefinitionConverter();
-
-	private static final long serialVersionUID = 1L;
 
 	@Override
 	public SurveySectionDefinitionBo save(SurveySectionDefinitionBo entityBo) {

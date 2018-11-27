@@ -7,12 +7,14 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import colruyt.pcrsejb.bo.surveyDefinition.strategy.SurveySectionStrategyBo;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionBo;
+import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionTitleBo;
 import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.facade.surveyDefinition.strategy.ISurveySectionStrategyFacade;
@@ -26,25 +28,13 @@ public class AdminSurveySectionDefinitionView implements Serializable {
 
 	@EJB
 	private ISurveySectionDefinitionFacade surveySectionDefinitionFacade;
-	@EJB
-	private ISurveySectionStrategyFacade surveySectionStrategyFacade;
-	
-	private List<SurveySectionDefinitionBo> surveySectionDefinitions;
-	private List<SurveySectionStrategyBo> surveySectionStrategies;
 
+	private List<SurveySectionDefinitionBo> surveySectionDefinitions;
 	private SurveySectionDefinitionBo addedSurveySectionDefinition;
 
 	@PostConstruct
 	private void fillSurveySectionDefinitions() {
 		surveySectionDefinitions = surveySectionDefinitionFacade.getAll();
-	}
-	
-	public void getSurveySectionStrategies() {
-		surveySectionStrategies = surveySectionStrategyFacade.getAll();
-	}
-	
-	public void setSurveySectionStrategies(List<SurveySectionStrategyBo> surveySectionStrategies) {
-		this.surveySectionStrategies = surveySectionStrategies;
 	}
 
 	public List<SurveySectionDefinitionBo> getSurveySectionDefinitions() {
@@ -69,6 +59,17 @@ public class AdminSurveySectionDefinitionView implements Serializable {
 
 	public void newSurveySectionDefinition() {
 		addedSurveySectionDefinition = new SurveySectionDefinitionBo();
+	}
+
+	public void deleteSurveySectionDefinition() {
+		SurveySectionDefinitionBo d = null;
+		for (SurveySectionDefinitionBo definition : surveySectionDefinitions) {
+			if (definition.getId() == addedSurveySectionDefinition.getId()) {
+				d = definition;
+			}
+		}
+		surveySectionDefinitions.remove(d);
+		surveySectionDefinitionFacade.delete(d);
 	}
 
 }
