@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.team.Enrolment;
 
 @Stateless
@@ -32,12 +33,9 @@ public class DbEnrolmentServiceDl implements IEnrolmentServiceDl{
 
 	@Override
 	public void delete(Enrolment element) {
-		element = em.merge(element);
-		if (element != null) {
+		Enrolment enrolment = em.find(Enrolment.class, element);
+		if (enrolment != null) {
 			em.remove(element);
-		}
-		else {
-			throw new EmptyStackException();
 		}
 	}
 
