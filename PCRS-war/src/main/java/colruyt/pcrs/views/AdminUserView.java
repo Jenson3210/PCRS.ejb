@@ -17,7 +17,7 @@ import colruyt.pcrsejb.facade.user.IUserFacade;
 
 @Named
 @ViewScoped
-public class AdminUsersView implements Serializable{
+public class AdminUserView implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@EJB
 	private IUserFacade userFacade;
