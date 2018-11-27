@@ -8,10 +8,8 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveyDefinitionBo;
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveyDefinition;
 import colruyt.pcrsejb.entity.user.User;
 
@@ -46,7 +44,7 @@ public class DbSurveyDefinitionDl implements Serializable, ISurveyDefinitionDl {
 
 	@Override
 	public List<SurveyDefinition> getAll() {
-		TypedQuery<SurveyDefinition> query = em.createNamedQuery("SurveyDefinition.getAllSurveyDefinitions", SurveyDefinition.class);
+		TypedQuery<SurveyDefinition> query = em.createNamedQuery("SURVEYDEFINITION.GETALL", SurveyDefinition.class);
 		return query.getResultList();
 	}
 
@@ -61,11 +59,11 @@ public class DbSurveyDefinitionDl implements Serializable, ISurveyDefinitionDl {
 
 	@Override
 	public List<SurveyDefinition> getSurveyDefinitionsOfUser(User user) {
-		TypedQuery<SurveyDefinition> q = em.createQuery("Select sd from SurveyDefinition sd where sd.responsibleUser = ?1",SurveyDefinition.class);
-		q.setParameter(1, user);
-		return q.getResultList();
-		
-		
+		TypedQuery<SurveyDefinition> q = em.createNamedQuery("SURVEYDEFINITION.GETBYRESPONSIBLE", SurveyDefinition.class);
+		q.setParameter("responsibleUser", user);
+		List<SurveyDefinition> listOfSurveyDefinitions = q.getResultList();
+		return listOfSurveyDefinitions;
+
 	}
 
 
