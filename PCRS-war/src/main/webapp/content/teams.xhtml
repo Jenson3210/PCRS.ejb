@@ -35,10 +35,10 @@
                             <p:column styleClass="ui-g-6">
                                 <h:outputText value="#{enrolment.user.firstName}  #{enrolment.user.lastName}"/>
                             </p:column>
-                            <p:column styleClass="ui-g-6">
+                            <p:column styleClass="ui-g-4">
                                 <h:outputText value="#{enrolment.userPrivilege.privilegeType.fullName}"/>
                             </p:column>
-							<p:column style="width:65px; text-align: center">
+							<p:column styleClass="ui-g-2">
 								<p:commandLink id="delete" oncomplete="PF('deleteEnrolmentDialog').show()">
 									<i class="fas fa-trash-alt"></i>
 		     						<f:setPropertyActionListener value="#{enrolment}"
@@ -120,12 +120,12 @@
 									<p:outputLabel value="#{msgs['enrolment.user']}"></p:outputLabel>
 								</div>
 								<div class="ui-g-8">
-                                    <p:autocomplete id="user" value="#{adminCompetenceView.user}" completeMethod="adminCompetenceView.completeUser"/>
+                                    <p:autoComplete id="user" value="#{adminTeamView.user}" completeMethod="#{adminTeamView.completeUser}"/>
                                 </div>
 							</div>
 							<div class="ui-g-2">
 								<p:commandButton value="#{msgs['enrolment.add']}" update=":form"
-									action="#{adminCompetenceView.addEnrolment}"
+									action="#{adminTeamView.addEnrolment}"
 									oncomplete="PF('addEnrolmentDialog').hide();" />
 							</div>
 						</p:outputPanel>
