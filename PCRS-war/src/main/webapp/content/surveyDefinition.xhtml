@@ -74,9 +74,11 @@
 									</p:outputLabel>
 								</div>
 								<div class="ui-g-8">
-									 <p:autoComplete id="shortName" completeMethod="#{adminSurveyDefinitionView.completeShortName}" 
-									 				forceSelection="true" maxlength="5" emptyMessage="#{msgs['surveyDefinition.noResults']}"
-									 				value="#{adminSurveyDefinitionView.addedSurveyDefinitionBo.responsibleUser.email}" required="true"/>
+									  <p:autoComplete id="shortName" completeMethod="#{adminSurveyDefinitionView.completeShortName}" 
+									  				var="user" itemLabel="#{user.email}" itemValue="#{user}" forceSelection="true" 
+									  				maxlength="5" emptyMessage="#{msgs['surveyDefinition.noResults']}"
+									 				value="#{adminSurveyDefinitionView.addedSurveyDefinitionBo.responsibleUser}" 
+									 				required="true" converter="userBoConverter"/>
 									 <p:message for="shortName"/>
 								</div> 
 							</div> 
@@ -114,8 +116,10 @@
 								</div>
 								<div class="ui-g-8">
 									  <p:autoComplete id="shortName" completeMethod="#{adminSurveyDefinitionView.completeShortName}" 
-									 				forceSelection="true" maxlength="5" emptyMessage="#{msgs['surveyDefinition.noResults']}"
-									 				value="#{adminSurveyDefinitionView.addedSurveyDefinitionBo.responsibleUser.email}" required="true"/>
+									  				var="user" itemLabel="#{user.email}" itemValue="#{user}" forceSelection="true" 
+									  				maxlength="5" emptyMessage="#{msgs['surveyDefinition.noResults']}"
+									 				value="#{adminSurveyDefinitionView.addedSurveyDefinitionBo.responsibleUser}" 
+									 				required="true" converter="userBoConverter"/>
 									 <p:message for="shortName"/>
 								</div> 
 							</div> 

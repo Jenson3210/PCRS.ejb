@@ -48,11 +48,12 @@ public class DbSurveyDefinitionDl implements Serializable, ISurveyDefinitionDl {
 
 	@Override
 	public void delete(SurveyDefinition element) {
-		SurveyDefinition surveyDefinition = em.find(SurveyDefinition.class, element);
-		if (surveyDefinition == null) {
+		SurveyDefinition surveyDefinition = em.merge(element);
+		if (null != surveyDefinition) {
+			em.remove(surveyDefinition);
+		} else {
 			throw new EmptyStackException();
 		}
-		em.remove(element);
 	}
 
 
