@@ -2,13 +2,14 @@ package colruyt.pcrsejb.service.dl.competence;
 
 import colruyt.pcrsejb.entity.competence.Competence;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.io.Serializable;
 import java.util.EmptyStackException;
 import java.util.List;
-
+@Stateless
 public class DbCompenetceServiceDl implements ICompetenceServiceDl, Serializable {
     private static final long serialVersionUID = 1L;
 

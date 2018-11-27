@@ -21,7 +21,8 @@ public class CompetenceServiceBl implements Serializable, ICompetenceServiceBl {
 
 	@Override
 	public Competence save(Competence element) {
-		return competencedb.save(element);
+		competencedb.save(element);
+		return element;
 	}
 
 	@Override

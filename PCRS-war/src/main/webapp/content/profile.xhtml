@@ -11,8 +11,8 @@
 	<div class="ui-g-10">
 
 		<div class="ui-g-4">
-			<img width="400px" height="400px"
-				src="https://i.ytimg.com/vi/JrR1mBwsFhE/maxresdefault.jpg" alt="Danny"></img>
+			<img width="350px" height="350px"
+				src="https://thefintechtimes.com/wp-content/uploads/2017/10/profile.jpg" alt="Profiel Foto"></img>
 				
 
 			</div>
@@ -44,7 +44,7 @@
 
 				</p:tab>
 
-				<p:tab title="#{msgs['profile.progress']}" >
+				<p:tab title="#{msgs['profile.progress']}" rendered="userProfileView.isHasTeam()">
 
 					<h:panelGrid columns="2" >
 
@@ -64,7 +64,7 @@
 			</p:tabView>
 		</div>
 		
-		 <p:growl id="growl" showDetail="false" sticky="true" />  
+		 <p:growl id="growl" showDetail="false" sticky="false" />  
 	</div>
 
 	<div class="ui-g-1"></div>
@@ -72,7 +72,7 @@
 	
 	<!-- Dialog ChangePAss -->
 	
-	 <p:dialog header="#{msgs['profile.changepass']}" widgetVar="dlg3" modal="true" height="200">
+	 <p:dialog header="#{msgs['profile.changepass']}" widgetVar="dlg3" modal="true" >
    		
 	 <h:form id="form1">
 	 
@@ -97,7 +97,7 @@
    			
    			
    			<p:inputText id="currentpass" value="#{userProfileView.currentpass}"
-   			required="true" maxlength="14" >
+   			 maxlength="14" >
 		
    		
    			</p:inputText>
@@ -105,7 +105,7 @@
    		
    				
    			<p:inputText id="newpass" value="#{userProfileView.newpassword}"
-   			required="true" maxlength="14">
+   			 maxlength="14">
    		
    		
    			</p:inputText>
@@ -113,7 +113,7 @@
    			
    			
    			<p:inputText id="repeatpass" value="#{userProfileView.repeatpassword}"
-   			required="true" maxlength="14">
+   			 maxlength="14">
    			
    			</p:inputText>
    			

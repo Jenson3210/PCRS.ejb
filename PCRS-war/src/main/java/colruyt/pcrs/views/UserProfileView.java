@@ -32,8 +32,20 @@ public class UserProfileView implements Serializable{
 	@EJB
 	private ISurveySetFacade surveyFacade;
 	
+	private boolean hasTeam = true;
 	
 	
+	
+	
+	
+	public boolean isHasTeam() {
+		return hasTeam;
+	}
+
+	public void setHasTeam(boolean hasTeam) {
+		this.hasTeam = hasTeam;
+	}
+
 	public ISurveySetFacade getSurveyFacade() {
 		return surveyFacade; 
 	}
@@ -88,8 +100,10 @@ public class UserProfileView implements Serializable{
 			return this.teamFacade.getTeamForUser(this.getUser()).getName();
 		} catch (UserIsNotMemberOfTeamException e) {
 			FacesContext context = FacesContext.getCurrentInstance();
+			this.setHasTeam(false);
 			return  context.getApplication().evaluateExpressionGet(context, "#{msgs['error.noteam']}",
 					String.class);
+			
 		}
 		
 	}
@@ -115,16 +129,19 @@ public class UserProfileView implements Serializable{
 			this.setUser(userfac.save(this.getUser()));
 			
 			
-			String message = context.getApplication().evaluateExpressionGet(context, "#{msgs['error.passmissmatch']}",
+			String message = context.getApplication().evaluateExpressionGet(context, "#{msgs['succes.changepass']}",
 					String.class);
-			FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO,"succes!!",message);
+			String title = context.getApplication().evaluateExpressionGet(context, "#{msgs['succes.changepass.title']}",String.class);
+			FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO,title,message);
 
 			context.addMessage(null, myFacesMessage);
 		}
 		else {
 			String message = context.getApplication().evaluateExpressionGet(context, "#{msgs['error.passmissmatch']}",
 					String.class);
-			FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR,"succes!!",message); 
+			
+			String title = context.getApplication().evaluateExpressionGet(context, "#{msgs['succes.changepass.title']}",String.class);
+			FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR,title,message); 
 			context.addMessage(null, myFacesMessage);
 			
 			
@@ -132,6 +149,21 @@ public class UserProfileView implements Serializable{
 	}
 
 	public boolean isSamePassword() {
+		if(this.newpassword.isEmpty() || this.repeatpassword.isEmpty()) {
+			
+			
+			FacesContext context = FacesContext.getCurrentInstance();
+			String message = context.getApplication().evaluateExpressionGet(context, "#{msgs['error.required']}",
+					String.class);
+			FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR,"",message);
+
+			context.addMessage(null, myFacesMessage);
+			return false;
+		}
+		else {
+			
+		
+		
 		if (!this.newpassword.equals(this.repeatpassword)) {
 
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -146,9 +178,20 @@ public class UserProfileView implements Serializable{
 		else {
 			return true;
 		}
+		}
 	}
 	
 	public boolean isCurrentPassword() {
+		
+		if(this.currentpass.isEmpty()) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			   String message = context.getApplication().evaluateExpressionGet(context, "#{msgs['error.required']}", String.class);
+			   FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR,"",message);
+			   context.addMessage(null,myFacesMessage);
+			   return false;
+		}
+		else {
+		
 		if(!this.currentpass.equals(this.getUser().getPassword())) {
 			   FacesContext context = FacesContext.getCurrentInstance();
 			   String message = context.getApplication().evaluateExpressionGet(context, "#{msgs['error.wrongpassword']}", String.class);
@@ -163,6 +206,7 @@ public class UserProfileView implements Serializable{
 
 			return true;
 		}
+	}
 	}
 
 	
