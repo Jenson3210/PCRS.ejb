@@ -62,6 +62,7 @@ public class DbSurveyDefinitionDl implements Serializable, ISurveyDefinitionDl {
 	@Override
 	public List<SurveyDefinition> getSurveyDefinitionsOfUser(User user) {
 		TypedQuery<SurveyDefinition> q = em.createQuery("Select sd from SurveyDefinition sd where sd.responsibleUser = ?1",SurveyDefinition.class);
+		q.setParameter(1, user);
 		return q.getResultList();
 		
 		
