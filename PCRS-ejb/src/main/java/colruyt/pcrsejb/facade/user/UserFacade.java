@@ -54,8 +54,8 @@ public class UserFacade implements Serializable, IUserFacade {
 	}
 
 	@Override
-	public UserBo getUsersByShortName(String shortName) {
-		return userConverter.convertToBo(userServiceBl.getUserByShortName(shortName));
+	public List<UserBo> getUsersByShortName(String shortName) {
+		return userConverter.convertToBos(userServiceBl.getUsersByShortName(shortName));
 	}
 
 }

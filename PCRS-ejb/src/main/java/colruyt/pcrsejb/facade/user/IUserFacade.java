@@ -1,5 +1,7 @@
 package colruyt.pcrsejb.facade.user;
 
+import java.util.List;
+
 import javax.ejb.Local;
 
 import colruyt.pcrsejb.bo.user.UserBo;
@@ -12,5 +14,5 @@ public interface IUserFacade extends IFacade<UserBo> {
 
 	UserBo getUserByEmail(String email);
 	Boolean hasPrivilege(UserBo userBo, PrivilegeTypeBo privilege, Boolean active);
-	UserBo getUsersByShortName(String shortName);
+	List<UserBo> getUsersByShortName(String shortName);
 }
