@@ -15,15 +15,15 @@ import javax.persistence.Table;
 
 import colruyt.pcrsejb.entity.AbstractEntity;
 @Entity
-@Table(name="SURVEYSECTIONDEFINITIONSIMPL")
+@Table(name="SURVEYSECTIONDEFIMPL")
 public class SurveySectionDefinitionImpl extends AbstractEntity implements Serializable {
 	/*
 	 * PROPERTIES
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SURVEYSECTIONDEFINITIONSIMPL_SEQ")
-    @SequenceGenerator(sequenceName = "SURVEYSECTIONDEFINITIONSIMPL_SEQ", allocationSize = 1, name = "SURVEYSECTIONDEFINITIONSIMPL_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SURVEYSECTIONDEFIMPL_SEQ")
+    @SequenceGenerator(sequenceName = "SURVEYSECTIONDEFIMPL_SEQ", allocationSize = 1, name = "SURVEYSECTIONDEFIMPL_SEQ")
 	@Column(name="ID")
     private Integer id;
     @Enumerated(EnumType.STRING)

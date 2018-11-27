@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -21,7 +22,15 @@ import colruyt.pcrsejb.entity.user.User;
 
 @Entity
 @Table(name="SURVEYDEFINITIONS")
-@NamedQuery(name="SurveyDefinition.getAllSurveyDefinitions", query="Select sd From SurveyDefinition sd")
+@NamedQueries
+(
+	{
+			@NamedQuery(name = "SURVEYDEFINITION.GETALL", query = "SELECT sd FROM SurveyDefinition sd"),
+			@NamedQuery(name = "SURVEYDEFINITION.GETBYRESPONSIBLE", query = "SELECT sd from SurveyDefinition sd where sd.responsibleUser = :responsibleUser")
+			
+	}
+	
+)
 public class SurveyDefinition extends AbstractEntity implements Serializable {
 	/*
 	 * PROPERTIES

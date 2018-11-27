@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.EmptyStackException;
 import java.util.List;
 @Stateless
-public class DbCompenetceServiceDl implements ICompetenceServiceDl, Serializable {
+public class DbCompetenceServiceDl implements ICompetenceServiceDl, Serializable {
     private static final long serialVersionUID = 1L;
 
     @PersistenceContext(unitName = "PCRSEJB")
@@ -35,8 +35,9 @@ public class DbCompenetceServiceDl implements ICompetenceServiceDl, Serializable
 
     @Override
     public List<Competence> getAll() {
-        TypedQuery<Competence> q = em.createQuery("SELECT c from Competence c", Competence.class);
-        return q.getResultList();
+        TypedQuery<Competence> q = em.createNamedQuery("COMPETENCE.GETALL", Competence.class);
+        List<Competence> listOfCompetences = q.getResultList();
+        return listOfCompetences;
     }
 
     @Override
