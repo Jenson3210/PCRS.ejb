@@ -23,22 +23,17 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 
 	@Override
 	public Team save(Team element) {
-		
 		return em.merge(element);
 	}
 
 	@Override
 	public Team get(Team element) {
-		
 		return em.find(Team.class, element.getId());
 	}
 
 	@Override
 	public List<Team> getAll() {
-		
 		return (List<Team>) em.createNamedQuery("Team.getAllElements").getResultList();
-		
-		
 	}
 
 	@Override
