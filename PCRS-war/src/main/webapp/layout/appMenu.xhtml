@@ -89,11 +89,11 @@
 					<ul>
 						<li
 							class="#{request.getParameter('target') == 'users' ? 'c-active' : ''}">
-							<h:link value="#{msgs['menu.users']}" outcome="/admin/users.xhtml" />
+							<h:link value="#{msgs['menu.users']}" outcome="/admin/adminUser.xhtml" />
 						</li>
 						<li
 							class="#{request.getParameter('target') == 'teamsOfManager' ? 'c-active' : ''}">
-							<h:link value="#{msgs['menu.teamsOfManager']}" outcome="/admin/teams.xhtml" />
+							<h:link value="#{msgs['menu.teamsOfManager']}" outcome="/admin/team.xhtml" />
 						</li>
 						<li
 							class="#{request.getParameter('target') == 'surveyDefinitionresponsibles' ? 'c-active' : ''}">
