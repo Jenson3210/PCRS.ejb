@@ -29,7 +29,6 @@ public class SurveySectionTitleServiceBl implements ISurveySectionTitleServiceBl
 
 	@Override
 	public List<SurveySectionTitle> getAll() {
-		System.out.println("the size is " + surveySectionTitleDb.getAll().size());
 		return surveySectionTitleDb.getAll();
 	}
 

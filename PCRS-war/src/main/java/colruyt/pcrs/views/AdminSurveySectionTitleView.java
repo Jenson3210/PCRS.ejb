@@ -49,13 +49,10 @@ public class AdminSurveySectionTitleView implements Serializable {
 	public void addSurveySectionTitle()
 	{
 		surveySectionTitles.add(surveySectionTitleFacade.save(addedSurveySectionTitle));
-		System.out.println("the title of the addedSurveySectionTitle is " + addedSurveySectionTitle.getTitle() + "and the id is " + addedSurveySectionTitle.getId());
-		System.out.println("the length of the list is" + surveySectionTitles.size());
 	}
 	
 	public void newSurveySectionTitle() {
         addedSurveySectionTitle = new SurveySectionTitleBo();
-		System.out.println("addedSurveyTitle set to new");
     }
 	
 	public void editSurveySectionTitle() {

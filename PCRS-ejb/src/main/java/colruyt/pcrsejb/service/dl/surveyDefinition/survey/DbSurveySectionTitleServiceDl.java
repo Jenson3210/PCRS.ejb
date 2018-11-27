@@ -48,8 +48,8 @@ public class DbSurveySectionTitleServiceDl implements Serializable, ISurveySecti
 
 	@Override
 	public void delete(SurveySectionTitle element) {
-		SurveySectionTitle  surveySectionTitle = em.find(SurveySectionTitle.class, element);
-		if (surveySectionTitle != null) {
+		element = em.merge(element);
+		if (element != null) {
 			em.remove(element);
 		}
 		else {
