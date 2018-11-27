@@ -20,9 +20,14 @@
                         <p:column styleClass="ui-g-6">
                             <h:outputText value="#{team.name}"/>
                         </p:column>
-                        <p:column styleClass="ui-g-6" style="float: right">
+                        <p:column styleClass="ui-g-4" style="float: right">
                             <h:outputText value="#{team.enrolments.size()}"/>
                         </p:column>
+             			<p:column style="width:65px; text-align: center">
+							<p:commandLink id="addEnrolment" oncomplete="PF('addEnrolmentDialog').show()">
+								<i class="fas fa-user-plus"/>
+	     					</p:commandLink>
+						</p:column>
                     </p:headerRow>
                     <p:column>
                         <p:dataTable var="enrolment" value="#{team.enrolments}">
@@ -100,6 +105,28 @@
 								<p:commandButton value="#{msgs['team.add']}" update=":form"
 									action="#{adminTeamView.addTeam}"
 									oncomplete="PF('addTeamDialog').hide();" />
+							</div>
+						</p:outputPanel>
+					</p:dialog>
+				</div>
+			</h:form>
+			<h:form id="addEnrolmentForm">
+				<div class="ui-g" id="addEnrolmentForm">
+					<p:dialog id="addEnrolmentFormTitle" header="#{msgs['enrolment.add']}"
+						widgetVar="addEnrolmentDialog" modal="true">
+						<p:outputPanel id="addEnrolmentDetail">
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['enrolment.user']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+                                    <p:autocomplete id="user" value="#{adminCompetenceView.user}" completeMethod="adminCompetenceView.completeUser"/>
+                                </div>
+							</div>
+							<div class="ui-g-2">
+								<p:commandButton value="#{msgs['user.add']}" update=":form"
+									action="#{usersView.addUser}"
+									oncomplete="PF('addUserDialog').hide();" />
 							</div>
 						</p:outputPanel>
 					</p:dialog>

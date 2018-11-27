@@ -46,4 +46,9 @@ public class UserServiceBl implements IUserServiceBl {
 		}
 		return hasPrivilege;
 	}
+
+	@Override
+	public List<User> getUsersByShortName(String shortName) {
+		return usersDb.getUserByShortName(shortName);
+	}
 }
