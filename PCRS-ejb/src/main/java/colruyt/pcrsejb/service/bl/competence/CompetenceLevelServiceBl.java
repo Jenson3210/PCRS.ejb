@@ -3,38 +3,39 @@ package colruyt.pcrsejb.service.bl.competence;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import colruyt.pcrsejb.bo.competence.CompetenceBo;
-
+import colruyt.pcrsejb.entity.competence.CompetenceLevel;
+import colruyt.pcrsejb.service.dl.competence.ICompetenceLevelServiceDl;
 @Stateless
-public class CompetenceLevelServiceBl implements Serializable, ICompetenceServiceBl{
+public class CompetenceLevelServiceBl implements Serializable, ICompetenceLevelServiceDl{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	@EJB
+	private ICompetenceLevelServiceDl competencelevelDb;
 
 	@Override
-	public CompetenceBo save(CompetenceBo element) {
-		// TODO Auto-generated method stub
-		return null;
+	public CompetenceLevel save(CompetenceLevel element) {
+		competencelevelDb.save(element);
+		return element;
 	}
 
 	@Override
-	public CompetenceBo get(CompetenceBo element) {
-		// TODO Auto-generated method stub
-		return null;
+	public CompetenceLevel get(CompetenceLevel element) {
+		return competencelevelDb.get(element);
 	}
 
 	@Override
-	public List<CompetenceBo> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<CompetenceLevel> getAll() {
+		return competencelevelDb.getAll();
 	}
 
 	@Override
-	public void delete(CompetenceBo element) {
-		// TODO Auto-generated method stub
+	public void delete(CompetenceLevel element) {
+		competencelevelDb.delete(element);
 		
 	}
 }

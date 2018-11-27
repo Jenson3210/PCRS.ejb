@@ -1,5 +1,6 @@
 package colruyt.pcrsejb.service.dl.user.team;
 
+import java.util.EmptyStackException;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -42,8 +43,13 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 
 	@Override
 	public void delete(Team element) {
-		em.remove(element);
-		
+		element = em.merge(element);
+		if (element != null) {
+			em.remove(element);
+		}
+		else {
+			throw new EmptyStackException();
+		}
 	}
 
 	@Override

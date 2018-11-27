@@ -1,5 +1,6 @@
 package colruyt.pcrsejb.service.dl.user.team;
 
+import java.util.EmptyStackException;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -31,7 +32,13 @@ public class DbEnrolmentServiceDl implements IEnrolmentServiceDl{
 
 	@Override
 	public void delete(Enrolment element) {
-		em.remove(element);
+		element = em.merge(element);
+		if (element != null) {
+			em.remove(element);
+		}
+		else {
+			throw new EmptyStackException();
+		}
 	}
 
 }
