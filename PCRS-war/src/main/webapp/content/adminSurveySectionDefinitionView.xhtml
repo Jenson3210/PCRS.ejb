@@ -7,11 +7,47 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<h:form id="myform">
+	<div class="ui-g">
+		<div class="ui-g-1" />
+		<div class="ui-g-10">
 
+			<h:form id="ssdform">
 
+				<p:dataTable var="surveySectionDefinition"
+					value="#{adminSurveySectionDefinitionView.surveySectionDefinitions}">
 
-	</h:form>
+					<f:facet name="header">
+						<h:outputText value="#{msgs['surveySectionDefinition.title']}" />
+					</f:facet>
 
+					<p:column headerText="#{msgs['surveySectionDefinition.name']}">
+						<h:outputText value="#{surveySectionDefinition.name}" />
+					</p:column>
+
+					<p:column headerText="#{msgs['edit']}"
+						style="width:65px; text-align: center">
+						<p:commandLink update=":editForm:editSurveySectionDefinition"
+							id="edit" oncomplete="PF('editCompetenceDialog').show()">
+							<i class="fas fa-pencil-alt"></i>
+							<f:setPropertyActionListener value="#{surveySectionDefinition}"
+								target="#{adminSurveySectionDefinitionView.addedSurveySectionDefinition}" />
+						</p:commandLink>
+					</p:column>
+
+					<p:column headerText="#{msgs['delete']}"
+						style="width:65px; text-align: center">
+						<p:commandLink id="delete"
+							oncomplete="PF('deleteSurveySectionDefinitionDialog').show()">
+							<i class="fas fa-trash-alt"></i>
+							<f:setPropertyActionListener value="#{surveySectionDefinition}"
+								target="#{adminSurveySectionDefinitionView.addedSurveySectionDefinition}" />
+						</p:commandLink>
+					</p:column>
+
+				</p:dataTable>
+
+			</h:form>
+		</div>
+	</div>
 
 </ui:composition>

@@ -17,22 +17,23 @@ import colruyt.pcrsejb.service.bl.surveyDefinition.survey.ISurveySectionDefiniti
 
 @Stateless
 public class SurveySectionDefinitionFacade implements Serializable, ISurveySectionDefinitionFacade {
-	private static final long serialVersionUID = 1L;
 
 	@EJB
 	private ISurveySectionDefinitionServiceBl surveySectionDefinitionServiceBl;
 	private SurveySectionDefinitionConverter surveySectionDefinitionConverter = new SurveySectionDefinitionConverter();
 
+	private static final long serialVersionUID = 1L;
+
 	@Override
-	public SurveySectionDefinitionBo save(SurveySectionDefinitionBo surveySectionDefinition) {
-		return surveySectionDefinitionConverter.convertToBo(surveySectionDefinitionServiceBl
-				.save(surveySectionDefinitionConverter.convertToEntity(surveySectionDefinition)));
+	public SurveySectionDefinitionBo save(SurveySectionDefinitionBo entityBo) {
+		return surveySectionDefinitionConverter.convertToBo(
+				surveySectionDefinitionServiceBl.save(surveySectionDefinitionConverter.convertToEntity(entityBo)));
 	}
 
 	@Override
-	public SurveySectionDefinitionBo get(SurveySectionDefinitionBo surveySectionDefinition) {
-		return surveySectionDefinitionConverter.convertToBo(surveySectionDefinitionServiceBl
-				.get(surveySectionDefinitionConverter.convertToEntity(surveySectionDefinition)));
+	public SurveySectionDefinitionBo get(SurveySectionDefinitionBo entityBo) {
+		return surveySectionDefinitionConverter.convertToBo(
+				surveySectionDefinitionServiceBl.get(surveySectionDefinitionConverter.convertToEntity(entityBo)));
 	}
 
 	@Override
@@ -41,33 +42,8 @@ public class SurveySectionDefinitionFacade implements Serializable, ISurveySecti
 	}
 
 	@Override
-	public void delete(SurveySectionDefinitionBo surveySectionDefinition) {
-		surveySectionDefinitionServiceBl
-				.delete(surveySectionDefinitionConverter.convertToEntity(surveySectionDefinition));
+	public void delete(SurveySectionDefinitionBo entityBo) {
+		surveySectionDefinitionServiceBl.delete(surveySectionDefinitionConverter.convertToEntity(entityBo));	
 	}
-
-	@Override
-	public SurveySectionDefinitionBo getSurveySectionTitle(SurveySectionTitle surveySectionTitle) {
-		return surveySectionDefinitionConverter
-				.convertToBo(surveySectionDefinitionServiceBl.getSurveySectionTitle(surveySectionTitle));
-	}
-
-	@Override
-	public SurveySectionDefinitionBo getSurveySectionStrategy(SurveySectionStrategy surveySectionStrategy) {
-		return surveySectionDefinitionConverter
-				.convertToBo(surveySectionDefinitionServiceBl.getSurveySectionStrategy(surveySectionStrategy));
-	}
-
-	@Override
-	public SurveySectionDefinitionBo getSurveySectionRequirementLevel(
-			SurveySectionRequirementLevel surveySectionRequirementLevel) {
-		return surveySectionDefinitionConverter.convertToBo(
-				surveySectionDefinitionServiceBl.getSurveySectionRequirementLevel(surveySectionRequirementLevel));
-	}
-
-	@Override
-	public List<SurveySectionDefinitionBo> getSurveySectionCompetences() {
-		return surveySectionDefinitionConverter.convertToBos(surveySectionDefinitionServiceBl.getAll());
-	}
-
+	
 }

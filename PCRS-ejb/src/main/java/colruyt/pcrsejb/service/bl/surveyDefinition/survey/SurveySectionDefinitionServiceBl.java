@@ -1,30 +1,30 @@
 package colruyt.pcrsejb.service.bl.surveyDefinition.survey;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import colruyt.pcrsejb.entity.surveyDefinition.strategy.SurveySectionStrategy;
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinition;
-import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionRequirementLevel;
-import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionTitle;
 import colruyt.pcrsejb.service.dl.surveyDefinition.survey.ISurveySectionDefinitionServiceDl;
 
 @Stateless
-public class SurveySectionDefinitionServiceBl implements ISurveySectionDefinitionServiceBl {
+public class SurveySectionDefinitionServiceBl implements ISurveySectionDefinitionServiceBl, Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	@EJB
 	private ISurveySectionDefinitionServiceDl surveySectionDefinitionDb;
 
 	@Override
-	public SurveySectionDefinition save(SurveySectionDefinition surveySectionDefinition) {
-		return surveySectionDefinitionDb.save(surveySectionDefinition);
+	public SurveySectionDefinition save(SurveySectionDefinition element) {
+		return surveySectionDefinitionDb.save(element);
 	}
 
 	@Override
-	public SurveySectionDefinition get(SurveySectionDefinition surveySectionDefinition) {
-		return surveySectionDefinitionDb.get(surveySectionDefinition);
+	public SurveySectionDefinition get(SurveySectionDefinition element) {
+		return surveySectionDefinitionDb.get(element);
 	}
 
 	@Override
@@ -33,28 +33,7 @@ public class SurveySectionDefinitionServiceBl implements ISurveySectionDefinitio
 	}
 
 	@Override
-	public void delete(SurveySectionDefinition surveySectionDefinition) {
-		surveySectionDefinitionDb.delete(surveySectionDefinition);
-	}
-
-	@Override
-	public SurveySectionDefinition getSurveySectionTitle(SurveySectionTitle surveySectionTitle) {
-		return surveySectionDefinitionDb.getSurveySectionTitle(surveySectionTitle);
-	}
-
-	@Override
-	public SurveySectionDefinition getSurveySectionStrategy(SurveySectionStrategy surveySectionStrategy) {
-		return surveySectionDefinitionDb.getSurveySectionStrategy(surveySectionStrategy);
-	}
-
-	@Override
-	public SurveySectionDefinition getSurveySectionRequirementLevel(SurveySectionRequirementLevel surveySectionRequirementLevel) {
-		return surveySectionDefinitionDb.getSurveySectionRequirementLevel(surveySectionRequirementLevel);
-	}
-
-	@Override
-	public List<SurveySectionDefinition> getSurveySectionCompetences() {
-		// TODO Auto-generated method stub
-		return null;
+	public void delete(SurveySectionDefinition element) {
+		surveySectionDefinitionDb.delete(element);
 	}
 }

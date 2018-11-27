@@ -16,6 +16,7 @@ import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionTitle;
 
 @Stateless
 public class DbSurveySectionDefinitionServiceDl implements Serializable, ISurveySectionDefinitionServiceDl {
+
 	@PersistenceContext(unitName = "PCRSEJB")
 	private EntityManager em;
 
@@ -41,7 +42,7 @@ public class DbSurveySectionDefinitionServiceDl implements Serializable, ISurvey
 
 	@Override
 	public List<SurveySectionDefinition> getAll() {
-		TypedQuery<SurveySectionDefinition> q = em.createQuery("SELECT ssd from SurveySectionDefinition ssd",
+		TypedQuery<SurveySectionDefinition> q = em.createQuery("SELECT s from SurveySectionDefinition s",
 				SurveySectionDefinition.class);
 		List<SurveySectionDefinition> surveySectionDefinitionList = q.getResultList();
 		return surveySectionDefinitionList;
@@ -49,42 +50,11 @@ public class DbSurveySectionDefinitionServiceDl implements Serializable, ISurvey
 
 	@Override
 	public void delete(SurveySectionDefinition element) {
-		SurveySectionDefinition surveySectionDefinition = em.find(SurveySectionDefinition.class, element);
-		if (surveySectionDefinition != null) {
+		element = em.merge(element);
+		if (element != null) {
 			em.remove(element);
-		}
-		else {
+		} else {
 			throw new EmptyStackException();
 		}
 	}
-
-	@Override
-	public SurveySectionDefinition getSurveySectionTitle(SurveySectionTitle surveySectionTitle) {
-		Query q = em.createQuery("SELECT ssd from SurveySectionDefinition ssd WHERE(sss.surveySectionTitle) = :surveySectionTitle");
-		q.setParameter("surveySectionTitle", surveySectionTitle);
-		return (SurveySectionDefinition) q.getSingleResult();
-	}
-
-	@Override
-	public SurveySectionDefinition getSurveySectionStrategy(SurveySectionStrategy surveySectionStrategy) {
-		Query q = em.createQuery("SELECT ssd from SurveySectionDefinition ssd WHERE(sss.surveySectionStrategy) = :surveySectionStrategy");
-		q.setParameter("surveySectionStrategy", surveySectionStrategy);
-		return (SurveySectionDefinition) q.getSingleResult();
-	}
-
-	@Override
-	public SurveySectionDefinition getSurveySectionRequirementLevel(
-			SurveySectionRequirementLevel surveySectionRequirementLevel) {
-		Query q = em.createQuery("SELECT ssd from SurveySectionDefinition ssd WHERE(sss.surveySectionRequirementLevel) = :surveySectionRequirementLevel");
-		q.setParameter("surveySectionRequirementLevel", surveySectionRequirementLevel);
-		return (SurveySectionDefinition) q.getSingleResult();
-	}
-
-	@Override
-	public List<SurveySectionDefinition> getSurveySectionCompetences() {
-		Query q = em.createQuery("SELECT ssd from SurveySectionDefinition ssd WHERE(sss.surveySectionCompetences) = :surveySectionCompetences");
-		q.setParameter("surveySectionCompetences", surveySectionCompetences);
-		return (List<SurveySectionDefinition>) q.getResultList();
-	}
-
 }
