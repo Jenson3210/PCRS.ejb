@@ -1,9 +1,7 @@
 package colruyt.pcrs.views;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;

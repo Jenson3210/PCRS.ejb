@@ -1,12 +1,11 @@
 package colruyt.pcrs.views;
 
-import java.util.Iterator;
 import java.util.List;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import colruyt.pcrsejb.bo.user.team.EnrolmentBo;
@@ -20,22 +19,16 @@ public class AdminTeamView implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@EJB 
-	ITeamFacade teamFacade;
-	
+	private ITeamFacade teamFacade;
 	@EJB
-	IEnrolmentFacade enrolmentFacade;
-	
+	private IEnrolmentFacade enrolmentFacade;
 	private List<TeamBo> teams; 
-	
     private TeamBo manipulatedTeamBo;
     private EnrolmentBo manipulatedEnrolmentBo;
 
     @PostConstruct
     private void fillList() {
         teams = teamFacade.getAll();
-        for (TeamBo teamBo : teams) {
-			System.out.println(teamBo.getName());
-		}
     }
 
 
@@ -61,7 +54,7 @@ public class AdminTeamView implements Serializable {
     }
 
     public TeamBo getManipulatedTeamBo() {
-        return manipulatedTeamBo;
+    	return manipulatedTeamBo;
     }
 
     public void setManipulatedTeamBo(TeamBo manipulatedTeamBo) {
@@ -69,7 +62,25 @@ public class AdminTeamView implements Serializable {
     }
 
     public void newTeam() {
-        manipulatedTeamBo = new TeamBo();
+        manipulatedTeamBo = new TeamBo(); 
+    }
+    
+    public void addTeam() {
+    	teams.add(teamFacade.save(manipulatedTeamBo));
+    }
+    
+    public void deleteEnrolment() {
+    	EnrolmentBo e = null;
+    	for(TeamBo team : teams) {
+        	for (EnrolmentBo enrolment : team.getEnrolments()) {
+        		if(enrolment.getId() == manipulatedEnrolmentBo.getId()) {
+        			e = enrolment;
+        		}
+        	}
+        	team.getEnrolments().remove(e);
+        	
+    	}
+    	enrolmentFacade.delete(manipulatedEnrolmentBo);
     }
 	
 }
