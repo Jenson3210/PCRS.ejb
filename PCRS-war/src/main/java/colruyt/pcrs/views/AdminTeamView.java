@@ -35,6 +35,7 @@ public class AdminTeamView implements Serializable {
     private TeamBo manipulatedTeamBo;
     private EnrolmentBo manipulatedEnrolmentBo;
     private UserBo user;
+    private String userPrivilege;
 
     @PostConstruct
     private void fillList() {
@@ -79,8 +80,17 @@ public class AdminTeamView implements Serializable {
 	public void setUser(UserBo user) {
 		this.user = user;
 	}
+	
+	public String getUserPrivilege() {
+		return userPrivilege;
+	}
 
-    public void newTeam() {
+	public void setUserPrivilege(String userPrivilege) {
+		this.userPrivilege = userPrivilege;
+	}
+
+
+	public void newTeam() {
         manipulatedTeamBo = new TeamBo(); 
     }
     
@@ -103,18 +113,16 @@ public class AdminTeamView implements Serializable {
     }
     
     public void addEnrolment() {
+    	
     	System.out.println(user.getFirstName());
+    	System.out.println(manipulatedTeamBo.getName());
+    	System.out.println(userPrivilege);
+    	
     }
     
 	
-	public List<String> completeUser(String query){
-		List<String> results = new ArrayList<>();
-		
-		for(UserBo u : userFacade.getUsersByShortName("%"+query+"%")) {
-			results.add(u.getFirstName() + " " + u.getLastName());
-		}
-		
-		return results;
+	public List<UserBo> completeUser(String query){
+		return userFacade.getUsersByShortName("%"+query+"%");
 	}
 	
 }
