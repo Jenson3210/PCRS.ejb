@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +16,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import colruyt.pcrsejb.entity.AbstractEntity;
-import colruyt.pcrsejb.entity.competence.Competence;
+import colruyt.pcrsejb.entity.competence.CompetenceImpl;
 import colruyt.pcrsejb.entity.surveyDefinition.strategy.SurveySectionStrategy;
 
 @Entity
@@ -34,37 +32,33 @@ public class SurveySectionDefinition extends AbstractEntity implements Serializa
 	@Column(name="ID")
 	private Integer id;
 	private Boolean administratorCreated;
-	@Enumerated(EnumType.STRING)
-	private SurveySectionRequirementLevel surveySectionRequirementLevel;
 	@ManyToOne
 	private SurveySectionTitle surveySectionTitle;
 	@OneToOne
 	private SurveySectionStrategy surveySectionStrategy;
 	@OneToMany
 	@JoinColumn(name="SURVEYSECTIONDEFINITIONS_ID")
-	private List<Competence> surveySectionCompetences;
+	private List<CompetenceImpl> surveySectionCompetences;
 	/*
 	 * CONSTRUCTORS
 	 */
 	public SurveySectionDefinition() {
 		super();
 	}
-	public SurveySectionDefinition(SurveySectionTitle surveySectionTitle, SurveySectionStrategy surveySectionStrategy, List<Competence> surveySectionCompetences, Boolean administratorCreated, SurveySectionRequirementLevel surveySectionRequirementLevel) {
+	public SurveySectionDefinition(SurveySectionTitle surveySectionTitle, SurveySectionStrategy surveySectionStrategy, List<CompetenceImpl> surveySectionCompetences, Boolean administratorCreated) {
 		super();
 		this.surveySectionTitle = surveySectionTitle;
 		this.surveySectionStrategy = surveySectionStrategy;
 		this.surveySectionCompetences = surveySectionCompetences;
 		this.administratorCreated = administratorCreated;
-		this.surveySectionRequirementLevel = surveySectionRequirementLevel;
 	}
-	public SurveySectionDefinition(Integer id,SurveySectionTitle surveySectionTitle, SurveySectionStrategy surveySectionStrategy, List<Competence> surveySectionCompetences, Boolean administratorCreated, SurveySectionRequirementLevel surveySectionRequirementLevel) {
+	public SurveySectionDefinition(Integer id,SurveySectionTitle surveySectionTitle, SurveySectionStrategy surveySectionStrategy, List<CompetenceImpl> surveySectionCompetences, Boolean administratorCreated) {
 		super();
 		this.id = id;
 		this.surveySectionTitle = surveySectionTitle;
 		this.surveySectionStrategy = surveySectionStrategy;
 		this.surveySectionCompetences = surveySectionCompetences;
 		this.administratorCreated = administratorCreated;
-		this.surveySectionRequirementLevel = surveySectionRequirementLevel;
 	}
 	/*
 	 * GETTERS AND SETTERS
@@ -87,10 +81,10 @@ public class SurveySectionDefinition extends AbstractEntity implements Serializa
 	public void setSurveySectionStrategy(SurveySectionStrategy surveySectionStrategy) {
 		this.surveySectionStrategy = surveySectionStrategy;
 	}
-	public List<Competence> getSurveySectionCompetences() {
+	public List<CompetenceImpl> getSurveySectionCompetences() {
 		return surveySectionCompetences;
 	}
-	public void setSurveySectionCompetences(List<Competence> surveySectionCompetences) {
+	public void setSurveySectionCompetences(List<CompetenceImpl> surveySectionCompetences) {
 		this.surveySectionCompetences = surveySectionCompetences;
 	}
 	public Boolean getAdministratorCreated() {
@@ -98,11 +92,5 @@ public class SurveySectionDefinition extends AbstractEntity implements Serializa
 	}
 	public void setAdministratorCreated(Boolean administratorCreated) {
 		this.administratorCreated = administratorCreated;
-	}
-	public SurveySectionRequirementLevel getSurveySectionRequirementLevel() {
-		return surveySectionRequirementLevel;
-	}
-	public void setSurveySectionRequirementLevel(SurveySectionRequirementLevel surveySectionRequirementLevel) {
-		this.surveySectionRequirementLevel = surveySectionRequirementLevel;
 	}
 }

@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -21,6 +23,7 @@ import colruyt.pcrsejb.facade.user.IUserFacade;
 public class AdminSurveyDefinitionView implements Serializable{
 	
 	
+	
 	private static final long serialVersionUID = 5L;
 	
 	@EJB
@@ -33,6 +36,7 @@ public class AdminSurveyDefinitionView implements Serializable{
 	private UserBo addedUserBo;
 	
 
+	
 	@EJB
 	private ISurveyDefinitionFacade surveyDefinitionFacade;
 
@@ -55,7 +59,6 @@ public class AdminSurveyDefinitionView implements Serializable{
 	public void newSurveyDefinition() {
 		System.out.println("Inside newSurveyDefinition()");
 		addedSurveyDefinitionBo = new SurveyDefinitionBo();
-		addedUserBo = new UserBo();
 	}
 	
 
@@ -86,37 +89,29 @@ public class AdminSurveyDefinitionView implements Serializable{
 		this.addedSurveyDefinitionBo = addedSurveyDefinitionBo;
 	}
 
+	
 	public void addSurveyDefinition() {
-		System.out.println("Inside addSurveyDefinition()");
-		System.out.println("Title " + addedSurveyDefinitionBo.getName());
-		System.out.println("User " + addedUserBo.getEmail());
-		
-		// search in the matchingUsers list for the selected user by comparing the
-		// email addresses
-		for (UserBo userBo : matchingUsers) {
-			if (userBo.getEmail().equals(addedUserBo.getEmail())) {
-				addedUserBo = userBo;
+		surveyDefinitions.add(surveyDefinitionFacade.save(addedSurveyDefinitionBo));	
+	}
+	
+	public List<UserBo> completeShortName(String query){
+		return userFacade.getUsersByShortName("%" + query + "%");
+	}
+	
+	
+	public void deleteSurveyDefinition(){
+		surveyDefinitions.remove(addedSurveyDefinitionBo);
+		surveyDefinitionFacade.delete(addedSurveyDefinitionBo);
+	}
+	
+	public void editSurveyDefinition() {
+		for (SurveyDefinitionBo bo : surveyDefinitions) {
+			if (bo.getId() == addedSurveyDefinitionBo.getId()) {
+				bo.setName(addedSurveyDefinitionBo.getName());
+				bo.setResponsibleUser(addedSurveyDefinitionBo.getResponsibleUser());
 			}
 		}
-		addedSurveyDefinitionBo.setResponsibleUser(addedUserBo);
 		surveyDefinitionFacade.save(addedSurveyDefinitionBo);
-		
 	}
-	
-	public List<String> completeShortName(String query){
-		matchingUsers = new ArrayList<>();
-		
-		List<String> autoCompleteList = new ArrayList<>();
-		
-		// look for users with short name = query
-		matchingUsers = userFacade.getUsersByShortName(query);
-		
-		for (UserBo userBo : matchingUsers) {
-			autoCompleteList.add(userBo.getEmail());
-		}
-		
-		return autoCompleteList;
-	}
-	
 }
 

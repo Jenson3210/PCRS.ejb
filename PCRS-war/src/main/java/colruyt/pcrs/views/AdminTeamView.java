@@ -13,6 +13,7 @@ import javax.inject.Named;
 
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
+import colruyt.pcrsejb.bo.user.privilege.TeamMemberUserPrivilegeBo;
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.bo.user.team.EnrolmentBo;
 import colruyt.pcrsejb.bo.user.team.TeamBo;
@@ -35,6 +36,7 @@ public class AdminTeamView implements Serializable {
     private TeamBo manipulatedTeamBo;
     private EnrolmentBo manipulatedEnrolmentBo;
     private UserBo user;
+    private String userPrivilege;
 
     @PostConstruct
     private void fillList() {
@@ -79,13 +81,26 @@ public class AdminTeamView implements Serializable {
 	public void setUser(UserBo user) {
 		this.user = user;
 	}
+	
+	public String getUserPrivilege() {
+		return userPrivilege;
+	}
 
-    public void newTeam() {
+	public void setUserPrivilege(String userPrivilege) {
+		this.userPrivilege = userPrivilege;
+	}
+
+
+	public void newTeam() {
         manipulatedTeamBo = new TeamBo(); 
     }
     
     public void addTeam() {
     	teams.add(teamFacade.save(manipulatedTeamBo));
+    }
+    
+    public void newEnrolment() {
+    	manipulatedEnrolmentBo = new EnrolmentBo();
     }
     
     public void deleteEnrolment() {
@@ -103,18 +118,31 @@ public class AdminTeamView implements Serializable {
     }
     
     public void addEnrolment() {
-    	System.out.println(user.getFirstName());
+    	UserPrivilegeBo privilege;
+    	EnrolmentBo enrolment = new EnrolmentBo();
+    	
+    	if(PrivilegeTypeBo.TEAMMEMBER.getShortName().equals(userPrivilege)) {
+    		privilege = new TeamMemberUserPrivilegeBo();
+    		privilege.setPrivilegeType(PrivilegeTypeBo.TEAMMEMBER);
+    	}else {
+    		privilege = new UserPrivilegeBo();
+    		privilege.setPrivilegeType(PrivilegeTypeBo.TEAMMANAGER);
+    	}
+    	
+		privilege.setActive(true);
+		
+    	enrolment.setUser(user);
+    	enrolment.setUserPrivilege(privilege);
+    	enrolment.setActive(true);
+    	
+    	manipulatedTeamBo.getEnrolments().add(enrolment);
+    	teamFacade.save(manipulatedTeamBo);
+
     }
     
 	
-	public List<String> completeUser(String query){
-		List<String> results = new ArrayList<>();
-		
-		for(UserBo u : userFacade.getUsersByShortName("%"+query+"%")) {
-			results.add(u.getFirstName() + " " + u.getLastName());
-		}
-		
-		return results;
+	public List<UserBo> completeUser(String query){
+		return userFacade.getUsersByShortName("%"+query+"%");
 	}
 	
 }

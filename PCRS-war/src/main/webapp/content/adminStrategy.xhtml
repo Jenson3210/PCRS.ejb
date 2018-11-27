@@ -11,53 +11,82 @@
 		<div class="ui-g-1" />
 		<div class="ui-g-10">
 			<h:form>
-				<p:dataTable var="strategy" value="#{surveySectionStrategyView.strategies}">
-					<f:facet name="header"><h:outputText value="#{msgs['strategy.title']}"/></f:facet>
-					<p:column style="width:16px">
-						<p:rowToggler />
-					</p:column>
-					<p:column>
+				<p:dataTable var="strategy"
+					value="#{surveySectionStrategyView.strategies}">
+					<f:facet name="header">
+						<h:outputText value="#{msgs['strategy.title']}" />
+					</f:facet>
+					<p:column headerText="#{msgs['strategy.name']}">
 						<h:outputText value="#{strategy.name}" />
 					</p:column>
-						<p:column headerText="#{msgs['edit']}" style="width:65px; text-align: center">
-<!-- 						<p:commandLink update=":editForm:editSurveySectionStrategy" id="edit" oncomplete="PF('editSurveySectionStrategyDialog').show()"> -->
-<!-- 							<i class="fas fa-pencil-alt"></i> -->
-<!--      						<f:setPropertyActionListener value="#{strategy}" -->
-<!-- 								target="#{surveySectionStrategyView.surveySectionStrategyBo}" /> -->
-<!--      					</p:commandLink> -->
+					<p:column headerText="#{msgs['strategy.amountOfLevels']}">
+						<h:outputText value="#{strategy.amountOfLevels}" />
+					</p:column>
+					<p:column headerText="#{msgs['strategy.energyRated']}">
+						<p:outputPanel rendered="#{strategy.energyRated}">
+							<i class="fas fa-check"></i>
+						</p:outputPanel>
+					</p:column>
+					<p:column headerText="#{msgs['strategy.interestRated']}">
+						<p:outputPanel rendered="#{strategy.interestRated}">
+							<i class="fas fa-check"></i>
+						</p:outputPanel>
+					</p:column>
+					<p:column headerText="#{msgs['strategy.descriptionRequired']}">
+						<p:outputPanel rendered="#{strategy.descriptionRequired}">
+							<i class="fas fa-check"></i>
+						</p:outputPanel>
+					</p:column>
+					<p:column headerText="#{msgs['strategy.hasMinimumLevel']}">
+						<p:outputPanel rendered="#{strategy.hasMinimumLevel}">
+							<i class="fas fa-check"></i>
+						</p:outputPanel>
+					</p:column>
+					<p:column headerText="#{msgs['strategy.flexibleDescription']}">
+						<p:outputPanel rendered="#{strategy.flexibleDescription}">
+							<i class="fas fa-check"></i>
+						</p:outputPanel>
+					</p:column>
+					<p:column headerText="#{msgs['edit']}"
+						style="width:65px; text-align: center">
+						<!-- 						<p:commandLink update=":editForm:editSurveySectionStrategy" id="edit" oncomplete="PF('editSurveySectionStrategyDialog').show()"> -->
+						<!-- 							<i class="fas fa-pencil-alt"></i> -->
+						<!--      						<f:setPropertyActionListener value="#{strategy}" -->
+						<!-- 								target="#{surveySectionStrategyView.surveySectionStrategyBo}" /> -->
+						<!--      					</p:commandLink> -->
 					</p:column>
 					<p:column headerText="#{msgs['delete']}"
 						style="width:65px; text-align: center">
-<!-- 						<p:commandLink id="delete" oncomplete="PF('deleteSurveySectionStrategyDialog').show()"> -->
-<!-- 							<i class="fas fa-trash-alt"></i> -->
-<!--      						<f:setPropertyActionListener value="#{strategy}" -->
-<!-- 								target="#{surveySectionStrategyView.surveySectionStrategyBo}" />  -->
-<!--      					</p:commandLink> -->
+						<!-- 						<p:commandLink id="delete" oncomplete="PF('deleteSurveySectionStrategyDialog').show()"> -->
+						<!-- 							<i class="fas fa-trash-alt"></i> -->
+						<!--      						<f:setPropertyActionListener value="#{strategy}" -->
+						<!-- 								target="#{surveySectionStrategyView.surveySectionStrategyBo}" />  -->
+						<!--      					</p:commandLink> -->
 					</p:column>
-					<p:rowExpansion>
-						<p:panelGrid columns="2">
+					<!-- 					<p:rowExpansion> -->
+					<!-- 						<p:panelGrid columns="2"> -->
 
-							<h:outputText value="#{msgs['strategy.amountOfLevels']}" />
-							<h:outputText value="#{strategy.amountOfLevels}" />
+					<!-- 							<h:outputText value="#{msgs['strategy.amountOfLevels']}" /> -->
+					<!-- 							<h:outputText value="#{strategy.amountOfLevels}" /> -->
 
-							<h:outputText value="#{msgs['strategy.energyRated']}" />
-							<p:selectBooleanButton id="energy" value="#{strategy.energyRated}" onLabel="#{msgs['general.button.yes']}" offLabel="#{msgs['general.button.no']}"  style="width:65px" />
+					<!-- 							<h:outputText value="#{msgs['strategy.energyRated']}" /> -->
+					<!-- 							<p:selectBooleanButton id="energy" value="#{strategy.energyRated}" onLabel="#{msgs['general.button.yes']}" offLabel="#{msgs['general.button.no']}"  style="width:65px" /> -->
 
-							<h:outputText value="#{msgs['strategy.interestRated']}" />
-							<p:selectBooleanButton id="interest" value="#{strategy.interestRated}" onLabel="#{msgs['general.button.yes']}" offLabel="#{msgs['general.button.no']}"  style="width:65px" />
+					<!-- 							<h:outputText value="#{msgs['strategy.interestRated']}" /> -->
+					<!-- 							<p:selectBooleanButton id="interest" value="#{strategy.interestRated}" onLabel="#{msgs['general.button.yes']}" offLabel="#{msgs['general.button.no']}"  style="width:65px" /> -->
 
-							<h:outputText value="#{msgs['strategy.descriptionRequired']}" />
-							<p:selectBooleanButton id="description" value="#{strategy.descriptionRequired}" onLabel="#{msgs['general.button.yes']}" offLabel="#{msgs['general.button.no']}"  style="width:65px" />
+					<!-- 							<h:outputText value="#{msgs['strategy.descriptionRequired']}" /> -->
+					<!-- 							<p:selectBooleanButton id="description" value="#{strategy.descriptionRequired}" onLabel="#{msgs['general.button.yes']}" offLabel="#{msgs['general.button.no']}"  style="width:65px" /> -->
 
-							<h:outputText value="#{msgs['strategy.hasMinimumLevel']}" />
-							<p:selectBooleanButton id="minLevel" value="#{strategy.hasMinimumLevel}" onLabel="#{msgs['general.button.yes']}" offLabel="#{msgs['general.button.no']}"  style="width:65px" />
+					<!-- 							<h:outputText value="#{msgs['strategy.hasMinimumLevel']}" /> -->
+					<!-- 							<p:selectBooleanButton id="minLevel" value="#{strategy.hasMinimumLevel}" onLabel="#{msgs['general.button.yes']}" offLabel="#{msgs['general.button.no']}"  style="width:65px" /> -->
 
-							<h:outputText value="#{msgs['strategy.flexibleDescription']}" />
-							<p:selectBooleanButton id="flexDesc" value="#{strategy.flexibleDescription}" onLabel="#{msgs['general.button.yes']}" offLabel="#{msgs['general.button.no']}"  style="width:65px" />
+					<!-- 							<h:outputText value="#{msgs['strategy.flexibleDescription']}" /> -->
+					<!-- 							<p:selectBooleanButton id="flexDesc" value="#{strategy.flexibleDescription}" onLabel="#{msgs['general.button.yes']}" offLabel="#{msgs['general.button.no']}"  style="width:65px" /> -->
 
-							
-						</p:panelGrid>
-					</p:rowExpansion>
+
+					<!-- 						</p:panelGrid> -->
+					<!-- 					</p:rowExpansion> -->
 				</p:dataTable>
 			</h:form>
 		</div>
