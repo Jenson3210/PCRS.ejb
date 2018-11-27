@@ -49,13 +49,12 @@ public abstract class PrivilegeFilter implements Filter {
 
 	@Override
 	public final void init(FilterConfig arg0) throws ServletException {
-		// TODO Auto-generated method stub
+
 		
 	}
 	
 	@Override
 	public final void destroy() {
-		// TODO Auto-generated method stub
 		
 	}
 	
