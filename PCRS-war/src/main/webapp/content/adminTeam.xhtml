@@ -24,7 +24,8 @@
                             <h:outputText value="#{team.enrolments.size()}"/>
                         </p:column>
              			<p:column style="width:65px; text-align: center">
-							<p:commandLink id="addEnrolment" oncomplete="PF('addEnrolmentDialog').show()">
+							<p:commandLink id="addEnrolment" oncomplete="PF('addEnrolmentDialog').show()"
+										action="#{adminTeamView.newEnrolment}">
 								<i class="fas fa-user-plus"/>
 								<f:setPropertyActionListener value="#{team}"
 										target="#{adminTeamView.manipulatedTeamBo}" /> 
@@ -135,8 +136,8 @@
 	                            <div class="ui-g-8">
 									<p:selectOneMenu id="privilege"
 										value="#{adminTeamView.userPrivilege}">
-										<f:selectItem itemLabel="TeamMember" itemValue="TEAMMEMBER" />
-										<f:selectItem itemLabel="TeamManager" itemValue="TEAMMANAGER" />
+										<f:selectItem itemLabel="TeamMember" itemValue="M" />
+										<f:selectItem itemLabel="TeamManager" itemValue="T" />
 									</p:selectOneMenu>
 	                            </div>
                             </div>
