@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import colruyt.pcrsejb.bo.AbstractBo;
-import colruyt.pcrsejb.bo.competence.CompetenceBo;
+import colruyt.pcrsejb.bo.competence.CompetenceImplBo;
 import colruyt.pcrsejb.bo.surveyDefinition.strategy.SurveySectionStrategyBo;
 
 public class SurveySectionDefinitionBo extends AbstractBo implements Serializable {
@@ -14,32 +14,29 @@ public class SurveySectionDefinitionBo extends AbstractBo implements Serializabl
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private Boolean administratorCreated;
-	private SurveySectionRequirementLevelBo surveySectionRequirementLevel;
 	private SurveySectionTitleBo surveySectionTitle;
 	private SurveySectionStrategyBo surveySectionStrategy;
-	private List<CompetenceBo> surveySectionCompetences;
+	private List<CompetenceImplBo> surveySectionCompetences;
 	/*
 	 * CONSTRUCTORS
 	 */
 	public SurveySectionDefinitionBo() {
 		super();
 	}
-	public SurveySectionDefinitionBo(SurveySectionTitleBo surveySectionTitle, SurveySectionStrategyBo surveySectionStrategy, List<CompetenceBo> surveySectionCompetences, Boolean administratorCreated, SurveySectionRequirementLevelBo surveySectionRequirementLevel) {
+	public SurveySectionDefinitionBo(SurveySectionTitleBo surveySectionTitle, SurveySectionStrategyBo surveySectionStrategy, List<CompetenceImplBo> surveySectionCompetences, Boolean administratorCreated) {
 		super();
 		this.surveySectionTitle = surveySectionTitle;
 		this.surveySectionStrategy = surveySectionStrategy;
 		this.surveySectionCompetences = surveySectionCompetences;
 		this.administratorCreated = administratorCreated;
-		this.surveySectionRequirementLevel = surveySectionRequirementLevel;
 	}
-	public SurveySectionDefinitionBo(Integer id,SurveySectionTitleBo surveySectionTitle, SurveySectionStrategyBo surveySectionStrategy, List<CompetenceBo> surveySectionCompetences, Boolean administratorCreated, SurveySectionRequirementLevelBo surveySectionRequirementLevel) {
+	public SurveySectionDefinitionBo(Integer id,SurveySectionTitleBo surveySectionTitle, SurveySectionStrategyBo surveySectionStrategy, List<CompetenceImplBo> surveySectionCompetences, Boolean administratorCreated) {
 		super();
 		this.id = id;
 		this.surveySectionTitle = surveySectionTitle;
 		this.surveySectionStrategy = surveySectionStrategy;
 		this.surveySectionCompetences = surveySectionCompetences;
 		this.administratorCreated = administratorCreated;
-		this.surveySectionRequirementLevel = surveySectionRequirementLevel;
 	}
 	/*
 	 * GETTERS AND SETTERS
@@ -62,10 +59,10 @@ public class SurveySectionDefinitionBo extends AbstractBo implements Serializabl
 	public void setSurveySectionStrategy(SurveySectionStrategyBo surveySectionStrategy) {
 		this.surveySectionStrategy = surveySectionStrategy;
 	}
-	public List<CompetenceBo> getSurveySectionCompetences() {
+	public List<CompetenceImplBo> getSurveySectionCompetences() {
 		return surveySectionCompetences;
 	}
-	public void setSurveySectionCompetences(List<CompetenceBo> surveySectionCompetences) {
+	public void setSurveySectionCompetences(List<CompetenceImplBo> surveySectionCompetences) {
 		this.surveySectionCompetences = surveySectionCompetences;
 	}
 	public Boolean getAdministratorCreated() {
@@ -73,11 +70,5 @@ public class SurveySectionDefinitionBo extends AbstractBo implements Serializabl
 	}
 	public void setAdministratorCreated(Boolean administratorCreated) {
 		this.administratorCreated = administratorCreated;
-	}
-	public SurveySectionRequirementLevelBo getSurveySectionRequirementLevel() {
-		return surveySectionRequirementLevel;
-	}
-	public void setSurveySectionRequirementLevel(SurveySectionRequirementLevelBo surveySectionRequirementLevel) {
-		this.surveySectionRequirementLevel = surveySectionRequirementLevel;
 	}
 }

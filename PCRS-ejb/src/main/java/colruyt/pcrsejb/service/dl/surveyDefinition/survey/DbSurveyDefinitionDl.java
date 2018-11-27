@@ -1,3 +1,4 @@
+
 package colruyt.pcrsejb.service.dl.surveyDefinition.survey;
 
 import java.io.Serializable;
@@ -7,9 +8,12 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveyDefinitionBo;
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveyDefinition;
+import colruyt.pcrsejb.entity.user.User;
 
 @Stateless
 public class DbSurveyDefinitionDl implements Serializable, ISurveyDefinitionDl {
@@ -48,13 +52,23 @@ public class DbSurveyDefinitionDl implements Serializable, ISurveyDefinitionDl {
 
 	@Override
 	public void delete(SurveyDefinition element) {
-		SurveyDefinition surveyDefinition = em.merge(element);
-		if (null != surveyDefinition) {
-			em.remove(surveyDefinition);
-		} else {
+		SurveyDefinition surveyDefinition = em.find(SurveyDefinition.class, element);
+		if (surveyDefinition == null) {
 			throw new EmptyStackException();
 		}
+		em.remove(element);
+	}
+
+	@Override
+	public List<SurveyDefinition> getSurveyDefinitionsOfUser(User user) {
+		TypedQuery<SurveyDefinition> q = em.createQuery("Select sd from SurveyDefinition sd where sd.responsibleUser = ?1",SurveyDefinition.class);
+		q.setParameter(1, user);
+		return q.getResultList();
+		
+		
 	}
 
 
 }
+
+
