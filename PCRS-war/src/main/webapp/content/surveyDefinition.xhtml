@@ -72,9 +72,10 @@
 									<p:outputLabel value="#{msgs['user.shortName']}"></p:outputLabel>
 								</div>
 								<div class="ui-g-8">
-									 <p:autoComplete value="#{autoCompleteView.theme1}" completeMethod="#{adminSurveyDefinitionView.completeShortName}"
-                        				var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme}"
-                        				forceSelection="true" maxlength="5" />
+									 <p:autoComplete completeMethod="#{adminSurveyDefinitionView.completeShortName}" 
+									 				forceSelection="true" maxlength="5" emptyMessage="#{msgs['surveyDefinition.noResults']}"
+									 				value="#{adminSurveyDefinitionView.addedUserBo.email}"/>
+                        				<!--  value="#{autoCompleteView.theme1}" var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme}"-->
 								</div> 
 							</div> 
 							

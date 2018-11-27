@@ -2,6 +2,7 @@ package colruyt.pcrs.views;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -12,9 +13,7 @@ import javax.inject.Named;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveyDefinitionBo;
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveyDefinitionFacade;
-import colruyt.pcrsejb.facade.user.UserFacade;
-
-
+import colruyt.pcrsejb.facade.user.IUserFacade;
 
 
 @Named
@@ -25,7 +24,7 @@ public class AdminSurveyDefinitionView implements Serializable{
 	private static final long serialVersionUID = 5L;
 	
 	@EJB
-	private UserFacade userFacade;
+	private IUserFacade userFacade;
 	
 	private List<SurveyDefinitionBo> surveyDefinitions;
 	
@@ -91,12 +90,18 @@ public class AdminSurveyDefinitionView implements Serializable{
 	}
 	
 	public List<String> completeShortName(String query){
-		List<String> matchingUsers = new ArrayList<>();
+		List<UserBo> matchingUsers = new ArrayList<>();
 		
-		// look for users with that shortname
-		matchingUsers = userFacade.getUserByShortName(query);
+		List<String> autoCompleteList = new ArrayList<>();
 		
-		return matchingUsers;
+		// look for users with short name = query
+		//matchingUsers = userFacade.getUsersByShortName(query);
+		
+		for (UserBo userBo : matchingUsers) {
+			autoCompleteList.add(userBo.getEmail());
+		}
+		
+		return autoCompleteList;
 	}
 	
 }
