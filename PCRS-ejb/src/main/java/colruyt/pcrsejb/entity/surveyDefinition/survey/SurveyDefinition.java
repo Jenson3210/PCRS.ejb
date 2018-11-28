@@ -24,6 +24,7 @@ import colruyt.pcrsejb.entity.AbstractEntity;
 (
 	{
 			@NamedQuery(name = "SURVEYDEFINITION.GETALL", query = "SELECT sd FROM SurveyDefinition sd"),
+			@NamedQuery(name = "SURVEYDEFINITION.GETRESPONSIBLE", query = "SELECT u FROM User u join u.privileges p WHERE p.privilegeType = :pt AND p.active = true AND TREAT(p AS SurveyUserPrivilege).surveyDefinition = :sd")
 	}
 	
 )
