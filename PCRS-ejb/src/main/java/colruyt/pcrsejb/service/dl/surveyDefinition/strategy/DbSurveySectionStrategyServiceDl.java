@@ -22,12 +22,22 @@ public class DbSurveySectionStrategyServiceDl implements Serializable, ISurveySe
 
 	@Override
 	public SurveySectionStrategy save(SurveySectionStrategy element) {
-		SurveySectionStrategy surveySectionStrategy = em.merge(element);
+		SurveySectionStrategy surveySectionStrategy = null;
+		try {
+			surveySectionStrategy = em.find(SurveySectionStrategy.class, element.getId());
+		}catch(Exception e) {}
 		if(surveySectionStrategy == null)
 		{
-			throw new EmptyStackException();
+			em.persist(element);
+			surveySectionStrategy = element;
+		}
+		else
+		{
+			element.setId(surveySectionStrategy.getId());
+			surveySectionStrategy = em.merge(element);
 		}
 		return surveySectionStrategy;
+		
 	}
 
 	@Override
