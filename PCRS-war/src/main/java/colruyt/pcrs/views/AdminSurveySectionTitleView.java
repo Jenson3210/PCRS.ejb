@@ -13,7 +13,7 @@ import javax.inject.Named;
 
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionBo;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionTitleBo;
-import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinition;
+import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveySectionDefinition;
 import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveySectionTitleFacade;
 
 @Named
@@ -25,8 +25,8 @@ public class AdminSurveySectionTitleView implements Serializable {
 	private List<SurveySectionTitleBo> surveySectionTitles;
 	@EJB
 	private ISurveySectionTitleFacade surveySectionTitleFacade;
-//	@EJB
-//	private ISurveySectionDefinitionFacade surveySectionDefinitionFacade;
+	@EJB
+	private ISurveySectionDefinition surveySectionDefinitionFacade;
 	
 	
 	@PostConstruct 
@@ -72,24 +72,15 @@ public class AdminSurveySectionTitleView implements Serializable {
 	
 	public void deleteSurveySectionTitle()
 	{
-		//FacesContext context = FacesContext.getCurrentInstance();
+		FacesContext context = FacesContext.getCurrentInstance();
 		SurveySectionTitleBo t = null;
-		//List<SurveySectionDefinitionBo> listOfSurveySectionDefinitions = new ArrayList<>();
-		//boolean isUsed = false;
 		for (SurveySectionTitleBo title : surveySectionTitles) {
 			if (title.getId() == addedSurveySectionTitle.getId()) {
 				t = title;
 			}
 		}
-		/*for (SurveySectionDefinitionBo surveySectionDefinition : surveySectionDefinitionFacade.getAll())
-		{
-			if(surveySectionDefinition.getSurveySectionTitle().equals(t))
-			{
-				listOfSurveySectionDefinitions.add(surveySectionDefinition);
-				isUsed = true;
-			}
-		}
-		if(!isUsed)
+		List<SurveySectionDefinitionBo> listOfSurveySectionDefinitions = surveySectionDefinitionFacade.getSurveySectionDefinitionsForTitle(t);
+		if(listOfSurveySectionDefinitions.size()==0)
 		{
 			surveySectionTitles.remove(t);
 			surveySectionTitleFacade.delete(t);
@@ -97,8 +88,6 @@ public class AdminSurveySectionTitleView implements Serializable {
 		else
 		{
 			context.addMessage(null, new FacesMessage("This title cannot be deleted, it is still used in one or more SurveySectionDefinitions."));
-		}*/
-		surveySectionTitles.remove(t);
-		surveySectionTitleFacade.delete(t);
+		}
 	}
 }
