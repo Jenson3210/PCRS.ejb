@@ -27,9 +27,19 @@ public class DbSurveyDefinitionDl implements Serializable, ISurveyDefinitionDl {
 	
 	@Override
 	public SurveyDefinition save(SurveyDefinition element) {
-		SurveyDefinition surveyDefinition = em.merge(element);
-		if (surveyDefinition == null) {
-			throw new EmptyStackException();
+		SurveyDefinition surveyDefinition = null;
+		try {
+			surveyDefinition = em.find(SurveyDefinition.class, element.getId());
+		}catch(Exception e) {}
+		if(surveyDefinition == null)
+		{
+			em.persist(element);
+			surveyDefinition = element;
+		}
+		else
+		{
+			element.setId(surveyDefinition.getId());
+			surveyDefinition = em.merge(element);
 		}
 		return surveyDefinition;
 	}

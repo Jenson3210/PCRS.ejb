@@ -5,12 +5,8 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceException;
-import javax.persistence.TypedQuery;
 
-import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
-import colruyt.pcrsejb.entity.user.team.Enrolment;
 
 @Stateless
 public class DbUserPrivilegeServiceDl implements IUserPrivilegeServiceDl{
@@ -20,14 +16,12 @@ public class DbUserPrivilegeServiceDl implements IUserPrivilegeServiceDl{
 
 	@Override
 	public UserPrivilege save(UserPrivilege element) {
-		// TODO Auto-generated method stub
-		return null;
+		return em.merge(element);
 	}
 
 	@Override
 	public UserPrivilege get(UserPrivilege element) {
-		// TODO Auto-generated method stub
-		return null;
+		return em.find(UserPrivilege.class, element.getId());
 	}
 
 	@Override
@@ -40,13 +34,6 @@ public class DbUserPrivilegeServiceDl implements IUserPrivilegeServiceDl{
 	public void delete(UserPrivilege element) {
 		// TODO Auto-generated method stub
 		
-	}
-	
-	@Override
-	public UserPrivilege getActivePrivilege(User user) {
-		return em.createNamedQuery("USER.GETACTIVEPRIVILEGE", UserPrivilege.class)
-				.setParameter("userId", user.getId())
-				.getSingleResult();
 	}
 
 }

@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -20,6 +22,9 @@ import colruyt.pcrsejb.entity.surveys.survey.Survey;
 
 @Entity
 @Table(name="SURVEYSETS")
+@NamedQueries({
+	@NamedQuery(name= "SURVEYSET.GETALL", query = "SELECT ss FROM SurveySet ss")
+})
 public class SurveySet  extends AbstractEntity implements Serializable{
 	/*
 	 * PROPERTIES

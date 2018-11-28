@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -26,15 +27,7 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 
 	@Override
 	public Team save(Team element) {
-		Team team = em.find(Team.class, element.getId());
-		if (team == null) {
-			em.persist(element);
-			team = element;
-		}else {
-			element.setId(team.getId());
-			team = em.merge(element);
-		}
-		return team;
+		return em.merge(element);
 	}
 
 	@Override
@@ -51,12 +44,9 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 
 	@Override
 	public void delete(Team element) {
-		element = em.merge(element);
-		if (element != null) {
-			em.remove(element);
-		}
-		else {
-			throw new EmptyStackException();
+		Team team = em.find(Team.class, element.getId());
+		if (team != null) {
+			em.remove(team);
 		}
 	}
 
@@ -74,7 +64,9 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 		q.setParameter("member", user);
 		q.setParameter("isActive", true);
 		try {
-		Team team = q.getResultList().stream().filter(x-> this.checkUserMetPrivilege(x, PrivilegeType.TEAMMEMBER)).findFirst().get();
+			
+		List<Team> teams = 	q.getResultList();
+		Team team = teams.stream().filter(x-> this.checkUserMetPrivilege(x, PrivilegeType.TEAMMEMBER)).findFirst().get();
 		return team;
 		}
 		catch(NoSuchElementException e) {
@@ -88,9 +80,13 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 	}
 	
 	private boolean checkUserMetPrivilege(Team team,PrivilegeType type) {
-		
-		return team.getEnrolments().stream().filter(x->x.getUserPrivilege().getPrivilegeType().equals(type) && x.isActive()).collect(Collectors.toList()).size() > 0;
+		Team team2 = team;
+		return team.getEnrolments().stream()
+				.filter(x->x.getUserPrivilege().getPrivilegeType().equals(type) && x.isActive())
+				.collect(Collectors.toList()).size() > 0;
 	}
+	
+	
 
 	@Override
 	public List<Team> getTeamsOfManager(User manager) {

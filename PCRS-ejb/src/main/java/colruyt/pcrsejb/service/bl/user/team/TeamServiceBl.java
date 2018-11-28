@@ -6,7 +6,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.team.Team;
 import colruyt.pcrsejb.service.dl.user.team.ITeamServiceDl;
@@ -20,6 +19,7 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
 	 */
 	@EJB
 	private ITeamServiceDl dlService;
+	
 	private static final long serialVersionUID = 1L;
 
 	public User getManagerOfUser(User u) {
