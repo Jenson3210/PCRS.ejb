@@ -60,7 +60,7 @@ public class TeamFacade implements Serializable, ITeamFacade {
 
 	@Override
 	public List<TeamBo> getTeamsOfManager(UserBo manager) {
-		return this.teamConv.convertToBos(this.teamBl.getTeamsOfManager(manager));
+		return this.teamConv.convertToBos(this.teamBl.getTeamsOfManager(this.userConv.convertToEntity(manager)));
 	}
 	
 }

@@ -2,15 +2,15 @@ package colruyt.pcrsejb.service.dl.user.team;
 
 import java.util.EmptyStackException;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.privilege.PrivilegeType;
 import colruyt.pcrsejb.entity.user.team.Team;
@@ -65,23 +65,32 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 		q.setParameter("member", user);
 		q.setParameter("isActive", true);
 		try {
-		Team team = q.getSingleResult();
+		Team team = q.getResultList().stream().filter(x-> this.checkUserMetPrivilege(x, PrivilegeType.TEAMMEMBER)).findFirst().get();
 		return team;
 		}
-		catch(NoResultException e) {
+		catch(NoSuchElementException e) {
 			throw new UserIsNotMemberOfTeamException();
 		}
+		
 		catch(NonUniqueResultException ex) {
 			throw new IllegalArgumentException("User mag maar in 1 team zitten");
 		}
 		
 	}
+	
+	private boolean checkUserMetPrivilege(Team team,PrivilegeType type) {
+		
+		return team.getEnrolments().stream().filter(x->x.getUserPrivilege().getPrivilegeType().equals(type) && x.isActive()).collect(Collectors.toList()).size() > 0;
+	}
 
 	@Override
-	public List<Team> getTeamsOfManager(UserBo manager) {
+	public List<Team> getTeamsOfManager(User manager) {
 		TypedQuery<Team> q = em.createNamedQuery("TEAM.GETTEAMSOFMANAGER", Team.class);
+		
 		q.setParameter("privilegeType", PrivilegeType.TEAMMANAGER);
-		q.setParameter("teamManager", manager.getId());
+		
+		q.setParameter("teamManager", manager);
+		
 		List<Team> listOfTeams = q.getResultList();
 		return listOfTeams;
 	}

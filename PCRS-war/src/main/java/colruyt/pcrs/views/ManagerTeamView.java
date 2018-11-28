@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -23,13 +23,18 @@ public class ManagerTeamView implements Serializable{
 	private ITeamFacade teamFacade;
 	@EJB
 	private IEnrolmentFacade enrolmentFacade;
+	
+	
 	private List<TeamBo> teams; 
+	
 	@Inject
-	WebUser currentUser;
+	private WebUser currentUser;
 	
 
     @PostConstruct
-    private void fillList() {
+    public void fillList() {
+    	
+    	
         teams = teamFacade.getTeamsOfManager(currentUser.getUser());
     }
 
