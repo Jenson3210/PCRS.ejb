@@ -6,7 +6,10 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionBo;
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinition;
+import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionTitle;
+import colruyt.pcrsejb.facade.surveyDefinition.survey.SurveySectionDefinitionFacade;
 import colruyt.pcrsejb.service.dl.surveyDefinition.survey.ISurveySectionDefinitionServiceDl;
 
 @Stateless
@@ -34,5 +37,10 @@ public class SurveySectionDefinitionServiceBl implements Serializable,ISurveySec
 	@Override
 	public void delete(SurveySectionDefinition element) {
 		surveySectionDefinitionDb.delete(element);
+	}
+
+	@Override
+	public List<SurveySectionDefinition> getSurveySectionDefinitionsForTitle(SurveySectionTitle t) {
+		return surveySectionDefinitionDb.getSurveySectionDefinitionsForTitle(t);
 	}
 }

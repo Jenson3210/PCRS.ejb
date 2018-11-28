@@ -27,7 +27,6 @@ import colruyt.pcrsejb.facade.user.IUserFacade;
 public class AdminSurveyDefinitionView implements Serializable{
 	
 	
-	
 	private static final long serialVersionUID = 5L;
 	
 	@EJB

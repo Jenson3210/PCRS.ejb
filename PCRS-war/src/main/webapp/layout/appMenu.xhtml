@@ -9,6 +9,9 @@
 
 	<ul>
 		<h:panelGroup rendered="#{webUser.hasUser()}">
+			
+<!-- TEAM MEMBERTEAM MEMBERTEAM MEMBERTEAM MEMBERTEAM MEMBERTEAM MEMBERTEAM MEMBERTEAM MEMBERTEAM MEMBERTEAM MEMBER	-->
+			
 			<h:panelGroup rendered="#{webUser.hasPrivilege('Team member')}">
 				<li class="#{view.viewId.contains('overview') ? 'c-active' : ''}">
 					<h:link value="#{msgs['menu.overview']}" outcome="/teammember/overview.xhtml" />
@@ -38,39 +41,23 @@
 					<h:link value="#{msgs['menu.myteam']}" outcome="/teammanager/teamManagerTeam.xhtml" />
 				</li>
 			</h:panelGroup>
-			<h:panelGroup rendered="#{webUser.hasPrivilege('Director')}">
-				<li
-					class="#{view.viewId.contains('behavioralDirector') ? 'c-active' : ''}">
-					<h:link value="#{msgs['menu.behavioraldirector']}"
-						outcome="/director/behavioral.xhtml" />
-				</li>
-			</h:panelGroup>
-			<h:panelGroup
-				rendered="#{webUser.hasPrivilege('Survey Definition Responsible')}">
+			
+<!-- SURVEY DEFINITION RESPONSIBLE SURVEY DEFINITION RESPONSIBLE SURVEY DEFINITION RESPONSIBLE SURVEY DEFINITION RESPONSIBLE-->
+			
+			<h:panelGroup rendered="#{webUser.hasPrivilege('Survey Definition Responsible')}">
 				<li>
 					<div>#{msgs['menu.craftfunctionresponsible']}</div>
 					<ul>
-						<li
-							class="#{request.getParameter('target') == 'craftmanagement' ? 'c-active' : ''}">
+						<li class="#{request.getParameter('target') == 'craftmanagement' ? 'c-active' : ''}">
 							<h:link value="#{msgs['menu.craftmanagement']}"
 								outcome="/responsible/respSurveyDefinition.xhtml" />
-						</li>
-						<li
-							class="#{request.getParameter('target') == 'rolemanagement' ? 'c-active' : ''}">
-							<h:link value="#{msgs['menu.rolemanagement']}"
-								outcome="/responsible/manage_roles_for_function.xhtml" />
 						</li>
 					</ul>
 				</li>
 			</h:panelGroup>
-			<h:panelGroup
-				rendered="#{webUser.hasPrivilege('Survey Definition Responsible')}">
-				<li
-					class="#{view.viewId.contains('behavioralFunctionResponsible') ? 'c-active' : ''}">
-					<h:link value="#{msgs['menu.behavioralfunctionresponsible']}"
-						outcome="/functionresponsible/behavioral.xhtml" />
-				</li>
-			</h:panelGroup>
+			
+<!-- ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN -->
+			
 			<h:panelGroup rendered="#{webUser.hasPrivilege('Administrator')}">
 				<li>
 					<div>#{msgs['menu.craftadmin']}</div>

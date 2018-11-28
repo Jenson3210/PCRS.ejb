@@ -41,4 +41,16 @@ public class SurveySectionTitleBo extends AbstractBo implements Serializable {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		return this.getId().equals(((SurveySectionTitleBo) o).getId());
+	}
+	
+	@Override
+	public int hashCode() {
+		return getId();
+	}
+
+	
 }
