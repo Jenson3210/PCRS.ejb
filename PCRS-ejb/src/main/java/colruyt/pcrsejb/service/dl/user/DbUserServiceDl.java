@@ -10,7 +10,9 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.entity.user.User;
+
 import colruyt.pcrsejb.util.exceptions.NoExistingEmailException;
 
 @Stateless
@@ -34,6 +36,7 @@ public class DbUserServiceDl implements Serializable, IUserServiceDl {
 			em.persist(element);
 			user = element;
 		}else {
+			element.setId(user.getId());
 			user = em.merge(element);
 		}
 		return user;

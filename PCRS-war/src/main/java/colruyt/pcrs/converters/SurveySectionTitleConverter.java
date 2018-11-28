@@ -7,8 +7,8 @@ import javax.faces.convert.FacesConverter;
 
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionTitleBo;
 
-@FacesConverter("SurveySectionTitleConverter")
-public class SurveySectionTitleConverter implements Converter{
+@FacesConverter("surveySectionTitleConverter")
+public class SurveySectionTitleConverter implements Converter {
 
 	@Override
 	public SurveySectionTitleBo getAsObject(FacesContext context, UIComponent component, String value) {
@@ -16,6 +16,8 @@ public class SurveySectionTitleConverter implements Converter{
 		String[] parts = value.split(";");
 		sst.setId(Integer.valueOf(parts[0]));
 		sst.setTitle(parts[1]);
+		sst = new SurveySectionTitleBo();
+		System.out.println(sst);
 		return sst;
 	}
 
@@ -27,6 +29,7 @@ public class SurveySectionTitleConverter implements Converter{
 		returnString.append(sst.getId())
 					.append(";")
 					.append(sst.getTitle());
+		System.out.println(sst);
 		return returnString.toString();
 	}
 

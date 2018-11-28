@@ -33,7 +33,7 @@
 						</p:column>
                     </p:headerRow>
                     <p:column>
-                        <p:dataTable var="enrolment" value="#{team.enrolments}">
+                        <p:dataTable var="enrolment" value="#{team.enrolments}" widgetVar="enrolment">
                             <p:column style="width: 16px"/>
                             <p:column styleClass="ui-g-6">
                                 <h:outputText value="#{enrolment.user.firstName}  #{enrolment.user.lastName}"/>
