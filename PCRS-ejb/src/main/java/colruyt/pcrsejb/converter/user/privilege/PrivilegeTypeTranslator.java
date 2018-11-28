@@ -12,7 +12,7 @@ public class PrivilegeTypeTranslator {
 			entity = PrivilegeType.ADMINISTRATOR;
 			break;
 		case SURVEYDEFINITIONRESPONSIBLE:
-			entity = PrivilegeType.ADMINISTRATOR;
+			entity = PrivilegeType.SURVEYDEFINITIONRESPONSIBLE;
 			break;
 		case TEAMMANAGER:
 			entity = PrivilegeType.TEAMMANAGER;
@@ -31,7 +31,7 @@ public class PrivilegeTypeTranslator {
 			bo = PrivilegeTypeBo.ADMINISTRATOR;
 			break;
 		case SURVEYDEFINITIONRESPONSIBLE:
-			bo = PrivilegeTypeBo.ADMINISTRATOR;
+			bo = PrivilegeTypeBo.SURVEYDEFINITIONRESPONSIBLE;
 			break;
 		case TEAMMANAGER:
 			bo = PrivilegeTypeBo.TEAMMANAGER;
