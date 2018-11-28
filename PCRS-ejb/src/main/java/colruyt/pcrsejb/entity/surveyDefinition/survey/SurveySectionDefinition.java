@@ -28,9 +28,6 @@ import colruyt.pcrsejb.entity.surveyDefinition.strategy.SurveySectionStrategy;
 	@NamedQuery(name = "SURVEYSECTIONDEFINITION.GETSURVEYSECTIONDEFINITIONSFORTITLE", query = "SELECT ssd FROM SurveySectionDefinition ssd WHERE ssd.surveySectionTitle = :title")
 
 })
-
-
-
 public class SurveySectionDefinition extends AbstractEntity implements Serializable {
 	/* 
 	 * PROPERTIES

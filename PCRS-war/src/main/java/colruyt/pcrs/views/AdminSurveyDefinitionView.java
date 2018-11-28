@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -37,12 +38,14 @@ public class AdminSurveyDefinitionView implements Serializable{
 	
 	private SurveyDefinitionBo addedSurveyDefinitionBo;
 	private UserBo addedUserBo;
+	
+	private Entry<SurveyDefinitionBo, UserBo> manipulatedRow;
 
 	
 	/**
 	 * mandatory empty constructor
 	 */
-	public AdminSurveyDefinitionView() {
+	public AdminSurveyDefinitionView() { 
 	}
 	
 	
@@ -60,7 +63,7 @@ public class AdminSurveyDefinitionView implements Serializable{
 	
 	public void newSurveyDefinition() {
 		addedSurveyDefinitionBo = new SurveyDefinitionBo();
-		addedUserBo = null;
+		addedUserBo = new UserBo();
 	}
 	
 
@@ -86,13 +89,13 @@ public class AdminSurveyDefinitionView implements Serializable{
 	 * deletes the survey definition from the List and from the DB
 	 */
 	public void deleteSurveyDefinition(){
-		surveyDefinitions.remove(addedSurveyDefinitionBo);
-		UserBo user = surveyDefinitions.get(addedSurveyDefinitionBo);
+		surveyDefinitions.remove(manipulatedRow.getKey());
+		UserBo user = manipulatedRow.getValue();
 		SurveyDefinitionResponsibleUserPrivilegeBo sdrup = null;
 		for (UserPrivilegeBo up : user.getPrivileges()) {
-			if (up.getPrivilegeType().equals(PrivilegeType.SURVEYDEFINITIONRESPONSIBLE) 
+			if (up.getPrivilegeType().equals(PrivilegeTypeBo.SURVEYDEFINITIONRESPONSIBLE) 
 					&& ((SurveyDefinitionResponsibleUserPrivilegeBo)up).getSurveyDefinition().getId() 
-						== addedSurveyDefinitionBo.getId()) {
+						== manipulatedRow.getKey().getId()) {
 				sdrup = (SurveyDefinitionResponsibleUserPrivilegeBo) up;
 			}
 		}
@@ -105,11 +108,10 @@ public class AdminSurveyDefinitionView implements Serializable{
 	 * modifies the survey definition and sets a new name and/or new responsible
 	 */
 	public void editSurveyDefinition() {
-		//DELETE THE PRIVILEGE FROM USER
-		UserBo user = surveyDefinitionFacade.getResponsible(addedSurveyDefinitionBo);
+		UserBo user = manipulatedRow.getValue();
 		SurveyDefinitionResponsibleUserPrivilegeBo sdrup = null;
 		for (UserPrivilegeBo up : user.getPrivileges()) {
-			if (up.getPrivilegeType().equals(PrivilegeType.SURVEYDEFINITIONRESPONSIBLE) 
+			if (up.getPrivilegeType().equals(PrivilegeTypeBo.SURVEYDEFINITIONRESPONSIBLE) 
 					&& ((SurveyDefinitionResponsibleUserPrivilegeBo)up).getSurveyDefinition().getId() 
 						== addedSurveyDefinitionBo.getId()) {
 				sdrup = (SurveyDefinitionResponsibleUserPrivilegeBo) up;
@@ -161,8 +163,15 @@ public class AdminSurveyDefinitionView implements Serializable{
 		this.addedSurveyDefinitionBo = addedSurveyDefinitionBo;
 	}
 
-	
-	
-	
+
+	public Entry<SurveyDefinitionBo, UserBo> getManipulatedRow() {
+		return manipulatedRow;
+	}
+
+
+	public void setManipulatedRow(Entry<SurveyDefinitionBo, UserBo> manipulatedRow) {
+		this.manipulatedRow = manipulatedRow;
+	}
+		
 }
 
