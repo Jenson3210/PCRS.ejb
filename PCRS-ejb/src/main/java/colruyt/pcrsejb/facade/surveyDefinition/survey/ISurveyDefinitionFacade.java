@@ -13,5 +13,6 @@ public interface ISurveyDefinitionFacade extends IFacade<SurveyDefinitionBo> {
 	
 	
 	List<SurveyDefinitionBo> getSurveyDefinitionsOfUser(UserBo user);
+	UserBo getResponsible(SurveyDefinitionBo bo);
 
 }

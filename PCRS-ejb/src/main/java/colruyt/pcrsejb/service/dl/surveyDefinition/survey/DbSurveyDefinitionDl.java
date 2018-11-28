@@ -66,6 +66,12 @@ public class DbSurveyDefinitionDl implements Serializable, ISurveyDefinitionDl {
 
 	}
 
+	@Override
+	public User getResponsible(SurveyDefinition surveyDefinition) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }
 

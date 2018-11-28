@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import colruyt.pcrsejb.bo.user.UserBo;
@@ -36,7 +35,9 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 
 	@Override
 	public List<Team> getAll() {
-		return (List<Team>) em.createNamedQuery("Team.getAllElements").getResultList();
+		TypedQuery<Team> q = em.createNamedQuery("TEAM.GETALL", Team.class);
+		List<Team> listOfTeams = q.getResultList();
+		return listOfTeams;
 	}
 
 	@Override
@@ -60,11 +61,11 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 	@Override
 	public Team getTeamForUser(User user) throws UserIsNotMemberOfTeamException{
 		
-		TypedQuery<Team> query = em.createQuery("select t from Team t join t.enrolments enrolment where enrolment.user = ?1 and enrolment.active = ?2",Team.class);
-		query.setParameter(1, user);
-		query.setParameter(2, true);
+		TypedQuery<Team> q = em.createNamedQuery("TEAM.GETTEAMFORUSER", Team.class);
+		q.setParameter("member", user);
+		q.setParameter("isActive", true);
 		try {
-		Team team = query.getSingleResult();
+		Team team = q.getSingleResult();
 		return team;
 		}
 		catch(NoResultException e) {
@@ -78,11 +79,11 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 
 	@Override
 	public List<Team> getTeamsOfManager(UserBo manager) {
-		Query q = em.createQuery("select t from Team t, Enrolment e, UserPrivilege up where up.privilegeType = :privilegeType and e.user.id = :teamManager");
+		TypedQuery<Team> q = em.createNamedQuery("TEAM.GETTEAMSOFMANAGER", Team.class);
 		q.setParameter("privilegeType", PrivilegeType.TEAMMANAGER);
 		q.setParameter("teamManager", manager.getId());
-		
-		return (List<Team>)q.getResultList();
+		List<Team> listOfTeams = q.getResultList();
+		return listOfTeams;
 	}
 
 }
