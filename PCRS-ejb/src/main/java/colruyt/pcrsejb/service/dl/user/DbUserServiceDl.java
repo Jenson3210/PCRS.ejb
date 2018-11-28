@@ -22,10 +22,9 @@ public class DbUserServiceDl implements Serializable, IUserServiceDl {
 	@Override
 	public User save(User element) {
 		try {
-			em.persist(element);
+			em.merge(element);
 		} catch (EntityExistsException eee) {
-			em.find(User.class, element.getId());
-			element = em.merge(element);
+			eee.printStackTrace();
 		}
 		return element;
 	}

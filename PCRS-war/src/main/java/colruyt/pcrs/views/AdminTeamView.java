@@ -106,8 +106,11 @@ public class AdminTeamView implements Serializable {
 					e = enrolment;
 				}
 			}
-			team.getEnrolments().remove(e);
-			enrolmentFacade.delete(e);
+			if(e != null) {
+				team.getEnrolments().remove(e);
+				enrolmentFacade.delete(e);
+			}
+
 		}
 	}
 

@@ -21,6 +21,7 @@ public class UserConverter implements GenericConverter<User, UserBo>{
 			ConverterUtils.setIfNotNull(bo::getFirstName, entity::setFirstName);
 			ConverterUtils.setIfNotNull(bo::getLastName, entity::setLastName);
 			ConverterUtils.setIfNotNull(bo::getPassword, entity::setPassword);
+			ConverterUtils.setIfNotNull(bo::getShortName, entity::setShortName);
 			entity.setPrivileges(userPrivilegeConverter.convertToEntities(bo.getPrivileges()));
 		} 
 		return entity;
@@ -37,8 +38,8 @@ public class UserConverter implements GenericConverter<User, UserBo>{
 			ConverterUtils.setIfNotNull(entity::getFirstName, bo::setFirstName);
 			ConverterUtils.setIfNotNull(entity::getLastName, bo::setLastName);
 			ConverterUtils.setIfNotNull(entity::getPassword, bo::setPassword);
+			ConverterUtils.setIfNotNull(entity::getShortName, bo::setShortName);
 			bo.setPrivileges(userPrivilegeConverter.convertToBos(entity.getPrivileges()));
-			
 		} 
 		return bo;
 	}
