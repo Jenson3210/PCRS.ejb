@@ -12,6 +12,7 @@ import javax.persistence.TypedQuery;
 
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveyDefinition;
 import colruyt.pcrsejb.entity.user.User;
+import colruyt.pcrsejb.entity.user.privilege.PrivilegeType;
 
 @Stateless
 public class DbSurveyDefinitionDl implements Serializable, ISurveyDefinitionDl {
@@ -68,8 +69,11 @@ public class DbSurveyDefinitionDl implements Serializable, ISurveyDefinitionDl {
 
 	@Override
 	public User getResponsible(SurveyDefinition surveyDefinition) {
-		// TODO Auto-generated method stub
-		return null;
+		TypedQuery<User> q = em.createNamedQuery("SURVEYDEFINITION.GETRESPONSIBLE", User.class);
+		q.setParameter("pt", PrivilegeType.SURVEYDEFINITIONRESPONSIBLE);
+		q.setParameter("sd", surveyDefinition);
+		User u = q.getSingleResult();
+		return u;
 	}
 
 
