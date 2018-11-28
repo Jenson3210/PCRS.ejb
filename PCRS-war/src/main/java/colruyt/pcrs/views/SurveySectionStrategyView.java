@@ -32,6 +32,7 @@ public class SurveySectionStrategyView implements Serializable {
 		return surveySectionStrategyBo;
 	}
 	public void setSurveySectionStrategyBo(SurveySectionStrategyBo surveySectionStrategyBo) {
+		System.out.println(surveySectionStrategyBo.getName());
 		this.surveySectionStrategyBo = surveySectionStrategyBo;
 	}
 	public List<SurveySectionStrategyBo> getStrategies() {
@@ -64,7 +65,7 @@ public class SurveySectionStrategyView implements Serializable {
 				s = strategy;
 			}
 		}
-		surveySectionStrategyFacade.save(s); 
+		surveySectionStrategyFacade.save(s);
 	}
 	
 	public void deleteSurveySectionStrategy()
