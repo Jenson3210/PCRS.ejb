@@ -2,6 +2,7 @@ package colruyt.pcrs.views;
 
 
 import java.io.Serializable;
+import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +18,6 @@ import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
 import colruyt.pcrsejb.bo.user.privilege.SurveyDefinitionResponsibleUserPrivilegeBo;
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
-import colruyt.pcrsejb.entity.user.privilege.PrivilegeType;
 import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveyDefinitionFacade;
 import colruyt.pcrsejb.facade.user.IUserFacade;
 
@@ -35,9 +35,6 @@ public class AdminSurveyDefinitionView implements Serializable{
 	private ISurveyDefinitionFacade surveyDefinitionFacade;
 	
 	private Map<SurveyDefinitionBo, UserBo> surveyDefinitions = new HashMap<>();
-	
-	private SurveyDefinitionBo addedSurveyDefinitionBo;
-	private UserBo addedUserBo;
 	
 	private Entry<SurveyDefinitionBo, UserBo> manipulatedRow;
 
@@ -62,12 +59,14 @@ public class AdminSurveyDefinitionView implements Serializable{
 	
 	
 	public void newSurveyDefinition() {
-		addedSurveyDefinitionBo = new SurveyDefinitionBo();
-		addedUserBo = new UserBo();
+		manipulatedRow = new AbstractMap.SimpleEntry<SurveyDefinitionBo, UserBo>(new SurveyDefinitionBo(), new UserBo());
 	}
 	
 
 	public void addSurveyDefinition() {
+		SurveyDefinitionBo addedSurveyDefinitionBo = manipulatedRow.getKey();
+		UserBo addedUserBo = manipulatedRow.getValue();
+		//	private UserBo addedUserBo;
 		addedSurveyDefinitionBo = surveyDefinitionFacade.save(addedSurveyDefinitionBo);	
 		addedUserBo.getPrivileges().add(new SurveyDefinitionResponsibleUserPrivilegeBo(PrivilegeTypeBo.SURVEYDEFINITIONRESPONSIBLE, true, addedSurveyDefinitionBo));
 		addedUserBo = userFacade.save(addedUserBo);
@@ -108,17 +107,18 @@ public class AdminSurveyDefinitionView implements Serializable{
 	 * modifies the survey definition and sets a new name and/or new responsible
 	 */
 	public void editSurveyDefinition() {
-		UserBo user = manipulatedRow.getValue();
+		UserBo addedUserBo = manipulatedRow.getValue();
+		SurveyDefinitionBo addedSurveyDefinitionBo = manipulatedRow.getKey();
 		SurveyDefinitionResponsibleUserPrivilegeBo sdrup = null;
-		for (UserPrivilegeBo up : user.getPrivileges()) {
+		for (UserPrivilegeBo up : addedUserBo.getPrivileges()) {
 			if (up.getPrivilegeType().equals(PrivilegeTypeBo.SURVEYDEFINITIONRESPONSIBLE) 
 					&& ((SurveyDefinitionResponsibleUserPrivilegeBo)up).getSurveyDefinition().getId() 
 						== addedSurveyDefinitionBo.getId()) {
 				sdrup = (SurveyDefinitionResponsibleUserPrivilegeBo) up;
 			}
 		}
-		user.getPrivileges().remove(sdrup);
-		userFacade.save(user);
+		addedUserBo.getPrivileges().remove(sdrup);
+		userFacade.save(addedUserBo);
 		//GIVE THE PRIVILEGE TO THE USER
 		addedUserBo.getPrivileges().add(new SurveyDefinitionResponsibleUserPrivilegeBo(PrivilegeTypeBo.SURVEYDEFINITIONRESPONSIBLE, true, addedSurveyDefinitionBo));
 		addedUserBo = userFacade.save(addedUserBo);
@@ -137,16 +137,6 @@ public class AdminSurveyDefinitionView implements Serializable{
 	 *  Getters and Setters
 	 */
 	
-	public UserBo getAddedUserBo() {
-		return addedUserBo;
-	}
-
-
-	public void setAddedUserBo(UserBo addedUserBo) {
-		this.addedUserBo = addedUserBo;
-	}
-
-
 	public Map<SurveyDefinitionBo, UserBo> getSurveyDefinitions() {
 		return this.surveyDefinitions;
 	}
@@ -155,15 +145,6 @@ public class AdminSurveyDefinitionView implements Serializable{
 		this.surveyDefinitions = surveyDefinitions;
 	}
 	
-	public SurveyDefinitionBo getAddedSurveyDefinitionBo() {
-		return addedSurveyDefinitionBo;
-	}
-
-	public void setAddedSurveyDefinitionBo(SurveyDefinitionBo addedSurveyDefinitionBo) {
-		this.addedSurveyDefinitionBo = addedSurveyDefinitionBo;
-	}
-
-
 	public Entry<SurveyDefinitionBo, UserBo> getManipulatedRow() {
 		return manipulatedRow;
 	}
