@@ -1,14 +1,13 @@
 package colruyt.pcrsejb.service.dl.user.team;
 
-import java.util.EmptyStackException;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.PersistenceException;
+import javax.persistence.TypedQuery;
 
-import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.team.Enrolment;
 
 @Stateless
@@ -19,7 +18,13 @@ public class DbEnrolmentServiceDl implements IEnrolmentServiceDl{
 
 	@Override
 	public Enrolment save(Enrolment element) {
-		return em.merge(element);
+		try {
+			em.persist(element);
+		} catch (PersistenceException e) {
+			em.find(Enrolment.class, element.getId());
+			element = em.merge(element);
+		}
+		return element;
 	}
 
 	@Override
@@ -29,7 +34,9 @@ public class DbEnrolmentServiceDl implements IEnrolmentServiceDl{
 
 	@Override
 	public List<Enrolment> getAll() {
-		return em.createQuery("select e from Enrolment", Enrolment.class).getResultList();
+		TypedQuery<Enrolment> q = em.createNamedQuery("ENROLMENT.GETALL", Enrolment.class);
+		List<Enrolment> listOfEnrolments = q.getResultList();
+		return listOfEnrolments;
 	}
 
 	@Override
@@ -38,6 +45,10 @@ public class DbEnrolmentServiceDl implements IEnrolmentServiceDl{
 		if (enrolment != null) {
 			enrolment = em.merge(enrolment);
 			em.remove(enrolment);
+			em.createNamedQuery("ENROLMENT.DEACTIVATE", Enrolment.class)
+			.setParameter("active", false)
+			.setParameter("id", enrolment.getUserPrivilege().getId())
+			.executeUpdate();
 		}
 	}
 

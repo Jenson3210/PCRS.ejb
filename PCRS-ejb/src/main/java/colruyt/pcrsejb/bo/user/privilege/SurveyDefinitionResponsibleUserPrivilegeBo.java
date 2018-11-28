@@ -13,4 +13,5 @@ public class SurveyDefinitionResponsibleUserPrivilegeBo extends SurveyUserPrivil
 	/*
 	 * GETTERS AND SETTERS
 	 */
+	
 }

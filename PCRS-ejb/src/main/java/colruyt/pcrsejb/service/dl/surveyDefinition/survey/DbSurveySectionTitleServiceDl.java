@@ -41,7 +41,7 @@ public class DbSurveySectionTitleServiceDl implements Serializable, ISurveySecti
 
 	@Override
 	public List<SurveySectionTitle> getAll() {
-		TypedQuery<SurveySectionTitle> q = em.createQuery("SELECT s from SurveySectionTitle s", SurveySectionTitle.class);
+		TypedQuery<SurveySectionTitle> q = em.createNamedQuery("SURVEYSECTIONTITLE.GETALL", SurveySectionTitle.class);
 		List<SurveySectionTitle> surveySectionTitleList = q.getResultList();
 		return surveySectionTitleList;
 	}

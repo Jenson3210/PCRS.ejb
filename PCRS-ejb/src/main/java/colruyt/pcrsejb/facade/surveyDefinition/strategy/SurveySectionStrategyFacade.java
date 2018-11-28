@@ -40,6 +40,5 @@ public class SurveySectionStrategyFacade implements Serializable, ISurveySection
 	@Override
 	public void delete(SurveySectionStrategyBo entityBo) {
 		surveySectionStrategyServiceBl.delete(surveySectionStrategyConverter.convertToEntity(entityBo));
-		
 	}
 }

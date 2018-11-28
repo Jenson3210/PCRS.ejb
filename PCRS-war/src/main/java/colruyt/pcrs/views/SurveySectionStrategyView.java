@@ -27,7 +27,7 @@ public class SurveySectionStrategyView implements Serializable {
 	private void fillStrategies() {
 		strategies = surveySectionStrategyFacade.getAll();
 	}
-	
+
 	public SurveySectionStrategyBo getSurveySectionStrategyBo() {
 		return surveySectionStrategyBo;
 	}
@@ -75,6 +75,7 @@ public class SurveySectionStrategyView implements Serializable {
 				s = strategy;
 			}
 		}
+		System.out.println("indelete" + s.getName());
 		strategies.remove(s);
 		surveySectionStrategyFacade.delete(s);
 	}

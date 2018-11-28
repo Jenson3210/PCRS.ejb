@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div class="ui-g-1"></div>
+
+	<div class="ui-g-10">
+		
+		<h:form id="form">
+				<p:dataTable var="surveyDefinition" value="#{respSurveyDefinitionView.surveyDefinitionList}">
+					 <f:facet name="header">
+						<h:outputText value="#{msgs['surveyDefinition.title']}" />
+					</f:facet>
+					
+					<p:column headerText="#{msgs['surveyDefinition.title']}">
+						<h:outputText value="#{surveyDefinition.name}" />
+					</p:column>
+					
+					<p:column headerText="#{msgs['surveyDefinition.responsible']}">
+						<h:outputText value="#{surveyDefinition.responsibleUser.firstName} #{surveyDefinition.responsibleUser.lastName}" />
+					</p:column>
+					
+					<!-- <p:column headerText="#{msgs['edit']}"
+						style="width:65px; text-align: center">
+						<p:commandLink update=":editForm:editSurveyDefinition" id="edit"
+							oncomplete="PF('editSurveyDefinitionDialog').show()">
+							<i class="fas fa-pencil-alt"></i>
+							<f:setPropertyActionListener value="#{surveyDefinition}"
+								target="#{adminSurveyDefinitionView.addedSurveyDefinitionBo}" />
+						</p:commandLink>
+					</p:column>
+					
+					<p:column headerText="#{msgs['delete']}"
+						style="width:65px; text-align: center">
+						<p:commandLink id="delete" oncomplete="PF('deleteSurveyDefinitionDialog').show()">
+							<i class="fas fa-trash-alt"></i>
+							<f:setPropertyActionListener value="#{surveyDefinition}"
+								target="#{adminSurveyDefinitionView.addedSurveyDefinitionBo}" />
+						</p:commandLink>
+					</p:column> -->
+				</p:dataTable>
+				 <div class="ui-g">
+					<div class="ui-g-12">
+						<p:commandButton value="#{msgs['respSurveyDefinition.add']}"
+							action="#{respSurveyDefinitionView.newSurveyDefinition}" styleClass="ui-priority-primary"
+							process="@this" update=":addForm:addSurveyDefinition"
+							oncomplete="PF('addSurveyDefinitionDialog').show();" />
+					</div>
+				</div>
+			</h:form>
+			
+			<h:form id="addForm">
+				<div class="ui-g" id="addSurveyDefinition">
+					<p:dialog header="#{msgs['respSurveyDefinition.add']}"
+						widgetVar="addSurveyDefinitionDialog" modal="true" draggable="false">
+						<p:outputPanel id="addSurveyDefinition">
+							
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['respSurveyDefinition.title']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:selectOneMenu>
+										<f:selectItems value="#{respSurveyDefinitionView.surveySectionTitleList}"
+											var="surveySectionTitle" itemLabel="#{surveySectionTitle.title}" 
+											itemValue="#{surveySectionTitle}"/>
+									</p:selectOneMenu>
+								</div> 
+							</div>  
+							
+							<!-- <div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['user.shortName']}">
+									</p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									  <p:autoComplete id="shortName" completeMethod="#{adminSurveyDefinitionView.completeShortName}" 
+									  				var="user" itemLabel="#{user.email}" itemValue="#{user}" forceSelection="true" 
+									  				maxlength="5" emptyMessage="#{msgs['surveyDefinition.noResults']}"
+									 				value="#{adminSurveyDefinitionView.addedSurveyDefinitionBo.responsibleUser}" 
+									 				required="true" converter="userBoConverter"/>
+									 <p:message for="shortName"/>
+								</div> 
+							</div> 
+							 -->
+							<div class="ui-g-2">
+								<p:commandButton value="#{msgs['respSurveyDefinition.add']}" update=":form"
+									action="#{respSurveyDefinitionView.addSurveyDefinition}"
+									oncomplete="PF('addSurveyDefinitionDialog').hide();" />
+							</div>
+						</p:outputPanel>
+					</p:dialog>
+				</div>
+			</h:form>
+			
+	</div>
+	
+	<div class="ui-g-1"></div>
+
+</ui:composition>
