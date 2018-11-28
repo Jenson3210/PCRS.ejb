@@ -100,6 +100,7 @@ public class AdminCompetenceView implements Serializable{
 	}
 
 	public List<CompetenceBo> getCompetences() {
+		competences = competenceFacade.getAll();
 		return competences;
 	}
 
