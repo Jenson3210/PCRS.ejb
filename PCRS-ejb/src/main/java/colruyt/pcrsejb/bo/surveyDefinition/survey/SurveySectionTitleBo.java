@@ -43,14 +43,41 @@ public class SurveySectionTitleBo extends AbstractBo implements Serializable {
 	}
 	
 	@Override
-	public boolean equals(Object o) {
-		return this.getId().equals(((SurveySectionTitleBo) o).getId());
+	public String toString() {
+		return "SurveySectionTitleBo [id=" + id + ", title=" + title + "]";
 	}
-	
 	@Override
 	public int hashCode() {
-		return getId();
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		return result;
 	}
-
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SurveySectionTitleBo other = (SurveySectionTitleBo) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (title == null) {
+			if (other.title != null)
+				return false;
+		} else if (!title.equals(other.title))
+			return false;
+		return true;
+	}
+	
+	
+	
+	
 	
 }
