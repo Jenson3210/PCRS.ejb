@@ -2,7 +2,6 @@ package colruyt.pcrsejb.service.dl.surveyDefinition.survey;
 
 import java.util.List;
 
-import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionBo;
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinition;
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionTitle;
 import colruyt.pcrsejb.service.dl.IDbService;

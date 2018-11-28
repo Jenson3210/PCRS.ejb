@@ -1,0 +1,9 @@
+package colruyt.pcrsejb.util.validators;
+
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
+
+public interface GenericValidator<T> {
+
+    void validate(T toValidate) throws ValidationException;
+
+}

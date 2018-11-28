@@ -4,12 +4,14 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
 import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.team.Enrolment;
+import colruyt.pcrsejb.entity.user.team.Team;
 
 @Stateless
 public class DbEnrolmentServiceDl implements IEnrolmentServiceDl{
@@ -19,15 +21,7 @@ public class DbEnrolmentServiceDl implements IEnrolmentServiceDl{
 
 	@Override
 	public Enrolment save(Enrolment element) {
-		Enrolment enrolment = em.find(Enrolment.class, element.getId());
-		if (enrolment == null) {
-			em.persist(element);
-			enrolment = element;
-		}else {
-			element.setId(enrolment.getId());
-			enrolment = em.merge(element);
-		}
-		return enrolment;
+		return em.merge(element);
 	}
 
 	@Override

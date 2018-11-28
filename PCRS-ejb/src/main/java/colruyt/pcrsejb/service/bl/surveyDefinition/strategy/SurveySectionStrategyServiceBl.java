@@ -8,6 +8,8 @@ import javax.ejb.Stateless;
 
 import colruyt.pcrsejb.entity.surveyDefinition.strategy.SurveySectionStrategy;
 import colruyt.pcrsejb.service.dl.surveyDefinition.strategy.ISurveySectionStrategyServiceDL;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
+import colruyt.pcrsejb.util.validators.surveyDefinition.strategy.StrategyValidator;
 
 @Stateless
 public class SurveySectionStrategyServiceBl implements Serializable, ISurveySectionStrategyServiceBl {
@@ -18,8 +20,12 @@ public class SurveySectionStrategyServiceBl implements Serializable, ISurveySect
 	
 	@EJB
 	private ISurveySectionStrategyServiceDL surveySectionStrategyServiceDL;
+	
+	private StrategyValidator strategyValidator = new StrategyValidator();
 
 	@Override
+//	public SurveySectionStrategy save(SurveySectionStrategy element) throws ValidationException{
+//		strategyValidator.validate(element);
 	public SurveySectionStrategy save(SurveySectionStrategy element) {
 		return surveySectionStrategyServiceDL.save(element);
 	}

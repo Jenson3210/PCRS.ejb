@@ -6,7 +6,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 import colruyt.pcrsejb.service.dl.user.privilege.IUserPrivilegeServiceDl;
 
@@ -42,11 +41,6 @@ public class UserPrivilegeServiceBl implements Serializable, IUserPrivilegeServi
 	public void delete(UserPrivilege element) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public UserPrivilege getActivePrivilege(User user) {
-		return userPrivilegeServiceDl.getActivePrivilege(user);
 	}
 	
 }

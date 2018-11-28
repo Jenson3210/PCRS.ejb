@@ -12,6 +12,7 @@ import javax.persistence.TypedQuery;
 
 import colruyt.pcrsejb.entity.surveyDefinition.strategy.SurveySectionStrategy;
 
+
 @Stateless
 public class DbSurveySectionStrategyServiceDl implements Serializable, ISurveySectionStrategyServiceDL{
 	@PersistenceContext(unitName = "PCRSEJB")
@@ -21,22 +22,17 @@ public class DbSurveySectionStrategyServiceDl implements Serializable, ISurveySe
 
 	@Override
 	public SurveySectionStrategy save(SurveySectionStrategy element) {
-		SurveySectionStrategy surveySectionStrategy = null;
-		try {
-			surveySectionStrategy = em.find(SurveySectionStrategy.class, element.getId());
-		}catch(Exception e) {}
-		if(surveySectionStrategy == null)
+		SurveySectionStrategy surveySectionStrategy;
+		if(element.getId()==null)
 		{
 			em.persist(element);
 			surveySectionStrategy = element;
 		}
 		else
 		{
-			element.setId(surveySectionStrategy.getId());
 			surveySectionStrategy = em.merge(element);
 		}
 		return surveySectionStrategy;
-		
 	}
 
 	@Override

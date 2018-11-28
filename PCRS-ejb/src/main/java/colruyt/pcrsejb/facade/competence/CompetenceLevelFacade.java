@@ -6,11 +6,8 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import colruyt.pcrsejb.bo.competence.CompetenceBo;
 import colruyt.pcrsejb.bo.competence.CompetenceLevelBo;
 import colruyt.pcrsejb.converter.competence.CompetenceLevelConverter;
-import colruyt.pcrsejb.entity.competence.Competence;
-import colruyt.pcrsejb.entity.competence.CompetenceLevel;
 import colruyt.pcrsejb.service.bl.competence.ICompetenceLevelServiceBl;
 
 @Stateless

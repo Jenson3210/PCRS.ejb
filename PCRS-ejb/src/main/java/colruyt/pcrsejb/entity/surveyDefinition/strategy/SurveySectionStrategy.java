@@ -34,7 +34,7 @@ public class SurveySectionStrategy extends AbstractEntity implements Serializabl
 	private Boolean hasMinimumLevel;
 	private Boolean flexibleDescription;
 	// NICE TO HAVE BEYOND THIS POINT
-	// private Boolean commentInConsensus;
+	// private Boolean commentInConsensus; 
 	// private Boolean textRated;
 	/*
 	 * CONSTRUCTORS

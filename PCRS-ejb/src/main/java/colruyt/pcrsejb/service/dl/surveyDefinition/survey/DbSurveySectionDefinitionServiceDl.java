@@ -9,7 +9,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionBo;
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinition;
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionTitle;
 
