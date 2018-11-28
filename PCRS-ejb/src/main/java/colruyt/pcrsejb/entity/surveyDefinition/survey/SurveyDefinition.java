@@ -40,7 +40,7 @@ public class SurveyDefinition extends AbstractEntity implements Serializable {
 	private Integer id;
 	private String name;
 	@OneToMany
-	@JoinColumn(name="SURVEYDEFINITIONS_ID")
+	@JoinColumn(name="SURVEYDEFINITIONIMPL_ID")
 	private List<SurveySectionDefinitionImpl> surveySections = new ArrayList<>();
 	/*
 	 * CONSTRUCTORS

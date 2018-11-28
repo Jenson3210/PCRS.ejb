@@ -79,12 +79,13 @@ public class AdminCompetenceView implements Serializable{
 		levels.add(new CompetenceLevelBo("", levels.size() + 1));
 	}
 	public void  removeLevel(){
-		CompetenceLevelBo c = null;
+		CompetenceLevelBo c = new CompetenceLevelBo();
 		for (CompetenceLevelBo competence : levels) {
 			if (competence.getId() == bo.getId()) {
 				c = competence;
 			}
 		}
+		
 		levels.remove(c);
 		competenceLevelFacade.delete(c);
 	}
