@@ -16,6 +16,7 @@ import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.facade.user.IUserFacade;
+import colruyt.pcrsejb.util.exceptions.NoExistingEmailException;
 
 @Named
 @SessionScoped
@@ -44,6 +45,8 @@ public class LogonView implements Serializable {
 	public void login() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
+		
+		try {
 		UserBo user = userFacade.getUserByEmail(email);
 		if (user != null && this.password.equals(user.getPassword())) {
 			context.getExternalContext().getSessionMap().put("user", user);
@@ -58,6 +61,13 @@ public class LogonView implements Serializable {
 			context.addMessage(null, new FacesMessage("Authentication Failed. Check username or password."));
 
 		}
+		
+		
+		}
+		catch(NoExistingEmailException e) {
+			context.addMessage(null, new FacesMessage("Authentication Failed. Check username or password."));
+		}
+		
 	}
 
 	public void logout() {
