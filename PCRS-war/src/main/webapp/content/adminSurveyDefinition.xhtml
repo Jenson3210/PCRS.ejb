@@ -29,10 +29,8 @@
 						<p:commandLink update=":editForm:editSurveyDefinition" id="edit"
 							oncomplete="PF('editSurveyDefinitionDialog').show()">
 							<i class="fas fa-pencil-alt"></i>
-							<f:setPropertyActionListener value="#{surveyDefinition.key}"
-								target="#{adminSurveyDefinitionView.addedSurveyDefinitionBo}" />
-							<f:setPropertyActionListener value="#{surveyDefinition.value}"
-								target="#{adminSurveyDefinitionView.addedUserBo}" />
+							<f:setPropertyActionListener value="#{surveyDefinition}"
+								target="#{adminSurveyDefinitionView.manipulatedRow}" />
 						</p:commandLink>
 					</p:column>
 					
@@ -40,10 +38,8 @@
 						style="width:65px; text-align: center">
 						<p:commandLink id="delete" oncomplete="PF('deleteSurveyDefinitionDialog').show()">
 							<i class="fas fa-trash-alt"></i>
-							<f:setPropertyActionListener value="#{surveyDefinition.key}"
-								target="#{adminSurveyDefinitionView.addedSurveyDefinitionBo}" />
-							<f:setPropertyActionListener value="#{surveyDefinition.value}"
-								target="#{adminSurveyDefinitionView.addedUserBo}" />
+							<f:setPropertyActionListener value="#{surveyDefinition}"
+								target="#{adminSurveyDefinitionView.manipulatedRow}" />
 						</p:commandLink>
 					</p:column>
 				</p:dataTable>

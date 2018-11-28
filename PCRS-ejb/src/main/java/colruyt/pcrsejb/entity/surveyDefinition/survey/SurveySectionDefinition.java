@@ -23,8 +23,6 @@ import colruyt.pcrsejb.entity.surveyDefinition.strategy.SurveySectionStrategy;
 @Entity
 @Table(name="SURVEYSECTIONDEFINITIONS")
 @NamedQuery(name= "SURVEYSECTIONDEFINITION.GETALL", query = "SELECT ssd FROM SurveySectionDefinition ssd")
-
-
 public class SurveySectionDefinition extends AbstractEntity implements Serializable {
 	/* 
 	 * PROPERTIES
