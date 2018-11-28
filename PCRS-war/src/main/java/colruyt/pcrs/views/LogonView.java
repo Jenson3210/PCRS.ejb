@@ -10,8 +10,10 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 
+import colruyt.pcrs.utillibs.CreateCompetencesScript;
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
@@ -28,12 +30,16 @@ public class LogonView implements Serializable {
 
 	@EJB
 	private IUserFacade userFacade;
+	
+	@Inject
+	private CreateCompetencesScript createCompetences;
 
 	private String email; 
 	private String password;
 	
 	@PostConstruct
 	private void fillDb() {
+		createCompetences.fillCompetencesDb(false);
 		if (userFacade.getAll().isEmpty()) {
 			Set<UserPrivilegeBo> privs = new HashSet<>();
 			privs.add(new UserPrivilegeBo(PrivilegeTypeBo.ADMINISTRATOR, true));

@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -43,12 +44,9 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 
 	@Override
 	public void delete(Team element) {
-		element = em.merge(element);
-		if (element != null) {
-			em.remove(element);
-		}
-		else {
-			throw new EmptyStackException();
+		Team team = em.find(Team.class, element.getId());
+		if (team != null) {
+			em.remove(team);
 		}
 	}
 

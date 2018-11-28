@@ -11,7 +11,8 @@
 		<div class="ui-g-10">
 			<h:form id="form">
 				<p:dataTable var="competence"
-							 value="#{adminCompetenceView.competences}">
+							 value="#{adminCompetenceView.competences}"
+							 onRowMouseOver="this.style.backgroundColor='#B5F3FB'">
 					<f:facet name="header">
 						<h:outputText value="#{msgs['competence.title']}" />
 					</f:facet>
@@ -48,7 +49,7 @@
 				</div>
 			</h:form>
 			
-<!-- 									ADD COMPETENCE												 -->
+<!-- ADD COMPETENCE	ADD COMPETENCE ADD COMPETENCE ADD COMPETENCE ADD COMPETENCE ADD COMPETENCE ADD COMPETENCE ADD COMPETENCE -->
 			
 			<h:form id="addForm">
 				<div class="ui-g" id="addCompetenceForm">
@@ -81,7 +82,7 @@
 								<div class="ui-g-2">
 									<p:commandLink	action="#{adminCompetenceView.newLevel}"
 													styleClass="ui-priority-primary" process="@this"
-													update=":editForm:editCompetenceDetail">
+													update=":addForm:addCompetenceDetail">
 										<i class="fas fa-plus"/>
 									</p:commandLink>
 								</div>
@@ -92,8 +93,8 @@
 										<!-- DELETE THIS LEVEL -->
 										<p:commandLink	action="#{adminCompetenceView.removeLevel}"
 														  styleClass="ui-priority-primary" process="@this"
-														  update=":editForm:editCompetenceDetail">
-											<i class="fas fa-plus"/>
+														  update=":addForm:addCompetenceDetail">
+											<i class="fas fa-trash-alt"/>
 										</p:commandLink>
 									</div>
 									<div class="ui-g-1">
@@ -114,7 +115,7 @@
 				</div>
 			</h:form>
 						
-<!-- 								EDIT COMPETENCE														 -->
+<!-- EDIT COMPETENCE EDIT COMPETENCE EDIT COMPETENCE EDIT COMPETENCE EDIT COMPETENCE EDIT COMPETENCE -->
 	
 			<h:form id="editForm">
 				<div class="ui-g" id="editCompetenceForm">
@@ -147,7 +148,7 @@
 								<div class="ui-g-2">
 									<p:commandLink	action="#{adminCompetenceView.newLevel}"
 													styleClass="ui-priority-primary" process="@this"
-													update=":addForm:addCompetenceDetail">
+													update=":editForm:editCompetenceDetail">
 										<i class="fas fa-plus"/>
 									</p:commandLink>
 								</div>
@@ -158,8 +159,8 @@
 										<!-- DELETE THIS LEVEL -->
 										<p:commandLink	action="#{adminCompetenceView.removeLevel}"
 														  styleClass="ui-priority-primary" process="@this"
-														  update=":addForm:addCompetenceDetail">
-											<i class="fas fa-plus"/>
+														  update=":editForm:editCompetenceDetail">
+											<i class="fas fa-trash-alt"/>
 										</p:commandLink>
 									</div>
 									<div class="ui-g-1">
@@ -180,7 +181,7 @@
 				</div>
 			</h:form>
 						
-<!-- 									DELETE COMPETENCE									 -->
+<!-- DELETE COMPETENCE DELETE COMPETENCE DELETE COMPETENCE DELETE COMPETENCE DELETE COMPETENCE DELETE COMPETENCE -->
 	
 			<h:form id="deleteForm">
 				<div class="ui-g" id="deleteCompetenceForm">

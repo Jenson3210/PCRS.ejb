@@ -1,6 +1,7 @@
 package colruyt.pcrs.views;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -47,7 +48,31 @@ public class RespSurveyDefinitionView implements Serializable {
 	
 	private SurveySectionDefinitionBo addedSurveySectionDefinition;
 	
+	private String selected;
+	private List<String> strings;
 	
+	
+
+	public String getSelected() {
+		return selected;
+	}
+
+	public void setSelected(String selected) {
+		this.selected = selected;
+	}
+	
+	
+
+	public List<String> getStrings() {
+		return strings;
+	}
+
+	public void setStrings(List<String> strings) {
+		this.strings = strings;
+	}
+
+
+
 	@Inject
 	private WebUser webuser;
 	
@@ -61,20 +86,17 @@ public class RespSurveyDefinitionView implements Serializable {
 	public void setup() {
 		UserBo userBo = webuser.getUser();
 		addedSurveySectionDefinition = new SurveySectionDefinitionBo();
-		for(UserPrivilegeBo up : userBo.getPrivileges()) {
-			System.out.println(up);
-			System.out.println(up.getPrivilegeType());
-			System.out.println(PrivilegeType.SURVEYDEFINITIONRESPONSIBLE);
-			System.out.println(((SurveyUserPrivilegeBo) up).getSurveyDefinition());
-			if (up.getPrivilegeType().equals(PrivilegeType.SURVEYDEFINITIONRESPONSIBLE)) {
-				surveyDefinitionBo = ((SurveyUserPrivilegeBo) up).getSurveyDefinition();
-				System.out.println(surveyDefinitionBo.getName());
-			}
-		}
+		
 		// get all definitions and titles
 		surveyDefinitionList = surveyDefinitionFacade.getAll();
 		surveySectionTitleList = surveySectionTitleFacade.getAll();
 		surveySectionStrategyList = surveySectionStrategyFacade.getAll();
+		
+		
+		strings = new ArrayList<>();
+		strings.add("aaa");
+		strings.add("bbb");
+		strings.add("ccc");
 	}
 	
 
@@ -86,9 +108,9 @@ public class RespSurveyDefinitionView implements Serializable {
 	
 	public void addSurveyDefinition() {
 		// TOD
-		System.out.println("---------");
+		System.out.println("++++++++++++++");
+		System.out.println("selected" + selected);
 		System.out.println(addedSurveySectionDefinition);
-		System.out.println(addedSurveySectionDefinition.getSurveySectionTitle().getTitle());
 	}
 	
 	
@@ -105,6 +127,7 @@ public class RespSurveyDefinitionView implements Serializable {
 	}
 
 
+	
 	public List<SurveySectionTitleBo> getSurveySectionTitleList() {
 		return surveySectionTitleList;
 	}
