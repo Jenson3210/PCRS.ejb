@@ -13,6 +13,7 @@ import javax.persistence.TypedQuery;
 
 import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.privilege.PrivilegeType;
+import colruyt.pcrsejb.entity.user.team.Enrolment;
 import colruyt.pcrsejb.entity.user.team.Team;
 import colruyt.pcrsejb.util.exceptions.UserIsNotMemberOfTeamException;
 
@@ -25,7 +26,15 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 
 	@Override
 	public Team save(Team element) {
-		return em.merge(element);
+		Team team = em.find(Team.class, element.getId());
+		if (team == null) {
+			em.persist(element);
+			team = element;
+		}else {
+			element.setId(team.getId());
+			team = em.merge(element);
+		}
+		return team;
 	}
 
 	@Override

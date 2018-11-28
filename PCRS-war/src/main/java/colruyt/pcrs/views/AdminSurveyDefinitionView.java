@@ -101,7 +101,7 @@ public class AdminSurveyDefinitionView implements Serializable{
 		}
 		user.getPrivileges().remove(sdrup);
 		userFacade.save(user);
-		surveyDefinitionFacade.delete(addedSurveyDefinitionBo);
+		surveyDefinitionFacade.delete(manipulatedRow.getKey());
 	}
 	
 	/**
