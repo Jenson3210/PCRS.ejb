@@ -1,13 +1,17 @@
 package colruyt.pcrs.views;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import colruyt.pcrsejb.bo.competence.CompetenceBo;
+import colruyt.pcrsejb.bo.competence.CompetenceLevelBo;
 import colruyt.pcrsejb.facade.competence.ICompetenceFacade;
 
 @Named
@@ -15,18 +19,25 @@ import colruyt.pcrsejb.facade.competence.ICompetenceFacade;
 public class AdminCompetenceView implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@EJB
-	private ICompetenceFacade competenceFasade;
+	private ICompetenceFacade competenceFacade;
 	private CompetenceBo competenceBo;
-	private List<CompetenceBo> competences; 
+	private List<CompetenceBo> competences;
+	private Set<CompetenceLevelBo> levels;
 	
+	@PostConstruct
+	private void fillCompetences() {
+		competences = competenceFacade.getAll();
+		newLevels();
+	}
 	
-	public List<CompetenceBo> getCompetences() {
-		return competences;
+	public void newCompetence() {
+		competenceBo = new CompetenceBo();
+		newLevels();
 	}
 	
 	public void addCompetence() {
-		
-		competences.add(competenceFasade.save(competenceBo));
+		competenceBo.setCompetenceLevels(levels);
+		competences.add(competenceFacade.save(competenceBo));
     }
 	
 	public void editCompetence() {
@@ -37,7 +48,7 @@ public class AdminCompetenceView implements Serializable{
 			}
 			c = competence;
 		}
-		competenceFasade.save(c); 
+		competenceFacade.save(c); 
 	}
 	
 	public void deleteCompetence() {
@@ -48,8 +59,41 @@ public class AdminCompetenceView implements Serializable{
 			}
 		}
 		competences.remove(c);
-		competenceFasade.delete(c);
+		competenceFacade.delete(c);
+	}
+
+	private void newLevels() {
+		levels = new HashSet<>();
+		for (int i = 1; i <= 2; i++) {
+			levels.add(new CompetenceLevelBo("", i));
+		}
 	}
 	
+	public void newLevel() {
+		levels.add(new CompetenceLevelBo("", levels.size() + 1));
+	}
 	
+	public CompetenceBo getCompetenceBo() {
+		return competenceBo;
+	}
+
+	public void setCompetenceBo(CompetenceBo competenceBo) {
+		this.competenceBo = competenceBo;
+	}
+
+	public List<CompetenceBo> getCompetences() {
+		return competences;
+	}
+
+	public void setCompetences(List<CompetenceBo> competences) {
+		this.competences = competences;
+	}
+
+	public Set<CompetenceLevelBo> getLevels() {
+		return levels;
+	}
+
+	public void setLevels(Set<CompetenceLevelBo> levels) {
+		this.levels = levels;
+	}
 }
