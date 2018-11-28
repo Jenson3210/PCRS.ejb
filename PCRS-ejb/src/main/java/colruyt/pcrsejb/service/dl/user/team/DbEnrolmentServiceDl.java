@@ -1,13 +1,12 @@
 package colruyt.pcrsejb.service.dl.user.team;
 
-import java.util.EmptyStackException;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
-import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.team.Enrolment;
 
 @Stateless
@@ -28,7 +27,9 @@ public class DbEnrolmentServiceDl implements IEnrolmentServiceDl{
 
 	@Override
 	public List<Enrolment> getAll() {
-		return em.createQuery("select e from Enrolment", Enrolment.class).getResultList();
+		TypedQuery<Enrolment> q = em.createNamedQuery("ENROLMENT.GETALL", Enrolment.class);
+		List<Enrolment> listOfEnrolments = q.getResultList();
+		return listOfEnrolments;
 	}
 
 	@Override
