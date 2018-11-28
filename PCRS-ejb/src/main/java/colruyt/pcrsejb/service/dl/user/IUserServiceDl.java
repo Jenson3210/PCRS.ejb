@@ -4,7 +4,9 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.entity.user.User;
+import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 import colruyt.pcrsejb.service.dl.IDbService;
 import colruyt.pcrsejb.util.exceptions.NoExistingEmailException;
 

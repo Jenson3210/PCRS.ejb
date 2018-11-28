@@ -29,10 +29,8 @@
 						<p:commandLink update=":editForm:editSurveyDefinition" id="edit"
 							oncomplete="PF('editSurveyDefinitionDialog').show()">
 							<i class="fas fa-pencil-alt"></i>
-							<f:setPropertyActionListener value="#{surveyDefinition.key}"
-								target="#{adminSurveyDefinitionView.addedSurveyDefinitionBo}" />
-							<f:setPropertyActionListener value="#{surveyDefinition.value}"
-								target="#{adminSurveyDefinitionView.addedUserBo}" />
+							<f:setPropertyActionListener value="#{surveyDefinition}"
+								target="#{adminSurveyDefinitionView.manipulatedRow}" />
 						</p:commandLink>
 					</p:column>
 					
@@ -40,10 +38,8 @@
 						style="width:65px; text-align: center">
 						<p:commandLink id="delete" oncomplete="PF('deleteSurveyDefinitionDialog').show()">
 							<i class="fas fa-trash-alt"></i>
-							<f:setPropertyActionListener value="#{surveyDefinition.key}"
-								target="#{adminSurveyDefinitionView.addedSurveyDefinitionBo}" />
-							<f:setPropertyActionListener value="#{surveyDefinition.value}"
-								target="#{adminSurveyDefinitionView.addedUserBo}" />
+							<f:setPropertyActionListener value="#{surveyDefinition}"
+								target="#{adminSurveyDefinitionView.manipulatedRow}" />
 						</p:commandLink>
 					</p:column>
 				</p:dataTable>
@@ -58,8 +54,8 @@
 			</h:form>
 
 			<h:form id="addForm">
-				<div class="ui-g" id="addUserForm">
-					<p:dialog id="adduserFormTitle" header="#{msgs['surveyDefinition.add']}"
+				<div class="ui-g" id="addSurveyDefinitionForm">
+					<p:dialog id="addSurveyDefinitionFormTitle" header="#{msgs['surveyDefinition.add']}"
 						widgetVar="addSurveyDefinitionDialog" modal="true" draggable="false">
 						<p:outputPanel id="addSurveyDefinition">
 							<div class="ui-g">
@@ -98,8 +94,8 @@
 			</h:form>
 				
 			<h:form id="editForm">
-				<div class="ui-g" id="editUserForm">
-					<p:dialog id="editUserFormTitle" header="#{msgs['surveyDefinition.edit']}"
+				<div class="ui-g" id="editSurveyDefinitionForm">
+					<p:dialog id="editSurveyDefinitionFormTitle" header="#{msgs['surveyDefinition.edit']}"
 						widgetVar="editSurveyDefinitionDialog" modal="true" draggable="false">
 						<p:outputPanel id="editSurveyDefinition">
 							

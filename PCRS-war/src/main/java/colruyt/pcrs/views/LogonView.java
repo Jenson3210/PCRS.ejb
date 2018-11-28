@@ -54,7 +54,7 @@ public class LogonView implements Serializable {
 				context.getExternalContext().redirect("profile.xhtml");
 				
 			} catch (IOException e) {
-				e.printStackTrace();
+				e.printStackTrace(); 
 			}
 		} else {
 			// Send an error message on Login Failure
