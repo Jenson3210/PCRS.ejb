@@ -13,7 +13,6 @@ import colruyt.pcrsejb.converter.user.UserConverter;
 import colruyt.pcrsejb.converter.user.privilege.PrivilegeTypeTranslator;
 import colruyt.pcrsejb.converter.user.privilege.UserPrivilegeConverter;
 import colruyt.pcrsejb.service.bl.user.IUserServiceBl;
-import colruyt.pcrsejb.service.bl.user.UserServiceBl;
 import colruyt.pcrsejb.util.exceptions.NoExistingEmailException;
 
 @Stateless

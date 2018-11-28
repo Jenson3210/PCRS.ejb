@@ -6,7 +6,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import colruyt.pcrsejb.bo.competence.CompetenceBo;
 import colruyt.pcrsejb.entity.competence.Competence;
 import colruyt.pcrsejb.service.dl.competence.ICompetenceServiceDl;
 

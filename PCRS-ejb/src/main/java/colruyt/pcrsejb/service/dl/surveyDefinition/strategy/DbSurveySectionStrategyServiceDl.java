@@ -12,6 +12,7 @@ import javax.persistence.TypedQuery;
 
 import colruyt.pcrsejb.entity.surveyDefinition.strategy.SurveySectionStrategy;
 
+
 @Stateless
 public class DbSurveySectionStrategyServiceDl implements Serializable, ISurveySectionStrategyServiceDL{
 	@PersistenceContext(unitName = "PCRSEJB")

@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.ejb.Local;
 
-import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.team.Team;
 import colruyt.pcrsejb.service.dl.IDbService;

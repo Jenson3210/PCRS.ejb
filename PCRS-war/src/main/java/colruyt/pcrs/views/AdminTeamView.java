@@ -155,13 +155,11 @@ public class AdminTeamView implements Serializable {
     		privilege.setActive(true);
     		user.getPrivileges().add(privilege);
         	enrolment.setUser(user); 
-        	enrolment.setUserPrivilege(privilege);
         	enrolment.setActive(true);
 
         	manipulatedTeamBo.getEnrolments().add(enrolment);
         	
-    		enrolmentFacade.saveNewMemberInTeam(manipulatedTeamBo, enrolment);
-    		
+        	teamFacade.save(manipulatedTeamBo);
     	} catch (MemberAlreadyHasATeamException ex) {
     		
     	}

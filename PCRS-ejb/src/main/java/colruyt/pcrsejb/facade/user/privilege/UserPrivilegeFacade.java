@@ -6,13 +6,10 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.converter.user.UserConverter;
 import colruyt.pcrsejb.converter.user.privilege.UserPrivilegeConverter;
-import colruyt.pcrsejb.entity.user.User;
-import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
-import colruyt.pcrsejb.service.bl.user.privilege.UserPrivilegeServiceBl;
+import colruyt.pcrsejb.service.bl.user.privilege.IUserPrivilegeServiceBl;
 
 @Stateless
 public class UserPrivilegeFacade implements Serializable, IUserPrivilegeFacade {
@@ -22,7 +19,7 @@ public class UserPrivilegeFacade implements Serializable, IUserPrivilegeFacade {
 	private static final long serialVersionUID = 1L;
 	
 	@EJB
-	UserPrivilegeServiceBl userPrivilegeServiceBl;
+	IUserPrivilegeServiceBl userPrivilegeServiceBl;
 	UserPrivilegeConverter userPrivilegeConverter = new UserPrivilegeConverter();
 	UserConverter userConverter = new UserConverter();
 
@@ -48,9 +45,5 @@ public class UserPrivilegeFacade implements Serializable, IUserPrivilegeFacade {
 	public void delete(UserPrivilegeBo entityBo) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	public UserPrivilegeBo getActivePrivilege(UserBo user) {
-		return userPrivilegeConverter.convertToBo(userPrivilegeServiceBl.getActivePrivilege(userConverter.convertToEntity(user)));
 	}
 }
