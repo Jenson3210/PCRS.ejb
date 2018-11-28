@@ -26,8 +26,6 @@ public class CompetenceLevel extends AbstractEntity implements Serializable{
     @SequenceGenerator(sequenceName = "COMPETENCELEVELS_SEQ", allocationSize = 1, name = "COMPETENCELEVELS_SEQ")
 	@Column(name="ID")
 	private Integer Id;
-	@Column(name="ACTIVE")
-	private Boolean minLevel;
 	@Column(name="DESCRIPTION")
 	private String description;
 	@Column(name="ORDERLEVEL")
@@ -38,16 +36,14 @@ public class CompetenceLevel extends AbstractEntity implements Serializable{
 	public CompetenceLevel() {
 		super();
 	}
-	public CompetenceLevel(Boolean minLevel, String description, Integer orderLevel) {
+	public CompetenceLevel(String description, Integer orderLevel) {
 		super();
-		this.minLevel = minLevel;
 		this.description = description;
 		this.orderLevel = orderLevel;
 	}
-	public CompetenceLevel(Integer id, Boolean minLevel, String description, Integer orderLevel) {
+	public CompetenceLevel(Integer id, String description, Integer orderLevel) {
 		super();
 		Id = id;
-		this.minLevel = minLevel;
 		this.description = description;
 		this.orderLevel = orderLevel;
 	}
@@ -59,12 +55,6 @@ public class CompetenceLevel extends AbstractEntity implements Serializable{
 	}
 	public void setId(Integer id) {
 		Id = id;
-	}
-	public Boolean getMinLevel() {
-		return minLevel;
-	}
-	public void setMinLevel(Boolean minLevel) {
-		this.minLevel = minLevel;
 	}
 	public String getDescription() {
 		return description;

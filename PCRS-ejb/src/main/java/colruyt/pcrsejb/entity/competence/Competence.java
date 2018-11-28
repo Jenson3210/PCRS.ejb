@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,7 +37,7 @@ public class Competence extends AbstractEntity implements Serializable {
     private String name;
     @Column(name="DESCRIPTION",table="COMPETENCEDESCRIPTIONS")
     private String competenceDescription;
-    @OneToMany
+    @OneToMany(cascade= {CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="COMPETENCES_ID")
     private Set<CompetenceLevel> competenceLevels = new HashSet<>();
 	/*

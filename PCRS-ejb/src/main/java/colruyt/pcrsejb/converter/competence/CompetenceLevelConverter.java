@@ -14,7 +14,6 @@ public class CompetenceLevelConverter implements GenericConverter<CompetenceLeve
 			entity = new CompetenceLevel();
 			ConverterUtils.setIfNotNull(bo::getDescription, entity::setDescription);
 			ConverterUtils.setIfNotNull(bo::getId, entity::setId);
-			ConverterUtils.setIfNotNull(bo::getMinLevel, entity::setMinLevel);
 			ConverterUtils.setIfNotNull(bo::getOrderLevel, entity::setOrderLevel);
 		} 
 		return entity;
@@ -27,7 +26,6 @@ public class CompetenceLevelConverter implements GenericConverter<CompetenceLeve
 			bo = new CompetenceLevelBo();
 			ConverterUtils.setIfNotNull(entity::getDescription, bo::setDescription);
 			ConverterUtils.setIfNotNull(entity::getId, bo::setId);
-			ConverterUtils.setIfNotNull(entity::getMinLevel, bo::setMinLevel);
 			ConverterUtils.setIfNotNull(entity::getOrderLevel, bo::setOrderLevel);
 		} 
 		return bo;
