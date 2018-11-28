@@ -6,12 +6,15 @@ import javax.ejb.Remote;
 
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveyDefinitionBo;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionBo;
+import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionTitleBo;
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.facade.IFacade;
 
 
 @Remote
 public interface ISurveySectionDefinition extends IFacade<SurveySectionDefinitionBo> {
+
+	List<SurveySectionDefinitionBo> getSurveySectionDefinitionsForTitle(SurveySectionTitleBo t);
 
 	
 	
