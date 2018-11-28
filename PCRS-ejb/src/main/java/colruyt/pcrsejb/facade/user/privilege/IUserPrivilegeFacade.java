@@ -11,5 +11,4 @@ import colruyt.pcrsejb.facade.IFacade;
 
 @Remote
 public interface IUserPrivilegeFacade extends IFacade<UserPrivilegeBo>{
-	UserPrivilegeBo getActivePrivilege(UserBo user);
 }

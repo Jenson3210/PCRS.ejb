@@ -20,6 +20,7 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
 	 */
 	@EJB
 	private ITeamServiceDl dlService;
+	
 	private static final long serialVersionUID = 1L;
 
 	public User getManagerOfUser(User u) {

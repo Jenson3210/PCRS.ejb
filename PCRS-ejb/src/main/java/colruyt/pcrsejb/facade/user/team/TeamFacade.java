@@ -16,8 +16,6 @@ import colruyt.pcrsejb.util.exceptions.UserIsNotMemberOfTeamException;
 @Stateless
 public class TeamFacade implements Serializable, ITeamFacade {
 
-	
-		
 	@EJB
 	private ITeamServiceBl teamBl;
 	
