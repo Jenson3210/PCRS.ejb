@@ -10,7 +10,7 @@
 	<ul>
 		<h:panelGroup rendered="#{webUser.hasUser()}">
 			
-			<!-- 								TEAM MEMBER										 -->
+<!-- TEAM MEMBERTEAM MEMBERTEAM MEMBERTEAM MEMBERTEAM MEMBERTEAM MEMBERTEAM MEMBERTEAM MEMBERTEAM MEMBERTEAM MEMBER	-->
 			
 			<h:panelGroup rendered="#{webUser.hasPrivilege('Team member')}">
 				<li class="#{view.viewId.contains('overview') ? 'c-active' : ''}">
@@ -42,16 +42,12 @@
 				</li>
 			</h:panelGroup>
 			
-			<!-- 					SURVEY DEFINITION RESPONSIBLE									 -->
+<!-- SURVEY DEFINITION RESPONSIBLE SURVEY DEFINITION RESPONSIBLE SURVEY DEFINITION RESPONSIBLE SURVEY DEFINITION RESPONSIBLE-->
 			
 			<h:panelGroup rendered="#{webUser.hasPrivilege('Survey Definition Responsible')}">
 				<li>
 					<div>#{msgs['menu.craftfunctionresponsible']}</div>
 					<ul>
-						<li class="#{request.getParameter('target') == 'rolemanagement' ? 'c-active' : ''}">
-							<h:link value="#{msgs['menu.rolemanagement']}"
-								outcome="/responsible/respCompetence.xhtml" />
-						</li>
 						<li class="#{request.getParameter('target') == 'craftmanagement' ? 'c-active' : ''}">
 							<h:link value="#{msgs['menu.craftmanagement']}"
 								outcome="/responsible/respSurveyDefinition.xhtml" />
@@ -60,7 +56,7 @@
 				</li>
 			</h:panelGroup>
 			
-			<!-- 								ADMIN												 -->
+<!-- ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN -->
 			
 			<h:panelGroup rendered="#{webUser.hasPrivilege('Administrator')}">
 				<li>
