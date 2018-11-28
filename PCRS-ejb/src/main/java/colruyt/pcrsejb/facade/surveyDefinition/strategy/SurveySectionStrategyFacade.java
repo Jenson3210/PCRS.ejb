@@ -5,10 +5,13 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 import colruyt.pcrsejb.bo.surveyDefinition.strategy.SurveySectionStrategyBo;
 import colruyt.pcrsejb.converter.surveyDefinition.strategy.SurveySectionStrategyConverter;
 import colruyt.pcrsejb.service.bl.surveyDefinition.strategy.ISurveySectionStrategyServiceBl;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
 public class SurveySectionStrategyFacade implements Serializable, ISurveySectionStrategyFacade {
@@ -24,7 +27,15 @@ public class SurveySectionStrategyFacade implements Serializable, ISurveySection
 
 	@Override
 	public SurveySectionStrategyBo save(SurveySectionStrategyBo entityBo) {
-		return surveySectionStrategyConverter.convertToBo(surveySectionStrategyServiceBl.save(surveySectionStrategyConverter.convertToEntity(entityBo)));
+//		try {
+			return surveySectionStrategyConverter.convertToBo(surveySectionStrategyServiceBl.save(surveySectionStrategyConverter.convertToEntity(entityBo)));
+//		} catch (ValidationException e) {
+//			// TODO Auto-generated catch block
+//			System.out.println("+++++++++++++validatieexception ++++++++++++++++++");
+//			System.out.println(e.getMessage());
+//			System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++");
+//			return entityBo;
+//		}
 	}
 
 	@Override
