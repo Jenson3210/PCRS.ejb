@@ -2,18 +2,21 @@ package colruyt.pcrs.views;
 
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveyDefinitionBo;
 import colruyt.pcrsejb.bo.user.UserBo;
+import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
+import colruyt.pcrsejb.bo.user.privilege.SurveyDefinitionResponsibleUserPrivilegeBo;
+import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
+import colruyt.pcrsejb.entity.user.privilege.PrivilegeType;
 import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveyDefinitionFacade;
 import colruyt.pcrsejb.facade.user.IUserFacade;
 
@@ -28,40 +31,110 @@ public class AdminSurveyDefinitionView implements Serializable{
 	
 	@EJB
 	private IUserFacade userFacade;
+	@EJB
+	private ISurveyDefinitionFacade surveyDefinitionFacade;
 	
-	private List<SurveyDefinitionBo> surveyDefinitions;
-	private List<UserBo> matchingUsers;
+	private Map<SurveyDefinitionBo, UserBo> surveyDefinitions = new HashMap<>();
 	
 	private SurveyDefinitionBo addedSurveyDefinitionBo;
 	private UserBo addedUserBo;
-	
 
 	
-	@EJB
-	private ISurveyDefinitionFacade surveyDefinitionFacade;
-
-	
+	/**
+	 * mandatory empty constructor
+	 */
 	public AdminSurveyDefinitionView() {
-		System.out.println("Inside constructor");
 	}
 	
 	
+	/**
+	 * setup of the screen, loading the needed data
+	 */
 	@PostConstruct
 	public void setup() {
-		System.out.println("Inside @PostConstruct");
-		surveyDefinitions = surveyDefinitionFacade.getAll();
-		for (SurveyDefinitionBo bo : surveyDefinitions) {
-			System.out.println("BO: " + bo);
+		List<SurveyDefinitionBo> sd = surveyDefinitionFacade.getAll();
+		for (SurveyDefinitionBo bo : sd) {
+			surveyDefinitions.put(bo, surveyDefinitionFacade.getResponsible(bo));
 		}
 	}
 	
 	
 	public void newSurveyDefinition() {
-		System.out.println("Inside newSurveyDefinition()");
 		addedSurveyDefinitionBo = new SurveyDefinitionBo();
+		addedUserBo = null;
 	}
 	
 
+	public void addSurveyDefinition() {
+		addedSurveyDefinitionBo = surveyDefinitionFacade.save(addedSurveyDefinitionBo);	
+		addedUserBo.getPrivileges().add(new SurveyDefinitionResponsibleUserPrivilegeBo(PrivilegeTypeBo.SURVEYDEFINITIONRESPONSIBLE, true, addedSurveyDefinitionBo));
+		addedUserBo = userFacade.save(addedUserBo);
+		surveyDefinitions.put(addedSurveyDefinitionBo, addedUserBo);
+	}
+	
+	/**
+	 * method used for completing the autocomplete input field in the dialog when adding 
+	 * a survey definition  
+	 * @param query: text typed in the input field
+	 * @return: List of users for which their short name matches the query parameter
+	 */
+	public List<UserBo> completeShortName(String query){
+		return userFacade.getUsersByShortName("%" + query + "%");
+	}
+	
+	
+	/**
+	 * deletes the survey definition from the List and from the DB
+	 */
+	public void deleteSurveyDefinition(){
+		surveyDefinitions.remove(addedSurveyDefinitionBo);
+		UserBo user = surveyDefinitions.get(addedSurveyDefinitionBo);
+		SurveyDefinitionResponsibleUserPrivilegeBo sdrup = null;
+		for (UserPrivilegeBo up : user.getPrivileges()) {
+			if (up.getPrivilegeType().equals(PrivilegeType.SURVEYDEFINITIONRESPONSIBLE) 
+					&& ((SurveyDefinitionResponsibleUserPrivilegeBo)up).getSurveyDefinition().getId() 
+						== addedSurveyDefinitionBo.getId()) {
+				sdrup = (SurveyDefinitionResponsibleUserPrivilegeBo) up;
+			}
+		}
+		user.getPrivileges().remove(sdrup);
+		userFacade.save(user);
+		surveyDefinitionFacade.delete(addedSurveyDefinitionBo);
+	}
+	
+	/**
+	 * modifies the survey definition and sets a new name and/or new responsible
+	 */
+	public void editSurveyDefinition() {
+		//DELETE THE PRIVILEGE FROM USER
+		UserBo user = surveyDefinitionFacade.getResponsible(addedSurveyDefinitionBo);
+		SurveyDefinitionResponsibleUserPrivilegeBo sdrup = null;
+		for (UserPrivilegeBo up : user.getPrivileges()) {
+			if (up.getPrivilegeType().equals(PrivilegeType.SURVEYDEFINITIONRESPONSIBLE) 
+					&& ((SurveyDefinitionResponsibleUserPrivilegeBo)up).getSurveyDefinition().getId() 
+						== addedSurveyDefinitionBo.getId()) {
+				sdrup = (SurveyDefinitionResponsibleUserPrivilegeBo) up;
+			}
+		}
+		user.getPrivileges().remove(sdrup);
+		userFacade.save(user);
+		//GIVE THE PRIVILEGE TO THE USER
+		addedUserBo.getPrivileges().add(new SurveyDefinitionResponsibleUserPrivilegeBo(PrivilegeTypeBo.SURVEYDEFINITIONRESPONSIBLE, true, addedSurveyDefinitionBo));
+		addedUserBo = userFacade.save(addedUserBo);
+		//UPDATE THE LIST
+		for (SurveyDefinitionBo bo : surveyDefinitions.keySet()) {
+			if (bo.getId() == addedSurveyDefinitionBo.getId()) {
+				bo.setName(addedSurveyDefinitionBo.getName());
+				surveyDefinitions.put(bo, addedUserBo);
+			}
+		}
+		surveyDefinitionFacade.save(addedSurveyDefinitionBo);
+	}
+	
+	
+	/*
+	 *  Getters and Setters
+	 */
 	
 	public UserBo getAddedUserBo() {
 		return addedUserBo;
@@ -73,14 +146,14 @@ public class AdminSurveyDefinitionView implements Serializable{
 	}
 
 
-	public List<SurveyDefinitionBo> getSurveyDefinitions() {
+	public Map<SurveyDefinitionBo, UserBo> getSurveyDefinitions() {
 		return this.surveyDefinitions;
 	}
 
-	public void setSurveyDefinitions(List<SurveyDefinitionBo> surveyDefinitions) {
+	public void setSurveyDefinitions(Map<SurveyDefinitionBo, UserBo> surveyDefinitions) {
 		this.surveyDefinitions = surveyDefinitions;
 	}
-
+	
 	public SurveyDefinitionBo getAddedSurveyDefinitionBo() {
 		return addedSurveyDefinitionBo;
 	}
@@ -90,28 +163,7 @@ public class AdminSurveyDefinitionView implements Serializable{
 	}
 
 	
-	public void addSurveyDefinition() {
-		surveyDefinitions.add(surveyDefinitionFacade.save(addedSurveyDefinitionBo));	
-	}
-	
-	public List<UserBo> completeShortName(String query){
-		return userFacade.getUsersByShortName("%" + query + "%");
-	}
 	
 	
-	public void deleteSurveyDefinition(){
-		surveyDefinitions.remove(addedSurveyDefinitionBo);
-		surveyDefinitionFacade.delete(addedSurveyDefinitionBo);
-	}
-	
-	public void editSurveyDefinition() {
-		for (SurveyDefinitionBo bo : surveyDefinitions) {
-			if (bo.getId() == addedSurveyDefinitionBo.getId()) {
-				bo.setName(addedSurveyDefinitionBo.getName());
-				bo.setResponsibleUser(addedSurveyDefinitionBo.getResponsibleUser());
-			}
-		}
-		surveyDefinitionFacade.save(addedSurveyDefinitionBo);
-	}
 }
 

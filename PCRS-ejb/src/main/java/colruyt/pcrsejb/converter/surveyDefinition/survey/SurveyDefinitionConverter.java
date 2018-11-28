@@ -19,7 +19,6 @@ public class SurveyDefinitionConverter implements GenericConverter<SurveyDefinit
 			ConverterUtils.setIfNotNull(bo::getId, entity::setId);
 			ConverterUtils.setIfNotNull(bo::getName, entity::setName);
 			entity.setSurveySections(surveySectionDefinitionConverter.convertToEntities(bo.getSurveySections()));
-			entity.setResponsibleUser(userConverter.convertToEntity(bo.getResponsibleUser()));
 			return entity;
 		}
 		return entity;
@@ -33,7 +32,6 @@ public class SurveyDefinitionConverter implements GenericConverter<SurveyDefinit
 			ConverterUtils.setIfNotNull(entity::getId, bo::setId);
 			ConverterUtils.setIfNotNull(entity::getName, bo::setName);
 			bo.setSurveySections(surveySectionDefinitionConverter.convertToBos(entity.getSurveySections()));
-			bo.setResponsibleUser(userConverter.convertToBo(entity.getResponsibleUser()));
 		}
 		return bo;
 	}

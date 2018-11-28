@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -18,6 +19,7 @@ import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 
 @Entity
 @Table(name="TEAMENROLMENTS")
+@NamedQuery(name = "ENROLMENT.GETALL", query = "SELECT e FROM Enrolment e")
 public class Enrolment extends AbstractEntity implements Serializable {
 	/*
 	 * PROPERTIES

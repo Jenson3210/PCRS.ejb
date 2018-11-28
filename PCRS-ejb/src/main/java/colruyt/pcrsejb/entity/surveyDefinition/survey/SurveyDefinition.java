@@ -25,9 +25,7 @@ import colruyt.pcrsejb.entity.user.User;
 @NamedQueries
 (
 	{
-			@NamedQuery(name = "SURVEYDEFINITION.GETALL", query = "SELECT sd FROM SurveyDefinition sd"),
-			@NamedQuery(name = "SURVEYDEFINITION.GETBYRESPONSIBLE", query = "SELECT sd from SurveyDefinition sd where sd.responsibleUser = :responsibleUser")
-			
+			@NamedQuery(name = "SURVEYDEFINITION.GETALL", query = "SELECT sd FROM SurveyDefinition sd")
 	}
 	
 )
@@ -41,8 +39,6 @@ public class SurveyDefinition extends AbstractEntity implements Serializable {
     @SequenceGenerator(sequenceName = "SURVEYDEFINITIONS_SEQ", allocationSize = 1, name = "SURVEYDEFINITIONS_SEQ")
 	@Column(name="ID")
 	private Integer id;
-	@ManyToOne
-	private User responsibleUser;
 	private String name;
 	@OneToMany
 	@JoinColumn(name="SURVEYDEFINITIONS_ID")
@@ -53,16 +49,14 @@ public class SurveyDefinition extends AbstractEntity implements Serializable {
 	public SurveyDefinition() {
 		super();
 	}
-	public SurveyDefinition(User responsibleUser, String name, List<SurveySectionDefinition> surveySections) {
+	public SurveyDefinition(String name, List<SurveySectionDefinition> surveySections) {
 		super();
-		this.responsibleUser = responsibleUser;
 		this.name = name;
 		this.surveySections = surveySections;
 	}
-	public SurveyDefinition(Integer id, User responsibleUser, String name, List<SurveySectionDefinition> surveySections) {
+	public SurveyDefinition(Integer id, String name, List<SurveySectionDefinition> surveySections) {
 		super();
 		this.id = id;
-		this.responsibleUser = responsibleUser;
 		this.name = name;
 		this.surveySections = surveySections;
 	}
@@ -74,12 +68,6 @@ public class SurveyDefinition extends AbstractEntity implements Serializable {
 	}
 	public void setId(Integer id) {
 		this.id = id;
-	}
-	public User getResponsibleUser() {
-		return responsibleUser;
-	}
-	public void setResponsibleUser(User responsibleUser) {
-		this.responsibleUser = responsibleUser;
 	}
 	public String getName() {
 		return name;

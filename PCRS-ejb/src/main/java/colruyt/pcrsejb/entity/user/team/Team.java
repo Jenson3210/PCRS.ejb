@@ -23,10 +23,9 @@ import colruyt.pcrsejb.entity.AbstractEntity;
 @Table(name = "TEAMS")
 @NamedQueries({ 
 	
-	@NamedQuery(name = "Team.getAllElements", query = "select t from Team t"),
-	
-
-
+	@NamedQuery(name = "TEAM.GETALL", query = "SELECT t FROM Team t"),
+	@NamedQuery(name = "TEAM.GETTEAMFORUSER", query = "SELECT t FROM Team t join t.enrolments enrolment WHERE enrolment.user = :member and enrolment.active = :isActive"),
+	@NamedQuery(name = "TEAM.GETTEAMSOFMANAGER", query = "SELECT t FROM Team t, Enrolment e, UserPrivilege up where up.privilegeType = :privilegeType and e.user.id = :teamManager")
 
 //	@NamedQuery(name = "Team.getTeamOfEnrolment", query = "select t from teamenrolments te "
 //			+ "join teams t on te.team_id = T.ID where te.id = :id"),
