@@ -8,6 +8,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveyDefinition;
@@ -68,8 +69,10 @@ public class DbSurveyDefinitionDl implements Serializable, ISurveyDefinitionDl {
 
 	@Override
 	public User getResponsible(SurveyDefinition surveyDefinition) {
-		// TODO Auto-generated method stub
-		return null;
+		Query q = em.createNativeQuery("SELECT * FROM Users u INNER JOIN userprivileges up ON u.ID = up.USER_ID WHERE PRIVILEGETYPE = 'SURVEYDEFINITIONRESPONSIBLE' AND SURVEYDEFINITION_ID = :surveyDefinitionID", User.class);
+		q.setParameter("surveyDefinitionID", surveyDefinition.getId());
+		User u = (User) q.getSingleResult();
+		return u;
 	}
 
 
