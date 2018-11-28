@@ -82,7 +82,7 @@
 								<div class="ui-g-2">
 									<p:commandLink	action="#{adminCompetenceView.newLevel}"
 													styleClass="ui-priority-primary" process="@this"
-													update=":addForm:addCompetenceDetail">
+													update=":editForm:editCompetenceDetail">
 										<i class="fas fa-plus"/>
 									</p:commandLink>
 								</div>
@@ -91,6 +91,11 @@
 								<ui:repeat var="level" value="#{adminCompetenceView.levels}">
 									<div class="ui-g-1">
 										<!-- DELETE THIS LEVEL -->
+										<p:commandLink	action="#{adminCompetenceView.removeLevel}"
+														  styleClass="ui-priority-primary" process="@this"
+														  update=":editForm:editCompetenceDetail">
+											<i class="fas fa-plus"/>
+										</p:commandLink>
 									</div>
 									<div class="ui-g-1">
 										<p:outputLabel value="#{level.orderLevel}." />
@@ -152,6 +157,11 @@
 								<ui:repeat var="level" value="#{adminCompetenceView.levels}">
 									<div class="ui-g-1">
 										<!-- DELETE THIS LEVEL -->
+										<p:commandLink	action="#{adminCompetenceView.removeLevel}"
+														  styleClass="ui-priority-primary" process="@this"
+														  update=":addForm:addCompetenceDetail">
+											<i class="fas fa-plus"/>
+										</p:commandLink>
 									</div>
 									<div class="ui-g-1">
 										<p:outputLabel value="#{level.orderLevel}." />

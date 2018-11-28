@@ -41,19 +41,19 @@ public class SurveyDefinition extends AbstractEntity implements Serializable {
 	private String name;
 	@OneToMany
 	@JoinColumn(name="SURVEYDEFINITIONS_ID")
-	private List<SurveySectionDefinition> surveySections = new ArrayList<>();
+	private List<SurveySectionDefinitionImpl> surveySections = new ArrayList<>();
 	/*
 	 * CONSTRUCTORS
 	 */
 	public SurveyDefinition() {
 		super();
 	}
-	public SurveyDefinition(String name, List<SurveySectionDefinition> surveySections) {
+	public SurveyDefinition(String name, List<SurveySectionDefinitionImpl> surveySections) {
 		super();
 		this.name = name;
 		this.surveySections = surveySections;
 	}
-	public SurveyDefinition(Integer id, String name, List<SurveySectionDefinition> surveySections) {
+	public SurveyDefinition(Integer id, String name, List<SurveySectionDefinitionImpl> surveySections) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -74,10 +74,10 @@ public class SurveyDefinition extends AbstractEntity implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<SurveySectionDefinition> getSurveySections() {
+	public List<SurveySectionDefinitionImpl> getSurveySections() {
 		return surveySections;
 	}
-	public void setSurveySections(List<SurveySectionDefinition> surveySections) {
+	public void setSurveySections(List<SurveySectionDefinitionImpl> surveySections) {
 		this.surveySections = surveySections;
 	}	
 }

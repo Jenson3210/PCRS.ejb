@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
+import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.team.Enrolment;
 
 @Stateless
@@ -18,13 +19,15 @@ public class DbEnrolmentServiceDl implements IEnrolmentServiceDl{
 
 	@Override
 	public Enrolment save(Enrolment element) {
-		try {
+		Enrolment enrolment = em.find(Enrolment.class, element.getId());
+		if (enrolment == null) {
 			em.persist(element);
-		} catch (PersistenceException e) {
-			em.find(Enrolment.class, element.getId());
-			element = em.merge(element);
+			enrolment = element;
+		}else {
+			element.setId(enrolment.getId());
+			enrolment = em.merge(element);
 		}
-		return element;
+		return enrolment;
 	}
 
 	@Override
@@ -43,11 +46,11 @@ public class DbEnrolmentServiceDl implements IEnrolmentServiceDl{
 	public void delete(Enrolment element) {
 		Enrolment enrolment = em.find(Enrolment.class, element.getId());
 		if (enrolment != null) {
-			enrolment = em.merge(enrolment);
 			em.remove(enrolment);
+			element.getUserPrivilege().setActive(false);
 			em.createNamedQuery("ENROLMENT.DEACTIVATE", Enrolment.class)
 			.setParameter("active", false)
-			.setParameter("id", enrolment.getUserPrivilege().getId())
+			.setParameter("id", element.getUserPrivilege().getId())
 			.executeUpdate();
 		}
 	}
