@@ -13,7 +13,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
+import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.entity.user.User;
+import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 
 @Stateless
 public class DbUserServiceDl implements Serializable, IUserServiceDl {
@@ -31,6 +33,7 @@ public class DbUserServiceDl implements Serializable, IUserServiceDl {
 			em.persist(element);
 			user = element;
 		}else {
+			element.setId(user.getId());
 			user = em.merge(element);
 		}
 		return user;

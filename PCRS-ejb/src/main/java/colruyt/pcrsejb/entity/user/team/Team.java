@@ -43,7 +43,7 @@ public class Team extends AbstractEntity implements Serializable {
 	@Column(name = "ID")
 	private Integer id;
 	private String name;
-	@OneToMany(cascade = CascadeType.MERGE)
+	@OneToMany(cascade= {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.PERSIST})
 	@JoinColumn(name = "TEAM_ID")
 	private Set<Enrolment> enrolments = new HashSet<>();
 	/*

@@ -58,7 +58,7 @@ public class AdminTeamView implements Serializable {
 	}
 
 	public void setManipulatedEnrolmentBo(EnrolmentBo manipulatedEnrolmentBo) {
-		this.manipulatedEnrolmentBo = manipulatedEnrolmentBo;
+		this.manipulatedEnrolmentBo  = manipulatedEnrolmentBo;
 	}
 
 	public TeamBo getManipulatedTeamBo() {
@@ -120,7 +120,6 @@ public class AdminTeamView implements Serializable {
     	try {
     	if(PrivilegeTypeBo.TEAMMEMBER.getShortName().equals(userPrivilege)) {
     		List<TeamMemberUserPrivilegeBo> memberPrivs = new ArrayList<>();
-    		
     			for (UserPrivilegeBo p : user.getPrivileges()) {
         			if (p.getPrivilegeType().equals(PrivilegeTypeBo.TEAMMEMBER)) {
         				if (p.isActive()) {
@@ -138,7 +137,7 @@ public class AdminTeamView implements Serializable {
     			if (privilege == null) {
     				privilege = new TeamMemberUserPrivilegeBo();
     	    		privilege.setPrivilegeType(PrivilegeTypeBo.TEAMMEMBER);
-    	    		((TeamMemberUserPrivilegeBo) privilege).setStartDateCurrentSurveyDefinition(LocalDate.now());
+    	    		//((TeamMemberUserPrivilegeBo) privilege).setStartDateCurrentSurveyDefinition(LocalDate.now());
     	    		((TeamMemberUserPrivilegeBo) privilege).setSurveyDefinition(surveyDefinition);
     			}   	    		
         	}else {    		
@@ -155,14 +154,14 @@ public class AdminTeamView implements Serializable {
         	
     		privilege.setActive(true);
     		user.getPrivileges().add(privilege);
-        	user = userFacade.save(user);
         	enrolment.setUser(user); 
         	enrolment.setUserPrivilege(privilege);
         	enrolment.setActive(true);
-        	
-        	
+
         	manipulatedTeamBo.getEnrolments().add(enrolment);
-        	teamFacade.save(manipulatedTeamBo);
+        	
+    		enrolmentFacade.saveNewMemberInTeam(manipulatedTeamBo, enrolment);
+    		
     	} catch (MemberAlreadyHasATeamException ex) {
     		
     	}
