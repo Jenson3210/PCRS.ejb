@@ -30,7 +30,6 @@ public class AdminSurveyDefinitionView implements Serializable{
 	private IUserFacade userFacade;
 	
 	private List<SurveyDefinitionBo> surveyDefinitions;
-	private List<UserBo> matchingUsers;
 	
 	private SurveyDefinitionBo addedSurveyDefinitionBo;
 	private UserBo addedUserBo;
@@ -41,14 +40,18 @@ public class AdminSurveyDefinitionView implements Serializable{
 	private ISurveyDefinitionFacade surveyDefinitionFacade;
 
 	
+	/**
+	 * mandatory empty constructor
+	 */
 	public AdminSurveyDefinitionView() {
-		System.out.println("Inside constructor");
 	}
 	
 	
+	/**
+	 * setup of the screen, loading the needed data
+	 */
 	@PostConstruct
 	public void setup() {
-		System.out.println("Inside @PostConstruct");
 		surveyDefinitions = surveyDefinitionFacade.getAll();
 		for (SurveyDefinitionBo bo : surveyDefinitions) {
 			System.out.println("BO: " + bo);
@@ -57,11 +60,50 @@ public class AdminSurveyDefinitionView implements Serializable{
 	
 	
 	public void newSurveyDefinition() {
-		System.out.println("Inside newSurveyDefinition()");
 		addedSurveyDefinitionBo = new SurveyDefinitionBo();
 	}
 	
 
+	public void addSurveyDefinition() {
+		surveyDefinitions.add(surveyDefinitionFacade.save(addedSurveyDefinitionBo));	
+	}
+	
+	/**
+	 * method used for completing the autocomplete input field in the dialog when adding 
+	 * a survey definition  
+	 * @param query: text typed in the input field
+	 * @return: List of users for which their short name matches the query parameter
+	 */
+	public List<UserBo> completeShortName(String query){
+		return userFacade.getUsersByShortName("%" + query + "%");
+	}
+	
+	
+	/**
+	 * deletes the survey definition from the List and from the DB
+	 */
+	public void deleteSurveyDefinition(){
+		surveyDefinitions.remove(addedSurveyDefinitionBo);
+		surveyDefinitionFacade.delete(addedSurveyDefinitionBo);
+	}
+	
+	/**
+	 * modifies the survey definition and sets a new name and/or new responsible
+	 */
+	public void editSurveyDefinition() {
+		for (SurveyDefinitionBo bo : surveyDefinitions) {
+			if (bo.getId() == addedSurveyDefinitionBo.getId()) {
+				bo.setName(addedSurveyDefinitionBo.getName());
+				bo.setResponsibleUser(addedSurveyDefinitionBo.getResponsibleUser());
+			}
+		}
+		surveyDefinitionFacade.save(addedSurveyDefinitionBo);
+	}
+	
+	
+	/*
+	 *  Getters and Setters
+	 */
 	
 	public UserBo getAddedUserBo() {
 		return addedUserBo;
@@ -80,7 +122,7 @@ public class AdminSurveyDefinitionView implements Serializable{
 	public void setSurveyDefinitions(List<SurveyDefinitionBo> surveyDefinitions) {
 		this.surveyDefinitions = surveyDefinitions;
 	}
-
+	
 	public SurveyDefinitionBo getAddedSurveyDefinitionBo() {
 		return addedSurveyDefinitionBo;
 	}
@@ -90,28 +132,7 @@ public class AdminSurveyDefinitionView implements Serializable{
 	}
 
 	
-	public void addSurveyDefinition() {
-		surveyDefinitions.add(surveyDefinitionFacade.save(addedSurveyDefinitionBo));	
-	}
-	
-	public List<UserBo> completeShortName(String query){
-		return userFacade.getUsersByShortName("%" + query + "%");
-	}
 	
 	
-	public void deleteSurveyDefinition(){
-		surveyDefinitions.remove(addedSurveyDefinitionBo);
-		surveyDefinitionFacade.delete(addedSurveyDefinitionBo);
-	}
-	
-	public void editSurveyDefinition() {
-		for (SurveyDefinitionBo bo : surveyDefinitions) {
-			if (bo.getId() == addedSurveyDefinitionBo.getId()) {
-				bo.setName(addedSurveyDefinitionBo.getName());
-				bo.setResponsibleUser(addedSurveyDefinitionBo.getResponsibleUser());
-			}
-		}
-		surveyDefinitionFacade.save(addedSurveyDefinitionBo);
-	}
 }
 
