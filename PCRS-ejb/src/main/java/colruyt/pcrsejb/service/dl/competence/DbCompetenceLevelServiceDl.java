@@ -1,5 +1,6 @@
 package colruyt.pcrsejb.service.dl.competence;
 
+import colruyt.pcrsejb.entity.competence.Competence;
 import colruyt.pcrsejb.entity.competence.CompetenceLevel;
 
 import javax.ejb.Stateless;
@@ -18,9 +19,14 @@ public class DbCompetenceLevelServiceDl implements ICompetenceLevelServiceDl, Se
 
     @Override
     public CompetenceLevel save(CompetenceLevel element) {
-        em.persist(element);
-        em.flush();
-        return element;
+        CompetenceLevel competencelevel = em.find(CompetenceLevel.class, element.getId());
+        if (competencelevel == null) {
+            em.persist(element);
+            competencelevel = element;
+        }else {
+            competencelevel = em.merge(element);
+        }
+        return competencelevel;
     }
 
     @Override
@@ -41,6 +47,9 @@ public class DbCompetenceLevelServiceDl implements ICompetenceLevelServiceDl, Se
 
     @Override
     public void delete(CompetenceLevel element) {
-        em.remove(element);
+        CompetenceLevel competenclevel = em.find(CompetenceLevel.class, element);
+        if(competenclevel != null) {
+            em.remove(competenclevel);
+        }
     }
 }
