@@ -12,7 +12,7 @@ public class UserBo extends AbstractBo implements Serializable {
 	 * PROPERTIES
 	 */
 	private static final long serialVersionUID = 1L;
-
+ 
     private Integer id;
     private String firstName;
     private String lastName;

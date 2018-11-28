@@ -8,8 +8,10 @@ import javax.ejb.Stateless;
 
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
+import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.converter.user.UserConverter;
 import colruyt.pcrsejb.converter.user.privilege.PrivilegeTypeTranslator;
+import colruyt.pcrsejb.converter.user.privilege.UserPrivilegeConverter;
 import colruyt.pcrsejb.service.bl.user.IUserServiceBl;
 import colruyt.pcrsejb.service.bl.user.UserServiceBl;
 import colruyt.pcrsejb.util.exceptions.NoExistingEmailException;
@@ -24,6 +26,7 @@ public class UserFacade implements Serializable, IUserFacade {
 	@EJB
 	private IUserServiceBl userServiceBl;
 	private UserConverter userConverter = new UserConverter();
+	private UserPrivilegeConverter privilegeConverter = new UserPrivilegeConverter(); 
 	private PrivilegeTypeTranslator privilegeTypeTranslator= new PrivilegeTypeTranslator();
 
 	public UserBo getUserByEmail(String email) throws NoExistingEmailException {

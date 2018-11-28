@@ -13,7 +13,7 @@
             <h:form id="form">
                 <p:dataTable var="team" value="#{managerTeamView.teams}"
                              styleClass="teamOverviewTable" sortBy="#{team.name}"
-                             expandableRowGroups="true" expandedRow="false"
+                          
                              id="teamDetail">
                     <f:facet name="header"><h:outputText value="#{msgs['team.header']}"/></f:facet>
                     <p:headerRow>
@@ -26,7 +26,9 @@
                     </p:headerRow>
                     <p:column>
                         <p:dataTable var="enrolment" value="#{team.enrolments}">
-                            <p:column style="width: 16px"/>
+                            <p:column style="width: 16px">
+                              <p:rowToggler />
+                            </p:column>
                             <p:column styleClass="ui-g-6">
                                 <h:outputText value="#{enrolment.user.firstName}  #{enrolment.user.lastName}"/>
                             </p:column>
@@ -38,6 +40,30 @@
 							</p:column>
                         </p:dataTable>
                     </p:column>
+                    
+                       <p:rowExpansion>
+            <p:panelGrid  columns="2" columnClasses="label,value" style="width:300px">
+                <f:facet name="header">
+                    <p:graphicImage name="demo/images/car/#{car.brand}-big.gif"/> 
+                </f:facet>
+ 
+                <h:outputText value="Id:" />
+                <h:outputText value="#{enrolment.user.firstName}  #{enrolment.user.lastName}"/>
+ 
+               <h:outputText value="#{webUser.getUser().firstName.concat(' ').concat(webUser.getUser().lastName)}"></h:outputText>
+						<p:progressBar id="progressBarEmployee" value="#{userProfileView.getSurveyFacade().getPercentageCompleteForMemberSurvey(webUser.getUser())}"  widgetVar="pbClient"
+							style="width:300px" />
+							
+							
+						<h:outputText value="#{userProfileView.teamLeaderNaam}"></h:outputText>
+						<p:progressBar id="progressBarBoss" widgetVar="pbClient" value="#{userProfileView.getSurveyFacade().getPercentageCompleteForManagerSurvey(webUser.getUser())}" style="width:300px" />
+ 
+ 
+               
+                <p:commandButton value="Generate survey"/>
+            </p:panelGrid>
+        </p:rowExpansion>
+                    
                 </p:dataTable>
             </h:form>
         </div>

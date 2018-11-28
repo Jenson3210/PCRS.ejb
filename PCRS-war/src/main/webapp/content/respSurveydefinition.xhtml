@@ -11,7 +11,7 @@
 	<div class="ui-g-10">
 
 		<h:form id="form">
-			<p:dataTable var="surveyDefinition"
+			<!-- <p:dataTable var="surveyDefinition"
 				value="#{respSurveyDefinitionView.surveyDefinitionList}">
 				<f:facet name="header">
 					<h:outputText value="#{msgs['surveyDefinition.title']}" />
@@ -26,7 +26,7 @@
 						value="#{surveyDefinition.responsibleUser.firstName} #{surveyDefinition.responsibleUser.lastName}" />
 				</p:column>
 
-				<!-- <p:column headerText="#{msgs['edit']}"
+				<p:column headerText="#{msgs['edit']}"
 						style="width:65px; text-align: center">
 						<p:commandLink update=":editForm:editSurveyDefinition" id="edit"
 							oncomplete="PF('editSurveyDefinitionDialog').show()">
@@ -43,8 +43,8 @@
 							<f:setPropertyActionListener value="#{surveyDefinition}"
 								target="#{adminSurveyDefinitionView.addedSurveyDefinitionBo}" />
 						</p:commandLink>
-					</p:column> -->
-			</p:dataTable>
+					</p:column>
+			</p:dataTable> -->
 			<div class="ui-g">
 				<div class="ui-g-12">
 					<p:commandButton value="#{msgs['respSurveyDefinition.add']}"
@@ -71,17 +71,14 @@
 							<div class="ui-g-8">
 								<p:selectOneMenu
 									value="#{respSurveyDefinitionView.addedSurveySectionDefinition.surveySectionTitle}"
-									converter="SurveySectionTitleConverter">
+									converter="surveySectionTitleConverter">
 									<f:selectItems
-										value="#{respSurveyDefinitionView.surveySectionTitleList}"
-										var="surveySectionTitle"
-										itemLabel="#{surveySectionTitle.title}"
-										itemValue="#{surveySectionTitle}" />
+										value="#{respSurveyDefinitionView.surveySectionTitleList}"/>
 								</p:selectOneMenu>
 							</div>
 						</div>
 
-						<div class="ui-g">
+					<!-- 	<div class="ui-g">
 							<div class="ui-g-4">
 								<p:outputLabel
 									value="#{msgs['respSurveyDefinition.sectionTitle']}" />
@@ -89,15 +86,12 @@
 							<div class="ui-g-8">
 								<p:selectOneMenu
 									value="#{respSurveyDefinitionView.addedSurveySectionDefinition.surveySectionStrategy}"
-									converter="SurveySectionStrategyConverter">
+									>
 									<f:selectItems
-										value="#{respSurveyDefinitionView.surveySectionStrategyList}"
-										var="surveySectionStrategy"
-										itemLabel="#{surveySectionStrategy.name}"
-										itemValue="#{surveySectionStrategy}" />
+										value="#{respSurveyDefinitionView.surveySectionStrategyList}"/>
 								</p:selectOneMenu>
 							</div>
-						</div>
+						</div> -->
 
 
 						<div class="ui-g-2">

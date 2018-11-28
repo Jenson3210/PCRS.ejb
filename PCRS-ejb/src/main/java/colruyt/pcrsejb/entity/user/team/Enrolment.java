@@ -35,9 +35,9 @@ public class Enrolment extends AbstractEntity implements Serializable {
     @SequenceGenerator(sequenceName = "ENROLMENTS_SEQ", allocationSize = 1, name = "ENROLMENTS_SEQ")
     @Column(name="ID")
     private Integer id;
-    @ManyToOne
-    private User user;
     @ManyToOne(cascade= {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.PERSIST})
+    private User user;
+    @ManyToOne
     private UserPrivilege userPrivilege;
     private Boolean active;
     /*

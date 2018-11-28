@@ -1,24 +1,22 @@
-package colruyt.pcrsejb.service.bl.user.privilege;
+package colruyt.pcrsejb.service.dl.user.privilege;
 
-import java.io.Serializable;
 import java.util.List;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
+import javax.persistence.TypedQuery;
 
 import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
-import colruyt.pcrsejb.service.dl.user.privilege.IUserPrivilegeServiceDl;
+import colruyt.pcrsejb.entity.user.team.Enrolment;
 
 @Stateless
-public class UserPrivilegeServiceBl implements Serializable, IUserPrivilegeServiceBl {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class DbUserPrivilegeServiceDl implements IUserPrivilegeServiceDl{
 	
-	@EJB
-	IUserPrivilegeServiceDl userPrivilegeServiceDl;
+	@PersistenceContext(unitName = "PCRSEJB")
+	private EntityManager em;
 
 	@Override
 	public UserPrivilege save(UserPrivilege element) {
@@ -43,10 +41,12 @@ public class UserPrivilegeServiceBl implements Serializable, IUserPrivilegeServi
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	@Override
 	public UserPrivilege getActivePrivilege(User user) {
-		return userPrivilegeServiceDl.getActivePrivilege(user);
+		return em.createNamedQuery("USER.GETACTIVEPRIVILEGE", UserPrivilege.class)
+				.setParameter("userId", user.getId())
+				.getSingleResult();
 	}
-	
+
 }
