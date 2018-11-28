@@ -2,6 +2,8 @@ package colruyt.pcrsejb.util.exceptions;
 
 public class NoExistingEmailException extends Exception {
 
+	private static final long serialVersionUID = 1L;
+
 	public NoExistingEmailException() {
 		super();
 		// TODO Auto-generated constructor stub

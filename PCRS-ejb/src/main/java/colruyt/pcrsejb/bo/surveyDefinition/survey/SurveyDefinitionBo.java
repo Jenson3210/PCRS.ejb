@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import colruyt.pcrsejb.bo.AbstractBo;
-import colruyt.pcrsejb.bo.user.UserBo;
 
 public class SurveyDefinitionBo extends AbstractBo implements Serializable {
 	/*
