@@ -13,5 +13,6 @@ import colruyt.pcrsejb.service.bl.IServiceBl;
 public interface ISurveyDefinitionServiceBl extends IServiceBl<SurveyDefinition> {
 	
 	public List<SurveyDefinition> getSurveyDefinitionsOfUser(User user) ;
+	public User getResponsible(SurveyDefinition surveyDefinition);
 
 }
