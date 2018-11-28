@@ -12,16 +12,18 @@ import javax.inject.Named;
 import colruyt.pcrs.utillibs.WebUser;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveyDefinitionBo;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionBo;
+import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionTitleBo;
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.SurveyUserPrivilegeBo;
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveyDefinition;
 import colruyt.pcrsejb.entity.user.privilege.PrivilegeType;
 import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveyDefinitionFacade;
+import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveySectionTitleFacade;
 
 @Named
 @ViewScoped
-public class RespSurveyDefinition implements Serializable {
+public class RespSurveyDefinitionView implements Serializable {
 
 	/**
 	 * 
@@ -31,12 +33,18 @@ public class RespSurveyDefinition implements Serializable {
 	
 	
 	@EJB
-	private ISurveyDefinitionFacade surveyDefFacade;
+	private ISurveyDefinitionFacade surveyDefinitionFacade;
+	
+	@EJB
+	private ISurveySectionTitleFacade surveySectionTitleFacade;
 	
 	
 	private List<SurveyDefinitionBo> surveyDefinitionList;
 	
-	private List<SurveySectionDefinitionBo> surveySectionDefinitionList;
+	private List<SurveySectionTitleBo> surveySectionTitleList;
+	
+	private SurveySectionDefinitionBo addedSurveySectionDefinition;
+	
 	
 	@Inject
 	private WebUser webuser;
@@ -44,7 +52,7 @@ public class RespSurveyDefinition implements Serializable {
 	SurveyDefinitionBo surveyDefinitionBo;
 	
 	
-	public RespSurveyDefinition() {
+	public RespSurveyDefinitionView() {
 	}
 
 	@PostConstruct
@@ -62,9 +70,24 @@ public class RespSurveyDefinition implements Serializable {
 			}
 		}
 		
+		surveyDefinitionList = surveyDefinitionFacade.getAll();
+		surveySectionTitleList = surveySectionTitleFacade.getAll();
+		surveyDefinitionList.stream().forEach(x->System.out.println(x));
+		surveySectionTitleList.stream().forEach(x->System.out.println(x));
 	}
 	
 
+	public void newSurveyDefinition() {
+		// TODO
+	}
+	
+	
+	public void addSurveyDefinition() {
+		// TODO
+		
+	}
+	
+	
 	
 	
 	/*
@@ -79,12 +102,13 @@ public class RespSurveyDefinition implements Serializable {
 		this.surveyDefinitionList = surveyDefinitionList;
 	}
 
-	public List<SurveySectionDefinitionBo> getSurveySectionDefinitionList() {
-		return surveySectionDefinitionList;
+
+	public List<SurveySectionTitleBo> getSurveySectionTitleList() {
+		return surveySectionTitleList;
 	}
 
-	public void setSurveySectionDefinitionList(List<SurveySectionDefinitionBo> surveySectionDefinitionList) {
-		this.surveySectionDefinitionList = surveySectionDefinitionList;
+	public void setSurveySectionTitleList(List<SurveySectionTitleBo> surveySectionTitleList) {
+		this.surveySectionTitleList = surveySectionTitleList;
 	}
 
 	public SurveyDefinitionBo getSurveyDefinitionBo() {
@@ -95,5 +119,12 @@ public class RespSurveyDefinition implements Serializable {
 		this.surveyDefinitionBo = surveyDefinitionBo;
 	}
 
+	public SurveySectionDefinitionBo getAddedSurveySectionDefinition() {
+		return addedSurveySectionDefinition;
+	}
+
+	public void setAddedSurveySectionDefinition(SurveySectionDefinitionBo addedSurveySectionDefinition) {
+		this.addedSurveySectionDefinition = addedSurveySectionDefinition;
+	}
 	
 }

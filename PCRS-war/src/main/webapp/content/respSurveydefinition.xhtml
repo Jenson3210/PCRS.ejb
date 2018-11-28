@@ -11,7 +11,7 @@
 	<div class="ui-g-10">
 		
 		<h:form id="form">
-				<p:dataTable var="surveyDefinition" value="#{respSurveyDefinition.surveyDefinitionList}">
+				<p:dataTable var="surveyDefinition" value="#{respSurveyDefinitionView.surveyDefinitionList}">
 					 <f:facet name="header">
 						<h:outputText value="#{msgs['surveyDefinition.title']}" />
 					</f:facet>
@@ -43,14 +43,58 @@
 						</p:commandLink>
 					</p:column> -->
 				</p:dataTable>
-				<!-- <div class="ui-g">
+				 <div class="ui-g">
 					<div class="ui-g-12">
-						<p:commandButton value="#{msgs['surveyDefinition.add']}"
-							action="#{adminSurveyDefinitionView.newSurveyDefinition}" styleClass="ui-priority-primary"
+						<p:commandButton value="#{msgs['respSurveyDefinition.add']}"
+							action="#{respSurveyDefinitionView.newSurveyDefinition}" styleClass="ui-priority-primary"
 							process="@this" update=":addForm:addSurveyDefinition"
 							oncomplete="PF('addSurveyDefinitionDialog').show();" />
 					</div>
-				</div> -->
+				</div>
+			</h:form>
+			
+			<h:form id="addForm">
+				<div class="ui-g" id="addSurveyDefinition">
+					<p:dialog header="#{msgs['respSurveyDefinition.add']}"
+						widgetVar="addSurveyDefinitionDialog" modal="true" draggable="false">
+						<p:outputPanel id="addSurveyDefinition">
+							
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['respSurveyDefinition.title']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:selectOneMenu>
+										<f:selectItems value="#{respSurveyDefinitionView.surveySectionTitleList}"
+											var="surveySectionTitle" itemLabel="#{surveySectionTitle.title}" 
+											itemValue="#{surveySectionTitle}"/>
+									</p:selectOneMenu>
+								</div> 
+							</div>  
+							
+							<!-- <div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['user.shortName']}">
+									</p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									  <p:autoComplete id="shortName" completeMethod="#{adminSurveyDefinitionView.completeShortName}" 
+									  				var="user" itemLabel="#{user.email}" itemValue="#{user}" forceSelection="true" 
+									  				maxlength="5" emptyMessage="#{msgs['surveyDefinition.noResults']}"
+									 				value="#{adminSurveyDefinitionView.addedSurveyDefinitionBo.responsibleUser}" 
+									 				required="true" converter="userBoConverter"/>
+									 <p:message for="shortName"/>
+								</div> 
+							</div> 
+							 -->
+							<div class="ui-g-2">
+								<p:commandButton value="#{msgs['respSurveyDefinition.add']}" update=":form"
+									action="#{respSurveyDefinitionView.addSurveyDefinition}"
+									oncomplete="PF('addSurveyDefinitionDialog').hide();" />
+							</div>
+						</p:outputPanel>
+					</p:dialog>
+				</div>
 			</h:form>
 			
 	</div>
