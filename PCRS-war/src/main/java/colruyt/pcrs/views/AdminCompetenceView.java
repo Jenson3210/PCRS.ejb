@@ -12,7 +12,9 @@ import javax.inject.Named;
 
 import colruyt.pcrsejb.bo.competence.CompetenceBo;
 import colruyt.pcrsejb.bo.competence.CompetenceLevelBo;
+import colruyt.pcrsejb.facade.competence.CompetenceLevelFacade;
 import colruyt.pcrsejb.facade.competence.ICompetenceFacade;
+import colruyt.pcrsejb.facade.competence.ICompetenceLevelFacade;
 
 @Named
 @ViewScoped
@@ -20,9 +22,11 @@ public class AdminCompetenceView implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@EJB
 	private ICompetenceFacade competenceFacade;
+	private ICompetenceLevelFacade competenceLevelFacade;
 	private CompetenceBo competenceBo;
+	private CompetenceLevelBo bo;
 	private List<CompetenceBo> competences;
-	private Set<CompetenceLevelBo> levels;
+	private Set<CompetenceLevelBo> levels = new HashSet<>();
 	
 	@PostConstruct
 	private void fillCompetences() {
@@ -45,6 +49,8 @@ public class AdminCompetenceView implements Serializable{
 		for (CompetenceBo competence : competences) {
 			if (competence.getId() == competenceBo.getId()) {
 				competence.setName(competenceBo.getName());
+				competence.setCompetenceDescription(competenceBo.getCompetenceDescription());
+				competence.setCompetenceLevels(levels);
 			}
 			c = competence;
 		}
@@ -69,8 +75,18 @@ public class AdminCompetenceView implements Serializable{
 		}
 	}
 	
-	public void newLevel() {
+	public void newLevel() { 
 		levels.add(new CompetenceLevelBo("", levels.size() + 1));
+	}
+	public void  removeLevel(){
+		CompetenceLevelBo c = null;
+		for (CompetenceLevelBo competence : levels) {
+			if (competence.getId() == bo.getId()) {
+				c = competence;
+			}
+		}
+		levels.remove(c);
+		competenceLevelFacade.delete(c);
 	}
 	
 	public CompetenceBo getCompetenceBo() {
@@ -79,6 +95,7 @@ public class AdminCompetenceView implements Serializable{
 
 	public void setCompetenceBo(CompetenceBo competenceBo) {
 		this.competenceBo = competenceBo;
+		levels = competenceBo.getCompetenceLevels();
 	}
 
 	public List<CompetenceBo> getCompetences() {

@@ -10,6 +10,7 @@ import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.privilege.PrivilegeType;
 import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 import colruyt.pcrsejb.service.dl.user.IUserServiceDl;
+import colruyt.pcrsejb.util.exceptions.NoExistingEmailException;
 
 @Stateless
 public class UserServiceBl implements IUserServiceBl {
@@ -17,7 +18,7 @@ public class UserServiceBl implements IUserServiceBl {
 	@EJB
 	private IUserServiceDl usersDb;
 
-	public User getUserByEmail(String email) {
+	public User getUserByEmail(String email) throws NoExistingEmailException {
 		return usersDb.getElementByEmail(email);
 	}
 

@@ -4,18 +4,16 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
 
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.entity.user.User;
-import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
+
+import colruyt.pcrsejb.util.exceptions.NoExistingEmailException;
 
 @Stateless
 public class DbUserServiceDl implements Serializable, IUserServiceDl {
@@ -26,9 +24,14 @@ public class DbUserServiceDl implements Serializable, IUserServiceDl {
 
 	@Override
 	public User save(User element) {
-		User user = em.createNamedQuery("USER.GETBYEMAIL", User.class)
+		User user = null;
+		try {
+		user = em.createNamedQuery("USER.GETBYEMAIL", User.class)
 					.setParameter("email", element.getEmail())
 					.getSingleResult();
+		} catch (NoResultException ex) {
+			
+		}
 		if (user == null) {
 			em.persist(element);
 			user = element;
@@ -64,10 +67,16 @@ public class DbUserServiceDl implements Serializable, IUserServiceDl {
 	}
 
 	@Override
-	public User getElementByEmail(String email) {
+	public User getElementByEmail(String email) throws NoExistingEmailException {
+		try {
 		TypedQuery<User> q = em.createNamedQuery("USER.GETBYEMAIL", User.class);
 		q.setParameter("email", email);
 		return (User) q.getSingleResult();
+		}
+		catch(NoResultException e) {
+			throw new NoExistingEmailException("Gegeven Email heeft geen user in de Databank");
+		}
+		
 	}
 
 	@Override

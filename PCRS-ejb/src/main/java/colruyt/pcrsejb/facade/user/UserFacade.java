@@ -14,6 +14,7 @@ import colruyt.pcrsejb.converter.user.privilege.PrivilegeTypeTranslator;
 import colruyt.pcrsejb.converter.user.privilege.UserPrivilegeConverter;
 import colruyt.pcrsejb.service.bl.user.IUserServiceBl;
 import colruyt.pcrsejb.service.bl.user.UserServiceBl;
+import colruyt.pcrsejb.util.exceptions.NoExistingEmailException;
 
 @Stateless
 public class UserFacade implements Serializable, IUserFacade {
@@ -28,7 +29,7 @@ public class UserFacade implements Serializable, IUserFacade {
 	private UserPrivilegeConverter privilegeConverter = new UserPrivilegeConverter(); 
 	private PrivilegeTypeTranslator privilegeTypeTranslator= new PrivilegeTypeTranslator();
 
-	public UserBo getUserByEmail(String email) {
+	public UserBo getUserByEmail(String email) throws NoExistingEmailException {
 		return userConverter.convertToBo(userServiceBl.getUserByEmail(email));
 	}
 

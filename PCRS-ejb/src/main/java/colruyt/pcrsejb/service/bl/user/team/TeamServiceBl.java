@@ -57,7 +57,7 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
 	}
 
 	@Override
-	public List<Team> getTeamsOfManager(UserBo manager) {
+	public List<Team> getTeamsOfManager(User manager) {
 		return this.dlService.getTeamsOfManager(manager);
 	}
 	
