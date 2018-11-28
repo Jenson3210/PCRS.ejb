@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -18,7 +17,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import colruyt.pcrsejb.entity.AbstractEntity;
-import colruyt.pcrsejb.entity.user.User;
 
 @Entity
 @Table(name="SURVEYDEFINITIONS")
@@ -26,8 +24,7 @@ import colruyt.pcrsejb.entity.user.User;
 (
 	{
 			@NamedQuery(name = "SURVEYDEFINITION.GETALL", query = "SELECT sd FROM SurveyDefinition sd"),
-			@NamedQuery(name = "SURVEYDEFINITION.GETBYRESPONSIBLE", query = "SELECT sd from SurveyDefinition sd where sd.responsibleUser = :responsibleUser")
-			
+			@NamedQuery(name = "SURVEYDEFINITION.GETRESPONSIBLE", query = "SELECT u FROM User u join u.privileges p WHERE p.privilegeType = :pt AND p.active = true AND TREAT(p AS SurveyUserPrivilege).surveyDefinition = :sd")
 	}
 	
 )
@@ -41,8 +38,6 @@ public class SurveyDefinition extends AbstractEntity implements Serializable {
     @SequenceGenerator(sequenceName = "SURVEYDEFINITIONS_SEQ", allocationSize = 1, name = "SURVEYDEFINITIONS_SEQ")
 	@Column(name="ID")
 	private Integer id;
-	@ManyToOne
-	private User responsibleUser;
 	private String name;
 	@OneToMany
 	@JoinColumn(name="SURVEYDEFINITIONS_ID")
@@ -53,16 +48,14 @@ public class SurveyDefinition extends AbstractEntity implements Serializable {
 	public SurveyDefinition() {
 		super();
 	}
-	public SurveyDefinition(User responsibleUser, String name, List<SurveySectionDefinition> surveySections) {
+	public SurveyDefinition(String name, List<SurveySectionDefinition> surveySections) {
 		super();
-		this.responsibleUser = responsibleUser;
 		this.name = name;
 		this.surveySections = surveySections;
 	}
-	public SurveyDefinition(Integer id, User responsibleUser, String name, List<SurveySectionDefinition> surveySections) {
+	public SurveyDefinition(Integer id, String name, List<SurveySectionDefinition> surveySections) {
 		super();
 		this.id = id;
-		this.responsibleUser = responsibleUser;
 		this.name = name;
 		this.surveySections = surveySections;
 	}
@@ -74,12 +67,6 @@ public class SurveyDefinition extends AbstractEntity implements Serializable {
 	}
 	public void setId(Integer id) {
 		this.id = id;
-	}
-	public User getResponsibleUser() {
-		return responsibleUser;
-	}
-	public void setResponsibleUser(User responsibleUser) {
-		this.responsibleUser = responsibleUser;
 	}
 	public String getName() {
 		return name;

@@ -4,13 +4,14 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import colruyt.pcrsejb.entity.user.User;
+import colruyt.pcrsejb.util.exceptions.NoExistingEmailException;
 
 @Stateless
 public class DbUserServiceDl implements Serializable, IUserServiceDl {
@@ -21,13 +22,16 @@ public class DbUserServiceDl implements Serializable, IUserServiceDl {
 
 	@Override
 	public User save(User element) {
-		try {
+		User user = em.createNamedQuery("USER.GETBYEMAIL", User.class)
+					.setParameter("email", element.getEmail())
+					.getSingleResult();
+		if (user == null) {
 			em.persist(element);
-		} catch (EntityExistsException eee) {
-			em.find(User.class, element.getId());
-			element = em.merge(element);
+			user = element;
+		}else {
+			user = em.merge(element);
 		}
-		return element;
+		return user;
 	}
 
 	@Override
@@ -48,17 +52,23 @@ public class DbUserServiceDl implements Serializable, IUserServiceDl {
 
 	@Override
 	public void delete(User element) {
-		User user = em.find(User.class, element);
+		User user = em.find(User.class, element.getId());
 		if (user != null) {
-			em.remove(element);
+			em.remove(user);
 		}
 	}
 
 	@Override
-	public User getElementByEmail(String email) {
+	public User getElementByEmail(String email) throws NoExistingEmailException {
+		try {
 		TypedQuery<User> q = em.createNamedQuery("USER.GETBYEMAIL", User.class);
 		q.setParameter("email", email);
 		return (User) q.getSingleResult();
+		}
+		catch(NoResultException e) {
+			throw new NoExistingEmailException("Gegeven Email heeft geen user in de Databank");
+		}
+		
 	}
 
 	@Override

@@ -15,5 +15,5 @@ public interface ITeamServiceBl extends IServiceBl<Team>{
 
 	User getManagerForUser(User user) throws UserIsNotMemberOfTeamException;
 	Team getTeamForUser(User user) throws UserIsNotMemberOfTeamException;
-	List<Team> getTeamsOfManager(UserBo manager);
+	List<Team> getTeamsOfManager(User manager);
 }

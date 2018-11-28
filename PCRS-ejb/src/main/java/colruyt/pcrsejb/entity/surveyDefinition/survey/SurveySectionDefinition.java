@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -21,6 +23,14 @@ import colruyt.pcrsejb.entity.surveyDefinition.strategy.SurveySectionStrategy;
 
 @Entity
 @Table(name="SURVEYSECTIONDEFINITIONS")
+@NamedQueries({
+	@NamedQuery(name= "SURVEYSECTIONDEFINITION.GETALL", query = "SELECT ssd FROM SurveySectionDefinition ssd"),
+	@NamedQuery(name = "SURVEYSECTIONDEFINITION.GETSURVEYSECTIONDEFINITIONSFORTITLE", query = "SELECT ssd FROM SurveySectionDefinition ssd WHERE ssd.surveySectionTitle = :title")
+
+})
+
+
+
 public class SurveySectionDefinition extends AbstractEntity implements Serializable {
 	/* 
 	 * PROPERTIES

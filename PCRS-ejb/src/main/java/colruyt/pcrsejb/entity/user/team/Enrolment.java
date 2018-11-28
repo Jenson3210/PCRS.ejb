@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -18,6 +20,11 @@ import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 
 @Entity
 @Table(name="TEAMENROLMENTS")
+@NamedQueries({ 
+	@NamedQuery(name = "ENROLMENT.GETALL", query = "SELECT e FROM Enrolment e"),
+	@NamedQuery(name = "ENROLMENT.DEACTIVATE", query = "UPDATE UserPrivilege SET active = :active WHERE id = :id")
+})
+
 public class Enrolment extends AbstractEntity implements Serializable {
 	/*
 	 * PROPERTIES

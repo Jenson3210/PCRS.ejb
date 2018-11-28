@@ -2,16 +2,15 @@ package colruyt.pcrsejb.service.dl.user.team;
 
 import java.util.EmptyStackException;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.privilege.PrivilegeType;
 import colruyt.pcrsejb.entity.user.team.Team;
@@ -36,7 +35,9 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 
 	@Override
 	public List<Team> getAll() {
-		return (List<Team>) em.createNamedQuery("Team.getAllElements").getResultList();
+		TypedQuery<Team> q = em.createNamedQuery("TEAM.GETALL", Team.class);
+		List<Team> listOfTeams = q.getResultList();
+		return listOfTeams;
 	}
 
 	@Override
@@ -60,29 +61,38 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 	@Override
 	public Team getTeamForUser(User user) throws UserIsNotMemberOfTeamException{
 		
-		TypedQuery<Team> query = em.createQuery("select t from Team t join t.enrolments enrolment where enrolment.user = ?1 and enrolment.active = ?2",Team.class);
-		query.setParameter(1, user);
-		query.setParameter(2, true);
+		TypedQuery<Team> q = em.createNamedQuery("TEAM.GETTEAMFORUSER", Team.class);
+		q.setParameter("member", user);
+		q.setParameter("isActive", true);
 		try {
-		Team team = query.getSingleResult();
+		Team team = q.getResultList().stream().filter(x-> this.checkUserMetPrivilege(x, PrivilegeType.TEAMMEMBER)).findFirst().get();
 		return team;
 		}
-		catch(NoResultException e) {
+		catch(NoSuchElementException e) {
 			throw new UserIsNotMemberOfTeamException();
 		}
+		
 		catch(NonUniqueResultException ex) {
 			throw new IllegalArgumentException("User mag maar in 1 team zitten");
 		}
 		
 	}
+	
+	private boolean checkUserMetPrivilege(Team team,PrivilegeType type) {
+		
+		return team.getEnrolments().stream().filter(x->x.getUserPrivilege().getPrivilegeType().equals(type) && x.isActive()).collect(Collectors.toList()).size() > 0;
+	}
 
 	@Override
-	public List<Team> getTeamsOfManager(UserBo manager) {
-		Query q = em.createQuery("select t from Team t, Enrolment e, UserPrivilege up where up.privilegeType = :privilegeType and e.user.id = :teamManager");
-		q.setParameter("privilegeType", PrivilegeType.TEAMMANAGER);
-		q.setParameter("teamManager", manager.getId());
+	public List<Team> getTeamsOfManager(User manager) {
+		TypedQuery<Team> q = em.createNamedQuery("TEAM.GETTEAMSOFMANAGER", Team.class);
 		
-		return (List<Team>)q.getResultList();
+		q.setParameter("privilegeType", PrivilegeType.TEAMMANAGER);
+		
+		q.setParameter("teamManager", manager);
+		
+		List<Team> listOfTeams = q.getResultList();
+		return listOfTeams;
 	}
 
 }

@@ -60,7 +60,7 @@
 					</h:panelGrid>
 
 				</p:tab>
-	
+
 			</p:tabView>
 		</div>
 		
@@ -70,60 +70,71 @@
 	<div class="ui-g-1"></div>
 	
 	
-	 <p:dialog header="#{msgs['profile.changepass']}" widgetVar="dlg3" modal="true" style="width: 600px">
-   		   				
-		<div class="ui-g">
-				<h:form>
-					<div class="ui-g">
-						<p:messages id="errors"  showDetail="false" closable="true"/>
-	   					<p:autoUpdate />
-					</div>
-					<div class="ui-g">
-						<div class="ui-g-4">
-							<p>#{msgs['profile.currentpass']}</p>
-						</div>
-						<div class="ui-g-8">
-							<div>
-								<p:inputText id="currentpass" value="#{userProfileview.currentpass}" 
-									required="true" validator="#{userProfileview.isCurrentPassword}">
-									<f:validateLength maximum="14" />
-								</p:inputText>
-							</div>
-						</div> 
-					</div>
-					<div class="ui-g">
-						<div class="ui-g-4">
-							<p>#{msgs['profile.newpass']}</p>
-						</div>
-						<div class="ui-g-8">
-							<p:inputText id="newpass" value="#{userprofileview.newpass}"
-								required="true" validator="#{userProfileview.isSamePassword}">
-								<f:validateLength maximum="14" />
-							</p:inputText>
-						</div>
-					</div>
-					<div class="ui-g">
-						<div class="ui-g-4">
-							<p>#{msgs['profile.repeatnewpass']}</p>
-						</div>
-						<div class="ui-g-8">
-							<p:inputText id="repeatpass" value="#{userProfileview.repeatpass}"
-								required="true" validator="#{userProfileview.isSamePassword}">
-								<f:validateLength maximum="14" />
-							</p:inputText>
-						</div>
-					</div>
-					<div class="ui-g">
-						<div class="ui-g-4"/>
-						<div class="ui-g-4">
-							<p:commandButton value="cancel" />
-						</div>
-						<div class="ui-g-4">
-							<p:commandButton value="confirm" ajax="true"
-								action="#{userProfileviewchangePass}" />
-						</div>
-					</div>
-				</h:form>
-			</div>
+	<!-- Dialog ChangePAss -->
+	
+	 <p:dialog header="#{msgs['profile.changepass']}" widgetVar="dlg3" modal="true" >
+   		
+	 <h:form id="form1">
+	 
+	   			<p:messages id="errors"  showDetail="false" closable="true">
+   				<p:autoUpdate />
+   			</p:messages>
+	   			
+   			
+	<div class="ui-g">
+
+						
+
+		 <div class="ui-g-4">
+   			 <p>#{msgs['profile.currentpass']}</p>
+   			 <p>#{msgs['profile.newpass']}</p>
+   			 <p>#{msgs['profile.repeatnewpass']}</p>
+   			 </div>
+   		<div class="ui-g-4">
+   			 	
+   			
+   			
+   			
+   			<p:password id="currentpass" value="#{userProfileView.currentpass}"
+   			 maxlength="14" >
+   			</p:password>
+   			
+   		
+   				
+   			<p:password id="newpass" value="#{userProfileView.newpassword}"
+   			 maxlength="14">
+   			</p:password>
+   			
+   			
+   			
+   			<p:password id="repeatpass" value="#{userProfileView.repeatpassword}"
+   			 maxlength="14">
+   			</p:password>
+   			
+
+   			
+   			 
+   		</div>
+   	
+   	</div>
+   		
+   		<div class="ui-g">
+   		<div class="ui-g-1">
+   		<p:commandButton value="#{msgs['msgs.cancel']}" styleClass="btn btn-outline-primary" ajax="false" onclick="PF('dlg3').hide();"  />
+   		</div>
+   		
+   		<div class="ui-g-1"></div>
+   		
+   		<div class="ui-g-1">
+   		<p:commandButton value="#{msgs['msgs.ok']}"  ajax="true" action="#{userProfileView.changePass}" oncompleted="PF('dlg3').hide();" />
+   		
+   		</div>
+   		
+   		</div>
+   		
+   	</h:form>
+
 	</p:dialog>
+	
+
 </ui:composition>

@@ -13,7 +13,6 @@ public class SurveyDefinitionBo extends AbstractBo implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Integer id;
-	private UserBo responsibleUser;
 	private String name;
 	private List<SurveySectionDefinitionBo> surveySections = new ArrayList<>();
 	/*
@@ -22,16 +21,14 @@ public class SurveyDefinitionBo extends AbstractBo implements Serializable {
 	public SurveyDefinitionBo() {
 		super();
 	}
-	public SurveyDefinitionBo(UserBo responsibleUser, String name, List<SurveySectionDefinitionBo> surveySections) {
+	public SurveyDefinitionBo(String name, List<SurveySectionDefinitionBo> surveySections) {
 		super();
-		this.responsibleUser = responsibleUser;
 		this.name = name;
 		this.surveySections = surveySections;
 	}
-	public SurveyDefinitionBo(Integer id, UserBo responsibleUser, String name, List<SurveySectionDefinitionBo> surveySections) {
+	public SurveyDefinitionBo(Integer id, String name, List<SurveySectionDefinitionBo> surveySections) {
 		super();
 		this.id = id;
-		this.responsibleUser = responsibleUser;
 		this.name = name;
 		this.surveySections = surveySections;
 	}
@@ -43,12 +40,6 @@ public class SurveyDefinitionBo extends AbstractBo implements Serializable {
 	}
 	public void setId(Integer id) {
 		this.id = id;
-	}
-	public UserBo getResponsibleUser() {
-		return responsibleUser;
-	}
-	public void setResponsibleUser(UserBo responsibleUser) {
-		this.responsibleUser = responsibleUser;
 	}
 	public String getName() {
 		return name;
