@@ -4,12 +4,16 @@ import java.io.Serializable;
 import java.util.EmptyStackException;
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionBo;
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinition;
+import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionTitle;
 
+@Stateless
 public class DbSurveySectionDefinitionServiceDl implements Serializable, ISurveySectionDefinitionServiceDl{
 
 	@PersistenceContext(unitName = "PCRSEJB")
@@ -54,6 +58,14 @@ public class DbSurveySectionDefinitionServiceDl implements Serializable, ISurvey
 		else {
 			throw new EmptyStackException();
 		}
+	}
+
+	@Override
+	public List<SurveySectionDefinition> getSurveySectionDefinitionsForTitle(SurveySectionTitle t) {
+		TypedQuery<SurveySectionDefinition> q = em.createNamedQuery("SURVEYSECTIONDEFINITION.GETSURVEYSECTIONDEFINITIONSFORTITLE", SurveySectionDefinition.class);
+		q.setParameter("title", t);
+		List<SurveySectionDefinition> listOfSurveySectionDefinitions = q.getResultList();
+		return listOfSurveySectionDefinitions;
 	}
 
 }

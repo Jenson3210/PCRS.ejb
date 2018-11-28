@@ -9,7 +9,7 @@ import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveyDefinition;
 public class SurveyDefinitionConverter implements GenericConverter<SurveyDefinition, SurveyDefinitionBo> {
 
 	private UserConverter userConverter = new UserConverter();
-	private SurveySectionDefinitionConverter surveySectionDefinitionConverter = new SurveySectionDefinitionConverter();
+	private SurveySectionDefinitionImplConverter surveySectionDefinitionImplConverter = new SurveySectionDefinitionImplConverter();
 	
 	@Override
 	public SurveyDefinition convertToEntity(SurveyDefinitionBo bo) {
@@ -18,7 +18,7 @@ public class SurveyDefinitionConverter implements GenericConverter<SurveyDefinit
 			entity = new SurveyDefinition();
 			ConverterUtils.setIfNotNull(bo::getId, entity::setId);
 			ConverterUtils.setIfNotNull(bo::getName, entity::setName);
-			entity.setSurveySections(surveySectionDefinitionConverter.convertToEntities(bo.getSurveySections()));
+			entity.setSurveySections(surveySectionDefinitionImplConverter.convertToEntities(bo.getSurveySections()));
 			return entity;
 		}
 		return entity;
@@ -31,7 +31,7 @@ public class SurveyDefinitionConverter implements GenericConverter<SurveyDefinit
 			bo = new SurveyDefinitionBo();
 			ConverterUtils.setIfNotNull(entity::getId, bo::setId);
 			ConverterUtils.setIfNotNull(entity::getName, bo::setName);
-			bo.setSurveySections(surveySectionDefinitionConverter.convertToBos(entity.getSurveySections()));
+			bo.setSurveySections(surveySectionDefinitionImplConverter.convertToBos(entity.getSurveySections()));
 		}
 		return bo;
 	}

@@ -14,19 +14,19 @@ public class SurveyDefinitionBo extends AbstractBo implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String name;
-	private List<SurveySectionDefinitionBo> surveySections = new ArrayList<>();
+	private List<SurveySectionDefinitionImplBo> surveySections = new ArrayList<>();
 	/*
 	 * CONSTRUCTORS
 	 */
 	public SurveyDefinitionBo() {
 		super();
 	}
-	public SurveyDefinitionBo(String name, List<SurveySectionDefinitionBo> surveySections) {
+	public SurveyDefinitionBo(String name, List<SurveySectionDefinitionImplBo> surveySections) {
 		super();
 		this.name = name;
 		this.surveySections = surveySections;
 	}
-	public SurveyDefinitionBo(Integer id, String name, List<SurveySectionDefinitionBo> surveySections) {
+	public SurveyDefinitionBo(Integer id, String name, List<SurveySectionDefinitionImplBo> surveySections) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -47,10 +47,10 @@ public class SurveyDefinitionBo extends AbstractBo implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<SurveySectionDefinitionBo> getSurveySections() {
+	public List<SurveySectionDefinitionImplBo> getSurveySections() {
 		return surveySections;
 	}
-	public void setSurveySections(List<SurveySectionDefinitionBo> surveySections) {
+	public void setSurveySections(List<SurveySectionDefinitionImplBo> surveySections) {
 		this.surveySections = surveySections;
 	}	
 }
