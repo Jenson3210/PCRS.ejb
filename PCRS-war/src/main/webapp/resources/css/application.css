@@ -55,3 +55,12 @@ body .ui-datatable .ui-datatable-data > tr:last-child {
 .teamOverviewTable .ui-widget-header{
 	background-color: #666666;
 }
+
+.popupTextInput {
+	width: 100%;
+}
+.popupTextMsgs {
+	width: 40%;
+	margin-right: 10px;
+	background-color: fuchsia;
+}
