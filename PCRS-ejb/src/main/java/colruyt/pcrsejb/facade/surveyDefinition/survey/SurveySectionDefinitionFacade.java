@@ -18,7 +18,7 @@ public class SurveySectionDefinitionFacade implements Serializable,ISurveySectio
 	private static final long serialVersionUID = 1L;
 	
 	@EJB
-	private ISurveySectionDefinitionServiceBl sdserv;
+	private ISurveySectionDefinitionServiceBl sdserv; 
 	
 	private SurveySectionDefinitionConverter sdconv;
 	
@@ -31,17 +31,17 @@ public class SurveySectionDefinitionFacade implements Serializable,ISurveySectio
 
 	@Override
 	public SurveySectionDefinitionBo get(SurveySectionDefinitionBo entityBo) {
-		return sdconv.convertToBo(this.sdserv.get(sdconv.convertToEntity(entityBo)));
+		return sdconv.convertToBo(this.sdserv.get(sdconv.convertToEntity(entityBo)));  
 	}
 
 	@Override
 	public List<SurveySectionDefinitionBo> getAll() {
-	return sdconv.convertToBos(this.sdserv.getAll());
+	return sdconv.convertToBos(this.sdserv.getAll()); 
 	}
 
 	@Override
 	public void delete(SurveySectionDefinitionBo entityBo) {
-		this.sdserv.delete(this.sdconv.convertToEntity(entityBo));
+		this.sdserv.delete(this.sdconv.convertToEntity(entityBo)); 
 		
 	}
 	
