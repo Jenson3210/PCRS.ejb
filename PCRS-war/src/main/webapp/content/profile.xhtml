@@ -6,94 +6,135 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<div class="ui-g-1"/>
+	<div class="ui-g-1"></div>
+
 	<div class="ui-g-10">
+
 		<div class="ui-g-4">
 			<img width="300px" height="300px"
 				src="https://d2e03lv76xdi59.cloudfront.net/sets/b88a9def-0431-4b4f-a8b8-6c1803b0ec58/xl-sinterklaas.jpg" alt="Profiel Foto"></img>
-		</div>
+				
+
+			</div>
+
 		<div class="ui-g-8">
 			<p:tabView>
+
 				<p:tab title="#{msgs['profile.title']}">
+
+					
 					<h:panelGrid columns="2">
-						<h:outputText value="#{msgs['profile.name']}:"/>
-						<h:outputText value="#{webUser.getUser().firstName.concat(' ').concat(webUser.getUser().lastName)}"/>			
-						<h:outputText value="#{msgs['profile.team']}:"/>
-						<h:outputText value="#{userProfileView.getTeamnaam()}"/>
+
+						<h:outputText value="#{msgs['profile.name']}:"></h:outputText>
+						<h:outputText
+							value="#{webUser.getUser().firstName.concat(' ').concat(webUser.getUser().lastName)}"></h:outputText>
+
+						
+						<h:outputText value="#{msgs['profile.team']}:"></h:outputText>
+						<h:outputText value="#{userProfileView.getTeamnaam()}" />
+
 						<h:form style="margin-top:10%">
 							<p:commandButton Styleclass="btn btn-outline-primary"
-											 onclick="PF('dlg3').show()"  
-											 value="#{msgs['profile.button.changepass']}" ajax="true"  />
+								onclick="PF('dlg3').show()"  
+								value="#{msgs['profile.button.changepass']}" ajax="true"  />
 						</h:form>
+
+
 					</h:panelGrid>
+
 				</p:tab>
+
 				<p:tab title="#{msgs['profile.progress']}" rendered="#{userProfileView.isHasTeam()}">
+
 					<h:panelGrid columns="2" >
-						<h:outputText value="#{webUser.getUser().firstName.concat(' ').concat(webUser.getUser().lastName)}"/>
-						<p:progressBar id="progressBarEmployee" value="#{userProfileView.getSurveyFacade().getPercentageCompleteForMemberSurvey(webUser.getUser())}"  
-									   widgetVar="pbClient" style="width:300px"/>
-						<h:outputText value="#{userProfileView.teamLeaderNaam}"/>
-						<p:progressBar id="progressBarBoss" value="#{userProfileView.getSurveyFacade().getPercentageCompleteForManagerSurvey(webUser.getUser())}"
-									   widgetVar="pbClient" style="width:300px" />
+
+						<h:outputText value="#{webUser.getUser().firstName.concat(' ').concat(webUser.getUser().lastName)}"></h:outputText>
+						<p:progressBar id="progressBarEmployee" value="#{userProfileView.getSurveyFacade().getPercentageCompleteForMemberSurvey(webUser.getUser())}"  widgetVar="pbClient"
+							style="width:300px" />
+							
+							
+						<h:outputText value="#{userProfileView.teamLeaderNaam}"></h:outputText>
+						<p:progressBar id="progressBarBoss" widgetVar="pbClient" value="#{userProfileView.getSurveyFacade().getPercentageCompleteForManagerSurvey(webUser.getUser())}"
+							style="width:300px" />
+
 					</h:panelGrid>
+
 				</p:tab>
+
 			</p:tabView>
 		</div>
-		<p:growl id="growl" showDetail="false" sticky="false" />  
+		
+		 <p:growl id="growl" showDetail="false" sticky="false" />  
 	</div>
-	<div class="ui-g-1"/>
+
+	<div class="ui-g-1"></div>
 	
-	<p:dialog header="#{msgs['profile.changepass']}" widgetVar="dlg3" modal="true" style="width: 600px">   				
-		<div class="ui-g">
-			<h:form>
-				<div class="ui-g">
-					<p:messages id="errors"  showDetail="false" closable="true"/>
-	   				<p:autoUpdate />
-				</div>
-				<div class="ui-g">
-					<div class="ui-g-4, popupTextMsgs">
-						<p>#{msgs['profile.currentpass']}</p>
-					</div>
-					<div class="ui-g-8, popupTextInput">
-						<p:inputText id="currentpass" value="#{userProfileview.currentpass}" 
-									 required="true" validator="#{userProfileview.isCurrentPassword}">
-							<f:validateLength maximum="14" />
-						</p:inputText>
-					</div> 
-				</div>
-					<div class="ui-g">
-						<div class="ui-g-4, popupTextMsgs">
-							<p>#{msgs['profile.newpass']}</p>
-						</div>
-						<div class="ui-g-8, popupTextInput">
-							<p:inputText id="newpass" value="#{userprofileview.newpass}"
-								required="true" validator="#{userProfileview.isSamePassword}">
-								<f:validateLength maximum="14" />
-							</p:inputText>
-						</div>
-					</div>
-				<div class="ui-g">
-					<div class="ui-g-4, popupTextMsgs">
-						<p>#{msgs['profile.repeatnewpass']}</p>
-					</div>
-					<div class="ui-g-8, popupTextInput">
-						<p:inputText id="repeatpass" value="#{userProfileview.repeatpass}"
-								required="true" validator="#{userProfileview.isSamePassword}">
-								<f:validateLength maximum="14" />
-						</p:inputText>
-					</div>
-				</div>
-				<div class="ui-g">
-					<div class="ui-g-4"/>
-					<div class="ui-g-4">
-						<p:commandButton value="cancel" />
-					</div>
-					<div class="ui-g-4">
-						<p:commandButton value="confirm" ajax="true"
-							action="#{userProfileviewchangePass}" />
-					</div>
-				</div>
-			</h:form>
-		</div>
+	
+	<!-- Dialog ChangePAss -->
+	
+	 <p:dialog header="#{msgs['profile.changepass']}" widgetVar="dlg3" modal="true" >
+   		
+	 <h:form id="form1">
+	 
+	   			<p:messages id="errors"  showDetail="false" closable="true">
+   				<p:autoUpdate />
+   			</p:messages>
+	   			
+   			
+	<div class="ui-g">
+
+						
+
+		 <div class="ui-g-4">
+   			 <p>#{msgs['profile.currentpass']}</p>
+   			 <p>#{msgs['profile.newpass']}</p>
+   			 <p>#{msgs['profile.repeatnewpass']}</p>
+   			 </div>
+   		<div class="ui-g-4">
+   			 	
+   			
+   			
+   			
+   			<p:password id="currentpass" value="#{userProfileView.currentpass}"
+   			 maxlength="14" >
+   			</p:password>
+   			
+   		
+   				
+   			<p:password id="newpass" value="#{userProfileView.newpassword}"
+   			 maxlength="14">
+   			</p:password>
+   			
+   			
+   			
+   			<p:password id="repeatpass" value="#{userProfileView.repeatpassword}"
+   			 maxlength="14">
+   			</p:password>
+   			
+
+   			
+   			 
+   		</div>
+   	
+   	</div>
+   		
+   		<div class="ui-g">
+   		<div class="ui-g-1">
+   		<p:commandButton value="#{msgs['msgs.cancel']}" styleClass="btn btn-outline-primary" ajax="false" onclick="PF('dlg3').hide();"  />
+   		</div>
+   		
+   		<div class="ui-g-1"></div>
+   		
+   		<div class="ui-g-1">
+   		<p:commandButton value="#{msgs['msgs.ok']}"  ajax="true" action="#{userProfileView.changePass}" oncompleted="PF('dlg3').hide();" />
+   		
+   		</div>
+   		
+   		</div>
+   		
+   	</h:form>
+
 	</p:dialog>
+	
+
 </ui:composition>
