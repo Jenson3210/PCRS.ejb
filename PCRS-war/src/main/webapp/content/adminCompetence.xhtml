@@ -11,7 +11,8 @@
 		<div class="ui-g-10">
 			<h:form id="form">
 				<p:dataTable var="competence"
-							 value="#{adminCompetenceView.competences}">
+							 value="#{adminCompetenceView.competences}"
+							 onRowMouseOver="this.style.backgroundColor='#B5F3FB'">
 					<f:facet name="header">
 						<h:outputText value="#{msgs['competence.title']}" />
 					</f:facet>
@@ -48,7 +49,7 @@
 				</div>
 			</h:form>
 			
-<!-- 									ADD COMPETENCE												 -->
+<!-- ADD COMPETENCE	ADD COMPETENCE ADD COMPETENCE ADD COMPETENCE ADD COMPETENCE ADD COMPETENCE ADD COMPETENCE ADD COMPETENCE -->
 			
 			<h:form id="addForm">
 				<div class="ui-g" id="addCompetenceForm">
@@ -114,7 +115,7 @@
 				</div>
 			</h:form>
 						
-<!-- 								EDIT COMPETENCE														 -->
+<!-- EDIT COMPETENCE EDIT COMPETENCE EDIT COMPETENCE EDIT COMPETENCE EDIT COMPETENCE EDIT COMPETENCE -->
 	
 			<h:form id="editForm">
 				<div class="ui-g" id="editCompetenceForm">
@@ -180,7 +181,7 @@
 				</div>
 			</h:form>
 						
-<!-- 									DELETE COMPETENCE									 -->
+<!-- DELETE COMPETENCE DELETE COMPETENCE DELETE COMPETENCE DELETE COMPETENCE DELETE COMPETENCE DELETE COMPETENCE -->
 	
 			<h:form id="deleteForm">
 				<div class="ui-g" id="deleteCompetenceForm">
