@@ -22,9 +22,14 @@ public class DbUserServiceDl implements Serializable, IUserServiceDl {
 
 	@Override
 	public User save(User element) {
-		User user = em.createNamedQuery("USER.GETBYEMAIL", User.class)
+		User user = null;
+		try {
+		user = em.createNamedQuery("USER.GETBYEMAIL", User.class)
 					.setParameter("email", element.getEmail())
 					.getSingleResult();
+		} catch (NoResultException ex) {
+			
+		}
 		if (user == null) {
 			em.persist(element);
 			user = element;
