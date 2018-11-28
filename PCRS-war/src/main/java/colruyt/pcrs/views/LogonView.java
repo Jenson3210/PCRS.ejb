@@ -71,7 +71,7 @@ public class LogonView implements Serializable {
 	}
 
 	public void logout() {
-		FacesContext context = FacesContext.getCurrentInstance();
+		FacesContext context = FacesContext.getCurrentInstance(); 
 		context.getExternalContext().invalidateSession();
 		try {
 			context.getExternalContext().redirect("login.xhtml");

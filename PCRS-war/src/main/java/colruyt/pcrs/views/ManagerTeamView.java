@@ -10,7 +10,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import colruyt.pcrs.utillibs.WebUser;
+import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.team.TeamBo;
+import colruyt.pcrsejb.facade.surveys.surveySet.ISurveySetFacade;
 import colruyt.pcrsejb.facade.user.team.IEnrolmentFacade;
 import colruyt.pcrsejb.facade.user.team.ITeamFacade;
 
@@ -21,8 +23,12 @@ public class ManagerTeamView implements Serializable{
 	
 	@EJB
 	private ITeamFacade teamFacade;
+	
 	@EJB
 	private IEnrolmentFacade enrolmentFacade;
+	
+	@EJB
+	private ISurveySetFacade surveyFacade;
 	
 	
 	private List<TeamBo> teams; 
@@ -33,9 +39,8 @@ public class ManagerTeamView implements Serializable{
 
     @PostConstruct
     public void fillList() {
-    	
-    	
         teams = teamFacade.getTeamsOfManager(currentUser.getUser());
+        
     }
 
     public List<TeamBo> getTeams() {
@@ -45,5 +50,14 @@ public class ManagerTeamView implements Serializable{
     public void setTeams(List<TeamBo> teams) {
         this.teams = teams;
     }
+    
+    public boolean isMe(UserBo bo) {
+    	
+    	return !this.currentUser.getUser().equals(bo); 
+    	
+    }
+    
+    
+    
 
 }

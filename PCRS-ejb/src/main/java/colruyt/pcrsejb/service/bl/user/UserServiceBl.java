@@ -18,10 +18,10 @@ public class UserServiceBl implements IUserServiceBl {
 	private IUserServiceDl usersDb;
 
 	public User getUserByEmail(String email) throws NoExistingEmailException {
-		return usersDb.getElementByEmail(email);
+		return usersDb.getElementByEmail(email); 
 	}
 
-	public List<User> getAll() {
+	public List<User> getAll() { 
 		return usersDb.getAll();
 	}
 
