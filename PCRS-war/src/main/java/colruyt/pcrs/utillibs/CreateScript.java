@@ -58,8 +58,8 @@ public class CreateScript implements Serializable {
 		cLevels.add(new CompetenceLevelBo("testLevel2", 2));
 		compFacade.save(new CompetenceBo("test", "", cLevels));
 
-		SurveyDefinitionBo sDevBo = new SurveyDefinitionBo("SE BPS BE", new ArrayList<>());
-		sDevBo = surveyDefinitionFacade.save(sDevBo);
+		//SurveyDefinitionBo sDevBo = new SurveyDefinitionBo("SE BPS BE", new ArrayList<>());
+		//sDevBo = surveyDefinitionFacade.save(sDevBo);
 
 		surveySectionStrategyFacade
 				.save(new SurveySectionStrategyBo(5, false, false, "Behavioral", false, true, false));

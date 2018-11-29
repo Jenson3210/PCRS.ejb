@@ -3,16 +3,15 @@ package colruyt.pcrsejb.service.bl.user.privilege;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
-import colruyt.pcrsejb.bo.user.privilege.TeamMemberUserPrivilegeBo;
-import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveyDefinition;
 import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.privilege.PrivilegeType;
+import colruyt.pcrsejb.entity.user.privilege.SurveyUserPrivilege;
 import colruyt.pcrsejb.entity.user.privilege.TeamMemberUserPrivilege;
 import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 import colruyt.pcrsejb.service.bl.user.IUserServiceBl;
@@ -56,25 +55,29 @@ public class UserPrivilegeServiceBl implements Serializable, IUserPrivilegeServi
 	}
 
 	@Override
-	public UserPrivilege grantUserPrivilegeToUser(User user, UserPrivilege userPrivilege) {
-		UserPrivilege newUserPrivilege = null;
+	public User grantUserPrivilegeToUser(User user, UserPrivilege userPrivilege) {
 		user.getPrivileges().add(userPrivilege);
-		User newUser = userServiceBl.save(user);
-		for(UserPrivilege up : newUser.getPrivileges()) {
-			if(up.getPrivilegeType().equals(userPrivilege.getPrivilegeType())) {
-				newUserPrivilege = up;
-			}
-		}
-		return newUserPrivilege;
+		user = userServiceBl.save(user);
+		return user;
 	}
 
 	@Override
 	public void revokeUserPrivilegeToUser(User user, UserPrivilege userPrivilege) {
+		UserPrivilege u = null;
 		for(UserPrivilege up : user.getPrivileges()) {
 			if(up.equals(userPrivilege)) {
-				up.setActive(false);
+				if (userPrivilege.getPrivilegeType().equals(PrivilegeType.TEAMMEMBER)) {
+					up.setActive(false);
+				}
+				else {
+					u = up;
+				}
 			}
 		}
+		if (u != null) {
+			user.getPrivileges().remove(u);
+		}
+		userServiceBl.save(user);
 	}
 
 	@Override
@@ -106,7 +109,7 @@ public class UserPrivilegeServiceBl implements Serializable, IUserPrivilegeServi
     			}   	    		
         	}else {    		
     			for (UserPrivilege p : user.getPrivileges()) {
-        			if (p.getPrivilegeType().equals(PrivilegeTypeBo.TEAMMANAGER)) {
+        			if (p.getPrivilegeType().equals(PrivilegeType.TEAMMANAGER)) {
         				privilege = p;
         			}
         		}
@@ -116,7 +119,31 @@ public class UserPrivilegeServiceBl implements Serializable, IUserPrivilegeServi
         		}
         	}
 		privilege.setActive(true);
-		return grantUserPrivilegeToUser(user, privilege);
+		UserPrivilege newUserPrivilege = null;
+		for(UserPrivilege up : user.getPrivileges()) {
+			if(up.getPrivilegeType().equals(newUserPrivilege.getPrivilegeType())) {
+				//ALS HET TEAMMANAGERPRIVILEGE IS OF MEMBERPRIVILEGE VOOR GESELECTEERDE FUNCTIE
+				if (up.getPrivilegeType().equals(PrivilegeType.TEAMMANAGER) ||
+						( 
+								up.getPrivilegeType().equals(PrivilegeType.TEAMMEMBER) 
+								&& ((TeamMemberUserPrivilege)up).getSurveyDefinition().getId() == ((TeamMemberUserPrivilege)newUserPrivilege).getSurveyDefinition().getId())) {
+					newUserPrivilege = up;
+				}
+				
+			}
+		}
+		return newUserPrivilege;
+	}
+
+	@Override
+	public void revokeUserPrivilegeTypeToUser(User user, PrivilegeType privilegeType, SurveyDefinition surveyDefinition) {
+		for(UserPrivilege up : user.getPrivileges()) {
+			if((up.getPrivilegeType().equals(privilegeType))) {
+				if ((surveyDefinition == null || surveyDefinition.getId() == ((SurveyUserPrivilege)up).getId())) {
+					this.revokeUserPrivilegeToUser(user, up);
+				}
+			}
+		}
 	}
 	
 }
