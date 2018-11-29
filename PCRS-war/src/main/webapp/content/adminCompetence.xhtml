@@ -91,11 +91,12 @@
 								<ui:repeat var="level" value="#{adminCompetenceView.levels}">
 									<div class="ui-g-1">
 										<!-- DELETE THIS LEVEL -->
-										<p:commandLink	action="#{adminCompetenceView.removeLevel}"
-														  styleClass="ui-priority-primary" process="@this"
-														  update=":addForm:addCompetenceDetail">
-											<i class="fas fa-trash-alt"/>
+										<p:commandLink id="delete">
+											<i class="fas fa-trash-alt" />
+											<f:setPropertyActionListener value="#{level}"
+												target="#{adminCompetenceView.removeLevel}" />
 										</p:commandLink>
+
 									</div>
 									<div class="ui-g-1">
 										<p:outputLabel value="#{level.orderLevel}." />
@@ -157,9 +158,9 @@
 								<ui:repeat var="level" value="#{adminCompetenceView.levels}">
 									<div class="ui-g-1">
 										<!-- DELETE THIS LEVEL -->
-										<p:commandLink	action="#{adminCompetenceView.removeLevel}"
-														  styleClass="ui-priority-primary" process="@this"
-														  update=":editForm:editCompetenceDetail">
+										<p:commandLink >
+											<f:setPropertyActionListener value="#{level}"
+													target="#{adminCompetenceView.removeLevel}" />
 											<i class="fas fa-trash-alt"/>
 										</p:commandLink>
 									</div>
@@ -212,6 +213,10 @@
 					</p:dialog>
 				</div>
 			</h:form>
+			
+
+			
+			
 		</div>
 		<div class="ui-g-1"></div>
 	</div>
