@@ -6,9 +6,11 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
+import colruyt.pcrsejb.bo.user.team.EnrolmentBo;
 import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.privilege.PrivilegeType;
 import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
+import colruyt.pcrsejb.entity.user.team.Enrolment;
 import colruyt.pcrsejb.service.dl.user.IUserServiceDl;
 import colruyt.pcrsejb.util.exceptions.NoExistingEmailException;
 
@@ -52,5 +54,10 @@ public class UserServiceBl implements IUserServiceBl {
 	@Override
 	public List<User> getUsersByShortName(String shortName) {
 		return usersDb.getUsersByShortName(shortName);
+	}
+
+	@Override
+	public User getUserByEnrolment(Enrolment enrolment) {
+		return usersDb.getUserByEnrolment(enrolment);
 	}
 }

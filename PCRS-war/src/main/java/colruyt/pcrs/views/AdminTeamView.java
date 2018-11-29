@@ -168,5 +168,9 @@ public class AdminTeamView implements Serializable {
 	public List<UserBo> completeUser(String query) {
 		return userFacade.getUsersByShortName("%" + query + "%");
 	}
+	
+	public UserBo getUserFromEnrolment(EnrolmentBo enrolment){
+		return userFacade.getUserByEnrolment(enrolment);
+	}
 
 }
