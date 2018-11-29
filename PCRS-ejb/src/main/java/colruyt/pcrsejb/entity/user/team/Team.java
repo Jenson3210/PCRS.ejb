@@ -24,13 +24,10 @@ import colruyt.pcrsejb.entity.AbstractEntity;
 @NamedQueries({ 
 	
 	@NamedQuery(name = "TEAM.GETALL", query = "SELECT t FROM Team t"),
-	@NamedQuery(name = "TEAM.GETTEAMFORUSER", query = "SELECT t FROM Team t join t.enrolments enrolment WHERE enrolment.user = :member and enrolment.active = :isActive"),
-	@NamedQuery(name = "TEAM.GETTEAMSOFMANAGER", query = "SELECT t FROM Team t join t.enrolments enrolment where enrolment.userPrivilege.privilegeType = :privilegeType and enrolment.user= :teamManager")
-
-//	@NamedQuery(name = "Team.getTeamOfEnrolment", query = "select t from teamenrolments te "
-//			+ "join teams t on te.team_id = T.ID where te.id = :id"),
-	
-
+	@NamedQuery(name = "TEAM.GETTEAMFORUSER", query = "select t, e, u from Team t, Enrolment e, User u where e.active = :isActive and u = :member"),
+	@NamedQuery(name = "TEAM.GETTEAMSOFMANAGER", query = "select t, e, u from Team t, Enrolment e, User u where e.active = true and e.userPrivilege.privilegeType = :privilegeType and u = :teamManager"),
+	@NamedQuery(name = "TEAM.GETMANAGEROFTEAM", query = "select t, e, up, u from Team t, Enrolment e, User u where e.userPrivilege.active = true and e.userPrivilege = :userPrivilege and t = :team"),
+	@NamedQuery(name = "TEAM.GETUSERSOFTEAM", query = "select u from User u join u.privileges p where p.active = true and p IN :team")
 })
 public class Team extends AbstractEntity implements Serializable {
 	/*
