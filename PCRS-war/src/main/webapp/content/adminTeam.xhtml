@@ -36,7 +36,7 @@
                         <p:dataTable var="enrolment" value="#{team.enrolments}" widgetVar="enrolment">
                             <p:column style="width: 16px"/>
                             <p:column styleClass="ui-g-6">
-                                <h:outputText value="#{enrolment.user.firstName}  #{enrolment.user.lastName}"/>
+                                <h:outputText value="#{adminTeamView.getUserFromEnrolment(enrolment).firstName}  #{adminTeamView.getUserFromEnrolment(enrolment).lastName}"/>
                             </p:column>
                             <p:column styleClass="ui-g-4">
                                 <h:outputText value="#{enrolment.userPrivilege.privilegeType.fullName}"/>

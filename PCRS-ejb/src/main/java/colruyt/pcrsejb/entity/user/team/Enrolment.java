@@ -2,7 +2,6 @@ package colruyt.pcrsejb.entity.user.team;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +14,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import colruyt.pcrsejb.entity.AbstractEntity;
-import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 
 @Entity
@@ -35,8 +33,6 @@ public class Enrolment extends AbstractEntity implements Serializable {
     @SequenceGenerator(sequenceName = "ENROLMENTS_SEQ", allocationSize = 1, name = "ENROLMENTS_SEQ")
     @Column(name="ID")
     private Integer id;
-    @ManyToOne(cascade= {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.PERSIST})
-    private User user;
     @ManyToOne
     private UserPrivilege userPrivilege;
     private Boolean active;
@@ -46,16 +42,14 @@ public class Enrolment extends AbstractEntity implements Serializable {
     public Enrolment() {
     	super();
     }
-    public Enrolment(User user, UserPrivilege userPrivilege, Boolean active) {
+    public Enrolment(UserPrivilege userPrivilege, Boolean active) {
 		super();
-		this.user = user;
 		this.userPrivilege = userPrivilege;
 		this.active = active;
 	}
-    public Enrolment(Integer id, User user, UserPrivilege userPrivilege, Boolean active) {
+    public Enrolment(Integer id, UserPrivilege userPrivilege, Boolean active) {
 		super();
 		this.id = id;
-		this.user = user;
 		this.userPrivilege = userPrivilege;
 		this.active = active;
 	}
@@ -67,12 +61,6 @@ public class Enrolment extends AbstractEntity implements Serializable {
 	}
 	public void setId(Integer id) {
 		this.id = id;
-	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
 	}
 	public UserPrivilege getUserPrivilege() {
 		return userPrivilege;

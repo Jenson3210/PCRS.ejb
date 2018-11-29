@@ -13,6 +13,7 @@ import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveyDefinitionBo;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionBo;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionTitleBo;
 import colruyt.pcrsejb.bo.user.UserBo;
+import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
 import colruyt.pcrsejb.bo.user.privilege.SurveyUserPrivilegeBo;
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.entity.user.privilege.PrivilegeType;
@@ -44,7 +45,7 @@ public class RespSurveyDefinitionView implements Serializable {
 	 * 
 	 */
 	
-	// list of survey definitions defined by the admin
+	// list of survey definitions assigned to the logged in user
 	private List<SurveyDefinitionBo> surveyDefinitionList;
 	
 	// list of survey section titles defined by the admin
@@ -57,8 +58,6 @@ public class RespSurveyDefinitionView implements Serializable {
 	// the added survey section definition
 	private SurveySectionDefinitionBo addedSurveySectionDefinition;
 	
-	private SurveyDefinitionBo surveyDefinition;
-	
 	
 	@Inject
 	private WebUser webuser;
@@ -70,20 +69,23 @@ public class RespSurveyDefinitionView implements Serializable {
 	@PostConstruct
 	public void setup() {
 		UserBo userBo = webuser.getUser();
+		
 		for (UserPrivilegeBo up : userBo.getPrivileges()) {
 			System.out.println(up);
-			if (up.getPrivilegeType().equals(PrivilegeType.SURVEYDEFINITIONRESPONSIBLE)) {
-				surveyDefinition = ((SurveyUserPrivilegeBo) up).getSurveyDefinition();
+//			// check the privileges of the logged in user; if it is survey definition,
+//			// add the survey definition to the corresponding list
+			if (up.getPrivilegeType().equals(PrivilegeTypeBo.SURVEYDEFINITIONRESPONSIBLE)) {
+				SurveyUserPrivilegeBo b = (SurveyUserPrivilegeBo) up;
+				SurveyDefinitionBo sdbo = b.getSurveyDefinition();
+				surveyDefinitionList.add(sdbo);
+				System.out.println(b);
+				//surveyDefinitionList.add(((SurveyUserPrivilegeBo) up).getSurveyDefinition() );
 			}
 		}
-		System.out.println("DEF: " + surveyDefinition);
-		addedSurveySectionDefinition = new SurveySectionDefinitionBo();
 		
-		// get all definitions and titles
-		surveyDefinitionList = surveyDefinitionFacade.getAll();
-		surveySectionTitleList = surveySectionTitleFacade.getAll();
-		surveySectionStrategyList = surveySectionStrategyFacade.getAll();
-
+//		surveySectionTitleList = surveySectionTitleFacade.getAll();
+//		surveySectionStrategyList = surveySectionStrategyFacade.getAll();
+//		this.newSurveyDefinition();
 	}
 	
 
@@ -96,6 +98,7 @@ public class RespSurveyDefinitionView implements Serializable {
 		System.out.println("++++++++++++++");
 		System.out.println(addedSurveySectionDefinition.getSurveySectionTitle().getTitle());
 		System.out.println(addedSurveySectionDefinition.getSurveySectionStrategy().getName());
+		
 	}
 	
 	
@@ -135,16 +138,6 @@ public class RespSurveyDefinitionView implements Serializable {
 
 	public void setSurveySectionStrategyList(List<SurveySectionStrategyBo> surveySectionStrategyList) {
 		this.surveySectionStrategyList = surveySectionStrategyList;
-	}
-
-	public SurveyDefinitionBo getSurveyDefinition() {
-		return surveyDefinition;
-	}
-
-	public void setSurveyDefinition(SurveyDefinitionBo surveyDefinition) {
-		this.surveyDefinition = surveyDefinition;
-	}
-	
-	
+	}	
 	
 }
