@@ -22,12 +22,24 @@ public class DbSurveySectionDefinitionServiceDl implements Serializable, ISurvey
 
 	@Override
 	public SurveySectionDefinition save(SurveySectionDefinition element) {
-		SurveySectionDefinition surveySectionDefinition = em.merge(element);
+		SurveySectionDefinition surveySectionDefinition;
+		if(element.getId() == null)
+		{
+			em.persist(element);
+			surveySectionDefinition = element;
+		}
+		else
+		{
+			surveySectionDefinition = em.merge(element);
+		}
+		return surveySectionDefinition;
+		
+		/*SurveySectionDefinition surveySectionDefinition = em.merge(element);
 		if(surveySectionDefinition == null)
 		{
 			throw new EmptyStackException();
 		}
-		return surveySectionDefinition;
+		return surveySectionDefinition;*/
 	}
 
 	@Override
