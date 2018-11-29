@@ -79,7 +79,6 @@ public class CreateScript implements Serializable {
 		userFacade.save(thomas);
 
 		teamFacade.save(new TeamBo("Java Trainees", new HashSet<>()));
-		System.out.println("Ok 10");
 	}
 	
 	private void additionalSetup() {
