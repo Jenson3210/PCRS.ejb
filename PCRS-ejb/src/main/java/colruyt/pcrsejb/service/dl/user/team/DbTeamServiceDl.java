@@ -63,8 +63,7 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 	@Override
 	public User getManagerForUser(User user) throws UserIsNotMemberOfTeamException{
 		Team team = this.getTeamForUser(user);
-		return team.getEnrolments().stream().filter(x-> x.getUserPrivilege().getPrivilegeType().equals(PrivilegeType.TEAMMANAGER) && x.isActive() )
-											.findFirst().get().getUser();
+		return this.getManagerOfTeam(team);
 	}
 
 	@Override
@@ -108,6 +107,25 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 		
 		List<Team> listOfTeams = q.getResultList();
 		return listOfTeams;
+	}
+
+	@Override
+	public User getManagerOfTeam(Team team) {
+		TypedQuery<User> q = em.createNamedQuery("TEAM.GETMANAGEROFTEAM", User.class);
+		q.setParameter("userPrivilege", PrivilegeType.TEAMMANAGER);
+		q.setParameter("team", team);
+		
+		return q.getSingleResult();
+	}
+
+	@Override
+	public List<User> getUsersOfTeam(Team team) {
+		TypedQuery<User> q = em.createNamedQuery("TEAM.GETUSERSOFTEAM", User.class);
+		
+		q.setParameter("team", team);
+		
+		List<User> listOfUsers = q.getResultList();
+		return listOfUsers;
 	}
 
 }

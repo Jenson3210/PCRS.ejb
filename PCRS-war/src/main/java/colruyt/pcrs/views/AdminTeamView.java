@@ -21,6 +21,7 @@ import colruyt.pcrsejb.facade.user.IUserFacade;
 import colruyt.pcrsejb.facade.user.team.IEnrolmentFacade;
 import colruyt.pcrsejb.facade.user.team.ITeamFacade;
 import colruyt.pcrsejb.util.exceptions.MemberAlreadyHasATeamException;
+import colruyt.pcrsejb.util.exceptions.NoExistingMemberException;
 
 @Named
 @ViewScoped
@@ -98,7 +99,6 @@ public class AdminTeamView implements Serializable {
 	}
 
 	public void deleteEnrolment() {
-		System.out.println(manipulatedEnrolmentBo.getUser().getFirstName());
 		EnrolmentBo e = null;
 		for (TeamBo team : teams) {
 			for (EnrolmentBo enrolment : team.getEnrolments()) {
@@ -107,8 +107,8 @@ public class AdminTeamView implements Serializable {
 				}
 			}
 			if(e != null) {
-				team.getEnrolments().remove(e);
 				enrolmentFacade.delete(e);
+				team.getEnrolments().remove(e);
 			}
 		}
 	}
@@ -151,10 +151,12 @@ public class AdminTeamView implements Serializable {
         			privilege.setPrivilegeType(PrivilegeTypeBo.TEAMMANAGER);
         		}
         	}
-        	
-    		privilege.setActive(true);
-    		user.getPrivileges().add(privilege);
-        	enrolment.setUser(user); 
+			privilege.setActive(true);
+			
+			user.getPrivileges().add(privilege);
+			user = userFacade.save(user);
+			
+    		enrolment.setUserPrivilege(privilege);
         	enrolment.setActive(true);
 
         	manipulatedTeamBo.getEnrolments().add(enrolment);
@@ -167,6 +169,16 @@ public class AdminTeamView implements Serializable {
 
 	public List<UserBo> completeUser(String query) {
 		return userFacade.getUsersByShortName("%" + query + "%");
+	}
+	
+	public UserBo getUserFromEnrolment(EnrolmentBo enrolment){
+		UserBo user = null;
+		try {
+			user = userFacade.getUserByEnrolment(enrolment);
+		} catch (NoExistingMemberException e) {
+			System.out.println(e.getMessage());
+		}
+		return user;
 	}
 
 }

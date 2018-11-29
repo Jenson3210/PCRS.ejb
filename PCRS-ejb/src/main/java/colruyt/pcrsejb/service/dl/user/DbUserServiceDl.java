@@ -12,8 +12,9 @@ import javax.persistence.TypedQuery;
 
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.entity.user.User;
-
+import colruyt.pcrsejb.entity.user.team.Enrolment;
 import colruyt.pcrsejb.util.exceptions.NoExistingEmailException;
+import colruyt.pcrsejb.util.exceptions.NoExistingMemberException;
 
 @Stateless
 public class DbUserServiceDl implements Serializable, IUserServiceDl {
@@ -85,5 +86,17 @@ public class DbUserServiceDl implements Serializable, IUserServiceDl {
 		q.setParameter("shortname", shortName);
 		List<User> resultList = q.getResultList();
 		return resultList;
+	}
+
+	@Override
+	public User getUserByEnrolment(Enrolment enrolment) throws NoExistingMemberException {
+		try {
+			TypedQuery<User> q = em.createNamedQuery("USER.GETBYENROLMENT", User.class);
+			q.setParameter("enrolment", enrolment);
+			return q.getSingleResult();
+		}catch(NoResultException e) {
+			throw new NoExistingMemberException("Gegeven enrolment met id: " + enrolment.getId() + " bestaat niet.");
+		}
+
 	}
 }

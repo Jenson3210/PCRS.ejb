@@ -15,4 +15,6 @@ public interface ITeamServiceDl extends IDbService<Team> {
 	User getManagerForUser(User user) throws UserIsNotMemberOfTeamException;
 	Team getTeamForUser(User user) throws UserIsNotMemberOfTeamException;
 	List<Team> getTeamsOfManager(User manager);
+	User getManagerOfTeam(Team team);
+	List<User> getUsersOfTeam(Team team);
 }
