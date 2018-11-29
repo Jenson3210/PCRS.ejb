@@ -28,8 +28,7 @@ import colruyt.pcrsejb.entity.AbstractEntity;
 @DiscriminatorValue(value="NON-FUNCTIONHOLDING")
 //@NamedQuery(name="USER.GETALL", query="select u from User u"), 
 @NamedQueries({		@NamedQuery(name="USER.GETACTIVEPRIVILEGE", 
-						query="Select up from UserPrivilege up where up.active = true and up IN (Select u.privileges from User u where u.id = :userId)")})
-						//query="Select u from User u join UserPrivilege up on u.privileges = up.id join Enrolment e on up.id = e.userPrivilege.id where up.active = true and e.user.id = :userId")})
+						query="select p from User u join u.privileges p where p.active = :isActive and u = :user")})
 public class UserPrivilege extends AbstractEntity implements Serializable {
 	/*
 	 * PROPERTIES
