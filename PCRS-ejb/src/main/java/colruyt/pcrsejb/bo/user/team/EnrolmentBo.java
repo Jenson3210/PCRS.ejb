@@ -5,8 +5,9 @@ import java.io.Serializable;
 import colruyt.pcrsejb.bo.AbstractBo;
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
+import colruyt.pcrsejb.entity.user.team.Enrolment;
 
-public class EnrolmentBo extends AbstractBo implements Serializable {
+public class EnrolmentBo extends AbstractBo implements Serializable, Comparable<EnrolmentBo> {
 	/*
 	 * PROPERTIES
 	 */
@@ -51,5 +52,13 @@ public class EnrolmentBo extends AbstractBo implements Serializable {
 	}
 	public void setActive(Boolean active) {
 		this.active = active;
+	}
+	@Override
+	public int compareTo(EnrolmentBo enrolment) {
+		if(this.id == enrolment.id) {
+			return 0;
+		}else {
+			return -1;
+		}
 	}
 }

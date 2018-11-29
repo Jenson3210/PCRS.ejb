@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -19,6 +19,7 @@ import colruyt.pcrsejb.bo.user.privilege.SurveyDefinitionResponsibleUserPrivileg
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveyDefinitionFacade;
 import colruyt.pcrsejb.facade.user.IUserFacade;
+import colruyt.pcrsejb.facade.user.privilege.IUserPrivilegeFacade;
 
 
 @Named
@@ -32,6 +33,8 @@ public class AdminSurveyDefinitionView implements Serializable{
 	private IUserFacade userFacade;
 	@EJB
 	private ISurveyDefinitionFacade surveyDefinitionFacade;
+	@EJB
+	private IUserPrivilegeFacade userPrivilegeFacade;
 	
 	private Map<SurveyDefinitionBo, UserBo> surveyDefinitions = new HashMap<>();
 	
@@ -65,10 +68,11 @@ public class AdminSurveyDefinitionView implements Serializable{
 	
 
 	public void addSurveyDefinition() {
-		//	private UserBo addedUserBo;
+		//SAVE THE SURVEYDEFINITION
 		manipulatedSurveyDefinitionBo = surveyDefinitionFacade.save(manipulatedSurveyDefinitionBo);	
-		manipulatedUserBo.getPrivileges().add(new SurveyDefinitionResponsibleUserPrivilegeBo(PrivilegeTypeBo.SURVEYDEFINITIONRESPONSIBLE, true, manipulatedSurveyDefinitionBo));
-		manipulatedUserBo = userFacade.save(manipulatedUserBo);
+		//MAKE SOMEONE RESPONSIBLE
+		manipulatedUserBo = userPrivilegeFacade.grantUserPrivilegeToUser(userFacade.get(manipulatedUserBo), new SurveyDefinitionResponsibleUserPrivilegeBo(PrivilegeTypeBo.SURVEYDEFINITIONRESPONSIBLE, true, manipulatedSurveyDefinitionBo));
+		//ADD THE SURVEY TO THE SCREEN
 		surveyDefinitions.put(manipulatedSurveyDefinitionBo, manipulatedUserBo);
 	}
 	
@@ -87,17 +91,11 @@ public class AdminSurveyDefinitionView implements Serializable{
 	 * deletes the survey definition from the List and from the DB
 	 */
 	public void deleteSurveyDefinition(){
+		//REMOVE FROM LOCAL LIST
 		surveyDefinitions.remove(manipulatedSurveyDefinitionBo);
-		SurveyDefinitionResponsibleUserPrivilegeBo sdrup = null;
-		for (UserPrivilegeBo up : manipulatedUserBo.getPrivileges()) {
-			if (up.getPrivilegeType().equals(PrivilegeTypeBo.SURVEYDEFINITIONRESPONSIBLE) 
-					&& ((SurveyDefinitionResponsibleUserPrivilegeBo)up).getSurveyDefinition().getId() 
-						== manipulatedSurveyDefinitionBo.getId()) {
-				sdrup = (SurveyDefinitionResponsibleUserPrivilegeBo) up;
-			}
-		}
-		manipulatedUserBo.getPrivileges().remove(sdrup);
-		userFacade.save(manipulatedUserBo);
+		//REMOVE THE RESPONSIBLES PRIVILEGE
+		userPrivilegeFacade.revokeUserPrivilegeTypeFromUser(manipulatedUserBo, PrivilegeTypeBo.SURVEYDEFINITIONRESPONSIBLE, manipulatedSurveyDefinitionBo);
+		//DELETE THE SURVEYDEFINITION
 		surveyDefinitionFacade.delete(manipulatedSurveyDefinitionBo);
 	}
 	
@@ -105,19 +103,11 @@ public class AdminSurveyDefinitionView implements Serializable{
 	 * modifies the survey definition and sets a new name and/or new responsible
 	 */
 	public void editSurveyDefinition() {
-		SurveyDefinitionResponsibleUserPrivilegeBo sdrup = null;
-		for (UserPrivilegeBo up : manipulatedUserBo.getPrivileges()) {
-			if (up.getPrivilegeType().equals(PrivilegeTypeBo.SURVEYDEFINITIONRESPONSIBLE) 
-					&& ((SurveyDefinitionResponsibleUserPrivilegeBo)up).getSurveyDefinition().getId() 
-						== manipulatedSurveyDefinitionBo.getId()) {
-				sdrup = (SurveyDefinitionResponsibleUserPrivilegeBo) up;
-			}
-		}
-		manipulatedUserBo.getPrivileges().remove(sdrup);
-		userFacade.save(manipulatedUserBo);
+		//REMOVE THE CURRENT RESPONSIBLES PRIVILEGE
+		//PRIVILEGE NIET AFGENOMEN?
+		userPrivilegeFacade.revokeUserPrivilegeTypeFromUser(surveyDefinitionFacade.getResponsible(manipulatedSurveyDefinitionBo), PrivilegeTypeBo.SURVEYDEFINITIONRESPONSIBLE, manipulatedSurveyDefinitionBo);
 		//GIVE THE PRIVILEGE TO THE USER
-		manipulatedUserBo.getPrivileges().add(new SurveyDefinitionResponsibleUserPrivilegeBo(PrivilegeTypeBo.SURVEYDEFINITIONRESPONSIBLE, true, manipulatedSurveyDefinitionBo));
-		manipulatedUserBo = userFacade.save(manipulatedUserBo);
+		manipulatedUserBo = userPrivilegeFacade.grantUserPrivilegeToUser(manipulatedUserBo, new SurveyDefinitionResponsibleUserPrivilegeBo(PrivilegeTypeBo.SURVEYDEFINITIONRESPONSIBLE, true, manipulatedSurveyDefinitionBo));
 		//UPDATE THE LIST
 		for (SurveyDefinitionBo bo : surveyDefinitions.keySet()) {
 			if (bo.getId() == manipulatedSurveyDefinitionBo.getId()) {
@@ -125,7 +115,8 @@ public class AdminSurveyDefinitionView implements Serializable{
 				surveyDefinitions.put(bo, manipulatedUserBo);
 			}
 		}
-		surveyDefinitionFacade.save(manipulatedSurveyDefinitionBo);
+		//UPDATE THE DATABASE TESTEN NOG OF WEL NODIG?
+		//surveyDefinitionFacade.save(manipulatedSurveyDefinitionBo);
 	}
 	
 	

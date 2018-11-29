@@ -1,20 +1,17 @@
 package colruyt.pcrs.views;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
-import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveyDefinitionBo;
 import colruyt.pcrsejb.bo.user.UserBo;
-import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
-import colruyt.pcrsejb.bo.user.privilege.TeamMemberUserPrivilegeBo;
-import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.bo.user.team.EnrolmentBo;
 import colruyt.pcrsejb.bo.user.team.TeamBo;
 import colruyt.pcrsejb.facade.user.IUserFacade;
@@ -39,11 +36,19 @@ public class AdminTeamView implements Serializable {
 	private EnrolmentBo manipulatedEnrolmentBo;
 	private UserBo user;
 	private String userPrivilege;
-	private SurveyDefinitionBo surveyDefinition;
+	private Map<TeamBo, Map<EnrolmentBo, UserBo>> teamMap = new TreeMap<TeamBo, Map<EnrolmentBo,UserBo>>();;
 
 	@PostConstruct
 	private void fillList() {
 		teams = teamFacade.getAll();
+		for(TeamBo t : teams) {
+			Map<EnrolmentBo, UserBo> map = new TreeMap<>();
+			for (EnrolmentBo e : t.getEnrolments()) {
+				map.put(e, getUserFromEnrolment(e));
+			}
+			teamMap.put(t, map);
+			
+		}
 	}
 
 	public List<TeamBo> getTeams() {
@@ -114,57 +119,24 @@ public class AdminTeamView implements Serializable {
 	}
 
 	public void addEnrolment() {
-    	UserPrivilegeBo privilege = null;
-    	EnrolmentBo enrolment = new EnrolmentBo();
-    	
     	try {
-    	if(PrivilegeTypeBo.TEAMMEMBER.getShortName().equals(userPrivilege)) {
-    		List<TeamMemberUserPrivilegeBo> memberPrivs = new ArrayList<>();
-    			for (UserPrivilegeBo p : user.getPrivileges()) {
-        			if (p.getPrivilegeType().equals(PrivilegeTypeBo.TEAMMEMBER)) {
-        				if (p.isActive()) {
-        					//TODO FACESMESSAGE TOEVOEGEN
-        					throw new MemberAlreadyHasATeamException();
-        				}
-        				memberPrivs.add((TeamMemberUserPrivilegeBo) p);
-        			}
-        		}
-    			for (TeamMemberUserPrivilegeBo p : memberPrivs) {
-    				if (p.getSurveyDefinition().getName().equalsIgnoreCase(surveyDefinition.getName())) {
-    					privilege = p;
-    				}
-    			}	
-    			if (privilege == null) {
-    				privilege = new TeamMemberUserPrivilegeBo();
-    	    		privilege.setPrivilegeType(PrivilegeTypeBo.TEAMMEMBER);
-    	    		//((TeamMemberUserPrivilegeBo) privilege).setStartDateCurrentSurveyDefinition(LocalDate.now());
-    	    		((TeamMemberUserPrivilegeBo) privilege).setSurveyDefinition(surveyDefinition);
-    			}   	    		
-        	}else {    		
-    			for (UserPrivilegeBo p : user.getPrivileges()) {
-        			if (p.getPrivilegeType().equals(PrivilegeTypeBo.TEAMMANAGER)) {
-        				privilege = p;
-        			}
-        		}
-        		if (privilege == null) {
-        			privilege = new UserPrivilegeBo();
-        			privilege.setPrivilegeType(PrivilegeTypeBo.TEAMMANAGER);
-        		}
-        	}
-			privilege.setActive(true);
-			
-			user.getPrivileges().add(privilege);
-			user = userFacade.save(user);
-			
-    		enrolment.setUserPrivilege(privilege);
-        	enrolment.setActive(true);
-
-        	manipulatedTeamBo.getEnrolments().add(enrolment);
-        	
-        	teamFacade.save(manipulatedTeamBo);
+    		EnrolmentBo enrolment = teamFacade.addUserToTeam(manipulatedTeamBo, user, userPrivilege);
+			manipulatedTeamBo.getEnrolments().add(enrolment);
+			addToTeamMap(manipulatedTeamBo, enrolment, user);
     	} catch (MemberAlreadyHasATeamException ex) {
     		
     	}
+	}
+
+	private void addToTeamMap(TeamBo team, EnrolmentBo enrolment, UserBo user) {
+		for(TeamBo t : teamMap.keySet()) {
+			if(t.equals(team)) {
+				Map<EnrolmentBo, UserBo> map = new HashMap<>();
+				map.put(enrolment, user);
+				teamMap.put(t, map);
+			}
+		}
+		
 	}
 
 	public List<UserBo> completeUser(String query) {
@@ -173,6 +145,7 @@ public class AdminTeamView implements Serializable {
 	
 	public UserBo getUserFromEnrolment(EnrolmentBo enrolment){
 		UserBo user = null;
+		
 		try {
 			user = userFacade.getUserByEnrolment(enrolment);
 		} catch (NoExistingMemberException e) {
@@ -181,4 +154,14 @@ public class AdminTeamView implements Serializable {
 		return user;
 	}
 
+
+	public Map<TeamBo, Map<EnrolmentBo, UserBo>> getTeamMap() {
+		return teamMap;
+	}
+
+	public void setTeamMap(Map<TeamBo, Map<EnrolmentBo, UserBo>> teamMap) {
+		this.teamMap = teamMap;
+	}
+
+	
 }
