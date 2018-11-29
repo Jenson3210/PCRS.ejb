@@ -23,7 +23,7 @@ import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 	@NamedQuery(name = "ENROLMENT.DEACTIVATE", query = "UPDATE UserPrivilege SET active = :active WHERE id = :id")
 })
 
-public class Enrolment extends AbstractEntity implements Serializable {
+public class Enrolment extends AbstractEntity implements Serializable, Comparable<Enrolment> {
 	/*
 	 * PROPERTIES
 	 */
@@ -73,5 +73,13 @@ public class Enrolment extends AbstractEntity implements Serializable {
 	}
 	public void setActive(Boolean active) {
 		this.active = active;
+	}
+	@Override
+	public int compareTo(Enrolment enrolment) {
+		if(this.id == enrolment.id) {
+			return 0;
+		}else {
+			return -1;
+		}
 	}
 }
