@@ -44,6 +44,7 @@ public class UserPrivilegeFacade implements Serializable, IUserPrivilegeFacade {
 	@Override
 	public void delete(UserPrivilegeBo entityBo) {
 		// TODO Auto-generated method stub
-		
 	}
+	
+	
 }

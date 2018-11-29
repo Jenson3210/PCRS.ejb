@@ -16,6 +16,7 @@ import colruyt.pcrsejb.converter.user.privilege.UserPrivilegeConverter;
 import colruyt.pcrsejb.converter.user.team.EnrolmentConverter;
 import colruyt.pcrsejb.service.bl.user.IUserServiceBl;
 import colruyt.pcrsejb.util.exceptions.NoExistingEmailException;
+import colruyt.pcrsejb.util.exceptions.NoExistingMemberException;
 
 @Stateless
 public class UserFacade implements Serializable, IUserFacade {
@@ -65,7 +66,7 @@ public class UserFacade implements Serializable, IUserFacade {
 	}
 
 	@Override
-	public UserBo getUserByEnrolment(EnrolmentBo enrolment) {
+	public UserBo getUserByEnrolment(EnrolmentBo enrolment) throws NoExistingMemberException {
 		return userConverter.convertToBo(userServiceBl.getUserByEnrolment(enrolmentConverter.convertToEntity(enrolment)));
 	}
 

@@ -13,6 +13,7 @@ import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 import colruyt.pcrsejb.entity.user.team.Enrolment;
 import colruyt.pcrsejb.service.dl.user.IUserServiceDl;
 import colruyt.pcrsejb.util.exceptions.NoExistingEmailException;
+import colruyt.pcrsejb.util.exceptions.NoExistingMemberException;
 
 @Stateless
 public class UserServiceBl implements IUserServiceBl {
@@ -57,7 +58,7 @@ public class UserServiceBl implements IUserServiceBl {
 	}
 
 	@Override
-	public User getUserByEnrolment(Enrolment enrolment) {
+	public User getUserByEnrolment(Enrolment enrolment) throws NoExistingMemberException {
 		return usersDb.getUserByEnrolment(enrolment);
 	}
 }
