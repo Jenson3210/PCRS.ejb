@@ -71,16 +71,21 @@ public class RespSurveyDefinitionView implements Serializable {
 		UserBo userBo = webuser.getUser();
 		
 		for (UserPrivilegeBo up : userBo.getPrivileges()) {
-			// check the privileges of the logged in user; if it is survey definition,
-			// add the survey definition to the corresponding list
+			System.out.println(up);
+//			// check the privileges of the logged in user; if it is survey definition,
+//			// add the survey definition to the corresponding list
 			if (up.getPrivilegeType().equals(PrivilegeTypeBo.SURVEYDEFINITIONRESPONSIBLE)) {
-				surveyDefinitionList.add(((SurveyUserPrivilegeBo) up).getSurveyDefinition() );
+				SurveyUserPrivilegeBo b = (SurveyUserPrivilegeBo) up;
+				SurveyDefinitionBo sdbo = b.getSurveyDefinition();
+				surveyDefinitionList.add(sdbo);
+				System.out.println(b);
+				//surveyDefinitionList.add(((SurveyUserPrivilegeBo) up).getSurveyDefinition() );
 			}
 		}
 		
-		surveySectionTitleList = surveySectionTitleFacade.getAll();
-		surveySectionStrategyList = surveySectionStrategyFacade.getAll();
-		this.newSurveyDefinition();
+//		surveySectionTitleList = surveySectionTitleFacade.getAll();
+//		surveySectionStrategyList = surveySectionStrategyFacade.getAll();
+//		this.newSurveyDefinition();
 	}
 	
 
