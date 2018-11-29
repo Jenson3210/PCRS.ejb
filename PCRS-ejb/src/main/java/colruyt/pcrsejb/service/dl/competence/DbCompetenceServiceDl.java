@@ -18,14 +18,26 @@ public class DbCompetenceServiceDl implements ICompetenceServiceDl, Serializable
 
     @Override
     public Competence save(Competence element) {
-        Competence competence = null;
+        Competence competence;
+        if(element.getId() == null)
+        {
+        	em.persist(element);
+        	competence = element;
+        }
+        else
+        {
+        	competence = em.merge(element);
+        }
+        return competence;
+        
+    	/*Competence competence = null;
         if (element.getId() == null) {
             em.persist(element);
             competence = element;
         }else {
             competence = em.merge(element);
         }
-        return competence;
+        return competence;*/
     }
 
     @Override
