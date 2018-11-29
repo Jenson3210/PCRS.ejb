@@ -4,11 +4,10 @@ import javax.ejb.Remote;
 
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
-import colruyt.pcrsejb.bo.user.team.EnrolmentBo;
-import colruyt.pcrsejb.bo.user.team.TeamBo;
-import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 import colruyt.pcrsejb.facade.IFacade;
 
 @Remote
 public interface IUserPrivilegeFacade extends IFacade<UserPrivilegeBo>{
+	public UserPrivilegeBo grantUserPrivilegeToUser(UserBo user, UserPrivilegeBo userPrivilege);
+	public void revokeUserPrivilegeFromUser(UserBo user, UserPrivilegeBo userPrivilege);
 }

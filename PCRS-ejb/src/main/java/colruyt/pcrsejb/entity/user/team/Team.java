@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import colruyt.pcrsejb.bo.user.team.TeamBo;
 import colruyt.pcrsejb.entity.AbstractEntity;
 
 @Entity
@@ -29,7 +30,7 @@ import colruyt.pcrsejb.entity.AbstractEntity;
 	@NamedQuery(name = "TEAM.GETMANAGEROFTEAM", query = "select t, e, u from Team t, Enrolment e, User u where e.userPrivilege.active = true and e.userPrivilege = :userPrivilege and t = :team"),
 	@NamedQuery(name = "TEAM.GETUSERSOFTEAM", query = "select u from User u join u.privileges p where p.active = true and p IN :team")
 })
-public class Team extends AbstractEntity implements Serializable {
+public class Team extends AbstractEntity implements Serializable, Comparable<Team> {
 	/*
 	 * PROPERTIES
 	 */
@@ -80,5 +81,13 @@ public class Team extends AbstractEntity implements Serializable {
 	}
 	public void setEnrolments(Set<Enrolment> enrolments) {
 		this.enrolments = enrolments;
+	}
+	@Override
+	public int compareTo(Team team) {
+		if(this.id == team.id) {
+			return 0;
+		}else {
+			return -1;
+		}
 	}
 }

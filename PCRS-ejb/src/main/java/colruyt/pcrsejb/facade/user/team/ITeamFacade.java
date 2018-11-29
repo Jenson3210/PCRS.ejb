@@ -5,8 +5,10 @@ import java.util.List;
 import javax.ejb.Remote;
 
 import colruyt.pcrsejb.bo.user.UserBo;
+import colruyt.pcrsejb.bo.user.team.EnrolmentBo;
 import colruyt.pcrsejb.bo.user.team.TeamBo;
 import colruyt.pcrsejb.facade.IFacade;
+import colruyt.pcrsejb.util.exceptions.MemberAlreadyHasATeamException;
 import colruyt.pcrsejb.util.exceptions.UserIsNotMemberOfTeamException;
 
 @Remote
@@ -16,5 +18,7 @@ public interface ITeamFacade extends IFacade<TeamBo>  {
 	UserBo getManagerForUser(UserBo user) throws UserIsNotMemberOfTeamException;
 	TeamBo getTeamForUser(UserBo user) throws UserIsNotMemberOfTeamException;
 	List<TeamBo> getTeamsOfManager(UserBo manager);
+	void deleteUserFromTeam(TeamBo manipulatedTeamBo, UserBo user);
+	EnrolmentBo addUserToTeam(TeamBo manipulatedTeamBo, UserBo user, String userPrivilege) throws MemberAlreadyHasATeamException;
 
 }

@@ -25,7 +25,7 @@ public class DbUserServiceDl implements Serializable, IUserServiceDl {
 
 	@Override
 	public User save(User element) {
-		User user = null;
+/*		User user = null;
 		try {
 		user = em.createNamedQuery("USER.GETBYEMAIL", User.class)
 					.setParameter("email", element.getEmail())
@@ -40,6 +40,9 @@ public class DbUserServiceDl implements Serializable, IUserServiceDl {
 			element.setId(user.getId());
 			user = em.merge(element);
 		}
+		return user;*/
+		User user = em.merge(element);
+		em.flush();
 		return user;
 	}
 
