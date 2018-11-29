@@ -1,30 +1,36 @@
 package colruyt.pcrsejb.service.bl.competence;
 
 import colruyt.pcrsejb.entity.competence.CompetenceImpl;
+import colruyt.pcrsejb.service.dl.competence.ICompetenceImplServiceDl;
 
+import javax.ejb.EJB;
+import java.io.Serializable;
 import java.util.List;
 
-public class CompetenceImplServiceBl implements ICompetenceImplServiceBl {
+public class CompetenceImplServiceBl implements ICompetenceImplServiceBl, Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @EJB
+    private ICompetenceImplServiceDl competenceimplDb;
     @Override
     public CompetenceImpl save(CompetenceImpl element) {
-        //todo
-        return null;
+        competenceimplDb.save(element);
+        return element;
     }
 
     @Override
     public CompetenceImpl get(CompetenceImpl element) {
-        //todo
-        return null;
+
+        return competenceimplDb.get(element);
     }
 
     @Override
     public List<CompetenceImpl> getAll() {
-        //todo
-        return null;
+        return competenceimplDb.getAll();
     }
 
     @Override
     public void delete(CompetenceImpl element) {
-        //todo
+        competenceimplDb.delete(element);
     }
 }
