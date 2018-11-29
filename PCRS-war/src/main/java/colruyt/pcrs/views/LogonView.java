@@ -2,8 +2,6 @@ package colruyt.pcrs.views;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -13,10 +11,8 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import colruyt.pcrs.utillibs.CreateCompetencesScript;
+import colruyt.pcrs.utillibs.CreateScript;
 import colruyt.pcrsejb.bo.user.UserBo;
-import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
-import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.facade.user.IUserFacade;
 import colruyt.pcrsejb.util.exceptions.NoExistingEmailException;
 
@@ -32,19 +28,16 @@ public class LogonView implements Serializable {
 	private IUserFacade userFacade;
 	
 	@Inject
-	private CreateCompetencesScript createCompetences;
+	private CreateScript createScript;
 
 	private String email; 
 	private String password;
 	
 	@PostConstruct
 	private void fillDb() {
-		createCompetences.fillCompetencesDb(false);
+		createScript.fillCompetencesDb(false);
 		if (userFacade.getAll().isEmpty()) {
-			Set<UserPrivilegeBo> privs = new HashSet<>();
-			privs.add(new UserPrivilegeBo(PrivilegeTypeBo.ADMINISTRATOR, true));
-			UserBo user = new UserBo("Root", "Woot", "Root.Woot@gmail.com", "RootWoot", "BE", "RoWoo", privs);
-			userFacade.save(user);
+			createScript.fillDb();
 		}
 	}
 	
