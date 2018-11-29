@@ -48,7 +48,7 @@ public class DbUserServiceDl implements Serializable, IUserServiceDl {
 
 	@Override
 	public User get(User element) {
-		User user = em.find(User.class, element);
+		User user = em.find(User.class, element.getId());
 		if (user == null) {
 			throw new EntityNotFoundException();
 		}
