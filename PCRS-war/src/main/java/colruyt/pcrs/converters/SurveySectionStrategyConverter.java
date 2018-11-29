@@ -37,7 +37,7 @@ public class SurveySectionStrategyConverter implements Converter {
 					.append(sssb.getEnergyRated()).append(";")
 					.append(sssb.getFlexibleDescription()).append(";")
 					.append(sssb.getHasMinimumLevel()).append(";")
-					.append(sssb.getInterestRated());
+					.append(sssb.getInterestRated()).append(";");
 		
 		return stringBuilder.toString();
 	}

@@ -18,12 +18,24 @@ public class DbSurveySetServiceDl implements Serializable, ISurveySetServiceDl {
 
 	@Override
 	public SurveySet save(SurveySet element) {
-		SurveySet surveySet = em.merge(element);
+		SurveySet surveySet;
+		if(element.getId() == null)
+		{
+			em.persist(element);
+			surveySet=element;
+		}
+		else
+		{
+			surveySet=em.merge(element);
+		}
+		return surveySet;
+		
+		/*SurveySet surveySet = em.merge(element);
 		if(surveySet == null)
 		{
 			throw new EmptyStackException();
 		}
-		return surveySet;
+		return surveySet;*/
 	}
 
 	@Override

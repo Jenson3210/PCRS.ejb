@@ -16,7 +16,19 @@ public class DbUserPrivilegeServiceDl implements IUserPrivilegeServiceDl{
 
 	@Override
 	public UserPrivilege save(UserPrivilege element) {
-		return em.merge(element);
+		UserPrivilege userPrivilege;
+		if(element.getId() == null)
+		{
+			em.persist(element);
+			userPrivilege= element;
+		}
+		else
+		{
+			userPrivilege = em.merge(element);
+		}
+		return userPrivilege;
+		
+		/*return em.merge(element);*/
 	}
 
 	@Override

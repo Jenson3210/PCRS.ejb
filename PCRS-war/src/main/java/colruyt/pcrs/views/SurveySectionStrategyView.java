@@ -10,6 +10,7 @@ import javax.inject.Named;
 
 import colruyt.pcrsejb.bo.surveyDefinition.strategy.SurveySectionStrategyBo;
 import colruyt.pcrsejb.facade.surveyDefinition.strategy.ISurveySectionStrategyFacade;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Named
 @ViewScoped
@@ -32,7 +33,6 @@ public class SurveySectionStrategyView implements Serializable {
 		return surveySectionStrategyBo;
 	}
 	public void setSurveySectionStrategyBo(SurveySectionStrategyBo surveySectionStrategyBo) {
-		System.out.println(surveySectionStrategyBo.getName());
 		this.surveySectionStrategyBo = surveySectionStrategyBo;
 	}
 	public List<SurveySectionStrategyBo> getStrategies() {
@@ -42,9 +42,8 @@ public class SurveySectionStrategyView implements Serializable {
 		this.strategies = strategies;
 	}
  
-	public void addSurveySectionStrategy()
-	{
-		strategies.add(surveySectionStrategyFacade.save(surveySectionStrategyBo));
+	public void addSurveySectionStrategy() {
+		strategies.add(surveySectionStrategyFacade.save(surveySectionStrategyBo));	
 	}
 	
 	public void newSurveySectionStrategy() {
@@ -76,7 +75,6 @@ public class SurveySectionStrategyView implements Serializable {
 				s = strategy;
 			}
 		}
-		System.out.println("indelete" + s.getName());
 		strategies.remove(s);
 		surveySectionStrategyFacade.delete(s);
 	}

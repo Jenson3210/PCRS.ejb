@@ -12,7 +12,7 @@ import colruyt.pcrsejb.util.exceptions.NoExistingEmailException;
 @Local
 public interface IUserFacade extends IFacade<UserBo> {
 
-	UserBo getUserByEmail(String email) throws NoExistingEmailException;
+	UserBo getUserByEmail(String email) throws NoExistingEmailException; 
 	Boolean hasPrivilege(UserBo userBo, PrivilegeTypeBo privilege, Boolean active);
 	List<UserBo> getUsersByShortName(String shortName);
 }

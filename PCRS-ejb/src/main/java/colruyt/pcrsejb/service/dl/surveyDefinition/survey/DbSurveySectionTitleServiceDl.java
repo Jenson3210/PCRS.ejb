@@ -21,12 +21,24 @@ public class DbSurveySectionTitleServiceDl implements Serializable, ISurveySecti
 
 	@Override
 	public SurveySectionTitle save(SurveySectionTitle element) {
-		SurveySectionTitle surveySectionTitle = em.merge(element);
+		SurveySectionTitle surveySectionTitle;
+		if(element.getId()==null)
+		{
+			em.persist(element);
+			surveySectionTitle = element;
+		}
+		else
+		{
+			surveySectionTitle = em.merge(element);
+		}
+		return surveySectionTitle;
+		
+		/*SurveySectionTitle surveySectionTitle = em.merge(element);
 		if(surveySectionTitle == null)
 		{
 			throw new EmptyStackException();
 		}
-		return surveySectionTitle;
+		return surveySectionTitle;*/
 	}
 
 	@Override

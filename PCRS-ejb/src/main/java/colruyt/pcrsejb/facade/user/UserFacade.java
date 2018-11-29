@@ -21,14 +21,14 @@ public class UserFacade implements Serializable, IUserFacade {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;  
 	@EJB
 	private IUserServiceBl userServiceBl;
 	private UserConverter userConverter = new UserConverter();
 	private UserPrivilegeConverter privilegeConverter = new UserPrivilegeConverter(); 
 	private PrivilegeTypeTranslator privilegeTypeTranslator= new PrivilegeTypeTranslator();
 
-	public UserBo getUserByEmail(String email) throws NoExistingEmailException {
+	public UserBo getUserByEmail(String email) throws NoExistingEmailException { 
 		return userConverter.convertToBo(userServiceBl.getUserByEmail(email));
 	}
 

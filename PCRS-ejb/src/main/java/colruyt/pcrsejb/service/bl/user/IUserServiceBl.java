@@ -12,8 +12,8 @@ import colruyt.pcrsejb.service.bl.IServiceBl;
 import colruyt.pcrsejb.util.exceptions.NoExistingEmailException;
 
 @Local
-public interface IUserServiceBl extends IServiceBl<User> {
-	public Boolean hasPrivilege(User user, PrivilegeType privilegeType, Boolean active);
-	public User getUserByEmail(String email) throws NoExistingEmailException;
+public interface IUserServiceBl extends IServiceBl<User>   { 
+	public Boolean hasPrivilege(User user, PrivilegeType privilegeType, Boolean active);  
+	public User getUserByEmail(String email) throws NoExistingEmailException;  
 	public List<User> getUsersByShortName(String shortName);
 }
