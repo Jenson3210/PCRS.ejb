@@ -58,4 +58,10 @@ public class SurveySetFacade implements Serializable,ISurveySetFacade{
 		return 70;
 	}
 
+	@Override
+	public SurveySetBo generateSurveySetFor(UserBo user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -19,4 +19,5 @@ public interface ITeamServiceBl extends IServiceBl<Team>{
 	List<Team> getTeamsOfManager(User manager);
 	void removeUserFromTeam(Team convertToEntity, User convertToEntity2);
 	Enrolment addUserToTeam(Team team, User user, String userPrivilege) throws MemberAlreadyHasATeamException;
+	List<User> getUsersOfTeam(Team team);
 }

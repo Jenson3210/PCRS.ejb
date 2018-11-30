@@ -31,6 +31,33 @@ public class ManagerTeamView implements Serializable{
 	private ISurveySetFacade surveyFacade;
 	
 	
+	
+	
+	public ITeamFacade getTeamFacade() {
+	
+		return teamFacade;
+	}
+
+	public void setTeamFacade(ITeamFacade teamFacade) {
+		this.teamFacade = teamFacade;
+	}
+
+	public IEnrolmentFacade getEnrolmentFacade() {
+		return enrolmentFacade;
+	}
+
+	public void setEnrolmentFacade(IEnrolmentFacade enrolmentFacade) {
+		this.enrolmentFacade = enrolmentFacade;
+	}
+
+	public ISurveySetFacade getSurveyFacade() {
+		return surveyFacade;
+	}
+
+	public void setSurveyFacade(ISurveySetFacade surveyFacade) {
+		this.surveyFacade = surveyFacade;
+	}
+
 	private List<TeamBo> teams; 
 	
 	@Inject
@@ -53,9 +80,11 @@ public class ManagerTeamView implements Serializable{
     
     public boolean isMe(UserBo bo) {
     	
-    	return !this.currentUser.getUser().equals(bo); 
+    	return this.currentUser.getUser().equals(bo); 
     	
     }
+   
+    
     
     
     
