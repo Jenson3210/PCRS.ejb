@@ -24,7 +24,7 @@ public class AdminCompetenceView implements Serializable{
 	private ICompetenceFacade competenceFacade;
 	private ICompetenceLevelFacade competenceLevelFacade;
 	private CompetenceBo competenceBo;
-	private CompetenceLevelBo bo;
+	private CompetenceLevelBo level;
 	private List<CompetenceBo> competences;
 	private Set<CompetenceLevelBo> levels = new HashSet<>();
 	
@@ -81,13 +81,13 @@ public class AdminCompetenceView implements Serializable{
 	public void  removeLevel(){
 		CompetenceLevelBo c = new CompetenceLevelBo();
 		for (CompetenceLevelBo competence : levels) {
-			if (competence.getId() == bo.getId()) {
+			if (competence.getOrderLevel() == level.getOrderLevel()) {
 				c = competence;
 			}
 		}
 		
 		levels.remove(c);
-		competenceLevelFacade.delete(c);
+		//competenceLevelFacade.delete(c);
 	}
 	
 	public CompetenceBo getCompetenceBo() {
@@ -100,7 +100,7 @@ public class AdminCompetenceView implements Serializable{
 	}
 
 	public List<CompetenceBo> getCompetences() {
-		competences = competenceFacade.getAll();
+		//competences = competenceFacade.getAll();
 		return competences;
 	}
 

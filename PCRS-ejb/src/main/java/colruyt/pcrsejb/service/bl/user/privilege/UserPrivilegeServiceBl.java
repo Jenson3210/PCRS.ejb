@@ -2,6 +2,7 @@ package colruyt.pcrsejb.service.bl.user.privilege;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -137,9 +138,11 @@ public class UserPrivilegeServiceBl implements Serializable, IUserPrivilegeServi
 
 	@Override
 	public void revokeUserPrivilegeTypeToUser(User user, PrivilegeType privilegeType, SurveyDefinition surveyDefinition) {
-		for(UserPrivilege up : user.getPrivileges()) {
+		for (Iterator<UserPrivilege> privileges = user.getPrivileges().iterator(); privileges.hasNext(); ) {
+			UserPrivilege up = privileges.next();
 			if((up.getPrivilegeType().equals(privilegeType))) {
-				if ((surveyDefinition == null || surveyDefinition.getId() == ((SurveyUserPrivilege)up).getId())) {
+				if ((surveyDefinition == null || surveyDefinition.getId() == ((SurveyUserPrivilege)up).getSurveyDefinition().getId())) {
+					privileges.remove();
 					this.revokeUserPrivilegeToUser(user, up);
 				}
 			}

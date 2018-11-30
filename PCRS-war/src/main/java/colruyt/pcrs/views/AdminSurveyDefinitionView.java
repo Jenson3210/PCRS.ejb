@@ -94,7 +94,7 @@ public class AdminSurveyDefinitionView implements Serializable{
 		//REMOVE FROM LOCAL LIST
 		surveyDefinitions.remove(manipulatedSurveyDefinitionBo);
 		//REMOVE THE RESPONSIBLES PRIVILEGE
-		userPrivilegeFacade.revokeUserPrivilegeTypeFromUser(manipulatedUserBo, PrivilegeTypeBo.SURVEYDEFINITIONRESPONSIBLE, manipulatedSurveyDefinitionBo);
+		userPrivilegeFacade.revokeUserPrivilegeTypeFromUser(userFacade.get(manipulatedUserBo), PrivilegeTypeBo.SURVEYDEFINITIONRESPONSIBLE, manipulatedSurveyDefinitionBo);
 		//DELETE THE SURVEYDEFINITION
 		surveyDefinitionFacade.delete(manipulatedSurveyDefinitionBo);
 	}
@@ -104,10 +104,9 @@ public class AdminSurveyDefinitionView implements Serializable{
 	 */
 	public void editSurveyDefinition() {
 		//REMOVE THE CURRENT RESPONSIBLES PRIVILEGE
-		//PRIVILEGE NIET AFGENOMEN?
 		userPrivilegeFacade.revokeUserPrivilegeTypeFromUser(surveyDefinitionFacade.getResponsible(manipulatedSurveyDefinitionBo), PrivilegeTypeBo.SURVEYDEFINITIONRESPONSIBLE, manipulatedSurveyDefinitionBo);
 		//GIVE THE PRIVILEGE TO THE USER
-		manipulatedUserBo = userPrivilegeFacade.grantUserPrivilegeToUser(manipulatedUserBo, new SurveyDefinitionResponsibleUserPrivilegeBo(PrivilegeTypeBo.SURVEYDEFINITIONRESPONSIBLE, true, manipulatedSurveyDefinitionBo));
+		manipulatedUserBo = userPrivilegeFacade.grantUserPrivilegeToUser(userFacade.get(manipulatedUserBo), new SurveyDefinitionResponsibleUserPrivilegeBo(PrivilegeTypeBo.SURVEYDEFINITIONRESPONSIBLE, true, manipulatedSurveyDefinitionBo));
 		//UPDATE THE LIST
 		for (SurveyDefinitionBo bo : surveyDefinitions.keySet()) {
 			if (bo.getId() == manipulatedSurveyDefinitionBo.getId()) {
@@ -115,8 +114,6 @@ public class AdminSurveyDefinitionView implements Serializable{
 				surveyDefinitions.put(bo, manipulatedUserBo);
 			}
 		}
-		//UPDATE THE DATABASE TESTEN NOG OF WEL NODIG?
-		//surveyDefinitionFacade.save(manipulatedSurveyDefinitionBo);
 	}
 	
 	
