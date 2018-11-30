@@ -64,4 +64,9 @@ public class SurveySetFacade implements Serializable,ISurveySetFacade{
 		return null;
 	}
 
+	@Override
+	public List<SurveySectionDefinitionImplBo> getPossibleSections(UserBo user) {
+		return surveySectionDefinitionImplConverter.convertToBos(surverSectionImplBl.getAllByUser(userConverter.convertToEntity(user)));
+	}
+
 }

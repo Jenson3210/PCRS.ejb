@@ -2,6 +2,7 @@ package colruyt.pcrs.views;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -12,6 +13,7 @@ import javax.inject.Named;
 
 import colruyt.pcrsejb.bo.competence.CompetenceBo;
 import colruyt.pcrsejb.bo.competence.CompetenceLevelBo;
+import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 import colruyt.pcrsejb.facade.competence.CompetenceLevelFacade;
 import colruyt.pcrsejb.facade.competence.ICompetenceFacade;
 import colruyt.pcrsejb.facade.competence.ICompetenceLevelFacade;
@@ -58,14 +60,8 @@ public class AdminCompetenceView implements Serializable{
 	}
 	
 	public void deleteCompetence() {
-		CompetenceBo c = null;
-		for (CompetenceBo competence : competences) {
-			if (competence.getId() == competenceBo.getId()) {
-				c = competence;
-			}
-		}
-		competences.remove(c);
-		competenceFacade.delete(c);
+		competences.remove(competenceBo);
+		competenceFacade.delete(competenceBo);
 	}
 
 	private void newLevels() {
@@ -78,16 +74,16 @@ public class AdminCompetenceView implements Serializable{
 	public void newLevel() { 
 		levels.add(new CompetenceLevelBo("", levels.size() + 1));
 	}
-	public void  removeLevel(){
-		CompetenceLevelBo c = new CompetenceLevelBo();
-		for (CompetenceLevelBo competence : levels) {
-			if (competence.getOrderLevel() == level.getOrderLevel()) {
-				c = competence;
+	public void removeLevel(){
+		System.out.println("OK");
+		for (Iterator<CompetenceLevelBo> iterator = levels.iterator(); iterator.hasNext(); ) {
+			CompetenceLevelBo bo = iterator.next();
+			if (bo.getOrderLevel() == level.getOrderLevel()) {
+				iterator.remove();
+				levels.remove(bo);
 			}
 		}
-		
-		levels.remove(c);
-		//competenceLevelFacade.delete(c);
+		//competenceLevelFacade.delete(c); 
 	}
 	
 	public CompetenceBo getCompetenceBo() {
@@ -114,5 +110,13 @@ public class AdminCompetenceView implements Serializable{
 
 	public void setLevels(Set<CompetenceLevelBo> levels) {
 		this.levels = levels;
+	}
+
+	public CompetenceLevelBo getLevel() {
+		return level;
+	}
+
+	public void setLevel(CompetenceLevelBo level) {
+		this.level = level;
 	}
 }
