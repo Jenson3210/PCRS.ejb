@@ -114,7 +114,7 @@ public class RespSurveyDefinitionView implements Serializable {
 	public void addSurveyDefinition() {
 		System.out.println("++++++++++++++");
 		// add the created survey section definition
-		surveySectionDefinitionFacade.save(addedSurveySectionDefinition);
+		addedSurveySectionDefinition = surveySectionDefinitionFacade.save(addedSurveySectionDefinition);
 		
 		SurveySectionDefinitionImplBo bo = new SurveySectionDefinitionImplBo(requirementLevel, addedSurveySectionDefinition);
 		surveySectionDefinitionImplFacade.save(bo);
