@@ -114,8 +114,6 @@ public class AdminSurveyDefinitionView implements Serializable{
 				surveyDefinitions.put(bo, manipulatedUserBo);
 			}
 		}
-		//UPDATE THE DATABASE TESTEN NOG OF WEL NODIG?
-		//surveyDefinitionFacade.save(manipulatedSurveyDefinitionBo);
 	}
 	
 	
