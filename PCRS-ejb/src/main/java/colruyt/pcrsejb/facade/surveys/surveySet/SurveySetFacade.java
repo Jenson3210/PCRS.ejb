@@ -6,9 +6,13 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionImplBo;
 import colruyt.pcrsejb.bo.surveys.surveySet.SurveySetBo;
 import colruyt.pcrsejb.bo.user.UserBo;
+import colruyt.pcrsejb.converter.surveyDefinition.survey.SurveySectionDefinitionImplConverter;
 import colruyt.pcrsejb.converter.surveys.surveySet.SurveySetConverter;
+import colruyt.pcrsejb.converter.user.UserConverter;
+import colruyt.pcrsejb.service.bl.surveys.survey.ISurveySectionDefinitionImplBl;
 import colruyt.pcrsejb.service.bl.surveys.surveySet.ISurveySetServiceBl;
 
 @Stateless
@@ -19,6 +23,11 @@ public class SurveySetFacade implements Serializable,ISurveySetFacade{
 	private SurveySetConverter surveySetConverter = new SurveySetConverter();
 	@EJB
 	private ISurveySetServiceBl surveySetServiceBl;
+	@EJB
+	private ISurveySectionDefinitionImplBl surverSectionImplBl;
+	private SurveySectionDefinitionImplConverter surveySectionDefinitionImplConverter = new SurveySectionDefinitionImplConverter();
+	private UserConverter userConverter = new UserConverter();
+	
 	
 	@Override
 	public SurveySetBo save(SurveySetBo entityBo) {
@@ -56,6 +65,11 @@ public class SurveySetFacade implements Serializable,ISurveySetFacade{
 	public Integer getPercentageCompleteForConsensusSurvey(UserBo user) {
 		// TODO Auto-generated method stub
 		return 70;
+	}
+
+	@Override
+	public List<SurveySectionDefinitionImplBo> getPossibleSections(UserBo user) {
+		return surveySectionDefinitionImplConverter.convertToBos(surverSectionImplBl.getAllByUser(userConverter.convertToEntity(user)));
 	}
 
 }
