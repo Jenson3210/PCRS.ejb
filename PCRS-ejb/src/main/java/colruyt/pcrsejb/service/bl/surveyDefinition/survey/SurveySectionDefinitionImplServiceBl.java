@@ -1,5 +1,6 @@
 package colruyt.pcrsejb.service.bl.surveyDefinition.survey;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -11,8 +12,10 @@ import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveySectionDefinitionIm
 import colruyt.pcrsejb.service.dl.surveyDefinition.survey.ISurveySectionDefinitionImplServiceDl;
 
 @Stateless
-public class SurveySectionDefinitionImplServiceBl implements ISurveySectionDefinitionImplServiceBl {
+public class SurveySectionDefinitionImplServiceBl implements ISurveySectionDefinitionImplServiceBl, Serializable {
 
+	
+	private static final long serialVersionUID = 1L;
 	
 	@EJB
 	private ISurveySectionDefinitionImplServiceDl surveySectionDefinitionImplServiceDl;
