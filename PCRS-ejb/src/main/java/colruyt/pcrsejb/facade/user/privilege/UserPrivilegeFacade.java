@@ -66,9 +66,7 @@ public class UserPrivilegeFacade implements Serializable, IUserPrivilegeFacade {
 
 	@Override
 	public void revokeUserPrivilegeTypeFromUser(UserBo user, PrivilegeTypeBo privilegeType, SurveyDefinitionBo surveyDefinition) {
-		if (surveyDefinition != null) {
-			userPrivilegeServiceBl.revokeUserPrivilegeTypeToUser(userConverter.convertToEntity(user), privilegeTypeTranslator.convertToEntity(privilegeType), surveyDefinitionConverter.convertToEntity(surveyDefinition));
-		}
+		userPrivilegeServiceBl.revokeUserPrivilegeTypeToUser(userConverter.convertToEntity(user), privilegeTypeTranslator.convertToEntity(privilegeType), surveyDefinitionConverter.convertToEntity(surveyDefinition));
 	}
 	
 	
