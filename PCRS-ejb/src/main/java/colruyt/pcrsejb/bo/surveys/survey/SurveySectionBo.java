@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import colruyt.pcrsejb.bo.AbstractBo;
-import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionBo;
+import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionImplBo;
 import colruyt.pcrsejb.bo.surveys.rating.RatingBo;
 
 public class SurveySectionBo extends AbstractBo implements Serializable {
@@ -14,7 +14,7 @@ public class SurveySectionBo extends AbstractBo implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Integer id;
-	private SurveySectionDefinitionBo surveySectionDefinition;
+	private SurveySectionDefinitionImplBo surveySectionDefinition;
 	private List<RatingBo> ratings = new ArrayList<>();
     /*
      * CONSTRUCTORS
@@ -22,12 +22,12 @@ public class SurveySectionBo extends AbstractBo implements Serializable {
 	public SurveySectionBo() {
 		super();
 	}
-	public SurveySectionBo(SurveySectionDefinitionBo surveySectionDefinition, List<RatingBo> ratings) {
+	public SurveySectionBo(SurveySectionDefinitionImplBo surveySectionDefinition, List<RatingBo> ratings) {
 		super();
 		this.surveySectionDefinition = surveySectionDefinition;
 		this.ratings = ratings;
 	}
-	public SurveySectionBo(Integer id, SurveySectionDefinitionBo surveySectionDefinition, List<RatingBo> ratings) {
+	public SurveySectionBo(Integer id, SurveySectionDefinitionImplBo surveySectionDefinition, List<RatingBo> ratings) {
 		super();
 		this.id = id;
 		this.surveySectionDefinition = surveySectionDefinition;
@@ -42,10 +42,10 @@ public class SurveySectionBo extends AbstractBo implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public SurveySectionDefinitionBo getSurveySectionDefinition() {
+	public SurveySectionDefinitionImplBo getSurveySectionDefinition() {
 		return surveySectionDefinition;
 	}
-	public void setSurveySectionDefinition(SurveySectionDefinitionBo surveySectionDefinition) {
+	public void setSurveySectionDefinition(SurveySectionDefinitionImplBo surveySectionDefinition) {
 		this.surveySectionDefinition = surveySectionDefinition;
 	}
 	public List<RatingBo> getRatings() {
