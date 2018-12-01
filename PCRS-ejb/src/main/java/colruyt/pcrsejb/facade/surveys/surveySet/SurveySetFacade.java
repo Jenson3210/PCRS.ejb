@@ -12,7 +12,7 @@ import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.converter.surveyDefinition.survey.SurveySectionDefinitionImplConverter;
 import colruyt.pcrsejb.converter.surveys.surveySet.SurveySetConverter;
 import colruyt.pcrsejb.converter.user.UserConverter;
-import colruyt.pcrsejb.service.bl.surveys.survey.ISurveySectionDefinitionImplBl;
+import colruyt.pcrsejb.service.bl.surveyDefinition.survey.ISurveySectionDefinitionImplServiceBl;
 import colruyt.pcrsejb.service.bl.surveys.surveySet.ISurveySetServiceBl;
 
 @Stateless
@@ -24,7 +24,7 @@ public class SurveySetFacade implements Serializable,ISurveySetFacade{
 	@EJB
 	private ISurveySetServiceBl surveySetServiceBl;
 	@EJB
-	private ISurveySectionDefinitionImplBl surveySectionImplBl;
+	private ISurveySectionDefinitionImplServiceBl surveySectionImplBl;
 	private SurveySectionDefinitionImplConverter surveySectionDefinitionImplConverter = new SurveySectionDefinitionImplConverter();
 	private UserConverter userConverter = new UserConverter();
 	

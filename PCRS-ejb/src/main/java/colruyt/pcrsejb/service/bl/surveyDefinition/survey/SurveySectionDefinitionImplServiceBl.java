@@ -1,14 +1,17 @@
 package colruyt.pcrsejb.service.bl.surveyDefinition.survey;
 
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionImplBo;
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinitionImpl;
-import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveySectionDefinitionImplFacade;
+import colruyt.pcrsejb.entity.user.User;
+import colruyt.pcrsejb.entity.user.privilege.PrivilegeType;
+import colruyt.pcrsejb.entity.user.privilege.SurveyUserPrivilege;
+import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 import colruyt.pcrsejb.service.dl.surveyDefinition.survey.ISurveySectionDefinitionImplServiceDl;
 
 @Stateless
@@ -43,7 +46,17 @@ public class SurveySectionDefinitionImplServiceBl implements ISurveySectionDefin
 		
 	}
 	
-	
+	@Override
+	public List<SurveySectionDefinitionImpl> getAllByUser(User user) {
+		List<SurveySectionDefinitionImpl> sections = null;
+		for (Iterator<UserPrivilege> privileges = user.getPrivileges().iterator(); privileges.hasNext(); ) {
+			UserPrivilege up = privileges.next();
+			if(up.isActive() && up.getPrivilegeType().equals(PrivilegeType.TEAMMEMBER)) {
+				sections = ((SurveyUserPrivilege) up).getSurveyDefinition().getSurveySections();
+			}
+		}
+		return sections;
+	}
 
 
 
