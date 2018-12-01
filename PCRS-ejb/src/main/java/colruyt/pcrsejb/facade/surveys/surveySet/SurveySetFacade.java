@@ -67,9 +67,8 @@ public class SurveySetFacade implements Serializable,ISurveySetFacade{
 	}
 
 	@Override
-	public SurveySetBo generateSurveySetFor(UserBo user) {
-		// TODO Auto-generated method stub
-		return null;
+	public SurveySetBo generateSurveySetFor(UserBo user, List<SurveySectionDefinitionImplBo> sections) {
+		return surveySetConverter.convertToBo(surveySetServiceBl.createSurveySetForUser(userConverter.convertToEntity(user), surveySectionDefinitionImplConverter.convertToEntities(sections)));
 	}
 
 	@Override

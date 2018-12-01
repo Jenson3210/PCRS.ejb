@@ -2,7 +2,7 @@ package colruyt.pcrsejb.bo.surveys.rating;
 
 import java.io.Serializable;
 
-import colruyt.pcrsejb.bo.competence.CompetenceBo;
+import colruyt.pcrsejb.bo.competence.CompetenceImplBo;
 public class ConsensusRatingBo extends RatingBo implements Serializable{
 	/*
 	 * PROPERTIES
@@ -16,12 +16,12 @@ public class ConsensusRatingBo extends RatingBo implements Serializable{
     public ConsensusRatingBo(){
     	super();
     }
-	public ConsensusRatingBo(Integer level, Boolean energy, CompetenceBo competence,
+	public ConsensusRatingBo(Integer level, Boolean energy, CompetenceImplBo competence,
 			String comment) {
 		super(level, energy, competence);
 		this.comment = comment;
 	}
-	public ConsensusRatingBo(Integer id, Integer level, Boolean energy, CompetenceBo competence, String comment) {
+	public ConsensusRatingBo(Integer id, Integer level, Boolean energy, CompetenceImplBo competence, String comment) {
 		super(id, level, energy, competence);
 		this.comment = comment;
 	}

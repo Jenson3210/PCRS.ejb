@@ -16,8 +16,8 @@ public interface ISurveySetFacade extends IFacade<SurveySetBo> {
 	public Integer getPercentageCompleteForMemberSurvey(UserBo user);
 	public Integer getPercentageCompleteForManagerSurvey(UserBo user);
 	public Integer getPercentageCompleteForConsensusSurvey(UserBo user);  
-	public List<SurveySectionDefinitionImplBo> getPossibleSections(UserBo user); 
-	public SurveySetBo generateSurveySetFor(UserBo user);
+	public List<SurveySectionDefinitionImplBo> getPossibleSections(UserBo user);
+	public SurveySetBo generateSurveySetFor(UserBo user, List<SurveySectionDefinitionImplBo> sections);
 	
 	
 }

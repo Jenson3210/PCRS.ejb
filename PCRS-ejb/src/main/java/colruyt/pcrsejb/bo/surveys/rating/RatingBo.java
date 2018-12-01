@@ -3,7 +3,7 @@ package colruyt.pcrsejb.bo.surveys.rating;
 import java.io.Serializable;
 
 import colruyt.pcrsejb.bo.AbstractBo;
-import colruyt.pcrsejb.bo.competence.CompetenceBo;
+import colruyt.pcrsejb.bo.competence.CompetenceImplBo;
 
 public class RatingBo extends AbstractBo implements Serializable {
 	/*
@@ -13,19 +13,19 @@ public class RatingBo extends AbstractBo implements Serializable {
 	private Integer id;
     private Integer level;
     private Boolean energy;
-    private CompetenceBo competence;
+    private CompetenceImplBo competence;
     /*
      * CONSTRUCTORS
      */
     public RatingBo(){
     	super();
     }
-    public RatingBo(Integer level, Boolean energy, CompetenceBo competence){
+    public RatingBo(Integer level, Boolean energy, CompetenceImplBo competence){
         setLevel(level);
         setEnergy(energy);
         setCompetence(competence);
     }   
-	public RatingBo(Integer id, Integer level, Boolean energy, CompetenceBo competence) {
+	public RatingBo(Integer id, Integer level, Boolean energy, CompetenceImplBo competence) {
 		super();
 		this.id = id;
 		this.level = level;
@@ -53,10 +53,10 @@ public class RatingBo extends AbstractBo implements Serializable {
 	public void setEnergy(Boolean energy) {
 		this.energy = energy;
 	}
-	public CompetenceBo getCompetence() {
+	public CompetenceImplBo getCompetence() {
 		return competence;
 	}
-	public void setCompetence(CompetenceBo competence) {
+	public void setCompetence(CompetenceImplBo competence) {
 		this.competence = competence;
 	}
 }
