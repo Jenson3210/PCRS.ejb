@@ -120,20 +120,16 @@ public class UserPrivilegeServiceBl implements Serializable, IUserPrivilegeServi
         		}
         	}
 		privilege.setActive(true);
-		UserPrivilege newUserPrivilege = null;
-		for(UserPrivilege up : user.getPrivileges()) {
-			if(up.getPrivilegeType().equals(newUserPrivilege.getPrivilegeType())) {
-				//ALS HET TEAMMANAGERPRIVILEGE IS OF MEMBERPRIVILEGE VOOR GESELECTEERDE FUNCTIE
-				if (up.getPrivilegeType().equals(PrivilegeType.TEAMMANAGER) ||
-						( 
-								up.getPrivilegeType().equals(PrivilegeType.TEAMMEMBER) 
-								&& ((TeamMemberUserPrivilege)up).getSurveyDefinition().getId() == ((TeamMemberUserPrivilege)newUserPrivilege).getSurveyDefinition().getId())) {
-					newUserPrivilege = up;
-				}
-				
+    	user.getPrivileges().add(privilege);
+    	
+		User newUser = userServiceBl.save(user);
+		
+		for(UserPrivilege p: newUser.getPrivileges()) {
+			if(p.getPrivilegeType().equals(privilege.getPrivilegeType())) {
+				privilege = p;
 			}
 		}
-		return newUserPrivilege;
+		return privilege;
 	}
 
 	@Override

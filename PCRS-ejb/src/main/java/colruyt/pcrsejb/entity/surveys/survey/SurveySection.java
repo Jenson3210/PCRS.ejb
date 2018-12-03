@@ -17,6 +17,7 @@ import javax.persistence.Table;
 
 import colruyt.pcrsejb.entity.AbstractEntity;
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinition;
+import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinitionImpl;
 import colruyt.pcrsejb.entity.surveys.rating.Rating;
 
 
@@ -33,7 +34,7 @@ public class SurveySection extends AbstractEntity implements Serializable {
 	@Column(name="ID")
 	private Integer id;
 	@ManyToOne
-	private SurveySectionDefinition surveySectionDefinition;
+	private SurveySectionDefinitionImpl surveySectionDefinition;
 	@OneToMany
 	@JoinColumn(name="SURVEYSECTIONS_ID")
 	private List<Rating> ratings = new ArrayList<>();
@@ -43,12 +44,12 @@ public class SurveySection extends AbstractEntity implements Serializable {
 	public SurveySection() {
 		super();
 	}
-	public SurveySection(SurveySectionDefinition surveySectionDefinition, List<Rating> ratings) {
+	public SurveySection(SurveySectionDefinitionImpl surveySectionDefinition, List<Rating> ratings) {
 		super();
 		this.surveySectionDefinition = surveySectionDefinition;
 		this.ratings = ratings;
 	}
-	public SurveySection(Integer id, SurveySectionDefinition surveySectionDefinition, List<Rating> ratings) {
+	public SurveySection(Integer id, SurveySectionDefinitionImpl surveySectionDefinition, List<Rating> ratings) {
 		super();
 		this.id = id;
 		this.surveySectionDefinition = surveySectionDefinition;
@@ -63,10 +64,10 @@ public class SurveySection extends AbstractEntity implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public SurveySectionDefinition getSurveySectionDefinition() {
+	public SurveySectionDefinitionImpl getSurveySectionDefinition() {
 		return surveySectionDefinition;
 	}
-	public void setSurveySectionDefinition(SurveySectionDefinition surveySectionDefinition) {
+	public void setSurveySectionDefinition(SurveySectionDefinitionImpl surveySectionDefinition) {
 		this.surveySectionDefinition = surveySectionDefinition;
 	}
 	public List<Rating> getRatings() {

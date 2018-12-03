@@ -11,4 +11,6 @@ import colruyt.pcrsejb.facade.IFacade;
 @Remote
 public interface IEnrolmentFacade extends IFacade<EnrolmentBo>{
 	
+	
+	
 }

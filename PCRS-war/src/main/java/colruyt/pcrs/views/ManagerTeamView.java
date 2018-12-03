@@ -1,6 +1,7 @@
 package colruyt.pcrs.views;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -12,6 +13,7 @@ import javax.inject.Named;
 import colruyt.pcrs.utillibs.WebUser;
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.team.TeamBo;
+import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionTitle;
 import colruyt.pcrsejb.facade.surveys.surveySet.ISurveySetFacade;
 import colruyt.pcrsejb.facade.user.team.IEnrolmentFacade;
 import colruyt.pcrsejb.facade.user.team.ITeamFacade;
@@ -36,6 +38,35 @@ public class ManagerTeamView implements Serializable{
 	@Inject
 	private WebUser currentUser;
 	
+	
+	
+	public ITeamFacade getTeamFacade() {
+	
+		return teamFacade;
+	}
+
+	public void setTeamFacade(ITeamFacade teamFacade) {
+		this.teamFacade = teamFacade;
+	}
+
+	public IEnrolmentFacade getEnrolmentFacade() {
+		return enrolmentFacade;
+	}
+
+	public void setEnrolmentFacade(IEnrolmentFacade enrolmentFacade) {
+		this.enrolmentFacade = enrolmentFacade;
+	}
+
+	public ISurveySetFacade getSurveyFacade() {
+		return surveyFacade;
+	}
+
+	public void setSurveyFacade(ISurveySetFacade surveyFacade) {
+		this.surveyFacade = surveyFacade;
+	}
+
+
+	
 
     @PostConstruct
     public void fillList() {
@@ -53,9 +84,11 @@ public class ManagerTeamView implements Serializable{
     
     public boolean isMe(UserBo bo) {
     	
-    	return !this.currentUser.getUser().equals(bo); 
+    	return this.currentUser.getUser().equals(bo); 
     	
     }
+   
+    
     
     
     

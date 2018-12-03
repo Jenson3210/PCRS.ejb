@@ -17,6 +17,7 @@ import javax.persistence.Table;
 
 import colruyt.pcrsejb.entity.AbstractEntity;
 import colruyt.pcrsejb.entity.competence.Competence;
+import colruyt.pcrsejb.entity.competence.CompetenceImpl;
 
 @Entity
 @Table(name="RATINGS")
@@ -37,19 +38,19 @@ public class Rating extends AbstractEntity implements Serializable {
     private Integer level;
     private Boolean energy;
     @ManyToOne
-    private Competence competence;
+    private CompetenceImpl competence;
     /*
      * CONSTRUCTORS
      */
     public Rating(){
     	super();
     }
-    public Rating(Integer level, Boolean energy, Competence competence){
+    public Rating(Integer level, Boolean energy, CompetenceImpl competence){
         setLevel(level);
         setEnergy(energy);
         setCompetence(competence);
     }   
-	public Rating(Integer id, Integer level, Boolean energy, Competence competence) {
+	public Rating(Integer id, Integer level, Boolean energy, CompetenceImpl competence) {
 		super();
 		this.id = id;
 		this.level = level;
@@ -77,10 +78,10 @@ public class Rating extends AbstractEntity implements Serializable {
 	public void setEnergy(Boolean energy) {
 		this.energy = energy;
 	}
-	public Competence getCompetence() {
+	public CompetenceImpl getCompetence() {
 		return competence;
 	}
-	public void setCompetence(Competence competence) {
+	public void setCompetence(CompetenceImpl competence) {
 		this.competence = competence;
 	}
 }

@@ -10,6 +10,7 @@ import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 import colruyt.pcrsejb.entity.user.team.Enrolment;
 import colruyt.pcrsejb.entity.user.team.Team;
+import colruyt.pcrsejb.service.bl.user.IUserServiceBl;
 import colruyt.pcrsejb.service.bl.user.privilege.IUserPrivilegeServiceBl;
 import colruyt.pcrsejb.service.dl.user.team.ITeamServiceDl;
 import colruyt.pcrsejb.util.exceptions.MemberAlreadyHasATeamException;
@@ -24,7 +25,8 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
 	@EJB
 	private ITeamServiceDl dlService;
 	@EJB
-	private IUserPrivilegeServiceBl userPrivilegeServiceBl;	
+	private IUserPrivilegeServiceBl userPrivilegeServiceBl;
+	
 	
 	private static final long serialVersionUID = 1L;
 
@@ -76,7 +78,7 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
 	@Override
 	public Enrolment addUserToTeam(Team team, User user, String userPrivilege) throws MemberAlreadyHasATeamException {
 		UserPrivilege enrolmentUserPrivilege = userPrivilegeServiceBl.setUserPrivilege(user, userPrivilege);
-		
+
     	Enrolment enrolment = new Enrolment();
     	enrolment.setUserPrivilege(enrolmentUserPrivilege);
     	enrolment.setActive(true);
@@ -85,6 +87,12 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
     	
     	save(team);
     	return enrolment;
+	} 
+
+	@Override
+	public List<User> getUsersOfTeam(Team team) {
+	
+		return this.dlService.getUsersOfTeam(team);
 	}
 	
 	

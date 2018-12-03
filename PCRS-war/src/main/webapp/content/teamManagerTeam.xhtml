@@ -20,29 +20,26 @@
                         <p:column styleClass="ui-g-6">
                             <h:outputText value="#{team.name}"/>
                         </p:column>
-                        <p:column styleClass="ui-g-4" style="float: right">
-                            <h:outputText value="#{team.enrolments.size()}"/>
-                        </p:column>
                     </p:headerRow>
                     <p:column>
-                        <p:dataTable var="enrolment" value="#{team.enrolments}">
+                        <p:dataTable var="enrolment" value="#{managerTeamView.teamFacade.teamFacade(team)}">
                             <p:column style="width: 32px" >
                               <p:rowToggler rendered="#{managerTeamView.isMe(enrolment.user)}" />
                             </p:column>
                             <p:column styleClass="ui-g-6">
-                                <h:outputText value="#{enrolment.user.firstName}  #{enrolment.user.lastName}" rendered="#{managerTeamView.isMe(enrolment.user)}"/>
+                                <h:outputText value="#{enrolment.user.firstName}  #{enrolment.user.lastName}" />
                             </p:column>
                             <p:column styleClass="ui-g-4" >
-                                <h:outputText value="#{enrolment.userPrivilege.privilegeType.fullName}" rendered="#{managerTeamView.isMe(enrolment.user)}"/>
+                                <h:outputText value="#{enrolment.userPrivilege.privilegeType.fullName}" />
                             </p:column>
 							<p:column styleClass="ui-g-2" >
-								<p:commandButton value="Generate Survey" rendered="#{managerTeamView.isMe(enrolment.user)}"/>
+								<p:commandButton value="Generate Survey" action="#{surveyFacade.generateSurveySetFor(enrolment.user)}" rendered="#{!managerTeamView.isMe(enrolment.user)}"/>
 							</p:column>
 							
 							   <p:rowExpansion>
                        
-            <p:panelGrid  columns="2" columnClasses="label,value" widt="100%">
-                						
+            			<p:panelGrid  columns="2" columnClasses="label,value" widt="100%">
+                		
  						<h:outputText value="#{enrolment.user.firstName}  #{enrolment.user.lastName}"></h:outputText>
 						<p:progressBar id="progressBarEmployee" value="#{userProfileView.getSurveyFacade().getPercentageCompleteForMemberSurvey(webUser.getUser())}"  widgetVar="pbClient"
 							style="width:300px" />
@@ -66,6 +63,40 @@
             </h:form>
         </div>
     </div>
+    
+    
+    
+       <p:dialog header="Selected Values" modal="true" showEffect="fade" widgetVar="dlg" resizable="false">
+        <p:panelGrid columns="2" id="display" columnClasses="label,output">
+        
+        <p:selectOneListbox id="advanced" value="#{selectOneView.theme}" var="t" filter="true" filterMatchMode="contains">
+            <f:selectItems value="#{selectOneView.themes}" var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme}" />
+ 
+            <p:column>
+                <h:graphicImage name="showcase/images/themeswitcher/themeswitcher-#{t.name}.png" alt="#{t.name}" styleClass="ui-theme" />
+            </p:column>
+             
+            <p:column>
+                <h:outputText value="#{t.displayName}" />
+            </p:column>
+        </p:selectOneListbox>
+        
+          <p:selectOneListbox id="advanced" value="#{selectOneView.theme}" var="t" filter="true" filterMatchMode="contains">
+            <f:selectItems value="#{selectOneView.themes}" var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme}" />
+ 
+            <p:column>
+                <h:graphicImage name="showcase/images/themeswitcher/themeswitcher-#{t.name}.png" alt="#{t.name}" styleClass="ui-theme" />
+            </p:column>
+             
+            <p:column>
+                <h:outputText value="#{t.displayName}" />
+            </p:column>
+            
+        </p:selectOneListbox>
+        
+        </p:panelGrid>
+    </p:dialog>
+
 
 </ui:composition>
 
