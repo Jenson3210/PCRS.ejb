@@ -52,4 +52,8 @@ public class SurveyDefinitionBo extends AbstractBo implements Serializable {
 	public void setSurveySections(List<SurveySectionDefinitionImplBo> surveySections) {
 		this.surveySections = surveySections;
 	}	
+	
+	public void addSurveySection(SurveySectionDefinitionImplBo bo) {
+		this.surveySections.add(bo);
+	}
 }
