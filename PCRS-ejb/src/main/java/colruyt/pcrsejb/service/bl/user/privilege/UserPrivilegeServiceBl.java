@@ -120,6 +120,15 @@ public class UserPrivilegeServiceBl implements Serializable, IUserPrivilegeServi
         		}
         	}
 		privilege.setActive(true);
+    	user.getPrivileges().add(privilege);
+    	
+		User newUser = userServiceBl.save(user);
+		
+		for(UserPrivilege p: newUser.getPrivileges()) {
+			if(p.getPrivilegeType().equals(privilege.getPrivilegeType())) {
+				privilege = p;
+			}
+		}
 		return privilege;
 	}
 
