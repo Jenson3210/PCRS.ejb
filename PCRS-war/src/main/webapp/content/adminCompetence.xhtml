@@ -101,7 +101,7 @@
 											</p:commandLink>
 										</div>
 										<div class="ui-g-1">
-											<p:outputLabel value="#{level.orderLevel}." />
+											<p:outputLabel value="#{level.orderLevel}" />
 										</div>
 										<div class="ui-g-10">
 											<p:inputText value="#{level.description}" />
@@ -157,24 +157,28 @@
 									</p:commandLink>
 								</div>
 							</div>
-							<div class="ui-g">
-								<ui:repeat var="level" value="#{adminCompetenceView.levels}">
-									<div class="ui-g-1">
-										<!-- DELETE THIS LEVEL -->
-										<p:commandLink>
-											<f:setPropertyActionListener value="#{level}"
-												target="#{adminCompetenceView.removeLevel}" />
-											<i class="fas fa-trash-alt" />
-										</p:commandLink>
-									</div>
-									<div class="ui-g-1">
-										<p:outputLabel value="#{level.orderLevel}." />
-									</div>
-									<div class="ui-g-10">
-										<p:inputText value="#{level.description}" />
-									</div>
-								</ui:repeat>
-							</div>
+							<p:outputPanel id="editCompetenceDetailLevels">
+								<div class="ui-g">
+									<ui:repeat var="level" value="#{adminCompetenceView.levels}">
+										<div class="ui-g-1">
+											<!-- DELETE THIS LEVEL -->
+											<p:commandLink id="delete"
+												action="#{adminCompetenceView.removeLevel}" process="@this"
+												update=":editForm:editCompetenceDetailLevels">
+												<i class="fas fa-trash-alt" />
+												<f:setPropertyActionListener value="#{level}"
+													target="#{adminCompetenceView.level}" />
+											</p:commandLink>
+										</div>
+										<div class="ui-g-1">
+											<p:outputLabel value="#{level.orderLevel}" />
+										</div>
+										<div class="ui-g-10">
+											<p:inputText value="#{level.description}" />
+										</div>
+									</ui:repeat>
+								</div>
+							</p:outputPanel>
 							<div class="ui-g-2">
 								<p:commandButton value="#{msgs['competence.edit']}"
 									update=":form" action="#{adminCompetenceView.editCompetence}"
