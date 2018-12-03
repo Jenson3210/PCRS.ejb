@@ -18,7 +18,6 @@ public class SurveySectionDefinitionImplFacade implements ISurveySectionDefiniti
 	
 	@Override
 	public SurveySectionDefinitionImplBo save(SurveySectionDefinitionImplBo entityBo) {
-		System.out.println("In the save");
 		return surveySectionDefinitionImplConverter.convertToBo(
 				surveySectionDefinitionImplBl.save(surveySectionDefinitionImplConverter.convertToEntity(entityBo)));
 	}

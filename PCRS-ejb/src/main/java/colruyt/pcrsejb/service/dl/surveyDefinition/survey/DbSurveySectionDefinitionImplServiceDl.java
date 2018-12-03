@@ -19,9 +19,13 @@ public class DbSurveySectionDefinitionImplServiceDl implements ISurveySectionDef
 	@Override
 	public SurveySectionDefinitionImpl save(SurveySectionDefinitionImpl element) {
 		// TODO add logic for existing element
-		SurveySectionDefinitionImpl impl = null;
-		em.persist(element);
-		impl = element;
+		SurveySectionDefinitionImpl impl;
+		if (element.getId() == null) {
+			em.persist(element);
+			impl = element;
+		} else {
+			impl = em.merge(element);
+		}
 		return impl;
 	}
 

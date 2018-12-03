@@ -11,8 +11,8 @@
 		<div class="ui-g-10">
 			<h:form id="form">
 				<p:dataTable var="competence"
-							 value="#{adminCompetenceView.competences}"
-							 onRowMouseOver="this.style.backgroundColor='#B5F3FB'">
+					value="#{adminCompetenceView.competences}"
+					onRowMouseOver="this.style.backgroundColor='#B5F3FB'">
 					<f:facet name="header">
 						<h:outputText value="#{msgs['competence.title']}" />
 					</f:facet>
@@ -20,7 +20,7 @@
 						<h:outputText value="#{competence.name}" />
 					</p:column>
 					<p:column headerText="#{msgs['edit']}"
-							  style="width:65px; text-align: center">
+						style="width:65px; text-align: center">
 						<p:commandLink update=":editForm:editCompetenceDetail" id="edit"
 							oncomplete="PF('editCompetenceDialog').show()">
 							<i class="fas fa-pencil-alt" />
@@ -34,7 +34,7 @@
 							oncomplete="PF('deleteCompetenceDialog').show()">
 							<i class="fas fa-trash-alt" />
 							<f:setPropertyActionListener value="#{competence}"
-								target="#{adminCompetenceView.deleteCompetence}" />
+								target="#{adminCompetenceView.competenceBo}" />
 						</p:commandLink>
 					</p:column>
 				</p:dataTable>
@@ -48,9 +48,9 @@
 					</div>
 				</div>
 			</h:form>
-			
-<!-- ADD COMPETENCE	ADD COMPETENCE ADD COMPETENCE ADD COMPETENCE ADD COMPETENCE ADD COMPETENCE ADD COMPETENCE ADD COMPETENCE -->
-			
+
+			<!-- ADD COMPETENCE	ADD COMPETENCE ADD COMPETENCE ADD COMPETENCE ADD COMPETENCE ADD COMPETENCE ADD COMPETENCE ADD COMPETENCE -->
+
 			<h:form id="addForm">
 				<div class="ui-g" id="addCompetenceForm">
 					<p:dialog id="addcompetenceFormTitle"
@@ -80,32 +80,35 @@
 									<p:outputLabel value="#{msgs['competence.levels']}" />
 								</div>
 								<div class="ui-g-2">
-									<p:commandLink	action="#{adminCompetenceView.newLevel}"
-													styleClass="ui-priority-primary" process="@this"
-													update=":addForm:addCompetenceDetail">
-										<i class="fas fa-plus"/>
+									<p:commandLink action="#{adminCompetenceView.newLevel}"
+										styleClass="ui-priority-primary" process="@this"
+										update=":addForm:addCompetenceDetailLevels">
+										<i class="fas fa-plus" />
 									</p:commandLink>
 								</div>
 							</div>
-							<div class="ui-g">
-								<ui:repeat var="level" value="#{adminCompetenceView.levels}">
-									<div class="ui-g-1">
-										<!-- DELETE THIS LEVEL -->
-										<p:commandLink id="delete">
-											<i class="fas fa-trash-alt" />
-											<f:setPropertyActionListener value="#{level}"
-												target="#{adminCompetenceView.removeLevel}" />
-										</p:commandLink>
-
-									</div>
-									<div class="ui-g-1">
-										<p:outputLabel value="#{level.orderLevel}." />
-									</div>
-									<div class="ui-g-10">
-										<p:inputText value="#{level.description}" />
-									</div>
-								</ui:repeat>
-							</div>
+							<p:outputPanel id="addCompetenceDetailLevels">
+								<div class="ui-g">
+									<ui:repeat var="level" value="#{adminCompetenceView.levels}">
+										<div class="ui-g-1">
+											<!-- DELETE THIS LEVEL -->
+											<p:commandLink id="delete"
+												action="#{adminCompetenceView.removeLevel}" process="@this"
+												update=":addForm:addCompetenceDetailLevels">
+												<i class="fas fa-trash-alt" />
+												<f:setPropertyActionListener value="#{level}"
+													target="#{adminCompetenceView.level}" />
+											</p:commandLink>
+										</div>
+										<div class="ui-g-1">
+											<p:outputLabel value="#{level.orderLevel}." />
+										</div>
+										<div class="ui-g-10">
+											<p:inputText value="#{level.description}" />
+										</div>
+									</ui:repeat>
+								</div>
+							</p:outputPanel>
 							<div class="ui-g-2">
 								<p:commandButton value="#{msgs['competence.add']}"
 									update=":form" action="#{adminCompetenceView.addCompetence}"
@@ -115,9 +118,9 @@
 					</p:dialog>
 				</div>
 			</h:form>
-						
-<!-- EDIT COMPETENCE EDIT COMPETENCE EDIT COMPETENCE EDIT COMPETENCE EDIT COMPETENCE EDIT COMPETENCE -->
-	
+
+			<!-- EDIT COMPETENCE EDIT COMPETENCE EDIT COMPETENCE EDIT COMPETENCE EDIT COMPETENCE EDIT COMPETENCE -->
+
 			<h:form id="editForm">
 				<div class="ui-g" id="editCompetenceForm">
 					<p:dialog id="editCompetenceFormTitle"
@@ -147,10 +150,10 @@
 									<p:outputLabel value="#{msgs['competence.levels']}" />
 								</div>
 								<div class="ui-g-2">
-									<p:commandLink	action="#{adminCompetenceView.newLevel}"
-													styleClass="ui-priority-primary" process="@this"
-													update=":editForm:editCompetenceDetail">
-										<i class="fas fa-plus"/>
+									<p:commandLink action="#{adminCompetenceView.newLevel}"
+										styleClass="ui-priority-primary" process="@this"
+										update=":editForm:editCompetenceDetail">
+										<i class="fas fa-plus" />
 									</p:commandLink>
 								</div>
 							</div>
@@ -158,10 +161,10 @@
 								<ui:repeat var="level" value="#{adminCompetenceView.levels}">
 									<div class="ui-g-1">
 										<!-- DELETE THIS LEVEL -->
-										<p:commandLink >
+										<p:commandLink>
 											<f:setPropertyActionListener value="#{level}"
-													target="#{adminCompetenceView.removeLevel}" />
-											<i class="fas fa-trash-alt"/>
+												target="#{adminCompetenceView.removeLevel}" />
+											<i class="fas fa-trash-alt" />
 										</p:commandLink>
 									</div>
 									<div class="ui-g-1">
@@ -181,9 +184,9 @@
 					</p:dialog>
 				</div>
 			</h:form>
-						
-<!-- DELETE COMPETENCE DELETE COMPETENCE DELETE COMPETENCE DELETE COMPETENCE DELETE COMPETENCE DELETE COMPETENCE -->
-	
+
+			<!-- DELETE COMPETENCE DELETE COMPETENCE DELETE COMPETENCE DELETE COMPETENCE DELETE COMPETENCE DELETE COMPETENCE -->
+
 			<h:form id="deleteForm">
 				<div class="ui-g" id="deleteCompetenceForm">
 					<p:dialog id="deleteCompetenceFormTitle"
@@ -213,10 +216,10 @@
 					</p:dialog>
 				</div>
 			</h:form>
-			
 
-			
-			
+
+
+
 		</div>
 		<div class="ui-g-1"></div>
 	</div>

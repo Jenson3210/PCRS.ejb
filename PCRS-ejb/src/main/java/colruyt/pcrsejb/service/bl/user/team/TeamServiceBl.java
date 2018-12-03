@@ -86,6 +86,12 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
     	save(team);
     	return enrolment;
 	} 
+
+	@Override
+	public List<User> getUsersOfTeam(Team team) {
+	
+		return this.dlService.getUsersOfTeam(team);
+	}
 	
 	
 }
