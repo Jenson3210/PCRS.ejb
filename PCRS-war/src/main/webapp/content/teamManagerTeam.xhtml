@@ -63,6 +63,40 @@
             </h:form>
         </div>
     </div>
+    
+    
+    
+       <p:dialog header="Selected Values" modal="true" showEffect="fade" widgetVar="dlg" resizable="false">
+        <p:panelGrid columns="2" id="display" columnClasses="label,output">
+        
+        <p:selectOneListbox id="advanced" value="#{selectOneView.theme}" var="t" filter="true" filterMatchMode="contains">
+            <f:selectItems value="#{selectOneView.themes}" var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme}" />
+ 
+            <p:column>
+                <h:graphicImage name="showcase/images/themeswitcher/themeswitcher-#{t.name}.png" alt="#{t.name}" styleClass="ui-theme" />
+            </p:column>
+             
+            <p:column>
+                <h:outputText value="#{t.displayName}" />
+            </p:column>
+        </p:selectOneListbox>
+        
+          <p:selectOneListbox id="advanced" value="#{selectOneView.theme}" var="t" filter="true" filterMatchMode="contains">
+            <f:selectItems value="#{selectOneView.themes}" var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme}" />
+ 
+            <p:column>
+                <h:graphicImage name="showcase/images/themeswitcher/themeswitcher-#{t.name}.png" alt="#{t.name}" styleClass="ui-theme" />
+            </p:column>
+             
+            <p:column>
+                <h:outputText value="#{t.displayName}" />
+            </p:column>
+            
+        </p:selectOneListbox>
+        
+        </p:panelGrid>
+    </p:dialog>
+
 
 </ui:composition>
 
