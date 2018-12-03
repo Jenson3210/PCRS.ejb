@@ -6,7 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-import colruyt.pcrsejb.entity.competence.Competence;
+import colruyt.pcrsejb.entity.competence.CompetenceImpl;
 
 @Entity
 @DiscriminatorValue(value="CONSENSUS") 
@@ -24,12 +24,12 @@ public class ConsensusRating extends Rating implements Serializable{
     public ConsensusRating(){
     	super();
     }
-	public ConsensusRating(Integer level, boolean energy, Competence competence,
+	public ConsensusRating(Integer level, Boolean energy, CompetenceImpl competence,
 			String comment) {
 		super(level, energy, competence);
 		this.comment = comment;
 	}
-	public ConsensusRating(Integer id, Integer level, Boolean energy, Competence competence, String comment) {
+	public ConsensusRating(Integer id, Integer level, Boolean energy, CompetenceImpl competence, String comment) {
 		super(id, level, energy, competence);
 		this.comment = comment;
 	}

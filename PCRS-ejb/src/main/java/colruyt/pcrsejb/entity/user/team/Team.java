@@ -41,7 +41,7 @@ public class Team extends AbstractEntity implements Serializable, Comparable<Tea
 	@Column(name = "ID")
 	private Integer id;
 	private String name;
-	@OneToMany(cascade= {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.PERSIST})
+	@OneToMany
 	@JoinColumn(name = "TEAM_ID")
 	private Set<Enrolment> enrolments = new HashSet<>();
 	/*
@@ -74,7 +74,7 @@ public class Team extends AbstractEntity implements Serializable, Comparable<Tea
 		return name;
 	}
 	public void setName(String name) {
-		this.name = name;
+		this.name = name; 
 	}
 	public Set<Enrolment> getEnrolments() {
 		return enrolments;
@@ -85,7 +85,7 @@ public class Team extends AbstractEntity implements Serializable, Comparable<Tea
 	@Override
 	public int compareTo(Team team) {
 		if(this.id == team.id) {
-			return 0;
+			return 0; 
 		}else {
 			return -1;
 		}

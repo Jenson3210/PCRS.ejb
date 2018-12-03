@@ -8,4 +8,5 @@ import colruyt.pcrsejb.service.dl.IDbService;
 
 @Local
 public interface IUserPrivilegeServiceDl extends IDbService<UserPrivilege> {
+
 }

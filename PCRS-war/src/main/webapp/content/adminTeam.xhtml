@@ -11,29 +11,29 @@
         <div class="ui-g-1"/>
         <div class="ui-g-10">
             <h:form id="form">
-                <p:dataTable var="team" value="#{adminTeamView.teamMap}"
-                             styleClass="teamOverviewTable"
+                <p:dataTable var="team" value="#{adminTeamView.teamEnrolments}"
+                             styleClass="teamOverviewTable" sortBy="#{team.team}"
                              expandableRowGroups="true" expandedRow="false"
                              id="teamDetail">
                     <f:facet name="header"><h:outputText value="#{msgs['team.header']}"/></f:facet>
                     <p:headerRow>
                         <p:column styleClass="ui-g-6">
-                            <h:outputText value="#{team.key.name}"/>
+                            <h:outputText value="#{team.team.name}"/>
                         </p:column>
                         <p:column styleClass="ui-g-4" style="float: right">
-                            <h:outputText value="#{team.value.size()}"/>
+                            <h:outputText value="#{team.team.enrolments.size()}"/>
                         </p:column>
              			<p:column style="width:65px; text-align: center">
 							<p:commandLink id="addEnrolment" oncomplete="PF('addEnrolmentDialog').show()"
 										action="#{adminTeamView.newEnrolment}">
 								<i class="fas fa-user-plus"/>
-								<f:setPropertyActionListener value="#{team.key}"
+								<f:setPropertyActionListener value="#{team.team}"
 										target="#{adminTeamView.manipulatedTeamBo}" /> 
 	     					</p:commandLink>
 						</p:column>
                     </p:headerRow>
                     <p:column>
-                        <p:dataTable var="enrolment" value="#{team.value}" widgetVar="enrolment">
+                        <p:dataTable var="enrolment" value="#{team.enrolmentMap}" widgetVar="enrolment">
                             <p:column style="width: 16px"/>
                             <p:column styleClass="ui-g-6">
                                 <h:outputText value="#{enrolment.value.firstName}  #{enrolment.value.lastName}"/>
@@ -44,7 +44,7 @@
 							<p:column styleClass="ui-g-2">
 								<p:commandLink id="delete" oncomplete="PF('deleteEnrolmentDialog').show()">
 									<i class="fas fa-trash-alt"></i>
-		     						<f:setPropertyActionListener value="#{enrolment.key}"
+		     						<f:setPropertyActionListener value="#{enrolment}"
 										target="#{adminTeamView.manipulatedEnrolmentBo}" /> 
 		     					</p:commandLink>
 							</p:column>
@@ -144,7 +144,7 @@
 							<div class="ui-g-8">
 								<p:commandButton value="#{msgs['enrolment.add']}" update=":form"
 									action="#{adminTeamView.addEnrolment}"
-									oncomplete="PF('addEnrolmentDialog').hide();"/>
+									oncomplete="PF('addEnrolmentDialog').hide();" />
 							</div>
 						</p:outputPanel>
 					</p:dialog>
