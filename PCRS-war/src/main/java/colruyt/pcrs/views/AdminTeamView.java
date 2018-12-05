@@ -41,7 +41,7 @@ public class AdminTeamView implements Serializable {
 	private List<TeamEnrolmentBo> teamEnrolments = new ArrayList<>();;
 
 	@PostConstruct
-	private void fillList() {
+	private void fillList() {  
   		teams = teamFacade.getAll();
 		for(TeamBo t : teams) {
 			TeamEnrolmentBo teamEnrolment = new TeamEnrolmentBo(t);

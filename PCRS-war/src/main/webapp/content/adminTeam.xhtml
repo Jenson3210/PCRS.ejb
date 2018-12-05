@@ -39,7 +39,7 @@
                                 <h:outputText value="#{enrolment.value.firstName}  #{enrolment.value.lastName}"/>
                             </p:column>
                             <p:column styleClass="ui-g-4">
-                                <h:outputText value="#{enrolment.key.userPrivilege.privilegeType.fullName}"/>
+                                <h:outputText value="#{enrolment.key.getUserPrivilege().privilegeType.fullName}"/>
                             </p:column>
 							<p:column styleClass="ui-g-2">
 								<p:commandLink id="delete" oncomplete="PF('deleteEnrolmentDialog').show()">

@@ -66,12 +66,14 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
 
 	@Override
 	public List<Team> getTeamsOfManager(User manager) {
-		return this.dlService.getTeamsOfManager(manager);
+		List<Team> team = this.dlService.getTeamsOfManager(manager);
+		return team;
+		
 	}
 
 	@Override
 	public void removeUserFromTeam(Team convertToEntity, User convertToEntity2) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub 
 		
 	}
 
