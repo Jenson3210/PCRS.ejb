@@ -107,8 +107,6 @@ public class AdminTeamView implements Serializable {
 	}
 
 	public void deleteEnrolment() {
-		EnrolmentBo e = null;
-		
 		for (TeamBo team : teams) {
 			for (EnrolmentBo enrolment : team.getEnrolments()) {
 				if (enrolment.getId() == manipulatedEnrolmentBo.getId()) {
