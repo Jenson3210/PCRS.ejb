@@ -14,8 +14,8 @@ import colruyt.pcrsejb.util.exceptions.MemberAlreadyHasATeamException;
 @Local
 public interface IUserPrivilegeServiceBl extends IServiceBl<UserPrivilege> {
 
-	User grantUserPrivilegeToUser(User convertToEntity, UserPrivilege convertToEntity2);
-	void revokeUserPrivilegeToUser(User convertToEntity, UserPrivilege convertToEntity2);
+	User grantUserPrivilegeToUser(User user, UserPrivilege userPrivilege);
+	void revokeUserPrivilegeToUser(User user, UserPrivilege userPrivilege);
 	UserPrivilege setUserPrivilege(User user, String userPrivilege) throws MemberAlreadyHasATeamException;
 	void revokeUserPrivilegeTypeToUser(User user, PrivilegeType privilegeType, SurveyDefinition surveyDefinition);
 }
