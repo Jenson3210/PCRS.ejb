@@ -67,3 +67,9 @@ body .ui-datatable .ui-datatable-data > tr:last-child {
 .modalSM {
 	width: 25rem !important;
 }
+.modalMM{
+	width: 40rem !important;
+}
+.modalBM {
+	width: 50rem !important;
+}
