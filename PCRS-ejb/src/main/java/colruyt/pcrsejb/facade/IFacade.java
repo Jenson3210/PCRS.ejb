@@ -2,6 +2,9 @@ package colruyt.pcrsejb.facade;
 
 import java.util.List;
 
+import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionBo;
+import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionTitleBo;
+
 public interface IFacade<T> {
 	T save(T entityBo);
 	T get(T entityBo);

@@ -17,18 +17,22 @@ public class SurveySectionDefinitionImplConverter implements GenericConverter<Su
 		if (bo != null) {
 			entity = new SurveySectionDefinitionImpl();
 			ConverterUtils.setIfNotNull(bo::getId, entity::setId);
-			switch (bo.getSurveySectionRequirementLevelBo()) {
-			case OPTIONAL:
-				entity.setSurveySectionRequirementLevel(SurveySectionRequirementLevel.OPTIONAL);
-				break;
-			case EXPECTED:
-				entity.setSurveySectionRequirementLevel(SurveySectionRequirementLevel.EXPECTED);
-				break;
-			case OBLIGATED:
-				entity.setSurveySectionRequirementLevel(SurveySectionRequirementLevel.OBLIGATED);
-				break;
+			if (bo.getSurveySectionRequirementLevelBo() != null) {
+				switch (bo.getSurveySectionRequirementLevelBo()) {
+				case OPTIONAL:
+					entity.setSurveySectionRequirementLevel(SurveySectionRequirementLevel.OPTIONAL);
+					break;
+				case EXPECTED:
+					entity.setSurveySectionRequirementLevel(SurveySectionRequirementLevel.EXPECTED);
+					break;
+				case OBLIGATED:
+					entity.setSurveySectionRequirementLevel(SurveySectionRequirementLevel.OBLIGATED);
+					break;
+				}
 			}
-			entity.setSurveySectionDefinition(surveySectionDefinitionConverter.convertToEntity(bo.getSurveySectionDefinitionBo()));
+			if (bo.getSurveySectionDefinitionBo() != null) {
+				entity.setSurveySectionDefinition(surveySectionDefinitionConverter.convertToEntity(bo.getSurveySectionDefinitionBo()));
+			}
 		}
 		return entity;
 	}
@@ -39,18 +43,22 @@ public class SurveySectionDefinitionImplConverter implements GenericConverter<Su
 		if (entity != null) {
 			bo = new SurveySectionDefinitionImplBo();
 			ConverterUtils.setIfNotNull(entity::getId, bo::setId);
-			switch (entity.getSurveySectionRequirementLevel()) {
-			case OPTIONAL:
-				bo.setSurveySectionRequirementLevelBo(SurveySectionRequirementLevelBo.OPTIONAL);
-				break;
-			case EXPECTED:
-				bo.setSurveySectionRequirementLevelBo(SurveySectionRequirementLevelBo.EXPECTED);
-				break;
-			case OBLIGATED:
-				bo.setSurveySectionRequirementLevelBo(SurveySectionRequirementLevelBo.OBLIGATED);
-				break;
+			if (null != entity.getSurveySectionRequirementLevel()) {
+				switch (entity.getSurveySectionRequirementLevel()) {
+				case OPTIONAL:
+					bo.setSurveySectionRequirementLevelBo(SurveySectionRequirementLevelBo.OPTIONAL);
+					break;
+				case EXPECTED:
+					bo.setSurveySectionRequirementLevelBo(SurveySectionRequirementLevelBo.EXPECTED);
+					break;
+				case OBLIGATED:
+					bo.setSurveySectionRequirementLevelBo(SurveySectionRequirementLevelBo.OBLIGATED);
+					break;
+				}
 			}
-			bo.setSurveySectionDefinitionBo(surveySectionDefinitionConverter.convertToBo(entity.getSurveySectionDefinition()));
+			if (null != entity.getSurveySectionDefinition()) {
+				bo.setSurveySectionDefinitionBo(surveySectionDefinitionConverter.convertToBo(entity.getSurveySectionDefinition()));
+			}
 		}
 		return bo;
 	}

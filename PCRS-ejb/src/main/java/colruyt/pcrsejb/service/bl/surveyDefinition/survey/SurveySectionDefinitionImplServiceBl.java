@@ -30,20 +30,17 @@ public class SurveySectionDefinitionImplServiceBl implements ISurveySectionDefin
 
 	@Override
 	public SurveySectionDefinitionImpl get(SurveySectionDefinitionImpl element) {
-		// TODO Auto-generated method stub
-		return null;
+		return surveySectionDefinitionImplServiceDl.get(element);
 	}
 
 	@Override
 	public List<SurveySectionDefinitionImpl> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return surveySectionDefinitionImplServiceDl.getAll();
 	}
 
 	@Override
 	public void delete(SurveySectionDefinitionImpl element) {
-		// TODO Auto-generated method stub
-		
+		surveySectionDefinitionImplServiceDl.delete(element);
 	}
 	
 	@Override
