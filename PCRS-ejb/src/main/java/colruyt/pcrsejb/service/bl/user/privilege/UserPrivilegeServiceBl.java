@@ -64,19 +64,10 @@ public class UserPrivilegeServiceBl implements Serializable, IUserPrivilegeServi
 
 	@Override
 	public void revokeUserPrivilegeToUser(User user, UserPrivilege userPrivilege) {
-		UserPrivilege u = null;
 		for(UserPrivilege up : user.getPrivileges()) {
-			if(up.equals(userPrivilege)) {
-				if (userPrivilege.getPrivilegeType().equals(PrivilegeType.TEAMMEMBER)) {
-					up.setActive(false);
-				}
-				else {
-					u = up;
-				}
+			if(up.getId().equals(userPrivilege.getId())) {
+				up.setActive(false);
 			}
-		}
-		if (u != null) {
-			user.getPrivileges().remove(u);
 		}
 		userServiceBl.save(user);
 	}
@@ -85,6 +76,7 @@ public class UserPrivilegeServiceBl implements Serializable, IUserPrivilegeServi
 	public UserPrivilege setUserPrivilege(User user, String userPrivilege) throws MemberAlreadyHasATeamException {
 		UserPrivilege privilege = null;
 		SurveyDefinition surveyDefinition = null;
+		user = userServiceBl.get(user);
 		
 		if(PrivilegeType.TEAMMEMBER.getShortName().equals(userPrivilege)) {
     		List<TeamMemberUserPrivilege> memberPrivs = new ArrayList<>();
@@ -93,8 +85,11 @@ public class UserPrivilegeServiceBl implements Serializable, IUserPrivilegeServi
         				if (p.isActive()) {
         					//TODO FACESMESSAGE TOEVOEGEN
         					throw new MemberAlreadyHasATeamException();
+        				}else {
+        					privilege = p;
         				}
-        				memberPrivs.add((TeamMemberUserPrivilege) p);
+        				//TODO
+        				//memberPrivs.add((TeamMemberUserPrivilege) p);
         			}
         		}
     			for (TeamMemberUserPrivilege p : memberPrivs) {

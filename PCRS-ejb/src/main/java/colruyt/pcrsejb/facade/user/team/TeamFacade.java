@@ -67,8 +67,8 @@ public class TeamFacade implements Serializable, ITeamFacade {
 	}
 
 	@Override
-	public void deleteUserFromTeam(TeamBo manipulatedTeamBo, UserBo user) {
-		teamBl.removeUserFromTeam(teamConv.convertToEntity(manipulatedTeamBo), userConv.convertToEntity(user));
+	public void deleteUserFromTeam(TeamBo manipulatedTeamBo, EnrolmentBo enrolment, UserBo user) {
+		teamBl.removeUserFromTeam(teamConv.convertToEntity(manipulatedTeamBo),enrolmentConv.convertToEntity(enrolment), userConv.convertToEntity(user));
 	}
 
 	@Override
@@ -78,7 +78,6 @@ public class TeamFacade implements Serializable, ITeamFacade {
 
 	@Override
 	public List<UserBo> getUsersOfTeam(TeamBo team) {
-		
 		return this.userConv.convertToBos(this.teamBl.getUsersOfTeam(this.teamConv.convertToEntity(team)));
 	}
 	

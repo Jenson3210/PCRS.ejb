@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
@@ -13,6 +15,7 @@ import javax.inject.Named;
 import org.primefaces.event.TabChangeEvent;
 
 import colruyt.pcrs.utillibs.WebUser;
+import colruyt.pcrsejb.bo.competence.CompetenceBo;
 import colruyt.pcrsejb.bo.competence.CompetenceImplBo;
 import colruyt.pcrsejb.bo.surveyDefinition.strategy.SurveySectionStrategyBo;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveyDefinitionBo;
@@ -25,6 +28,7 @@ import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
 import colruyt.pcrsejb.bo.user.privilege.SurveyUserPrivilegeBo;
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.entity.user.privilege.PrivilegeType;
+import colruyt.pcrsejb.facade.competence.ICompetenceFacade;
 import colruyt.pcrsejb.facade.competence.ICompetenceImplFacade;
 import colruyt.pcrsejb.facade.surveyDefinition.strategy.ISurveySectionStrategyFacade;
 import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveyDefinitionFacade;
@@ -39,26 +43,22 @@ public class RespSurveyDefinitionView implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/*
-	 * injection of the needed facade beans
+	 * injection of the needed facade beans and user
 	 */
 	@EJB
 	private ISurveyDefinitionFacade surveyDefinitionFacade;
-	
 	@EJB
 	private ISurveySectionTitleFacade surveySectionTitleFacade;
-	
 	@EJB
 	private ISurveySectionStrategyFacade surveySectionStrategyFacade;
-	
 	@EJB
 	private ISurveySectionDefinition surveySectionDefinitionFacade;
-	
 	@EJB
 	private ISurveySectionDefinitionImplFacade surveySectionDefinitionImplFacade;
-	
 	@EJB
-	private ICompetenceImplFacade competenceImplFacade;
-	
+	private ICompetenceFacade competenceFacade;
+	@Inject
+	private WebUser webuser;
 	
 	
 	/*
@@ -81,22 +81,28 @@ public class RespSurveyDefinitionView implements Serializable {
 	private List<SurveySectionRequirementLevelBo> surveySectionRequirementLevels;
 	
 	// list of all the existing competences
-	private List<CompetenceImplBo> existingCompetences;
+	private List<CompetenceBo> existingCompetences;
 	
 	private CompetenceImplBo addedCompetence;
 	
-	// the added survey section definition
-	private SurveySectionDefinitionBo addedSurveySectionDefinition;
 	
-	// active tab 
+	
+	// current active tab of the user
 	private SurveyDefinitionBo activeTab;
 	
-	// selected requirement level
-	private SurveySectionRequirementLevelBo requirementLevel;
 	
-	@Inject
-	private WebUser webuser;
+	
+	
+	// integer keeping track of the radio button selected on the dialog
+	// when managing sections
+	private int newExistingOrDeleteSection;
 		
+	// selected requirement level when adding a section
+	private SurveySectionRequirementLevelBo requirementLevel;
+		
+	// selected or created survey section definition when adding a section
+	private SurveySectionDefinitionBo addedSurveySectionDefinition;
+	
 	
 	
 	public RespSurveyDefinitionView() {
@@ -119,9 +125,14 @@ public class RespSurveyDefinitionView implements Serializable {
 		this.surveySectionStrategyList = surveySectionStrategyFacade.getAll();
 		this.existingSurveySectionDefinitionList = surveySectionDefinitionFacade.getAll();
 		this.surveySectionRequirementLevels =  Arrays.asList(SurveySectionRequirementLevelBo.values());
-		this.existingCompetences = competenceImplFacade.getAll();
+		this.existingCompetences = competenceFacade.getAll();
+		System.out.println(existingCompetences.size());
 		this.newSurveyDefinition();
+		this.activeTab = this.assignedSurveyDefinitionList.get(0);
 	}
+	
+	
+	
 	
 	
 	public void newSurveyDefinition() {
@@ -132,13 +143,26 @@ public class RespSurveyDefinitionView implements Serializable {
 		addedCompetence = new CompetenceImplBo();
 	}
 	
+	public void manageCompetences() {
+	
+		
+	}
+	
+	public List<CompetenceBo> completeCompetence(String query) {
+		List<CompetenceBo> filteredResults = new ArrayList<>();
+		query = query.toLowerCase();
+		for (CompetenceBo bo : existingCompetences) {
+			if (bo.getName().toLowerCase().contains(query) || 
+					bo.getCompetenceDescription().toLowerCase().contains(query)) {
+				filteredResults.add(bo);
+			}
+		}
+		return filteredResults;
+	}
+	
 	public void addNewSurveyDefinition() {
 		// add the created survey section definition
-		//this.addedSurveySectionDefinition = this.surveySectionDefinitionFacade.save(this.addedSurveySectionDefinition);
-		SurveySectionDefinitionImplBo bo = new SurveySectionDefinitionImplBo(this.requirementLevel, this.addedSurveySectionDefinition);
-		this.assignedSurveyDefinitionList.get(getActiveIndex()).addSurveySection(bo);
-		SurveyDefinitionBo bb = this.surveyDefinitionFacade.save(this.assignedSurveyDefinitionList.get(getActiveIndex()));
-		this.assignedSurveyDefinitionList.set(getActiveIndex(), bb);
+		
 	}
 	
 	public void addExistingSurveyDefinition() {
@@ -155,6 +179,55 @@ public class RespSurveyDefinitionView implements Serializable {
 		
 	}
 	
+	
+	
+	public void sectionChangeListener() {
+		switch(newExistingOrDeleteSection) {
+		case 0:
+			addNewSection();
+			break;
+		case 1:
+			addExistingSection();
+			break;
+		case 2:
+			deleteSection();
+			break;
+		default:
+		}
+	}
+	
+
+	private void addExistingSection() {
+		System.out.println("ADD EXISTING");
+		System.out.println(addedSurveySectionDefinition.getSurveySectionTitle());
+		System.out.println(requirementLevel.name());
+		System.out.println("*****");
+	}
+	
+	
+	private void addNewSection() {
+		System.out.println("ADD NEW");
+		System.out.println(addedSurveySectionDefinition.getSurveySectionTitle().getTitle());
+		System.out.println(addedSurveySectionDefinition.getSurveySectionStrategy().getName());
+		System.out.println(requirementLevel.name());
+		
+		SurveySectionDefinitionImplBo bo = new SurveySectionDefinitionImplBo(requirementLevel, addedSurveySectionDefinition);
+		this.assignedSurveyDefinitionList.get(getActiveIndex()).addSurveySection(bo);
+		SurveyDefinitionBo bb = this.surveyDefinitionFacade.save(this.assignedSurveyDefinitionList.get(getActiveIndex()));
+		this.assignedSurveyDefinitionList.set(getActiveIndex(), bb);
+		
+	}
+	
+	private void deleteSection() {
+		System.out.println("DELETE");
+		System.out.println(addedSurveySectionDefinition);
+		
+	}
+
+	public void manageSections() {
+		
+	}
+	
 	public int getActiveIndex() {
 		int index = -1;
 		for (int i = 0; i < assignedSurveyDefinitionList.size(); i++) {
@@ -165,7 +238,6 @@ public class RespSurveyDefinitionView implements Serializable {
 		}
 		return index;
 	}
-	
 	
 	/*
 	 *  Getters and Setters
@@ -239,5 +311,17 @@ public class RespSurveyDefinitionView implements Serializable {
 	public void setActiveTab(SurveyDefinitionBo activeTab) {
 		this.activeTab = activeTab;
 	}
+
+	public int getNewExistingOrDeleteSection() {
+		return newExistingOrDeleteSection;
+	}
+
+	public void setNewExistingOrDeleteSection(int newExistingOrDeleteSection) {
+		this.newExistingOrDeleteSection = newExistingOrDeleteSection;
+	}
+
+	
+	
+	
 	
 }
