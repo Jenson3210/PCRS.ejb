@@ -92,17 +92,17 @@ public class AdminSurveySectionDefinitionView implements Serializable {
 
 	public void editSurveySectionDefinition() {
 		SurveySectionDefinitionBo d = null;
-		
+
 		for (SurveySectionDefinitionBo definition : surveySectionDefinitions) {
 			if (definition.getId() == addedSurveySectionDefinition.getId()) {
 				surveySectionDefinitionFacade.save(addedSurveySectionDefinition);
-				//definition.setSurveySectionTitle();;
 				d = definition;
 			}
 		}
 		surveySectionDefinitionFacade.save(d);	
 	}
 	
+
 	//TODO:
 	public void deleteSurveySectionDefinition() {
 		SurveySectionDefinitionBo d = null;

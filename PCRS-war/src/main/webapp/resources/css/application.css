@@ -73,3 +73,10 @@ body .ui-datatable .ui-datatable-data > tr:last-child {
 .modalBM {
 	width: 50rem !important;
 }
+
+.ui-selectonemenu{
+     width: 100% !important;
+}
+.ui-selectonemenu-label{
+     width: 100% !important;
+}  
