@@ -72,43 +72,30 @@
 									<!-- <h:link outcome="/sessionContext">#{webutillibmsgs.changeSettings}</h:link> -->
 									<h:link outcome="/profile.xhtml">#{msgs['changeSettings']}</h:link>
 								</div>
-
-
 								<div>
 									<div class="c-header-language" style="padding-left: 1.87rem;">
 										<ui:repeat value="#{appContext.supportedLanguages}" var="lang">
 											<a href="javascript:setLanguage('#{lang}');"
 												class="#{appContext.currentLanguage == lang ? 'actvlang' : ''}"
 												style="padding: 0.3rem 0.3rem 0.3rem 0.5rem; border-style: solid; margin: -0.1rem; border-width: 0.01rem">#{lang}</a>
-
 										</ui:repeat>
 									</div>
-
-
 								</div>
-
 								<div>
 									<!-- <h:outputLink onclick="PF('popup').show();return false;">#{webutillibmsgs.logout}</h:outputLink>-->
 									<h:outputLink onclick="PF('popup').show();return false;">#{msgs['logout']}</h:outputLink>
 								</div>
-
-
-
 							</div>
 						</div>
 					</h:panelGroup>
 				</div>
 			</div>
-
 			<!-- Horizontal menu -->
 			<div id="c-header-menubar">
 				<ui:include src="appMenu.xhtml" />
-
 			</div>
-
 			<p:messages id="messages" showDetail="true" globalOnly="false"
 				showSummary="false" style="margin: 10px;" />
-
 		</div>
 
 
