@@ -16,7 +16,6 @@ public class SurveySectionTitleConverter implements Converter {
 		String[] parts = value.split(";");
 		sst.setId(Integer.valueOf(parts[0]));
 		sst.setTitle(parts[1]);
-		System.out.println(sst);
 		return sst;
 	}
 
@@ -24,7 +23,6 @@ public class SurveySectionTitleConverter implements Converter {
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
 		SurveySectionTitleBo sst = (SurveySectionTitleBo) value;
 		String s = sst.getId() + ";" + sst.getTitle() + ";";
-		System.out.println(sst);
 		return s;
 	}
 
