@@ -49,11 +49,6 @@ public class DbEnrolmentServiceDl implements IEnrolmentServiceDl{
 		Enrolment enrolment = em.find(Enrolment.class, element.getId());
 		if (enrolment != null) {
 			em.remove(enrolment);
-			element.getUserPrivilege().setActive(false);
-			em.createNamedQuery("ENROLMENT.DEACTIVATE", Enrolment.class)
-			.setParameter("active", false)
-			.setParameter("id", element.getUserPrivilege().getId())
-			.executeUpdate();
 		}
 	}
 

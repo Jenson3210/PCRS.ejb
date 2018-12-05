@@ -3,6 +3,7 @@ package colruyt.pcrs.views;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -41,7 +42,7 @@ public class AdminTeamView implements Serializable {
 	private List<TeamEnrolmentBo> teamEnrolments = new ArrayList<>();;
 
 	@PostConstruct
-	private void fillList() {
+	private void fillList() {  
   		teams = teamFacade.getAll();
 		for(TeamBo t : teams) {
 			TeamEnrolmentBo teamEnrolment = new TeamEnrolmentBo(t);
@@ -106,16 +107,28 @@ public class AdminTeamView implements Serializable {
 	}
 
 	public void deleteEnrolment() {
-		EnrolmentBo e = null;
 		for (TeamBo team : teams) {
 			for (EnrolmentBo enrolment : team.getEnrolments()) {
 				if (enrolment.getId() == manipulatedEnrolmentBo.getId()) {
-					e = enrolment;
+					teamFacade.deleteUserFromTeam(team, enrolment, user);
+					removeTeamEnrolment(team, enrolment);
+					
 				}
 			}
-			if(e != null) {
-				enrolmentFacade.delete(e);
-				team.getEnrolments().remove(e);
+		}
+	}
+
+	private void removeTeamEnrolment(TeamBo team, EnrolmentBo enrolment) {
+		for(TeamEnrolmentBo teb : teamEnrolments) {
+			if(teb.getTeam().equals(team)) {
+				Iterator<EnrolmentBo> iterator = teb.getEnrolmentMap().keySet().iterator();
+				
+				while (iterator.hasNext()) {
+					EnrolmentBo e = iterator.next();
+					if(enrolment.equals(e)) {
+						iterator.remove();
+					}
+				}
 			}
 		}
 	}
