@@ -64,3 +64,8 @@ body .ui-datatable .ui-datatable-data > tr:last-child {
 	margin-right: 10px;
 	background-color: fuchsia;
 }
+
+#editForm:editCompetenceFormTitle
+#addForm:addcompetenceFormTitle{
+	width: 30% !important;
+}
