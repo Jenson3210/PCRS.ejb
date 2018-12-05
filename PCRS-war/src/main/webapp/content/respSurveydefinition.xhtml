@@ -11,49 +11,66 @@
 	<div class="ui-g-10">
 
 		<h:form id="form">
-			<p:tabView value="#{respSurveyDefinitionView.assignedSurveyDefinitionList}" var="def">
+			<p:tabView
+				value="#{respSurveyDefinitionView.assignedSurveyDefinitionList}"
+				var="def">
 				<p:tab title="#{def.name}">
-					<p:outputLabel rendered="#{def.surveySections.size() == 0}">Empty message</p:outputLabel>
-					<p:repeat var="sectionImpl" value="#{def.surveySections}" >
+					<p:outputLabel rendered="#{def.surveySections.size() == 0}"
+						value="#{msgs['respSurveyDefinition.noSectionsDefined']}" />
+					<p:repeat var="sectionImpl" value="#{def.surveySections}">
 						<p:dataTable
 							value="#{sectionImpl.surveySectionDefinitionBo.surveySectionCompetences}"
 							var="comp">
 							<f:facet name="header">
-								<p:outputLabel value="#{sectionImpl.surveySectionDefinitionBo.surveySectionTitle.title}"></p:outputLabel>
+								<p:outputLabel
+									value="#{sectionImpl.surveySectionDefinitionBo.surveySectionTitle.title}"></p:outputLabel>
 							</f:facet>
 							<p:column>
 								<h:outputText value="#{var.competenceDescription}" />
 							</p:column>
 						</p:dataTable>
-						<p:commandButton value="#{msgs['respSurveyDefinition.addCompetence']}" 
-										process="@this" action="#{respSurveyDefinitionView.newCompetence}"
-										update=":addCompetence:addExistingCompetence" oncomplete="PF('addExistingCompetenceDialog').show();" >
-							
-						</p:commandButton>
 					</p:repeat>
-					<div class="ui-g" style="margin-top:20px; float: right;">
+					<div class="ui-g" style="margin-top: 20px; float: right;">
 						<div class="ui-g-12">
-							<p:commandButton value="#{msgs['respSurveyDefinition.addNew']}" styleClass="btn btn-outline-primary mx-1"
+							<!-- <p:commandButton value="#{msgs['respSurveyDefinition.addNew']}" styleClass="btn btn-outline-primary mx-1"
 									process="@this" action="#{respSurveyDefinitionView.newSurveyDefinition}"
 									update=":addNewForm:addNewSurveySectionDefinition" oncomplete="PF('addNewSurveySectionDefinitionDialog').show();" >
 									<f:setPropertyActionListener value="#{def}" target="#{respSurveyDefinitionView.activeTab}"/>
-							</p:commandButton>
-							
-							<p:commandButton value="#{msgs['respSurveyDefinition.addExisting']}" styleClass="btn btn-primary mx-1"
+							</p:commandButton> -->
+
+							<!-- <p:commandButton value="#{msgs['respSurveyDefinition.addExisting']}" styleClass="btn btn-primary mx-1"
 											process="@this" action="#{respSurveyDefinitionView.newSurveyDefinition}"
 											update=":addExistingForm:addExistingSurveySectionDefinition" 
-											oncomplete="PF('addExistingSurveySectionDefinitionDialog').show();" >
+											oncomplete="PF('addExistingSurveySectionDefinitionDialog').show();" 
+											disabled="#{respSurveyDefinitionView.existingSurveySectionDefinitionList.size() == 0}">
 											<f:setPropertyActionListener value="#{def}" target="#{respSurveyDefinitionView.activeTab}"/>
+							</p:commandButton> -->
+
+							<p:commandButton
+								value="#{msgs['respSurveyDefinition.manageSections']}"
+								styleClass="btn btn-outline-primary mx-1" process="@this"
+								action="#{respSurveyDefinitionView.manageSections}"
+								update=":manageSections:manageSectionsPanel"
+								oncomplete="PF('manageSectionsDialog').show();">
+							</p:commandButton>
+
+							<p:commandButton
+								value="#{msgs['respSurveyDefinition.manageCompetences']}"
+								styleClass="btn btn-outline-primary mx-1" process="@this"
+								action="#{respSurveyDefinitionView.manageCompetences}"
+								update=":manageCompetences:manageCompetencesPanel"
+								oncomplete="PF('manageCompetencesDialog').show();">
+
 							</p:commandButton>
 						</div>
 					</div>
-					
+
 				</p:tab>
-				
+
 			</p:tabView>
 		</h:form>
 
-		<h:form id="addNewForm">
+		<!-- 		<h:form id="addNewForm">
 			<div class="ui-g" id="addSurveyDefinition">
 				<p:dialog header="#{msgs['respSurveyDefinition.addNew']}"
 					widgetVar="addNewSurveySectionDefinitionDialog" modal="true"
@@ -122,9 +139,9 @@
 					</p:outputPanel>
 				</p:dialog>
 			</div>
-		</h:form>
-		
-		<h:form id="addExistingForm">
+		</h:form> -->
+
+		<!-- <h:form id="addExistingForm">
 			<div class="ui-g" id="addSurveyDefinition">
 				<p:dialog header="#{msgs['respSurveyDefinition.addExisting']}"
 					widgetVar="addExistingSurveySectionDefinitionDialog" modal="true"
@@ -173,12 +190,12 @@
 					</p:outputPanel>
 				</p:dialog>
 			</div>
-		</h:form>
-		
-		
-		
-		
-		<h:form id="addCompetence">
+		</h:form> -->
+
+
+
+
+		<!-- 		<h:form id="addCompetence">
 			<div class="ui-g" id="addSurveyDefinition">
 				<p:dialog header="#{msgs['respSurveyDefinition.addExisting']}"
 					widgetVar="addExistingCompetenceDialog" modal="true"
@@ -193,8 +210,204 @@
 					</p:outputPanel>
 				</p:dialog>
 			</div>
+		</h:form> -->
+
+		<h:form id="manageSections">
+			<div class="ui-g" id="manageSectionsContainer">
+				<p:dialog header="#{msgs['respSurveyDefinition.manageSections']}"
+					widgetVar="manageSectionsDialog" modal="true" draggable="false"
+					style="width: 200px; height: 200px;">
+					<p:outputPanel id="manageSectionsPanel">
+						<div class="ui-g">
+							<div class="ui-g-4">
+								<p:outputLabel
+									value="#{msgs['respSurveyDefinition.newOrExisting']}" />
+							</div>
+
+							<div class="ui-g-8">
+								<p:selectOneRadio
+									value="#{respSurveyDefinitionView.newExistingOrDeleteSection}">
+									<p:ajax update="manageSectionsPanel" />
+									<f:selectItem itemLabel="Add new" itemValue="0" />
+									<f:selectItem itemLabel="Add existing" itemValue="1" />
+									<f:selectItem itemLabel="Delete" itemValue="2" />
+								</p:selectOneRadio>
+
+							</div>
+						</div>
+
+						<p:outputPanel
+							rendered="#{respSurveyDefinitionView.newExistingOrDeleteSection == 0}">
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['respSurveyDefinition.title']}"></p:outputLabel>
+								</div>
+
+								<div class="ui-g-8">
+									<p:selectOneMenu
+										value="#{respSurveyDefinitionView.addedSurveySectionDefinition.surveySectionTitle}"
+										converter="surveySectionTitleConverter">
+										<f:selectItems
+											value="#{respSurveyDefinitionView.surveySectionTitleList}"
+											var="sectionTitle" itemLabel="#{sectionTitle.title}"
+											itemValue="#{sectionTitle}" />
+									</p:selectOneMenu>
+
+								</div>
+							</div>
+
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel
+										value="#{msgs['respSurveyDefinition.sectionStrategy']}" />
+								</div>
+								<div class="ui-g-8">
+									<p:selectOneMenu
+										value="#{respSurveyDefinitionView.addedSurveySectionDefinition.surveySectionStrategy}"
+										converter="SurveySectionStrategyConverter">
+										<f:selectItems
+											value="#{respSurveyDefinitionView.surveySectionStrategyList}"
+											var="sectionStrategy" itemLabel="#{sectionStrategy.name}"
+											itemValue="#{sectionStrategy}" />
+									</p:selectOneMenu>
+
+								</div>
+							</div>
+
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel
+										value="#{msgs['respSurveyDefinition.sectionRequirementLevel']}" />
+								</div>
+								<div class="ui-g-8">
+									<p:selectOneMenu
+										value="#{respSurveyDefinitionView.requirementLevel}">
+										<f:selectItems
+											value="#{respSurveyDefinitionView.surveySectionRequirementLevels}"
+											var="level" itemLabel="#{level}" itemValue="#{level}" />
+									</p:selectOneMenu>
+								</div>
+							</div>
+						</p:outputPanel>
+
+						<p:outputPanel
+							rendered="#{respSurveyDefinitionView.newExistingOrDeleteSection == 1}">
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['respSurveyDefinition.title']}"></p:outputLabel>
+								</div>
+
+								<div class="ui-g-8">
+									<p:selectOneMenu
+										value="#{respSurveyDefinitionView.addedSurveySectionDefinition}"
+										converter="SurveySectionDefinitionBoConverter">
+										<f:selectItems
+											value="#{respSurveyDefinitionView.existingSurveySectionDefinitionList}"
+											var="section" itemLabel="#{section.surveySectionTitle.title}"
+											itemValue="#{section}" />
+									</p:selectOneMenu>
+								</div>
+							</div>
+
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel
+										value="#{msgs['respSurveyDefinition.sectionRequirementLevel']}" />
+								</div>
+								<div class="ui-g-8">
+									<p:selectOneMenu
+										value="#{respSurveyDefinitionView.requirementLevel}">
+										<f:selectItems
+											value="#{respSurveyDefinitionView.surveySectionRequirementLevels}"
+											var="level" itemLabel="#{level}" itemValue="#{level}" />
+									</p:selectOneMenu>
+
+								</div>
+							</div>
+						</p:outputPanel>
+
+						<p:outputPanel
+							rendered="#{respSurveyDefinitionView.newExistingOrDeleteSection == 2}">
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel
+										value="#{msgs['respSurveyDefinition.sectionToDelete']}" />
+								</div>
+								<div class="ui-g-8">
+									<p:selectOneMenu
+										value="#{respSurveyDefinitionView.activeTab.surveySections}">
+										<f:selectItems
+											value="#{respSurveyDefinitionView.activeTab.surveySections}"
+											var="section"
+											itemLabel="#{section.surveySectionDefinitionBo.surveySectionTitle.title}"
+											itemValue="#{section}" />
+									</p:selectOneMenu>
+								</div>
+							</div>
+						</p:outputPanel>
+
+
+
+
+						<div class="ui-g-2">
+							<p:commandButton value="#{msgs['respSurveyDefinition.add']}"
+								update=":form"
+								action="#{respSurveyDefinitionView.sectionChangeListener}"
+								oncomplete="PF('manageSectionsDialog').hide();" />
+						</div>
+					</p:outputPanel>
+				</p:dialog>
+			</div>
 		</h:form>
 
+		<h:form id="manageCompetences">
+			<div class="ui-g" id="manageCompetencesContainer">
+				<p:dialog header="#{msgs['respSurveyDefinition.manageCompetences']}"
+					widgetVar="manageCompetencesDialog" modal="true" draggable="false"
+					style="width: 200px; height: 200px;">
+					<p:outputPanel id="manageCompetencesPanel">
+
+						<div class="ui-g">
+							<div class="ui-g-4">
+								<p:outputLabel
+									value="#{msgs['respSurveyDefinition.sectionToAddCompetenceTo']}" />
+							</div>
+							<div class="ui-g-8">
+								<p:selectOneMenu
+									value="#{respSurveyDefinitionView.activeTab.surveySections}">
+									<f:selectItems
+										value="#{respSurveyDefinitionView.activeTab.surveySections}"
+										var="section"
+										itemLabel="#{section.surveySectionDefinitionBo.surveySectionTitle.title}"
+										itemValue="#{section}" />
+								</p:selectOneMenu>
+							</div>
+						</div>
+
+						<div class="ui-g">
+							<div class="ui-g-4">
+								<p:outputLabel
+									value="#{msgs['respSurveyDefinition.competenceToAdd']}" />
+							</div>
+							<div class="ui-g-8">
+								<p:autoComplete id="competence" completeMethod="#{respSurveyDefinitionView.completeCompetence}" 
+									  				var="competence" itemLabel="#{competence.name}" itemValue="#{competence}" forceSelection="true" 
+									  				emptyMessage="#{msgs['surveyDefinition.noResults']}"
+									 				required="true" converter="userBoConverter"/>
+									 				<!--  value="#{adminSurveyDefinitionView.manipulatedUserBo}" -->
+							</div>
+						</div>
+
+						<div class="ui-g-2">
+							<p:commandButton value="#{msgs['respSurveyDefinition.add']}"
+								update=":form"
+								action="#{respSurveyDefinitionView.addNewSurveyDefinition}"
+								oncomplete="PF('manageCompetencesDialog').hide();" />
+						</div>
+					</p:outputPanel>
+				</p:dialog>
+			</div>
+		</h:form>
 
 
 	</div>
