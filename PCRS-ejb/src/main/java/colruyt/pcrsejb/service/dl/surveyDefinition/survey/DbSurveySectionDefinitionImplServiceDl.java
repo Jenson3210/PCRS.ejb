@@ -1,12 +1,15 @@
 package colruyt.pcrsejb.service.dl.surveyDefinition.survey;
 
+import java.util.EmptyStackException;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
+import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinition;
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinitionImpl;
 import colruyt.pcrsejb.entity.user.User;
 
@@ -31,20 +34,29 @@ public class DbSurveySectionDefinitionImplServiceDl implements ISurveySectionDef
 
 	@Override
 	public SurveySectionDefinitionImpl get(SurveySectionDefinitionImpl element) {
-		// TODO Auto-generated method stub
-		return null;
+		SurveySectionDefinitionImpl impl = em.find(SurveySectionDefinitionImpl.class, element.getId());
+		if(element.getId() == null){
+			throw new EmptyStackException();
+		}
+		return impl;
 	}
 
 	@Override
 	public List<SurveySectionDefinitionImpl> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		TypedQuery<SurveySectionDefinitionImpl> q = em.createNamedQuery("SURVEYSECTIONDEFINITIONIMPL.GETALL", SurveySectionDefinitionImpl.class);
+		List<SurveySectionDefinitionImpl> listOfSurveySectionDefinitions = q.getResultList();
+		return listOfSurveySectionDefinitions;
 	}
 
 	@Override
 	public void delete(SurveySectionDefinitionImpl element) {
-		// TODO Auto-generated method stub
-
+		element = em.merge(element);
+		if(element != null){
+			em.remove(element);
+		}
+		else {
+			throw new EmptyStackException();
+		}
 	}
 
 }
