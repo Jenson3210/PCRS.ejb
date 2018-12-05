@@ -4,9 +4,12 @@ import colruyt.pcrsejb.entity.competence.CompetenceImpl;
 import colruyt.pcrsejb.service.dl.competence.ICompetenceImplServiceDl;
 
 import javax.ejb.EJB;
+import javax.ejb.Stateless;
+
 import java.io.Serializable;
 import java.util.List;
 
+@Stateless
 public class CompetenceImplServiceBl implements ICompetenceImplServiceBl, Serializable {
 
     private static final long serialVersionUID = 1L;
