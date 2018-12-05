@@ -63,7 +63,7 @@
 								</div>
 								<div class="ui-g-8">
 									<p:inputText id="nm"
-										value="#{adminCompetenceView.competenceBo.name}" />
+										value="#{adminCompetenceView.competenceBo.name}" required="true"/>
 								</div>
 							</div>
 							<div class="ui-g">
@@ -72,7 +72,7 @@
 								</div>
 								<div class="ui-g-8">
 									<p:inputTextarea id="ds"
-										value="#{adminCompetenceView.competenceBo.competenceDescription}" />
+										value="#{adminCompetenceView.competenceBo.competenceDescription}" required="true" />
 								</div>
 							</div>
 							<div class="ui-g">
@@ -98,13 +98,14 @@
 												<i class="fas fa-trash-alt" />
 												<f:setPropertyActionListener value="#{level}"
 													target="#{adminCompetenceView.level}" />
+												
 											</p:commandLink>
 										</div>
 										<div class="ui-g-1">
 											<p:outputLabel value="#{level.orderLevel}" />
 										</div>
 										<div class="ui-g-10">
-											<p:inputText value="#{level.description}" />
+											<p:inputText value="#{level.description}" required="true" />
 										</div>
 									</ui:repeat>
 								</div>

@@ -75,24 +75,26 @@ public class AdminCompetenceView implements Serializable{
 		levels.add(new CompetenceLevelBo("", levels.size() + 1));
 	}
 	public void removeLevel(){
-		//System.out.println("OK");
-		for (Iterator<CompetenceLevelBo> iterator = levels.iterator(); iterator.hasNext(); ) {
-			CompetenceLevelBo bo = iterator.next();
-			if (bo.getOrderLevel() == level.getOrderLevel()) {
-				iterator.remove();
-				levels.remove(bo);
-				if(level.getId() != null){
-                    competenceLevelFacade.delete(level);
-                }
+		System.out.println(levels.size());
+		if(levels.size() > 2) {
+			for (Iterator<CompetenceLevelBo> iterator = levels.iterator(); iterator.hasNext(); ) {
+				CompetenceLevelBo bo = iterator.next();
+				if (bo.getOrderLevel() == level.getOrderLevel()) {
+					iterator.remove();
+					levels.remove(bo);
+					if (level.getId() != null) {
+						competenceLevelFacade.delete(level);
+					}
+				}
+			}
+			int j = 1;
+			for (CompetenceLevelBo clevel : levels) {
+				if (j != clevel.getOrderLevel()) {
+					clevel.setOrderLevel(j);
+				}
+				j = j + 1;
 			}
 		}
-		int j = 1;
-        for (CompetenceLevelBo clevel : levels ) {
-            if (j != clevel.getOrderLevel()) {
-                clevel.setOrderLevel(j);
-            }
-            j = j + 1;
-        }
 
 	}
 	
