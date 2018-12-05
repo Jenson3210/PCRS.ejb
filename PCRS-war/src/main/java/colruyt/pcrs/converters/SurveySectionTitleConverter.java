@@ -1,10 +1,8 @@
 package colruyt.pcrs.converters;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionTitleBo;
@@ -22,7 +20,6 @@ public class SurveySectionTitleConverter implements Converter {
 		return sst;
 	}
 
-	 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
 		SurveySectionTitleBo sst = (SurveySectionTitleBo) value;
