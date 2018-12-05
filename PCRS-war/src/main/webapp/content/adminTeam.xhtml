@@ -11,6 +11,7 @@
         <div class="ui-g-1"/>
         <div class="ui-g-10">
             <h:form id="form">
+            <p:messages id="errors" closable="true" autoUpdate="true" />
                 <p:dataTable var="team" value="#{adminTeamView.teamEnrolments}"
                              styleClass="teamOverviewTable" sortBy="#{team.team}"
                              expandableRowGroups="true" expandedRow="false"
@@ -93,21 +94,23 @@
 			</h:form>
 			<h:form id="addForm">
 				<div class="ui-g" id="addTeamForm">
-					<p:dialog id="addTeamFormTitle" header="#{msgs['team.add']}"
+					<p:dialog class="modalSM" id="addTeamFormTitle" header="#{msgs['team.add']}"
 						widgetVar="addTeamDialog" modal="true">
+						<p:messages id="errors" closable="true" autoUpdate="true" />
+
 						<p:outputPanel id="addTeamDetail">
 							<div class="ui-g">
 								<div class="ui-g-4">
 									<p:outputLabel value="#{msgs['team.name']}"></p:outputLabel>
 								</div>
 								<div class="ui-g-8">
-									<p:inputText id="fn" value="#{adminTeamView.manipulatedTeamBo.name}" />
+									<p:inputText id="fn" value="#{adminTeamView.manipulatedTeamBo.name}" required="true" requiredMessage="You need to fill in a team name." />
 								</div>
 							</div>
 							<div class="ui-g-2">
 								<p:commandButton value="#{msgs['team.add']}" update=":form"
 									action="#{adminTeamView.addTeam}"
-									oncomplete="PF('addTeamDialog').hide();" />
+									oncomplete="if(!args.validationFailed) PF('addTeamDialog').hide();"/>
 							</div>
 						</p:outputPanel>
 					</p:dialog>
@@ -115,26 +118,27 @@
 			</h:form>
 			<h:form id="addEnrolmentForm">
 				<div class="ui-g" id="addEnrolmentForm">
-					<p:dialog id="addEnrolmentFormTitle" header="#{msgs['enrolment.add']}"
+					<p:dialog class="modalMM" id="addEnrolmentFormTitle" header="#{msgs['enrolment.add']}"
 						widgetVar="addEnrolmentDialog" modal="true">
+						<p:messages id="errors" closable="true" autoUpdate="true" />
 						<p:outputPanel id="addEnrolmentDetail">
 							<div class="ui-g">
 								<div class="ui-g-4">
 									<p:outputLabel value="#{msgs['enrolment.user']}"/>
 								</div>
 								<div class="ui-g-8">
-                                    <p:autoComplete id="user" value="#{adminTeamView.user}" maxResults="5" 
+                                    <p:autoComplete class="popupTextInput" id="user" value="#{adminTeamView.user}" maxResults="5" 
                                     			completeMethod="#{adminTeamView.completeUser}" var="user" 
-                                    			itemValue="#{user}" itemLabel="#{user.firstName} #{user.lastName}"
+                                    			itemLabel="#{user.firstName} #{user.lastName}"
                                     			forceSelection="true" converter="userBoConverter"/>
                                 </div>
 							</div>
 							<div class="ui-g">
 								<div class="ui-g-4">
-									<p:outputLabel value="#{msgs['enrolment.user.privilege']}"/>
+									<p:outputLabel value="#{msgs['enrolment.user.privilege']}" />
 								</div>
 	                            <div class="ui-g-8">
-									<p:selectOneMenu id="privilege"
+									<p:selectOneMenu id="privilege" class="popupTextInput" 
 										value="#{adminTeamView.userPrivilege}">
 										<f:selectItem itemLabel="Team Member" itemValue="M" />
 										<f:selectItem itemLabel="Team Manager" itemValue="T" />

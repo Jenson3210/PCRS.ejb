@@ -10,7 +10,6 @@ import colruyt.pcrsejb.service.dl.IDbService;
 
 @Local
 public interface ISurveyDefinitionDl extends IDbService<SurveyDefinition> {
-
 	
 	public List<SurveyDefinition> getSurveyDefinitionsOfUser(User user);
 	public User getResponsible(SurveyDefinition surveyDefinition);
