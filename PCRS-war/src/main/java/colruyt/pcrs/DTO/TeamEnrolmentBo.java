@@ -14,6 +14,7 @@ public class TeamEnrolmentBo {
 	public TeamEnrolmentBo(TeamBo team) {
 		super();
 		this.team = team;
+		
 	} 
 	
 	public TeamBo getTeam() {

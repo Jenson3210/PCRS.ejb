@@ -39,13 +39,14 @@
                                 <h:outputText value="#{enrolment.value.firstName}  #{enrolment.value.lastName}"/>
                             </p:column>
                             <p:column styleClass="ui-g-4">
-                                <h:outputText value="#{enrolment.key.userPrivilege.privilegeType.fullName}"/>
+                                <h:outputText value="#{enrolment.key.getUserPrivilege().privilegeType.fullName}"/>
                             </p:column>
 							<p:column styleClass="ui-g-2">
 								<p:commandLink id="delete" oncomplete="PF('deleteEnrolmentDialog').show()">
 									<i class="fas fa-trash-alt"></i>
-		     						<f:setPropertyActionListener value="#{enrolment}"
+		     						<f:setPropertyActionListener value="#{enrolment.key}"
 										target="#{adminTeamView.manipulatedEnrolmentBo}" /> 
+									<f:setPropertyActionListener value="#{enrolment.value}" target="#{adminTeamView.user}" />
 		     					</p:commandLink>
 							</p:column>
                         </p:dataTable>
@@ -78,7 +79,6 @@
 							<h:outputText
 								value="Ben je zeker dat je deze persoon uit het team wilt verwijderen?" />
 						</p>
-						<br></br>
 						<br></br>
 						<div align="right">
 							<p:commandButton styleClass="btn btn-link" value="#{msgs['general.button.no']}"
