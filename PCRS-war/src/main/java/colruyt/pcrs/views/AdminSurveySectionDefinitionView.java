@@ -44,6 +44,7 @@ public class AdminSurveySectionDefinitionView implements Serializable {
 	public void setSurveySectionDefinitions(List<SurveySectionDefinitionBo> surveySectionDefinitions) {
 		this.surveySectionDefinitions = surveySectionDefinitions;
 	}
+	
 
 	public SurveySectionDefinitionBo getAddedSurveySectionDefinition() {
 		return addedSurveySectionDefinition;
