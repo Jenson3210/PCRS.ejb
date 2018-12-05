@@ -26,6 +26,10 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
 	private ITeamServiceDl dlService;
 	@EJB
 	private IUserPrivilegeServiceBl userPrivilegeServiceBl;
+	@EJB
+	private IEnrolmentServiceBl enrolmentServiceBl;
+	@EJB
+	private IUserServiceBl userServiceBl;
 	
 	
 	private static final long serialVersionUID = 1L;
@@ -69,10 +73,18 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
 		return this.dlService.getTeamsOfManager(manager);
 	}
 
-	@Override
-	public void removeUserFromTeam(Team convertToEntity, User convertToEntity2) {
-		// TODO Auto-generated method stub
+	
+	public void removeUserFromTeam(Team team, Enrolment enrolment, User user) {		
+		//remove teamEnrolment
+		enrolmentServiceBl.delete(enrolment);
 		
+		//set userPrivilege to unactive
+		for(UserPrivilege p : user.getPrivileges()) {
+			if(enrolment.getUserPrivilege().getPrivilegeType().equals(p.getPrivilegeType())) {
+				p.setActive(false);
+			}
+		}
+		userServiceBl.save(user);
 	}
 
 	@Override

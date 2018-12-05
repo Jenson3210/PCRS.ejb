@@ -9,7 +9,5 @@ import colruyt.pcrsejb.facade.IFacade;
 
 @Local
 public interface ISurveySectionDefinitionFacade extends IFacade<SurveySectionDefinitionBo> {
-
 	List<SurveySectionDefinitionBo> getSurveySectionDefinitionsForTitle(SurveySectionTitleBo t);
-
 }
