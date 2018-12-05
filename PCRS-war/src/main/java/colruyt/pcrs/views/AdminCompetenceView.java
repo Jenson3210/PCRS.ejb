@@ -13,7 +13,6 @@ import javax.inject.Named;
 
 import colruyt.pcrsejb.bo.competence.CompetenceBo;
 import colruyt.pcrsejb.bo.competence.CompetenceLevelBo;
-import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 import colruyt.pcrsejb.facade.competence.CompetenceLevelFacade;
 import colruyt.pcrsejb.facade.competence.ICompetenceFacade;
 import colruyt.pcrsejb.facade.competence.ICompetenceLevelFacade;
@@ -24,6 +23,7 @@ public class AdminCompetenceView implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@EJB
 	private ICompetenceFacade competenceFacade;
+	@EJB
 	private ICompetenceLevelFacade competenceLevelFacade;
 	private CompetenceBo competenceBo;
 	private CompetenceLevelBo level;
@@ -75,15 +75,27 @@ public class AdminCompetenceView implements Serializable{
 		levels.add(new CompetenceLevelBo("", levels.size() + 1));
 	}
 	public void removeLevel(){
-		System.out.println("OK");
-		for (Iterator<CompetenceLevelBo> iterator = levels.iterator(); iterator.hasNext(); ) {
-			CompetenceLevelBo bo = iterator.next();
-			if (bo.getOrderLevel() == level.getOrderLevel()) {
-				iterator.remove();
-				levels.remove(bo);
+		System.out.println(levels.size());
+		if(levels.size() > 2) {
+			for (Iterator<CompetenceLevelBo> iterator = levels.iterator(); iterator.hasNext(); ) {
+				CompetenceLevelBo bo = iterator.next();
+				if (bo.getOrderLevel() == level.getOrderLevel()) {
+					iterator.remove();
+					levels.remove(bo);
+					if (level.getId() != null) {
+						competenceLevelFacade.delete(level);
+					}
+				}
+			}
+			int j = 1;
+			for (CompetenceLevelBo clevel : levels) {
+				if (j != clevel.getOrderLevel()) {
+					clevel.setOrderLevel(j);
+				}
+				j = j + 1;
 			}
 		}
-		//competenceLevelFacade.delete(c); 
+
 	}
 	
 	public CompetenceBo getCompetenceBo() {

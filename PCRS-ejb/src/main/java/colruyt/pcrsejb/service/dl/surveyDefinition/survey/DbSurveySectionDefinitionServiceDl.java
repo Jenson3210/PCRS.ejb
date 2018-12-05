@@ -44,7 +44,7 @@ public class DbSurveySectionDefinitionServiceDl implements Serializable, ISurvey
 
 	@Override
 	public SurveySectionDefinition get(SurveySectionDefinition element) {
-		SurveySectionDefinition surveySectionDefinition = em.find(SurveySectionDefinition.class, element);
+		SurveySectionDefinition surveySectionDefinition = em.find(SurveySectionDefinition.class, element.getId());
 		if(surveySectionDefinition == null)
 		{
 			throw new EmptyStackException();

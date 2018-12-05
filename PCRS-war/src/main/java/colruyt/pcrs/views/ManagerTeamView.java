@@ -1,6 +1,7 @@
 package colruyt.pcrs.views;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -12,6 +13,7 @@ import javax.inject.Named;
 import colruyt.pcrs.utillibs.WebUser;
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.team.TeamBo;
+import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionTitle;
 import colruyt.pcrsejb.facade.surveys.surveySet.ISurveySetFacade;
 import colruyt.pcrsejb.facade.user.team.IEnrolmentFacade;
 import colruyt.pcrsejb.facade.user.team.ITeamFacade;
@@ -30,6 +32,11 @@ public class ManagerTeamView implements Serializable{
 	@EJB
 	private ISurveySetFacade surveyFacade;
 	
+	
+	private List<TeamBo> teams; 
+	
+	@Inject
+	private WebUser currentUser;
 	
 	
 	
@@ -58,10 +65,7 @@ public class ManagerTeamView implements Serializable{
 		this.surveyFacade = surveyFacade;
 	}
 
-	private List<TeamBo> teams; 
-	
-	@Inject
-	private WebUser currentUser;
+
 	
 
     @PostConstruct

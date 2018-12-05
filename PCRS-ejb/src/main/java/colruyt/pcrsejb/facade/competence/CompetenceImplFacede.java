@@ -8,9 +8,12 @@ import colruyt.pcrsejb.service.bl.competence.ICompetenceImplServiceBl;
 import colruyt.pcrsejb.service.bl.competence.ICompetenceServiceBl;
 
 import javax.ejb.EJB;
+import javax.ejb.Stateless;
+
 import java.io.Serializable;
 import java.util.List;
 
+@Stateless
 public class CompetenceImplFacede implements ICompetenceImplFacade, Serializable {
 
     private static final long serialVersionUID = 1L;

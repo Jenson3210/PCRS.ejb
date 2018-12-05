@@ -53,7 +53,7 @@ public class DbCompetenceServiceDl implements ICompetenceServiceDl, Serializable
     public List<Competence> getAll() {
         TypedQuery<Competence> q = em.createNamedQuery("COMPETENCE.GETALL", Competence.class);
         List<Competence> listOfCompetences = q.getResultList();
-        System.out.println(listOfCompetences.size());
+        //System.out.println(listOfCompetences.size());
         return listOfCompetences;
     }
 
