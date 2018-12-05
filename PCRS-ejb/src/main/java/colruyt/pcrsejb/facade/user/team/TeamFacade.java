@@ -7,22 +7,25 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import colruyt.pcrsejb.bo.user.UserBo;
+import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
+import colruyt.pcrsejb.bo.user.team.EnrolmentBo;
 import colruyt.pcrsejb.bo.user.team.TeamBo;
 import colruyt.pcrsejb.converter.user.UserConverter;
+import colruyt.pcrsejb.converter.user.team.EnrolmentConverter;
 import colruyt.pcrsejb.converter.user.team.TeamConverter;
 import colruyt.pcrsejb.service.bl.user.team.ITeamServiceBl;
+import colruyt.pcrsejb.util.exceptions.MemberAlreadyHasATeamException;
 import colruyt.pcrsejb.util.exceptions.UserIsNotMemberOfTeamException;
 
 @Stateless
 public class TeamFacade implements Serializable, ITeamFacade {
 
-	
-		
 	@EJB
 	private ITeamServiceBl teamBl;
 	
 	private TeamConverter teamConv = new TeamConverter();
 	private UserConverter userConv = new UserConverter();
+	private EnrolmentConverter enrolmentConv = new EnrolmentConverter();
 	
 	private static final long serialVersionUID = 1L;
 
@@ -60,7 +63,23 @@ public class TeamFacade implements Serializable, ITeamFacade {
 
 	@Override
 	public List<TeamBo> getTeamsOfManager(UserBo manager) {
-		return this.teamConv.convertToBos(this.teamBl.getTeamsOfManager(manager));
+		return this.teamConv.convertToBos(this.teamBl.getTeamsOfManager(this.userConv.convertToEntity(manager)));
+	}
+
+	@Override
+	public void deleteUserFromTeam(TeamBo manipulatedTeamBo, UserBo user) {
+		teamBl.removeUserFromTeam(teamConv.convertToEntity(manipulatedTeamBo), userConv.convertToEntity(user));
+	}
+
+	@Override
+	public EnrolmentBo addUserToTeam(TeamBo manipulatedTeamBo, UserBo user, String userPrivilege) throws MemberAlreadyHasATeamException {
+		return enrolmentConv.convertToBo(teamBl.addUserToTeam(teamConv.convertToEntity(manipulatedTeamBo), userConv.convertToEntity(user), userPrivilege));
+	}
+
+	@Override
+	public List<UserBo> getUsersOfTeam(TeamBo team) {
+		
+		return this.userConv.convertToBos(this.teamBl.getUsersOfTeam(this.teamConv.convertToEntity(team)));
 	}
 	
 }

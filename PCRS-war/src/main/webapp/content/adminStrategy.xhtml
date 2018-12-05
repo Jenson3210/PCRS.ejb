@@ -16,33 +16,39 @@
 					<f:facet name="header">
 						<h:outputText value="#{msgs['strategy.title']}" />
 					</f:facet>
-					<p:column headerText="#{msgs['strategy.name']}">
+					<p:column headerText="#{msgs['strategy.name']}" style="width:300px">
 						<h:outputText value="#{strategy.name}" />
 					</p:column>
-					<p:column headerText="#{msgs['strategy.amountOfLevels']}" style="text-align: center">
+					<p:column headerText="#{msgs['strategy.amountOfLevels']}"
+						style="text-align: center">
 						<h:outputText value="#{strategy.amountOfLevels}" />
 					</p:column>
-					<p:column headerText="#{msgs['strategy.energyRated']}" style="text-align: center">
+					<p:column headerText="#{msgs['strategy.energyRated']}"
+						style="text-align: center">
 						<p:outputPanel rendered="#{strategy.energyRated}">
 							<i class="fas fa-check"></i>
 						</p:outputPanel>
 					</p:column>
-					<p:column headerText="#{msgs['strategy.interestRated']}" style="text-align: center">
+					<p:column headerText="#{msgs['strategy.interestRated']}"
+						style="text-align: center">
 						<p:outputPanel rendered="#{strategy.interestRated}">
 							<i class="fas fa-check"></i>
 						</p:outputPanel>
 					</p:column>
-					<p:column headerText="#{msgs['strategy.descriptionRequired']}" style="text-align: center">
+					<p:column headerText="#{msgs['strategy.descriptionRequired']}"
+						style="text-align: center">
 						<p:outputPanel rendered="#{strategy.descriptionRequired}">
 							<i class="fas fa-check"></i>
 						</p:outputPanel>
 					</p:column>
-					<p:column headerText="#{msgs['strategy.hasMinimumLevel']}" style="text-align: center">
+					<p:column headerText="#{msgs['strategy.hasMinimumLevel']}"
+						style="text-align: center">
 						<p:outputPanel rendered="#{strategy.hasMinimumLevel}">
 							<i class="fas fa-check"></i>
 						</p:outputPanel>
 					</p:column>
-					<p:column headerText="#{msgs['strategy.flexibleDescription']}" style="text-align: center">
+					<p:column headerText="#{msgs['strategy.flexibleDescription']}"
+						style="text-align: center">
 						<p:outputPanel rendered="#{strategy.flexibleDescription}">
 							<i class="fas fa-check"></i>
 						</p:outputPanel>
@@ -58,7 +64,7 @@
 					</p:column>
 					<p:column headerText="#{msgs['delete']}"
 						style="width:65px; text-align: center">
-						<p:commandLink id="delete"
+						<p:commandLink id="delete" update=":deleteForm:deleteStrategyDetail"
 							oncomplete="PF('deleteStrategyDialog').show()">
 							<i class="fas fa-trash-alt"></i>
 							<f:setPropertyActionListener value="#{strategy}"
@@ -238,6 +244,7 @@
 				<div class="ui-g" id="deleteStrategyForm">
 					<p:dialog id="deleteStrategy" header="#{msgs['strategy.delete']}"
 						widgetVar="deleteStrategyDialog" modal="true">
+						<p:outputPanel id="deleteStrategyDetail">
 						<f:facet name="header">
 							<h:outputText value="#{msgs['strategy.delete']}" />
 						</f:facet>
@@ -245,9 +252,14 @@
 							<h:outputLink value="#"
 								onclick="PF('deleteStrategy').hide(); return false;">X</h:outputLink>
 						</f:facet>
+						
+						<p>
+							<h:outputText value="#{msgs['strategy.delete.sure']}" />
+						</p>
 						<p>
 							<h:outputText
-								value="#{msgs['strategy.delete.sure']}" />
+								value="#{surveySectionStrategyView.surveySectionStrategyBo.name}"
+								style="text-align: center" />
 						</p>
 						<br></br>
 						<br></br>
@@ -260,6 +272,7 @@
 								action="#{surveySectionStrategyView.deleteSurveySectionStrategy}"
 								oncomplete="PF('deleteStrategyDialog').hide();" />
 						</div>
+						</p:outputPanel>
 					</p:dialog>
 
 				</div>

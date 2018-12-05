@@ -5,14 +5,13 @@ import java.util.EmptyStackException;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import colruyt.pcrsejb.entity.surveyDefinition.strategy.SurveySectionStrategy;
-import colruyt.pcrsejb.entity.user.User;
+
 
 @Stateless
 public class DbSurveySectionStrategyServiceDl implements Serializable, ISurveySectionStrategyServiceDL{
@@ -23,13 +22,17 @@ public class DbSurveySectionStrategyServiceDl implements Serializable, ISurveySe
 
 	@Override
 	public SurveySectionStrategy save(SurveySectionStrategy element) {
-		try {
+		SurveySectionStrategy surveySectionStrategy;
+		if(element.getId()==null)
+		{
 			em.persist(element);
-		} catch (EntityExistsException eee) {
-			em.find(SurveySectionStrategy.class, element.getId());
-			element = em.merge(element);
+			surveySectionStrategy = element;
 		}
-		return element;
+		else
+		{
+			surveySectionStrategy = em.merge(element);
+		}
+		return surveySectionStrategy;
 	}
 
 	@Override
@@ -50,9 +53,12 @@ public class DbSurveySectionStrategyServiceDl implements Serializable, ISurveySe
 
 	@Override
 	public void delete(SurveySectionStrategy element) {
-		SurveySectionStrategy surveySectionStrategy = em.find(SurveySectionStrategy.class, element);
-		if (surveySectionStrategy != null) {
+		element = em.merge(element);
+		if (element != null) {
 			em.remove(element);
+		}
+		else {
+			throw new EmptyStackException();
 		}
 	}
 

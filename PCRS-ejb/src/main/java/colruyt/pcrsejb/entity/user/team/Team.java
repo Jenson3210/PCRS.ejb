@@ -17,23 +17,20 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import colruyt.pcrsejb.bo.user.team.TeamBo;
 import colruyt.pcrsejb.entity.AbstractEntity;
 
 @Entity
 @Table(name = "TEAMS")
 @NamedQueries({ 
 	
-	@NamedQuery(name = "Team.getAllElements", query = "select t from Team t"),
-	
-
-
-
-//	@NamedQuery(name = "Team.getTeamOfEnrolment", query = "select t from teamenrolments te "
-//			+ "join teams t on te.team_id = T.ID where te.id = :id"),
-	
-
+	@NamedQuery(name = "TEAM.GETALL", query = "SELECT t FROM Team t"),
+	@NamedQuery(name = "TEAM.GETTEAMFORUSER", query = "select t From Team t, User u join t.enrolments e where e.active = :isActive and u = :member"),
+	@NamedQuery(name = "TEAM.GETTEAMSOFMANAGER", query = "select t, e, u from Team t, Enrolment e, User u where e.active = true and e.userPrivilege.privilegeType = :privilegeType and u = :teamManager"),
+	@NamedQuery(name = "TEAM.GETMANAGEROFTEAM", query = "select t, e, u from Team t, Enrolment e, User u where e.userPrivilege.active = true and e.userPrivilege = :userPrivilege and t = :team"),
+	@NamedQuery(name = "TEAM.GETUSERSOFTEAM", query = "select u from User u join u.privileges p where p.active = true and p IN :team")
 })
-public class Team extends AbstractEntity implements Serializable {
+public class Team extends AbstractEntity implements Serializable, Comparable<Team> {
 	/*
 	 * PROPERTIES
 	 */
@@ -44,7 +41,7 @@ public class Team extends AbstractEntity implements Serializable {
 	@Column(name = "ID")
 	private Integer id;
 	private String name;
-	@OneToMany(cascade = CascadeType.MERGE)
+	@OneToMany
 	@JoinColumn(name = "TEAM_ID")
 	private Set<Enrolment> enrolments = new HashSet<>();
 	/*
@@ -77,12 +74,20 @@ public class Team extends AbstractEntity implements Serializable {
 		return name;
 	}
 	public void setName(String name) {
-		this.name = name;
+		this.name = name; 
 	}
 	public Set<Enrolment> getEnrolments() {
 		return enrolments;
 	}
 	public void setEnrolments(Set<Enrolment> enrolments) {
 		this.enrolments = enrolments;
+	}
+	@Override
+	public int compareTo(Team team) {
+		if(this.id == team.id) {
+			return 0; 
+		}else {
+			return -1;
+		}
 	}
 }

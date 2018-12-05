@@ -51,6 +51,11 @@ public class SurveyDefinitionFacade implements Serializable, ISurveyDefinitionFa
 		return surveyDefinitionConverter.convertToBos(this.surveyDefinitionServiceBl.getSurveyDefinitionsOfUser(this.userConv.convertToEntity(user)));
 	}
 
+	@Override
+	public UserBo getResponsible(SurveyDefinitionBo bo) {
+		return userConv.convertToBo(surveyDefinitionServiceBl.getResponsible(surveyDefinitionConverter.convertToEntity(bo)));
+	}
+
 	
 	
 }

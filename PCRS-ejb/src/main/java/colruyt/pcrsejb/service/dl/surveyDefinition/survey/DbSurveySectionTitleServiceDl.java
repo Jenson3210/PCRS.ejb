@@ -21,12 +21,24 @@ public class DbSurveySectionTitleServiceDl implements Serializable, ISurveySecti
 
 	@Override
 	public SurveySectionTitle save(SurveySectionTitle element) {
-		SurveySectionTitle surveySectionTitle = em.merge(element);
+		SurveySectionTitle surveySectionTitle;
+		if(element.getId()==null)
+		{
+			em.persist(element);
+			surveySectionTitle = element;
+		}
+		else
+		{
+			surveySectionTitle = em.merge(element);
+		}
+		return surveySectionTitle;
+		
+		/*SurveySectionTitle surveySectionTitle = em.merge(element);
 		if(surveySectionTitle == null)
 		{
 			throw new EmptyStackException();
 		}
-		return surveySectionTitle;
+		return surveySectionTitle;*/
 	}
 
 	@Override
@@ -41,7 +53,7 @@ public class DbSurveySectionTitleServiceDl implements Serializable, ISurveySecti
 
 	@Override
 	public List<SurveySectionTitle> getAll() {
-		TypedQuery<SurveySectionTitle> q = em.createQuery("SELECT s from SurveySectionTitle s", SurveySectionTitle.class);
+		TypedQuery<SurveySectionTitle> q = em.createNamedQuery("SURVEYSECTIONTITLE.GETALL", SurveySectionTitle.class);
 		List<SurveySectionTitle> surveySectionTitleList = q.getResultList();
 		return surveySectionTitleList;
 	}

@@ -24,7 +24,8 @@ import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 @Table(name="USERS")
 @NamedQueries({ @NamedQuery(name="USER.GETALL", query="select u from User u"), 
 				@NamedQuery(name="USER.GETBYEMAIL", query="SELECT u from User u where UPPER(u.email) = UPPER(:email)"), 
-				@NamedQuery(name="USER.GETBYSHORTNAME", query="SELECT u from User u where UPPER(u.shortName) LIKE UPPER(:shortname)")})
+				@NamedQuery(name="USER.GETBYSHORTNAME", query="SELECT u from User u where UPPER(u.shortName) LIKE UPPER(:shortname)"),
+				@NamedQuery(name="USER.GETBYENROLMENT", query="select u from User u, Enrolment e join u.privileges p where e.userPrivilege.id = p.id and e = :enrolment")})
 public class User extends AbstractEntity implements Serializable {
 	/*
 	 * PROPERTIES
@@ -47,7 +48,7 @@ public class User extends AbstractEntity implements Serializable {
     private String country;
     @Column(name="SHORTNAME")
     private String shortName;
-    @OneToMany(cascade= {CascadeType.REMOVE, CascadeType.PERSIST})
+    @OneToMany(cascade= {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval=true)
     @JoinColumn(name="USER_ID")
     private Set<UserPrivilege> privileges = new HashSet<>();
     /*

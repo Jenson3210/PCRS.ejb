@@ -54,6 +54,7 @@
 							oncomplete="PF('addUserDialog').show();" />
 					</div>
 				</div>
+				
 			</h:form>
 			<h:form id="addForm">
 				<div class="ui-g" id="addUserForm">
@@ -99,9 +100,9 @@
 								<div class="ui-g-8">
 									<p:selectOneMenu id="userCountry"
 										value="#{adminUserView.addedUser.country}">
-										<f:selectItem itemLabel="Belgium" value="BE"/>
-										<f:selectItem itemLabel="France" value="FR"/>
-										<f:selectItem itemLabel="India" value="IN"/>
+										<f:selectItem itemLabel="Belgium" itemValue="BE"/>
+										<f:selectItem itemLabel="France" itemValue="FR"/>
+										<f:selectItem itemLabel="India" itemValue="IN"/>
 									</p:selectOneMenu>
 								</div>
 							</div>

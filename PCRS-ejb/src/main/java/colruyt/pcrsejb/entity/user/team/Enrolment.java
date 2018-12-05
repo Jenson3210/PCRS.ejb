@@ -2,23 +2,28 @@ package colruyt.pcrsejb.entity.user.team;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import colruyt.pcrsejb.entity.AbstractEntity;
-import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 
 @Entity
 @Table(name="TEAMENROLMENTS")
-public class Enrolment extends AbstractEntity implements Serializable {
+@NamedQueries({ 
+	@NamedQuery(name = "ENROLMENT.GETALL", query = "SELECT e FROM Enrolment e"),
+	@NamedQuery(name = "ENROLMENT.DEACTIVATE", query = "UPDATE UserPrivilege SET active = :active WHERE id = :id")
+})
+
+public class Enrolment extends AbstractEntity implements Serializable, Comparable<Enrolment> {
 	/*
 	 * PROPERTIES
 	 */
@@ -29,8 +34,6 @@ public class Enrolment extends AbstractEntity implements Serializable {
     @Column(name="ID")
     private Integer id;
     @ManyToOne
-    private User user;
-    @ManyToOne(cascade= {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.PERSIST})
     private UserPrivilege userPrivilege;
     private Boolean active;
     /*
@@ -39,16 +42,14 @@ public class Enrolment extends AbstractEntity implements Serializable {
     public Enrolment() {
     	super();
     }
-    public Enrolment(User user, UserPrivilege userPrivilege, Boolean active) {
+    public Enrolment(UserPrivilege userPrivilege, Boolean active) {
 		super();
-		this.user = user;
 		this.userPrivilege = userPrivilege;
 		this.active = active;
 	}
-    public Enrolment(Integer id, User user, UserPrivilege userPrivilege, Boolean active) {
+    public Enrolment(Integer id, UserPrivilege userPrivilege, Boolean active) {
 		super();
 		this.id = id;
-		this.user = user;
 		this.userPrivilege = userPrivilege;
 		this.active = active;
 	}
@@ -61,12 +62,6 @@ public class Enrolment extends AbstractEntity implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
 	public UserPrivilege getUserPrivilege() {
 		return userPrivilege;
 	}
@@ -78,5 +73,13 @@ public class Enrolment extends AbstractEntity implements Serializable {
 	}
 	public void setActive(Boolean active) {
 		this.active = active;
+	}
+	@Override
+	public int compareTo(Enrolment enrolment) {
+		if(this.id == enrolment.id) {
+			return 0;
+		}else {
+			return -1;
+		}
 	}
 }

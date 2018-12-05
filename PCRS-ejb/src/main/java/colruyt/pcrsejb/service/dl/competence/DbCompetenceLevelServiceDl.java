@@ -18,14 +18,31 @@ public class DbCompetenceLevelServiceDl implements ICompetenceLevelServiceDl, Se
 
     @Override
     public CompetenceLevel save(CompetenceLevel element) {
-        em.persist(element);
-        em.flush();
-        return element;
+    	CompetenceLevel competenceLevel;
+    	if(element.getId()==null)
+    	{
+    		em.persist(element);
+    		competenceLevel=element;
+    	}
+    	else
+    	{
+    		competenceLevel = em.merge(element);
+    	}
+    	return competenceLevel;
+    	
+        /*CompetenceLevel competencelevel = em.find(CompetenceLevel.class, element.getId());
+        if (competencelevel == null) {
+            em.persist(element);
+            competencelevel = element;
+        }else {
+            competencelevel = em.merge(element);
+        }
+        return competencelevel;*/
     }
 
     @Override
     public CompetenceLevel get(CompetenceLevel element) {
-        CompetenceLevel competence = em.find(CompetenceLevel.class, element);
+        CompetenceLevel competence = em.find(CompetenceLevel.class, element.getId());
         if (competence == null) {
             throw new EmptyStackException();
         }
@@ -41,6 +58,9 @@ public class DbCompetenceLevelServiceDl implements ICompetenceLevelServiceDl, Se
 
     @Override
     public void delete(CompetenceLevel element) {
-        em.remove(element);
+        CompetenceLevel competenclevel = em.find(CompetenceLevel.class, element.getId());
+        if(competenclevel != null) {
+            em.remove(competenclevel);
+        }
     }
 }

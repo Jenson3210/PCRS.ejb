@@ -11,35 +11,35 @@
         <div class="ui-g-1"/>
         <div class="ui-g-10">
             <h:form id="form">
-                <p:dataTable var="team" value="#{adminTeamView.teams}"
-                             styleClass="teamOverviewTable" sortBy="#{team.name}"
+                <p:dataTable var="team" value="#{adminTeamView.teamEnrolments}"
+                             styleClass="teamOverviewTable" sortBy="#{team.team}"
                              expandableRowGroups="true" expandedRow="false"
                              id="teamDetail">
                     <f:facet name="header"><h:outputText value="#{msgs['team.header']}"/></f:facet>
                     <p:headerRow>
                         <p:column styleClass="ui-g-6">
-                            <h:outputText value="#{team.name}"/>
+                            <h:outputText value="#{team.team.name}"/>
                         </p:column>
                         <p:column styleClass="ui-g-4" style="float: right">
-                            <h:outputText value="#{team.enrolments.size()}"/>
+                            <h:outputText value="#{team.team.enrolments.size()}"/>
                         </p:column>
              			<p:column style="width:65px; text-align: center">
 							<p:commandLink id="addEnrolment" oncomplete="PF('addEnrolmentDialog').show()"
 										action="#{adminTeamView.newEnrolment}">
 								<i class="fas fa-user-plus"/>
-								<f:setPropertyActionListener value="#{team}"
+								<f:setPropertyActionListener value="#{team.team}"
 										target="#{adminTeamView.manipulatedTeamBo}" /> 
 	     					</p:commandLink>
 						</p:column>
                     </p:headerRow>
                     <p:column>
-                        <p:dataTable var="enrolment" value="#{team.enrolments}">
+                        <p:dataTable var="enrolment" value="#{team.enrolmentMap}" widgetVar="enrolment">
                             <p:column style="width: 16px"/>
                             <p:column styleClass="ui-g-6">
-                                <h:outputText value="#{enrolment.user.firstName}  #{enrolment.user.lastName}"/>
+                                <h:outputText value="#{enrolment.value.firstName}  #{enrolment.value.lastName}"/>
                             </p:column>
                             <p:column styleClass="ui-g-4">
-                                <h:outputText value="#{enrolment.userPrivilege.privilegeType.fullName}"/>
+                                <h:outputText value="#{enrolment.key.userPrivilege.privilegeType.fullName}"/>
                             </p:column>
 							<p:column styleClass="ui-g-2">
 								<p:commandLink id="delete" oncomplete="PF('deleteEnrolmentDialog').show()">
@@ -136,8 +136,8 @@
 	                            <div class="ui-g-8">
 									<p:selectOneMenu id="privilege"
 										value="#{adminTeamView.userPrivilege}">
-										<f:selectItem itemLabel="TeamMember" itemValue="M" />
-										<f:selectItem itemLabel="TeamManager" itemValue="T" />
+										<f:selectItem itemLabel="Team Member" itemValue="M" />
+										<f:selectItem itemLabel="Team Manager" itemValue="T" />
 									</p:selectOneMenu>
 	                            </div>
                             </div>

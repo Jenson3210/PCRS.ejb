@@ -4,13 +4,17 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.entity.user.User;
+import colruyt.pcrsejb.entity.user.team.Enrolment;
+import colruyt.pcrsejb.util.exceptions.NoExistingEmailException;
+import colruyt.pcrsejb.util.exceptions.NoExistingMemberException;
 
 @Stateless
 public class DbUserServiceDl implements Serializable, IUserServiceDl {
@@ -21,18 +25,30 @@ public class DbUserServiceDl implements Serializable, IUserServiceDl {
 
 	@Override
 	public User save(User element) {
+/*		User user = null;
 		try {
-			em.persist(element);
-		} catch (EntityExistsException eee) {
-			em.find(User.class, element.getId());
-			element = em.merge(element);
+		user = em.createNamedQuery("USER.GETBYEMAIL", User.class)
+					.setParameter("email", element.getEmail())
+					.getSingleResult();
+		} catch (NoResultException ex) {
+			
 		}
-		return element;
+		if (user == null) {
+			em.persist(element);
+			user = element;
+		}else {
+			element.setId(user.getId());
+			user = em.merge(element);
+		}
+		return user;*/
+		User user = em.merge(element);
+		em.flush();
+		return user;
 	}
 
 	@Override
 	public User get(User element) {
-		User user = em.find(User.class, element);
+		User user = em.find(User.class, element.getId());
 		if (user == null) {
 			throw new EntityNotFoundException();
 		}
@@ -48,17 +64,23 @@ public class DbUserServiceDl implements Serializable, IUserServiceDl {
 
 	@Override
 	public void delete(User element) {
-		User user = em.find(User.class, element);
+		User user = em.find(User.class, element.getId());
 		if (user != null) {
-			em.remove(element);
+			em.remove(user);
 		}
 	}
 
 	@Override
-	public User getElementByEmail(String email) {
+	public User getElementByEmail(String email) throws NoExistingEmailException {
+		try {
 		TypedQuery<User> q = em.createNamedQuery("USER.GETBYEMAIL", User.class);
 		q.setParameter("email", email);
 		return (User) q.getSingleResult();
+		}
+		catch(NoResultException e) {
+			throw new NoExistingEmailException("Gegeven Email heeft geen user in de Databank");
+		}
+		
 	}
 
 	@Override
@@ -67,5 +89,17 @@ public class DbUserServiceDl implements Serializable, IUserServiceDl {
 		q.setParameter("shortname", shortName);
 		List<User> resultList = q.getResultList();
 		return resultList;
+	}
+
+	@Override
+	public User getUserByEnrolment(Enrolment enrolment) throws NoExistingMemberException {
+		try {
+			TypedQuery<User> q = em.createNamedQuery("USER.GETBYENROLMENT", User.class);
+			q.setParameter("enrolment", enrolment);
+			return q.getSingleResult();
+		}catch(NoResultException e) {
+			throw new NoExistingMemberException("Gegeven enrolment met id: " + enrolment.getId() + " bestaat niet.");
+		}
+
 	}
 }

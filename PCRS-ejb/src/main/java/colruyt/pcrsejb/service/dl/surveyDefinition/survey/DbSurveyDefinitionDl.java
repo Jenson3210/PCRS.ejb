@@ -12,6 +12,7 @@ import javax.persistence.TypedQuery;
 
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveyDefinition;
 import colruyt.pcrsejb.entity.user.User;
+import colruyt.pcrsejb.entity.user.privilege.PrivilegeType;
 
 @Stateless
 public class DbSurveyDefinitionDl implements Serializable, ISurveyDefinitionDl {
@@ -26,11 +27,33 @@ public class DbSurveyDefinitionDl implements Serializable, ISurveyDefinitionDl {
 	
 	@Override
 	public SurveyDefinition save(SurveyDefinition element) {
-		SurveyDefinition surveyDefinition = em.merge(element);
-		if (surveyDefinition == null) {
-			throw new EmptyStackException();
+		SurveyDefinition surveyDefinition;
+		if(element.getId()==null)
+		{
+			em.persist(element);
+			surveyDefinition = element;
+		}
+		else
+		{
+			surveyDefinition = em.merge(element);
 		}
 		return surveyDefinition;
+		
+		/*SurveyDefinition surveyDefinition = null;
+		try {
+			surveyDefinition = em.find(SurveyDefinition.class, element.getId());
+		}catch(Exception e) {}
+		if(surveyDefinition == null)
+		{
+			em.persist(element);
+			surveyDefinition = element;
+		}
+		else
+		{
+			element.setId(surveyDefinition.getId());
+			surveyDefinition = em.merge(element);
+		}
+		return surveyDefinition;*/
 	}
 
 	@Override
@@ -50,11 +73,10 @@ public class DbSurveyDefinitionDl implements Serializable, ISurveyDefinitionDl {
 
 	@Override
 	public void delete(SurveyDefinition element) {
-		SurveyDefinition surveyDefinition = em.find(SurveyDefinition.class, element);
-		if (surveyDefinition == null) {
-			throw new EmptyStackException();
+		SurveyDefinition surveyDefinition = em.find(SurveyDefinition.class, element.getId());
+		if (surveyDefinition != null) {
+			em.remove(surveyDefinition);
 		}
-		em.remove(element);
 	}
 
 	@Override
@@ -64,6 +86,15 @@ public class DbSurveyDefinitionDl implements Serializable, ISurveyDefinitionDl {
 		List<SurveyDefinition> listOfSurveyDefinitions = q.getResultList();
 		return listOfSurveyDefinitions;
 
+	}
+
+	@Override
+	public User getResponsible(SurveyDefinition surveyDefinition) {
+		TypedQuery<User> q = em.createNamedQuery("SURVEYDEFINITION.GETRESPONSIBLE", User.class);
+		q.setParameter("pt", PrivilegeType.SURVEYDEFINITIONRESPONSIBLE);
+		q.setParameter("sd", surveyDefinition);
+		User u = q.getSingleResult();
+		return u;
 	}
 
 

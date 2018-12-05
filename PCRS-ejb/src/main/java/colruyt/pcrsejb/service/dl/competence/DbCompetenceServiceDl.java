@@ -18,10 +18,26 @@ public class DbCompetenceServiceDl implements ICompetenceServiceDl, Serializable
 
     @Override
     public Competence save(Competence element) {
-        em.persist(element);
-
-        em.flush();
-        return element;
+        Competence competence;
+        if(element.getId() == null)
+        {
+        	em.persist(element);
+        	competence = element;
+        }
+        else
+        {
+        	competence = em.merge(element);
+        }
+        return competence;
+        
+    	/*Competence competence = null;
+        if (element.getId() == null) {
+            em.persist(element);
+            competence = element;
+        }else {
+            competence = em.merge(element);
+        }
+        return competence;*/
     }
 
     @Override
@@ -37,12 +53,16 @@ public class DbCompetenceServiceDl implements ICompetenceServiceDl, Serializable
     public List<Competence> getAll() {
         TypedQuery<Competence> q = em.createNamedQuery("COMPETENCE.GETALL", Competence.class);
         List<Competence> listOfCompetences = q.getResultList();
+        //System.out.println(listOfCompetences.size());
         return listOfCompetences;
     }
 
     @Override
     public void delete(Competence element) {
-        em.remove(element);
+        Competence competence = em.find(Competence.class, element.getId());
+        if(competence != null) {
+            em.remove(competence);
+        }
 
     }
 }
