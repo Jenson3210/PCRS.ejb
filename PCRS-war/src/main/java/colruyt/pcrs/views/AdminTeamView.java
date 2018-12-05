@@ -40,7 +40,7 @@ public class AdminTeamView implements Serializable {
 	private UserBo user;
 	private String userPrivilege;
 	private List<TeamEnrolmentBo> teamEnrolments = new ArrayList<>();;
-
+  
 	@PostConstruct
 	private void fillList() {  
   		teams = teamFacade.getAll();
@@ -52,7 +52,7 @@ public class AdminTeamView implements Serializable {
 			teamEnrolments.add(teamEnrolment);
 		} 
 	}
-
+      
 	public List<TeamBo> getTeams() {
 		return teams;
 	}

@@ -93,21 +93,26 @@
 			</h:form>
 			<h:form id="addForm">
 				<div class="ui-g" id="addTeamForm">
-					<p:dialog id="addTeamFormTitle" header="#{msgs['team.add']}"
+					<p:dialog class="modalSM" id="addTeamFormTitle" header="#{msgs['team.add']}"
 						widgetVar="addTeamDialog" modal="true">
+						<p:messages id="errors" closable="true" showDetail="true" autoUpdate="true" />
+
 						<p:outputPanel id="addTeamDetail">
 							<div class="ui-g">
 								<div class="ui-g-4">
 									<p:outputLabel value="#{msgs['team.name']}"></p:outputLabel>
 								</div>
 								<div class="ui-g-8">
-									<p:inputText id="fn" value="#{adminTeamView.manipulatedTeamBo.name}" />
+									<p:inputText id="fn" value="#{adminTeamView.manipulatedTeamBo.name}" required="true" requiredMessage="test" validatorMessage="Need more then 3 characters!">
+									<f:validateLength minimum="3"/>
+									</p:inputText>
+									<p:message for="fn"></p:message>
 								</div>
 							</div>
 							<div class="ui-g-2">
 								<p:commandButton value="#{msgs['team.add']}" update=":form"
 									action="#{adminTeamView.addTeam}"
-									oncomplete="PF('addTeamDialog').hide();" />
+									oncomplete="if(!args.validationFailed) PF('addTeamDialog').hide();"/>
 							</div>
 						</p:outputPanel>
 					</p:dialog>
