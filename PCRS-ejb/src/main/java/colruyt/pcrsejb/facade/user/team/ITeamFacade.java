@@ -19,7 +19,7 @@ public interface ITeamFacade extends IFacade<TeamBo>  {
 	UserBo getManagerForUser(UserBo user) throws UserIsNotMemberOfTeamException;
 	TeamBo getTeamForUser(UserBo user) throws UserIsNotMemberOfTeamException;
 	List<TeamBo> getTeamsOfManager(UserBo manager);
-	void deleteUserFromTeam(TeamBo manipulatedTeamBo, UserBo user);
+	void deleteUserFromTeam(TeamBo manipulatedTeamBo, EnrolmentBo enrolment, UserBo user);
 	EnrolmentBo addUserToTeam(TeamBo manipulatedTeamBo, UserBo user, String userPrivilege) throws MemberAlreadyHasATeamException;
 	List<UserBo> getUsersOfTeam(TeamBo team);
 
