@@ -10,7 +10,8 @@
 	<div class="ui-g-10">
 		<h:form id="form">
 			<p:tabView
-				value="#{respSurveyDefinitionView.assignedSurveyDefinitionList}" var="def">
+				value="#{respSurveyDefinitionView.assignedSurveyDefinitionList}"
+				var="def">
 				<p:tab title="#{def.name}">
 					<p:outputLabel rendered="#{def.surveySections.size() == 0}"
 						value="#{msgs['respSurveyDefinition.noSectionsDefined']}" />
@@ -19,7 +20,8 @@
 							value="#{sectionImpl.surveySectionDefinitionBo.surveySectionCompetences}"
 							var="comp">
 							<f:facet name="header">
-								<p:outputLabel value="#{sectionImpl.surveySectionDefinitionBo.surveySectionTitle.title}"/>
+								<p:outputLabel
+									value="#{sectionImpl.surveySectionDefinitionBo.surveySectionTitle.title}" />
 							</f:facet>
 							<p:column>
 								<h:outputText value="#{var.competenceDescription}" />
@@ -34,7 +36,8 @@
 								action="#{respSurveyDefinitionView.manageSections}"
 								update=":manageSections:manageSectionsPanel"
 								oncomplete="PF('manageSectionsDialog').show();">
-								<f:setPropertyActionListener value="#{def}" target="#{respSurveyDefinitionView.activeTab}"/>
+								<f:setPropertyActionListener value="#{def}"
+									target="#{respSurveyDefinitionView.activeTab}" />
 							</p:commandButton>
 							<p:commandButton
 								value="#{msgs['respSurveyDefinition.manageCompetences']}"
@@ -42,7 +45,8 @@
 								action="#{respSurveyDefinitionView.manageCompetences}"
 								update=":manageCompetences:manageCompetencesPanel"
 								oncomplete="PF('manageCompetencesDialog').show();">
-								<f:setPropertyActionListener value="#{def}" target="#{respSurveyDefinitionView.activeTab}"/>
+								<f:setPropertyActionListener value="#{def}"
+									target="#{respSurveyDefinitionView.activeTab}" />
 							</p:commandButton>
 						</div>
 					</div>
@@ -58,15 +62,22 @@
 					<p:outputPanel id="manageSectionsPanel">
 						<div class="ui-g">
 							<div class="ui-g-4">
-								<p:outputLabel value="#{msgs['respSurveyDefinition.newExistingOrDelete']}"/>
+								<p:outputLabel
+									value="#{msgs['respSurveyDefinition.newExistingOrDelete']}" />
 							</div>
 							<div class="ui-g-8">
 								<p:selectOneRadio
 									value="#{respSurveyDefinitionView.newExistingOrDeleteSection}">
 									<p:ajax update="manageSectionsPanel" />
-									<f:selectItem itemLabel="#{msgs['respSurveyDefinition.addNew']}" itemValue="0" />
-									<f:selectItem itemLabel="#{msgs['respSurveyDefinition.addExisting']}" itemValue="1" />
-									<f:selectItem itemLabel="#{msgs['respSurveyDefinition.delete']}" itemValue="2" />
+									<f:selectItem
+										itemLabel="#{msgs['respSurveyDefinition.addNew']}"
+										itemValue="0" />
+									<f:selectItem
+										itemLabel="#{msgs['respSurveyDefinition.addExisting']}"
+										itemValue="1" />
+									<f:selectItem
+										itemLabel="#{msgs['respSurveyDefinition.delete']}"
+										itemValue="2" />
 								</p:selectOneRadio>
 
 							</div>
@@ -224,14 +235,56 @@
 									value="#{msgs['respSurveyDefinition.competenceToAdd']}" />
 							</div>
 							<div class="ui-g-8">
-								<p:autoComplete id="competence" completeMethod="#{respSurveyDefinitionView.completeCompetence}" 
-									  				var="competence" itemLabel="#{competence.name}" itemValue="#{competence}" forceSelection="true" 
-									  				emptyMessage="#{msgs['surveyDefinition.noResults']}"
-									 				required="true" converter="userBoConverter"/>
-									 				<!--  value="#{adminSurveyDefinitionView.manipulatedUserBo}" -->
+								<p:autoComplete id="competence"
+									completeMethod="#{respSurveyDefinitionView.completeCompetence}"
+									var="competence" itemLabel="#{competence.name}"
+									itemValue="#{competence}" forceSelection="true"
+									emptyMessage="#{msgs['respSurveyDefinition.noResults']}"
+									value="#{respSurveyDefinitionView.selectedCompetence}"
+									converter="competenceBoConverter" >
+									
+									<p:ajax event="itemSelect"
+											update="manageCompetencesPanel" />
+										
+								</p:autoComplete>
+
 							</div>
 						</div>
-
+						
+						<div class="ui-g">
+							<div class="ui-g-4">
+								<p:outputLabel
+									value="#{msgs['respSurveyDefinition.selectedCompetenceTitle']}" />
+							</div>
+							<div class="ui-g-8">
+								<p:inputText value="#{respSurveyDefinitionView.selectedCompetence.name}"
+												 readonly="true"/>
+							</div>
+						</div>
+						
+						<div class="ui-g">
+							<div class="ui-g-4">
+								<p:outputLabel
+									value="#{msgs['respSurveyDefinition.selectedCompetenceDescription']}" />
+							</div>
+							<div class="ui-g-8">
+								<p:inputTextarea value="#{respSurveyDefinitionView.selectedCompetence.competenceDescription}"/>
+							</div>
+						</div>
+						
+						<ui:repeat value="#{respSurveyDefinitionView.selectedCompetence.competenceLevels}" var="level" >
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel
+										value="#{level.orderLevel}" />
+								</div>
+								<div class="ui-g-8">
+									<p:inputTextarea value="#{level.description}" readonly="true"/>
+								</div>
+							</div>
+						</ui:repeat>
+						
+						
 						<div class="ui-g-2">
 							<p:commandButton value="#{msgs['respSurveyDefinition.add']}"
 								update=":form"
