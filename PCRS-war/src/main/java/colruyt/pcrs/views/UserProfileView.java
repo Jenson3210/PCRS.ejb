@@ -35,7 +35,7 @@ public class UserProfileView implements Serializable {
 	private boolean hasTeam = true;
 
 	@PostConstruct
-	public void init() {
+	public void init() { 
 		this.setHasTeam(true);
 
 	}
@@ -49,7 +49,7 @@ public class UserProfileView implements Serializable {
 	}
 
 	public ISurveySetFacade getSurveyFacade() {
-		return surveyFacade;
+		return surveyFacade; 
 	}
 
 	public void setSurveyFacade(ISurveySetFacade surveyFacade) {
