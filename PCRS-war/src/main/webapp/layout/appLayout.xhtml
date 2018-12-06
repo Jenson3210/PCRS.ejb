@@ -146,7 +146,7 @@
 				</f:facet>
 				<p>
 					<!-- <h:outputText value="#{webutillibmsgs.logoffConfirmMessage}" /> -->
-					<h:outputText value="#{msgs.logoffconfirmmessage}" />
+					<h:outputText value="#{msgs['logoffconfirmmessage']}" />
 				</p>
 				<br></br>
 				<br></br>
@@ -155,10 +155,10 @@
 					<!-- value="#{webutillibmsgs.cancel}" onclick="PF('popup').hide()" /> -->
 					<!-- <p:commandButton id="okButton" styleClass="btn btn-primary" -->
 					<!-- value="#{webutillibmsgs.ok}" onclick="#{logonView.logoutURL}" /> -->
-					<p:commandButton styleClass="btn btn-link" value="#{msgs.cancel}"
+					<p:commandButton styleClass="btn btn-link" value="#{msgs['cancel']}"
 						onclick="PF('popup').hide()" />
 					<p:commandButton id="okButton" styleClass="btn btn-primary"
-						value="#{msgs.ok}" action="#{logonView.logoutURL}" ajax="false" />
+						value="#{msgs['ok']}" action="#{logonView.logoutURL}" ajax="false" />
 				</div>
 			</p:dialog>
 		</h:form>
