@@ -50,17 +50,30 @@ public class CompetenceLevelBo extends AbstractBo implements Serializable{
 	public void setOrderLevel(Integer orderLevel) {
 		this.orderLevel = orderLevel;
 	}
-	@Override
-	public boolean equals(Object o) {
-		boolean equal = false;
-		if (this.getClass().equals(o.getClass())) {
-			equal = (this.getId() == ((CompetenceLevelBo) o).getId());
-		}
-		return equal;
-	}
 	
 	@Override
 	public int hashCode() {
-		return orderLevel;
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((orderLevel == null) ? 0 : orderLevel.hashCode());
+		return result;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CompetenceLevelBo other = (CompetenceLevelBo) obj;
+		if (orderLevel == null) {
+			if (other.orderLevel != null)
+				return false;
+		} else if (!orderLevel.equals(other.orderLevel))
+			return false;
+		return true;
+	}
+	
 }

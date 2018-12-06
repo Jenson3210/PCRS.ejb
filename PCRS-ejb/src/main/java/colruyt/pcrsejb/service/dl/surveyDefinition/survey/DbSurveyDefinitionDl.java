@@ -28,13 +28,10 @@ public class DbSurveyDefinitionDl implements Serializable, ISurveyDefinitionDl {
 	@Override
 	public SurveyDefinition save(SurveyDefinition element) {
 		SurveyDefinition surveyDefinition;
-		if(element.getId()==null)
-		{
+		if(element.getId()==null) {
 			em.persist(element);
 			surveyDefinition = element;
-		}
-		else
-		{
+		} else {
 			surveyDefinition = em.merge(element);
 		}
 		return surveyDefinition;
