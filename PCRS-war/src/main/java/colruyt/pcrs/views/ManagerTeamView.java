@@ -133,9 +133,8 @@ public class ManagerTeamView implements Serializable {
 		} catch (NoSurveySetException e) {
 			return 0;
 		}
-
 	}
-
+	
 	public Integer getConsensusSurveyPercentage(UserBo user) {
 		try {
 			return this.getSurveyFacade().getPercentageCompleteForConsensusSurvey(user);

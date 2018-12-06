@@ -11,6 +11,9 @@
 		<div class="ui-g-1" />
 		<div class="ui-g-10">
 			<h:form id="form">
+				<p:messages id="errors" showDetail="false" closable="true">
+					<p:autoUpdate/>
+				</p:messages>
 				<p:dataTable var="surveySectionTitle"
 					value="#{adminSurveySectionTitleView.surveySectionTitles}">
 					<p:column headerText="#{msgs['surveySectionTitle.title']}">
@@ -18,8 +21,8 @@
 					</p:column>
 					<p:column headerText="#{msgs['edit']}"
 						style="width:65px; text-align: center">
-						<p:commandLink update=":editForm:editSurveySectionTitleDetail" id="edit"
-							oncomplete="PF('editSurveySectionTitleDialog').show()">
+						<p:commandLink update=":editForm:editSurveySectionTitleDetail"
+							id="edit" oncomplete="PF('editSurveySectionTitleDialog').show()">
 							<i class="fas fa-pencil-alt"></i>
 							<f:setPropertyActionListener value="#{surveySectionTitle}"
 								target="#{adminSurveySectionTitleView.addedSurveySectionTitle}" />
@@ -83,7 +86,8 @@
 									<p:outputLabel value="#{msgs['surveySectionTitle.title']}"></p:outputLabel>
 								</div>
 								<div class="ui-g-8">
-									<p:inputText id="fn" value="#{adminSurveySectionTitleView.addedSurveySectionTitle.title}" />
+									<p:inputText id="fn"
+										value="#{adminSurveySectionTitleView.addedSurveySectionTitle.title}" />
 								</div>
 							</div>
 							<div class="ui-g-2">
@@ -97,7 +101,8 @@
 			</h:form>
 			<h:form id="deleteForm">
 				<div class="ui-g" id="deleteSurveySectionTitleForm">
-					<p:dialog id="deleteSurveySectionTitleFormTitle" header="#{msgs['surveySectionTitle.delete']}"
+					<p:dialog id="deleteSurveySectionTitleFormTitle"
+						header="#{msgs['surveySectionTitle.delete']}"
 						widgetVar="deleteSurveySectionTitleDialog" modal="true">
 						<f:facet name="header">
 							<h:outputText value="#{msgs['surveySectionTitle.delete']}" />
@@ -117,7 +122,8 @@
 								value="#{msgs['button.no']}"
 								onclick="PF('deleteSurveySectionTitleDialog').hide()" />
 							<p:commandButton styleClass="btn btn-primary" update=":form"
-								value="#{msgs['button.yes']}" action="#{adminSurveySectionTitleView.deleteSurveySectionTitle}"
+								value="#{msgs['button.yes']}"
+								action="#{adminSurveySectionTitleView.deleteSurveySectionTitle}"
 								oncomplete="PF('deleteSurveySectionTitleDialog').hide();" />
 							<p:messages></p:messages>
 						</div>

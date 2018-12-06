@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 
 import colruyt.pcrsejb.entity.competence.CompetenceLevel;
 import colruyt.pcrsejb.service.dl.competence.ICompetenceLevelServiceDl;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 @Stateless
 public class CompetenceLevelServiceBl implements Serializable, ICompetenceLevelServiceBl{
 	/**
@@ -35,7 +36,7 @@ public class CompetenceLevelServiceBl implements Serializable, ICompetenceLevelS
 	}
 
 	@Override
-	public void delete(CompetenceLevel element) {
+	public void delete(CompetenceLevel element) throws ValidationException {
 		competencelevelDb.delete(element);
 		
 	}
