@@ -110,28 +110,28 @@
      <p:dialog header="Change Function" widgetVar="dlg2" modal="true" resizable="false">
         <p:panelGrid columns="2" id="display2" columnClasses="label,output">
         
-        		 <p:column >
+        	
                             <h:form id="functionForm">
                             
+                            
+                              <p:selectOneMenu
+									value="#{managerTeamViewChangeFunction.function}"
+									converter="SurveyDefinitionBoConverter">
+									
+									<f:selectItems
+									value="#{managerTeamViewChangeFunction.getAvailableFunctionDefinitions()}"  
+									var="function" 
+									itemLabel="#{function.getFunction()}" 
+									itemValue="#{function}" 
+									 />
+							</p:selectOneMenu>
                 						 
-								    <p:selectOneMenu id="functionDropDown" value="#{managerTeamViewChangeFunction.function}" style="width:150px"  >
-                						 <f:selectItem itemLabel="Kies een Functie" itemValue="" noSelectionOption="true" />
-                						 <f:selectItems value="#{managerTeamViewChangeFunction.getAvailableFunctionDefinitions()}"  var="function" itemLabel="#{function.getFunction()}" itemValue="#{function}"  />
-             						</p:selectOneMenu>
-           						
-           							 
+							
+							    <p:commandButton action="#{managerTeamViewChangeFunction.submit}" icon="pi pi-check" value="Submit"></p:commandButton>
+							    	 
            							 
            					</h:form>
            					
-							</p:column>
-							
-							<p:column>
-							     <p:commandButton action="#{managerTeamViewChangeFunction.submit()}" icon="pi pi-check" value="Submit"></p:commandButton>
-							
-							</p:column>
-        
-        
-        
         </p:panelGrid>
     </p:dialog>
 

@@ -32,7 +32,7 @@
 							value="#{surveySectionDefinition.surveySectionStrategy.name}" />
 					</p:column>
 					<p:column headerText="#{msgs['edit']}"
-						style="width:65px; text-align: center">
+						style="width:100px; text-align: center">
 						<p:commandLink
 							update=":editForm:editSurveySectionDefinitionDetail" id="edit"
 							oncomplete="PF('editSurveySectionDefinitionDialog').show()">
@@ -42,7 +42,7 @@
 						</p:commandLink>
 					</p:column>
 					<p:column headerText="#{msgs['delete']}"
-						style="width:65px; text-align: center">
+						style="width:100px; text-align: center">
 						<p:commandLink id="delete"
 							oncomplete="PF('deleteSurveySectionDefinitionDialog').show()">
 							<i class="fas fa-trash-alt"></i>
