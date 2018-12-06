@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div class="ui-g">
+	
+		<div class="ui-g-1"/>
+		
+		<div class="ui-g-10">
+		
+			<h:form id="form">
+				<p:dataTable var="surveySectionDefinition"
+					value="#{adminSurveySectionDefinitionView.surveySectionDefinitions}">
+					<f:facet name="header">
+						<h:outputText value="#{msgs['surveySectionDefinition.title']}" />
+					</f:facet>
+					<p:column
+						headerText="#{msgs['surveySectionDefinition.surveySectionTitle']}">
+						<h:outputText
+							value="#{surveySectionDefinition.surveySectionTitle.title}" />
+					</p:column>
+					<p:column
+						headerText="#{msgs['surveySectionDefinition.surveySectionStrategy']}">
+						<h:outputText
+							value="#{surveySectionDefinition.surveySectionStrategy.name}" />
+					</p:column>
+					<p:column headerText="#{msgs['edit']}"
+						style="width:65px; text-align: center">
+						<p:commandLink
+							update=":editForm:editSurveySectionDefinitionDetail" id="edit"
+							oncomplete="PF('editSurveySectionDefinitionDialog').show()">
+							<i class="fas fa-pencil-alt"></i>
+							<f:setPropertyActionListener value="#{surveySectionDefinition}"
+								target="#{adminSurveySectionDefinitionView.addedSurveySectionDefinition}" />
+						</p:commandLink>
+					</p:column>
+					<p:column headerText="#{msgs['delete']}"
+						style="width:65px; text-align: center">
+						<p:commandLink id="delete"
+							oncomplete="PF('deleteSurveySectionDefinitionDialog').show()">
+							<i class="fas fa-trash-alt"></i>
+							<f:setPropertyActionListener value="#{surveySectionDefinition}"
+								target="#{adminSurveySectionDefinitionView.addedSurveySectionDefinition}" />
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<p:commandButton value="#{msgs['surveySectionDefinition.add']}"
+							action="#{adminSurveySectionDefinitionView.newSurveySectionDefinition}"
+							styleClass="ui-priority-primary" process="@this"
+							update=":addForm:addSurveySectionDefinitionDetail"
+							oncomplete="PF('addSurveySectionDefinitionDialog').show();" />
+					</div>
+				</div>
+			</h:form>
+
+			<h:form id="addForm">
+				<div class="ui-g" id="addSurveySectionDefinitionForm">
+					<p:dialog id="addSurveySectionDefinitionFormTitle"
+							header="#{msgs['surveySectionDefinition.add']}" 
+							widgetVar="addSurveySectionDefinitionDialog" 
+							modal="true"
+							class="modalSM">
+						<p:outputPanel id="addSurveySectionDefinitionDetail">
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel
+										value="#{msgs['surveySectionDefinition.surveySectionTitle.title']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+						            <p:selectOneMenu
+									value="#{adminSurveySectionDefinitionView.addedSurveySectionDefinition.surveySectionTitle}"
+									converter="surveySectionTitleConverter">
+									<f:selectItems
+										value="#{adminSurveySectionDefinitionView.surveySectionTitles}"
+										var="sectionTitle" itemLabel="#{sectionTitle.title}"
+										itemValue="#{sectionTitle}" />
+								</p:selectOneMenu>
+								</div>
+							</div>
+							
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel
+										value="#{msgs['surveySectionDefinition.surveySectionStrategy.name']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:selectOneMenu
+									value="#{adminSurveySectionDefinitionView.addedSurveySectionDefinition.surveySectionStrategy}"
+									converter="SurveySectionStrategyConverter">
+									<f:selectItems
+										value="#{adminSurveySectionDefinitionView.surveySectionStrategies}"
+										var="sectionStrategy" itemLabel="#{sectionStrategy.name}"
+										itemValue="#{sectionStrategy}" />
+								</p:selectOneMenu>
+								</div>
+							</div>
+							
+							<div class="ui-g-8">
+								<p:commandButton value="#{msgs['surveySectionDefinition.add']}"
+									update=":form"
+									action="#{adminSurveySectionDefinitionView.addSurveySectionDefinition}"
+									oncomplete="PF('addSurveySectionDefinitionDialog').hide();" />
+							</div>
+						</p:outputPanel>
+					</p:dialog>
+				</div>
+			</h:form>
+			
+			<h:form id="editForm">
+				<div class="ui-g" id="editSurveySectionDefinitionForm">
+					<p:dialog id="editSurveySectionDefinitionForm" 
+							header="#{msgs['surveySectionDefinition.edit']}"
+							widgetVar="editSurveySectionDefinitionDialog" 
+							modal="true"
+							class="modalSM">
+						<p:outputPanel id="editSurveySectionDefinitionDetail">
+							
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel
+										value="#{msgs['surveySectionDefinition.surveySectionTitle.title']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+						            <p:selectOneMenu
+									value="#{adminSurveySectionDefinitionView.addedSurveySectionDefinition.surveySectionTitle}"
+									converter="surveySectionTitleConverter"
+									style="width:125px">
+									<f:selectItems
+										value="#{adminSurveySectionDefinitionView.surveySectionTitles}"
+										var="sectionTitle" itemLabel="#{sectionTitle.title}"
+										itemValue="#{sectionTitle}" />
+								</p:selectOneMenu>
+								</div>
+							</div>
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel
+										value="#{msgs['surveySectionDefinition.surveySectionStrategy']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:selectOneMenu
+									value="#{adminSurveySectionDefinitionView.addedSurveySectionDefinition.surveySectionStrategy}"
+									converter="SurveySectionStrategyConverter"
+									style="width:125px">
+									<f:selectItems
+										value="#{adminSurveySectionDefinitionView.surveySectionStrategies}"
+										var="sectionStrategy" itemLabel="#{sectionStrategy.name}"
+										itemValue="#{sectionStrategy}" />
+								</p:selectOneMenu>
+								</div>
+							</div>
+							
+							<div class="ui-g-8">
+								<p:commandButton value="#{msgs['surveySectionDefinition.edit']}" 
+									update=":form"
+									action="#{adminSurveySectionDefinitionView.editSurveySectionDefinition}"
+									oncomplete="PF('editSurveySectionDefinitionDialog').hide();" />
+							</div>
+						</p:outputPanel>
+					</p:dialog>
+				</div>
+			</h:form>
+
+			<h:form id="deleteForm">
+				<div class="ui-g" id="deleteSurveySectionDefinitionForm">
+					<p:dialog id="deleteSurveySectionDefinitionForm"
+						header="#{msgs['surveySectionDefinition.delete']}"
+						widgetVar="deleteSurveySectionDefinitionDialog" 
+						modal="true"
+						class="modalSM">
+						<f:facet name="header">
+							<h:outputText value="#{msgs['surveySectionDefinition.delete']}" />
+						</f:facet>
+						<f:facet name="controls">
+							<h:outputLink value="#"
+								onclick="PF('deleteSurveySectionDefinitionForm').hide(); return false;">X</h:outputLink>
+						</f:facet>
+						<p>
+							<h:outputText
+								value="#{msgs['surveySectionDefinition.confirmdelete']}" />
+								
+						</p>
+						<br></br>
+						<br></br>
+						<div align="right">
+							<p:commandButton styleClass="btn btn-link"
+									value="#{msgs['general.button.no']}"
+									onclick="PF('deleteSurveySectionDefinitionDialog').hide()" />
+							<p:commandButton styleClass="btn btn-primary" update=":form"
+								value="#{msgs['general.button.yes']}"
+								action="#{adminSurveySectionDefinitionView.deleteSurveySectionDefinition}"
+								oncomplete="PF('deleteSurveySectionDefinitionDialog').hide();" />
+							
+						</div>
+					</p:dialog>
+				</div>
+			</h:form>
+			
+			
+		</div> 
+		
+	</div> 
+	
+</ui:composition>

@@ -54,6 +54,7 @@
 							oncomplete="PF('addUserDialog').show();" />
 					</div>
 				</div>
+				
 			</h:form>
 			<h:form id="addForm">
 				<div class="ui-g" id="addUserForm">
@@ -74,6 +75,14 @@
 								</div>
 								<div class="ui-g-8">
 									<p:inputText id="ln" value="#{adminUserView.addedUser.lastName}" />
+								</div>
+							</div>
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['user.shortName']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:inputText id="sn" value="#{adminUserView.addedUser.shortName}" />
 								</div>
 							</div>
 							<div class="ui-g">

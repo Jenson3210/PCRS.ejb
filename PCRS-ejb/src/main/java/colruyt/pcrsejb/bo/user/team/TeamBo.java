@@ -6,7 +6,7 @@ import java.util.Set;
 
 import colruyt.pcrsejb.bo.AbstractBo;
 
-public class TeamBo extends AbstractBo implements Serializable {
+public class TeamBo extends AbstractBo implements Serializable, Comparable<TeamBo> {
 	/*
 	 * PROPERTIES
 	 */
@@ -51,5 +51,13 @@ public class TeamBo extends AbstractBo implements Serializable {
 	}
 	public void setEnrolments(Set<EnrolmentBo> enrolments) {
 		this.enrolments = enrolments;
+	}
+	@Override
+	public int compareTo(TeamBo team) {
+		if(this.id == team.id) {
+			return 0;
+		}else {
+			return -1;
+		}
 	}
 }

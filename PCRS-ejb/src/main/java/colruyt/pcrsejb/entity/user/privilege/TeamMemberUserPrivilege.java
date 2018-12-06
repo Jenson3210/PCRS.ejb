@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -23,7 +24,7 @@ public class TeamMemberUserPrivilege extends SurveyUserPrivilege implements Seri
 	private static final long serialVersionUID = 1L;
 	@Column(name="STARTDATE")
 	private LocalDate startDateCurrentSurveyDefinition; 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="USERPRIVILEGE_ID")
     private Set<SurveySet> surveySetTreeSet = new TreeSet<>();
 	/*

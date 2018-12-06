@@ -20,7 +20,7 @@ public class DbSurveySectionDefinitionServiceDl implements Serializable, ISurvey
 	
 	private static final long serialVersionUID = 1L;
 
-	@Override
+	@Override 
 	public SurveySectionDefinition save(SurveySectionDefinition element) {
 		SurveySectionDefinition surveySectionDefinition;
 		if(element.getId() == null)
@@ -44,13 +44,11 @@ public class DbSurveySectionDefinitionServiceDl implements Serializable, ISurvey
 
 	@Override
 	public SurveySectionDefinition get(SurveySectionDefinition element) {
-		SurveySectionDefinition surveySectionDefinition = em.find(SurveySectionDefinition.class, element);
-		if(surveySectionDefinition == null)
-		{
+		SurveySectionDefinition surveySectionDefinition = em.find(SurveySectionDefinition.class, element.getId());
+		if(surveySectionDefinition == null) {
 			throw new EmptyStackException();
+			} return surveySectionDefinition;
 		}
-		return surveySectionDefinition;
-	}
 
 	@Override
 	public List<SurveySectionDefinition> getAll() {

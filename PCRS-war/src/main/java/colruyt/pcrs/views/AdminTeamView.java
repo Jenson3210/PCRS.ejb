@@ -1,26 +1,27 @@
 package colruyt.pcrs.views;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
-import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveyDefinitionBo;
+import colruyt.pcrs.DTO.TeamEnrolmentBo;
 import colruyt.pcrsejb.bo.user.UserBo;
-import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
-import colruyt.pcrsejb.bo.user.privilege.TeamMemberUserPrivilegeBo;
-import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.bo.user.team.EnrolmentBo;
 import colruyt.pcrsejb.bo.user.team.TeamBo;
 import colruyt.pcrsejb.facade.user.IUserFacade;
 import colruyt.pcrsejb.facade.user.team.IEnrolmentFacade;
 import colruyt.pcrsejb.facade.user.team.ITeamFacade;
 import colruyt.pcrsejb.util.exceptions.MemberAlreadyHasATeamException;
+import colruyt.pcrsejb.util.exceptions.NoExistingMemberException;
 
 @Named
 @ViewScoped
@@ -38,16 +39,23 @@ public class AdminTeamView implements Serializable {
 	private EnrolmentBo manipulatedEnrolmentBo;
 	private UserBo user;
 	private String userPrivilege;
-	private SurveyDefinitionBo surveyDefinition;
-
+	private List<TeamEnrolmentBo> teamEnrolments = new ArrayList<>();;
+   
 	@PostConstruct
-	private void fillList() {
-		teams = teamFacade.getAll();
+	private void fillList() {  
+  		teams = teamFacade.getAll();
+		for(TeamBo t : teams) {
+			TeamEnrolmentBo teamEnrolment = new TeamEnrolmentBo(t);
+			for (EnrolmentBo e : t.getEnrolments()) {
+				teamEnrolment.addEnrolmentToMap(e, getUserFromEnrolment(e));
+			}
+			teamEnrolments.add(teamEnrolment);
+		} 
 	}
-
+      
 	public List<TeamBo> getTeams() {
 		return teams;
-	}
+	} 
 
 	public void setTeams(List<TeamBo> teams) {
 		this.teams = teams;
@@ -66,11 +74,11 @@ public class AdminTeamView implements Serializable {
 	}
 
 	public void setManipulatedTeamBo(TeamBo manipulatedTeamBo) {
-		this.manipulatedTeamBo = manipulatedTeamBo;
+		this.manipulatedTeamBo = manipulatedTeamBo; 
 	}
 
 	public UserBo getUser() {
-		return user;
+ 		return user;  
 	}
 
 	public void setUser(UserBo user) {
@@ -91,75 +99,49 @@ public class AdminTeamView implements Serializable {
 
 	public void addTeam() {
 		teams.add(teamFacade.save(manipulatedTeamBo));
+		teamEnrolments.add(new TeamEnrolmentBo(manipulatedTeamBo));
 	}
 
 	public void newEnrolment() {
-		manipulatedEnrolmentBo = new EnrolmentBo();
-	}
+ 		manipulatedEnrolmentBo = new EnrolmentBo();
 
+	}
+	 
 	public void deleteEnrolment() {
-		System.out.println(manipulatedEnrolmentBo.getUser().getFirstName());
-		EnrolmentBo e = null;
 		for (TeamBo team : teams) {
 			for (EnrolmentBo enrolment : team.getEnrolments()) {
 				if (enrolment.getId() == manipulatedEnrolmentBo.getId()) {
-					e = enrolment;
+					teamFacade.deleteUserFromTeam(team, enrolment, user);
+					removeTeamEnrolment(team, enrolment);
 				}
 			}
-			if(e != null) {
-				team.getEnrolments().remove(e);
-				enrolmentFacade.delete(e);
+		}
+	}
+
+	private void removeTeamEnrolment(TeamBo team, EnrolmentBo enrolment) {
+		for(TeamEnrolmentBo teb : teamEnrolments) {
+			if(teb.getTeam().equals(team)) {
+				Iterator<EnrolmentBo> iterator = teb.getEnrolmentMap().keySet().iterator();
+				
+				while (iterator.hasNext()) {
+					EnrolmentBo e = iterator.next();
+					if(enrolment.equals(e)) {
+						iterator.remove();
+					}
+				}
 			}
 		}
 	}
 
 	public void addEnrolment() {
-    	UserPrivilegeBo privilege = null;
-    	EnrolmentBo enrolment = new EnrolmentBo();
-    	
     	try {
-    	if(PrivilegeTypeBo.TEAMMEMBER.getShortName().equals(userPrivilege)) {
-    		List<TeamMemberUserPrivilegeBo> memberPrivs = new ArrayList<>();
-    			for (UserPrivilegeBo p : user.getPrivileges()) {
-        			if (p.getPrivilegeType().equals(PrivilegeTypeBo.TEAMMEMBER)) {
-        				if (p.isActive()) {
-        					//TODO FACESMESSAGE TOEVOEGEN
-        					throw new MemberAlreadyHasATeamException();
-        				}
-        				memberPrivs.add((TeamMemberUserPrivilegeBo) p);
-        			}
-        		}
-    			for (TeamMemberUserPrivilegeBo p : memberPrivs) {
-    				if (p.getSurveyDefinition().getName().equalsIgnoreCase(surveyDefinition.getName())) {
-    					privilege = p;
-    				}
-    			}	
-    			if (privilege == null) {
-    				privilege = new TeamMemberUserPrivilegeBo();
-    	    		privilege.setPrivilegeType(PrivilegeTypeBo.TEAMMEMBER);
-    	    		//((TeamMemberUserPrivilegeBo) privilege).setStartDateCurrentSurveyDefinition(LocalDate.now());
-    	    		((TeamMemberUserPrivilegeBo) privilege).setSurveyDefinition(surveyDefinition);
-    			}   	    		
-        	}else {    		
-    			for (UserPrivilegeBo p : user.getPrivileges()) {
-        			if (p.getPrivilegeType().equals(PrivilegeTypeBo.TEAMMANAGER)) {
-        				privilege = p;
-        			}
-        		}
-        		if (privilege == null) {
-        			privilege = new UserPrivilegeBo();
-        			privilege.setPrivilegeType(PrivilegeTypeBo.TEAMMANAGER);
-        		}
-        	}
-        	
-    		privilege.setActive(true);
-    		user.getPrivileges().add(privilege);
-        	enrolment.setUser(user); 
-        	enrolment.setActive(true);
-
-        	manipulatedTeamBo.getEnrolments().add(enrolment);
-        	
-        	teamFacade.save(manipulatedTeamBo);
+    		EnrolmentBo enrolment = teamFacade.addUserToTeam(manipulatedTeamBo, user, userPrivilege);
+			manipulatedTeamBo.getEnrolments().add(enrolment);
+			for(TeamEnrolmentBo te : teamEnrolments) {
+				if(te.getTeam().equals(manipulatedTeamBo)){
+					te.addEnrolmentToMap(enrolment, user);
+				}
+			}
     	} catch (MemberAlreadyHasATeamException ex) {
     		
     	}
@@ -168,5 +150,27 @@ public class AdminTeamView implements Serializable {
 	public List<UserBo> completeUser(String query) {
 		return userFacade.getUsersByShortName("%" + query + "%");
 	}
+	
+	public UserBo getUserFromEnrolment(EnrolmentBo enrolment){
+		UserBo user = null;
+		
+		try {
+			user = userFacade.getUserByEnrolment(enrolment);
+		} catch (NoExistingMemberException e) {
+			System.out.println(e.getMessage());
+		}
+		return user;
+	}
 
+	public List<TeamEnrolmentBo> getTeamEnrolments() {
+		return teamEnrolments; 
+	}
+
+	public void setTeamEnrolments(List<TeamEnrolmentBo> teamEnrolments) {
+		this.teamEnrolments = teamEnrolments;
+	}
+	 
+	
+
+	
 }

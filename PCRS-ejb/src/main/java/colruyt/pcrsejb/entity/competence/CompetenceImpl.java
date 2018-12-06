@@ -2,21 +2,14 @@ package colruyt.pcrsejb.entity.competence;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.SecondaryTable;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import colruyt.pcrsejb.entity.AbstractEntity;
 
 @Entity
 @Table(name="COMPETENCEIMPLEMENTATIONS")
 @SecondaryTable(name="COMPETENCEDESCRIPTIONS")
+@NamedQuery(name="COMPETENCEIMPL.GETALL", query="SELECT c FROM CompetenceImpl c")
 public class CompetenceImpl extends AbstractEntity implements Serializable {
 	/*
 	 * PROPERTIES

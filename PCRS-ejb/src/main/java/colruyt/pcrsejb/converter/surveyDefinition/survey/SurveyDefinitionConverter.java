@@ -17,7 +17,9 @@ public class SurveyDefinitionConverter implements GenericConverter<SurveyDefinit
 		if (bo != null) {
 			entity = new SurveyDefinition();
 			ConverterUtils.setIfNotNull(bo::getId, entity::setId);
-			ConverterUtils.setIfNotNull(bo::getName, entity::setName);
+			ConverterUtils.setIfNotNull(bo::getFunction, entity::setFunction);
+			ConverterUtils.setIfNotNull(bo::getOperatingUnit, entity::setOperatingUnit);
+			ConverterUtils.setIfNotNull(bo::getCountry, entity::setCountry);
 			entity.setSurveySections(surveySectionDefinitionImplConverter.convertToEntities(bo.getSurveySections()));
 			return entity;
 		}
@@ -30,7 +32,9 @@ public class SurveyDefinitionConverter implements GenericConverter<SurveyDefinit
 		if (entity != null) {
 			bo = new SurveyDefinitionBo();
 			ConverterUtils.setIfNotNull(entity::getId, bo::setId);
-			ConverterUtils.setIfNotNull(entity::getName, bo::setName);
+			ConverterUtils.setIfNotNull(entity::getFunction, bo::setFunction);
+			ConverterUtils.setIfNotNull(entity::getOperatingUnit, bo::setOperatingUnit);
+			ConverterUtils.setIfNotNull(entity::getCountry, bo::setCountry);
 			bo.setSurveySections(surveySectionDefinitionImplConverter.convertToBos(entity.getSurveySections()));
 		}
 		return bo;

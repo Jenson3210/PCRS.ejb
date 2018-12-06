@@ -2,6 +2,7 @@ package colruyt.pcrs.views;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -22,9 +23,10 @@ public class AdminCompetenceView implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@EJB
 	private ICompetenceFacade competenceFacade;
+	@EJB
 	private ICompetenceLevelFacade competenceLevelFacade;
 	private CompetenceBo competenceBo;
-	private CompetenceLevelBo bo;
+	private CompetenceLevelBo level;
 	private List<CompetenceBo> competences;
 	private Set<CompetenceLevelBo> levels = new HashSet<>();
 	
@@ -58,14 +60,8 @@ public class AdminCompetenceView implements Serializable{
 	}
 	
 	public void deleteCompetence() {
-		CompetenceBo c = null;
-		for (CompetenceBo competence : competences) {
-			if (competence.getId() == competenceBo.getId()) {
-				c = competence;
-			}
-		}
-		competences.remove(c);
-		competenceFacade.delete(c);
+		competences.remove(competenceBo);
+		competenceFacade.delete(competenceBo);
 	}
 
 	private void newLevels() {
@@ -78,16 +74,28 @@ public class AdminCompetenceView implements Serializable{
 	public void newLevel() { 
 		levels.add(new CompetenceLevelBo("", levels.size() + 1));
 	}
-	public void  removeLevel(){
-		CompetenceLevelBo c = new CompetenceLevelBo();
-		for (CompetenceLevelBo competence : levels) {
-			if (competence.getId() == bo.getId()) {
-				c = competence;
+	public void removeLevel(){
+		//System.out.println(levels.size());
+		if(levels.size() > 2) {
+			for (Iterator<CompetenceLevelBo> iterator = levels.iterator(); iterator.hasNext(); ) {
+				CompetenceLevelBo bo = iterator.next();
+				if (bo.getOrderLevel() == level.getOrderLevel()) {
+					iterator.remove();
+					levels.remove(bo);
+					if (level.getId() != null) {
+						competenceLevelFacade.delete(level);
+					}
+				}
+			}
+			int j = 1;
+			for (CompetenceLevelBo clevel : levels) {
+				if (j != clevel.getOrderLevel()) {
+					clevel.setOrderLevel(j);
+				}
+				j = j + 1;
 			}
 		}
-		
-		levels.remove(c);
-		competenceLevelFacade.delete(c);
+
 	}
 	
 	public CompetenceBo getCompetenceBo() {
@@ -100,7 +108,7 @@ public class AdminCompetenceView implements Serializable{
 	}
 
 	public List<CompetenceBo> getCompetences() {
-		competences = competenceFacade.getAll();
+		//competences = competenceFacade.getAll();
 		return competences;
 	}
 
@@ -114,5 +122,13 @@ public class AdminCompetenceView implements Serializable{
 
 	public void setLevels(Set<CompetenceLevelBo> levels) {
 		this.levels = levels;
+	}
+
+	public CompetenceLevelBo getLevel() {
+		return level;
+	}
+
+	public void setLevel(CompetenceLevelBo level) {
+		this.level = level;
 	}
 }

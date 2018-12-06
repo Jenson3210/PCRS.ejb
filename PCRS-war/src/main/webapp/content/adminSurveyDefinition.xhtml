@@ -16,8 +16,16 @@
 						<h:outputText value="#{msgs['surveyDefinition.title']}" />
 					</f:facet>
 					
-					<p:column headerText="#{msgs['surveyDefinition.title']}">
-						<h:outputText value="#{surveyDefinition.key.name}" />
+					<p:column headerText="#{msgs['surveyDefinition.function']}">
+						<h:outputText value="#{surveyDefinition.key.function}" />
+					</p:column>
+					
+					<p:column headerText="#{msgs['surveyDefinition.operatingUnit']}">
+						<h:outputText value="#{surveyDefinition.key.operatingUnit}" />
+					</p:column>
+					
+					<p:column headerText="#{msgs['surveyDefinition.country']}">
+						<h:outputText value="#{surveyDefinition.key.country}" />
 					</p:column>
 					
 					<p:column headerText="#{msgs['surveyDefinition.responsible']}">
@@ -29,8 +37,10 @@
 						<p:commandLink update=":editForm:editSurveyDefinition" id="edit"
 							oncomplete="PF('editSurveyDefinitionDialog').show()">
 							<i class="fas fa-pencil-alt"></i>
-							<f:setPropertyActionListener value="#{surveyDefinition}"
-								target="#{adminSurveyDefinitionView.manipulatedRow}" />
+							<f:setPropertyActionListener value="#{surveyDefinition.value}"
+								target="#{adminSurveyDefinitionView.manipulatedUserBo}" />
+							<f:setPropertyActionListener value="#{surveyDefinition.key}"
+								target="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo}" />
 						</p:commandLink>
 					</p:column>
 					
@@ -38,8 +48,10 @@
 						style="width:65px; text-align: center">
 						<p:commandLink id="delete" oncomplete="PF('deleteSurveyDefinitionDialog').show()">
 							<i class="fas fa-trash-alt"></i>
-							<f:setPropertyActionListener value="#{surveyDefinition}"
-								target="#{adminSurveyDefinitionView.manipulatedRow}" />
+							<f:setPropertyActionListener value="#{surveyDefinition.value}"
+								target="#{adminSurveyDefinitionView.manipulatedUserBo}" />
+							<f:setPropertyActionListener value="#{surveyDefinition.key}"
+								target="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo}" />
 						</p:commandLink>
 					</p:column>
 				</p:dataTable>
@@ -63,7 +75,7 @@
 									<p:outputLabel value="#{msgs['surveyDefinition.title']}"></p:outputLabel>
 								</div>
 								<div class="ui-g-8">
-									<p:inputText id="surveyTitle" value="#{adminSurveyDefinitionView.addedSurveyDefinitionBo.name}" required="true"/>
+									<p:inputText id="surveyTitle" value="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo.name}" required="true"/>
 									<p:message for="surveyTitle"/>
 								</div> 
 							</div> 
@@ -77,7 +89,7 @@
 									  <p:autoComplete id="shortName" completeMethod="#{adminSurveyDefinitionView.completeShortName}" 
 									  				var="user" itemLabel="#{user.email}" itemValue="#{user}" forceSelection="true" 
 									  				maxlength="5" emptyMessage="#{msgs['surveyDefinition.noResults']}"
-									 				value="#{adminSurveyDefinitionView.addedUserBo}" 
+									 				value="#{adminSurveyDefinitionView.manipulatedUserBo}" 
 									 				required="true" converter="userBoConverter"/>
 									 <p:message for="shortName"/>
 								</div> 
@@ -104,7 +116,7 @@
 									<p:outputLabel value="#{msgs['surveyDefinition.title']}"></p:outputLabel>
 								</div>
 								<div class="ui-g-8">
-									<p:inputText id="surveyTitle" value="#{adminSurveyDefinitionView.addedSurveyDefinitionBo.name}" required="true"/>
+									<p:inputText id="surveyTitle" value="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo.name}" required="true"/>
 									<p:message for="surveyTitle"/>
 								</div> 
 							</div> 
@@ -118,7 +130,7 @@
 									  <p:autoComplete id="shortName" completeMethod="#{adminSurveyDefinitionView.completeShortName}" 
 									  				var="user" itemLabel="#{user.email}" itemValue="#{user}" forceSelection="true" 
 									  				maxlength="5" emptyMessage="#{msgs['surveyDefinition.noResults']}"
-									 				value="#{adminSurveyDefinitionView.addedSurveyDefinitionBo.responsibleUser}" 
+									 				value="#{adminSurveyDefinitionView.manipulatedUserBo}" 
 									 				required="true" converter="userBoConverter"/>
 									 <p:message for="shortName"/>
 								</div> 

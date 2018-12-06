@@ -8,12 +8,14 @@ import javax.ejb.Stateless;
 
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
-import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
+import colruyt.pcrsejb.bo.user.team.EnrolmentBo;
 import colruyt.pcrsejb.converter.user.UserConverter;
 import colruyt.pcrsejb.converter.user.privilege.PrivilegeTypeTranslator;
 import colruyt.pcrsejb.converter.user.privilege.UserPrivilegeConverter;
+import colruyt.pcrsejb.converter.user.team.EnrolmentConverter;
 import colruyt.pcrsejb.service.bl.user.IUserServiceBl;
 import colruyt.pcrsejb.util.exceptions.NoExistingEmailException;
+import colruyt.pcrsejb.util.exceptions.NoExistingMemberException;
 
 @Stateless
 public class UserFacade implements Serializable, IUserFacade {
@@ -25,6 +27,7 @@ public class UserFacade implements Serializable, IUserFacade {
 	@EJB
 	private IUserServiceBl userServiceBl;
 	private UserConverter userConverter = new UserConverter();
+	private EnrolmentConverter enrolmentConverter = new EnrolmentConverter();
 	private UserPrivilegeConverter privilegeConverter = new UserPrivilegeConverter(); 
 	private PrivilegeTypeTranslator privilegeTypeTranslator= new PrivilegeTypeTranslator();
 
@@ -59,6 +62,11 @@ public class UserFacade implements Serializable, IUserFacade {
 	@Override
 	public List<UserBo> getUsersByShortName(String shortName) {
 		return userConverter.convertToBos(userServiceBl.getUsersByShortName(shortName));
+	}
+
+	@Override
+	public UserBo getUserByEnrolment(EnrolmentBo enrolment) throws NoExistingMemberException {
+		return userConverter.convertToBo(userServiceBl.getUserByEnrolment(enrolmentConverter.convertToEntity(enrolment)));
 	}
 
 }

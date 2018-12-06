@@ -1,6 +1,7 @@
 package colruyt.pcrsejb.bo.surveyDefinition.survey;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import colruyt.pcrsejb.bo.AbstractBo;
@@ -16,7 +17,7 @@ public class SurveySectionDefinitionBo extends AbstractBo implements Serializabl
 	private Boolean administratorCreated;
 	private SurveySectionTitleBo surveySectionTitle;
 	private SurveySectionStrategyBo surveySectionStrategy;
-	private List<CompetenceImplBo> surveySectionCompetences;
+	private List<CompetenceImplBo> surveySectionCompetences = new ArrayList<>(); 
 	/*
 	 * CONSTRUCTORS
 	 */
@@ -72,7 +73,6 @@ public class SurveySectionDefinitionBo extends AbstractBo implements Serializabl
 		this.administratorCreated = administratorCreated;
 	}
 	
-	
 	@Override
 	public String toString() {
 		return "SurveySectionDefinitionBo [id=" + id + "]";
@@ -100,9 +100,5 @@ public class SurveySectionDefinitionBo extends AbstractBo implements Serializabl
 			return false;
 		return true;
 	}
-	
-	
-	
-	
 	
 }

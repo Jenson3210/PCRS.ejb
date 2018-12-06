@@ -19,7 +19,6 @@ public class EnrolmentConverter implements GenericConverter<Enrolment, Enrolment
 			entity = new Enrolment();
 			ConverterUtils.setIfNotNull(bo::getId, entity::setId);
 			ConverterUtils.setIfNotNull(bo::isActive, entity::setActive);
-			entity.setUser(userConverter.convertToEntity(bo.getUser()));
 			entity.setUserPrivilege(userPrivilegeConverter.convertToEntity(bo.getUserPrivilege()));
 			
 		} 
@@ -33,7 +32,6 @@ public class EnrolmentConverter implements GenericConverter<Enrolment, Enrolment
 			bo = new EnrolmentBo();
 			ConverterUtils.setIfNotNull(entity::getId, bo::setId);
 			ConverterUtils.setIfNotNull(entity::isActive, bo::setActive);
-			bo.setUser(userConverter.convertToBo(entity.getUser()));
 			bo.setUserPrivilege(userPrivilegeConverter.convertToBo(entity.getUserPrivilege()));
 			
 		} 

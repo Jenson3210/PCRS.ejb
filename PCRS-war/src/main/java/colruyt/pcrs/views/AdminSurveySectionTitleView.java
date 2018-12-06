@@ -13,7 +13,7 @@ import javax.inject.Named;
 
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionBo;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionTitleBo;
-import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveySectionDefinition;
+import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveySectionDefinitionFacade;
 import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveySectionTitleFacade;
 
 @Named
@@ -26,7 +26,7 @@ public class AdminSurveySectionTitleView implements Serializable {
 	@EJB
 	private ISurveySectionTitleFacade surveySectionTitleFacade;
 	@EJB
-	private ISurveySectionDefinition surveySectionDefinitionFacade;
+	private ISurveySectionDefinitionFacade surveySectionDefinitionFacade;
 	
 	
 	@PostConstruct 

@@ -11,50 +11,52 @@
         <div class="ui-g-1"/>
         <div class="ui-g-10">
             <h:form id="form">
-                <p:dataTable var="team" value="#{managerTeamView.teams}"
-                             styleClass="teamOverviewTable" sortBy="#{team.name}"
+                <p:dataTable var="team" value="#{managerTeamView.getTeamEnrolments()}"
+                             styleClass="teamOverviewTable" sortBy="#{team.getTeam().name}"
                           
                              id="teamDetail">
                     <f:facet name="header"><h:outputText value="#{msgs['team.header']}"/></f:facet>
                     <p:headerRow>
                         <p:column styleClass="ui-g-6">
-                            <h:outputText value="#{team.name}"/>
-                        </p:column>
-                        <p:column styleClass="ui-g-4" style="float: right">
-                            <h:outputText value="#{team.enrolments.size()}"/>
+                            <h:outputText value="#{team.getTeam().name}"/>
                         </p:column>
                     </p:headerRow>
                     <p:column>
-                        <p:dataTable var="enrolment" value="#{team.enrolments}">
+                        <p:dataTable var="enrolment" value="#{team.getEnrolmentMap()}"  >
                             <p:column style="width: 32px" >
-                              <p:rowToggler rendered="#{managerTeamView.isMe(enrolment.user)}" />
+                              <p:rowToggler rendered="#{managerTeamView.isMe(enrolment.value)}" />
                             </p:column>
-                            <p:column styleClass="ui-g-6">
-                                <h:outputText value="#{enrolment.user.firstName}  #{enrolment.user.lastName}" rendered="#{managerTeamView.isMe(enrolment.user)}"/>
+                            <p:column>
+                                <h:outputText value="#{enrolment.value.firstName}  #{enrolment.value.lastName}" />
                             </p:column>
-                            <p:column styleClass="ui-g-4" >
-                                <h:outputText value="#{enrolment.userPrivilege.privilegeType.fullName}" rendered="#{managerTeamView.isMe(enrolment.user)}"/>
+                            <p:column >
+                                <h:outputText value="#{enrolment.key.userPrivilege.privilegeType.fullName}" />
                             </p:column>
-							<p:column styleClass="ui-g-2" >
-								<p:commandButton value="Generate Survey" rendered="#{managerTeamView.isMe(enrolment.user)}"/>
+							<p:column >
+								<p:commandButton value="Generate Survey" onclick="PF('dlg3').show()"  
+								 ajax="true"  action="#{managerTeamViewDialog.init(enrolment.value)}"  rendered="#{managerTeamView.isMe(enrolment.value)}"   />
 							</p:column>
 							
-							   <p:rowExpansion>
+					    
+					    <p:rowExpansion>
                        
-            <p:panelGrid  columns="2" columnClasses="label,value" widt="100%">
-                						
- 						<h:outputText value="#{enrolment.user.firstName}  #{enrolment.user.lastName}"></h:outputText>
-						<p:progressBar id="progressBarEmployee" value="#{userProfileView.getSurveyFacade().getPercentageCompleteForMemberSurvey(webUser.getUser())}"  widgetVar="pbClient"
+            			<p:panelGrid  columns="2"  widt="100%">
+                	
+ 						<h:outputText value="#{enrolment.value.firstName}  #{enrolment.value.lastName}"></h:outputText>
+						<p:progressBar id="progressBarEmployee" value="#{managerTeamView.getMemberSurveyPercentage(enrolment.value)}"  widgetVar="pbClient"
 							style="width:300px" />
-							
-							
+					
+						
+					
 						<h:outputText value="Jij"></h:outputText>
-						<p:progressBar id="progressBarBoss" widgetVar="pbClient" value="#{userProfileView.getSurveyFacade().getPercentageCompleteForMemberSurvey(webUser.getUser())}" style="width:300px" />
-							
+						<p:progressBar id="progressBarBoss" widgetVar="pbClient" value="#{managerTeamView.getManagerSurveyPercentage(webUser.getUser())}" style="width:300px" />
+						
+						
+					
+					
 						<h:outputText value=""></h:outputText>
- 			
-              
-               						 <p:commandButton value="Generate Consensus"/>
+						<p:commandButton disabled="true" value="Generate Consensus"/>
+						
            						 </p:panelGrid>
         					</p:rowExpansion>
                         </p:dataTable>
@@ -66,6 +68,31 @@
             </h:form>
         </div>
     </div>
+    
+    
+    
+     <p:dialog header="TITLELLELEL"  widgetVar="dlg3" modal="true" resizable="false">
+        <p:panelGrid columns="2" id="display" columnClasses="label,output">
+        
+        <p:selectOneListbox id="advanced" value="#{managerTeamViewDialog.availableList}" var="t" filter="true" filterMatchMode="contains">
+            <f:selectItems value="#{managerTeamViewDialog.availableList}}" var="theme" itemLabel="#{theme.getSurveySectionDefinitionBo().getSurveySectionTitle().getTitle()}" itemValue="#{theme}" />
+             
+            <p:column>
+                <h:outputText value="#{t.getSurveySectionDefinitionBo().getSurveySectionTitle().getTitle()}" />
+            </p:column>
+        </p:selectOneListbox>
+        
+          <p:selectOneListbox id="advanced2" value="#{managerTeamViewDialog.chosenList}" var="t" filter="true" filterMatchMode="contains">
+            <f:selectItems value="#{managerTeamViewDialog.chosenList}}" var="theme" itemLabel="#{theme.getSurveySectionDefinitionBo().getSurveySectionTitle().getTitle()}" itemValue="#{theme}" />
+             
+            <p:column>
+                <h:outputText value="#{t.getSurveySectionDefinitionBo().getSurveySectionTitle().getTitle()}" />
+            </p:column>
+        </p:selectOneListbox>
+        
+        </p:panelGrid>
+    </p:dialog>
+
 
 </ui:composition>
 

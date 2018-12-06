@@ -5,14 +5,14 @@ import java.io.Serializable;
 import colruyt.pcrsejb.bo.AbstractBo;
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
+import colruyt.pcrsejb.entity.user.team.Enrolment;
 
-public class EnrolmentBo extends AbstractBo implements Serializable {
+public class EnrolmentBo extends AbstractBo implements Serializable, Comparable<EnrolmentBo> {
 	/*
 	 * PROPERTIES
 	 */
 	private static final long serialVersionUID = 1L;
     private Integer id;
-    private UserBo user;
     private UserPrivilegeBo userPrivilege;
     private Boolean active;
     /*
@@ -21,16 +21,14 @@ public class EnrolmentBo extends AbstractBo implements Serializable {
     public EnrolmentBo() {
     	super();
     }
-    public EnrolmentBo(UserBo user, UserPrivilegeBo userPrivilege, Boolean active) {
+    public EnrolmentBo(UserPrivilegeBo userPrivilege, Boolean active) {
 		super();
-		this.user = user;
 		this.userPrivilege = userPrivilege;
 		this.active = active;
 	}
-    public EnrolmentBo(Integer id, UserBo user, UserPrivilegeBo userPrivilege, Boolean active) {
+    public EnrolmentBo(Integer id, UserPrivilegeBo userPrivilege, Boolean active) {
 		super();
 		this.id = id;
-		this.user = user;
 		this.userPrivilege = userPrivilege;
 		this.active = active;
 	}
@@ -43,12 +41,6 @@ public class EnrolmentBo extends AbstractBo implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public UserBo getUser() {
-		return user;
-	}
-	public void setUser(UserBo user) {
-		this.user = user;
-	}
 	public UserPrivilegeBo getUserPrivilege() {
 		return userPrivilege;
 	}
@@ -60,5 +52,13 @@ public class EnrolmentBo extends AbstractBo implements Serializable {
 	}
 	public void setActive(Boolean active) {
 		this.active = active;
+	}
+	@Override
+	public int compareTo(EnrolmentBo enrolment) {
+		if(this.id == enrolment.id) {
+			return 0;
+		}else {
+			return -1;
+		}
 	}
 }

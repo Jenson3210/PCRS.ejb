@@ -4,12 +4,12 @@ import colruyt.pcrsejb.bo.surveys.rating.ConsensusRatingBo;
 import colruyt.pcrsejb.bo.surveys.rating.RatingBo;
 import colruyt.pcrsejb.converter.ConverterUtils;
 import colruyt.pcrsejb.converter.GenericConverter;
-import colruyt.pcrsejb.converter.competence.CompetenceConverter;
+import colruyt.pcrsejb.converter.competence.CompetenceImplConverter;
 import colruyt.pcrsejb.entity.surveys.rating.ConsensusRating;
 import colruyt.pcrsejb.entity.surveys.rating.Rating;
 
 public class RatingConverter implements GenericConverter<Rating, RatingBo> {
-	private CompetenceConverter competenceConverter = new CompetenceConverter();
+	private CompetenceImplConverter competenceImplConverter = new CompetenceImplConverter();
 
 	@Override
 	public Rating convertToEntity(RatingBo bo) {
@@ -25,7 +25,7 @@ public class RatingConverter implements GenericConverter<Rating, RatingBo> {
 			ConverterUtils.setIfNotNull(bo::getId, entity::setId);
 			ConverterUtils.setIfNotNull(bo::getEnergy, entity::setEnergy);
 			ConverterUtils.setIfNotNull(bo::getLevel, entity::setLevel);
-			entity.setCompetence(competenceConverter.convertToEntity(bo.getCompetence()));
+			entity.setCompetence(competenceImplConverter.convertToEntity(bo.getCompetence()));
 		}
 		return entity;
 	}
@@ -44,7 +44,7 @@ public class RatingConverter implements GenericConverter<Rating, RatingBo> {
 			ConverterUtils.setIfNotNull(entity::getId, bo::setId);
 			ConverterUtils.setIfNotNull(entity::getEnergy, bo::setEnergy);
 			ConverterUtils.setIfNotNull(entity::getLevel, bo::setLevel);
-			bo.setCompetence(competenceConverter.convertToBo(entity.getCompetence()));
+			bo.setCompetence(competenceImplConverter.convertToBo(entity.getCompetence()));
 		}
 		return bo;
 	}

@@ -6,10 +6,15 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionImplBo;
 import colruyt.pcrsejb.bo.surveys.surveySet.SurveySetBo;
 import colruyt.pcrsejb.bo.user.UserBo;
+import colruyt.pcrsejb.converter.surveyDefinition.survey.SurveySectionDefinitionImplConverter;
 import colruyt.pcrsejb.converter.surveys.surveySet.SurveySetConverter;
+import colruyt.pcrsejb.converter.user.UserConverter;
+import colruyt.pcrsejb.service.bl.surveyDefinition.survey.ISurveySectionDefinitionImplServiceBl;
 import colruyt.pcrsejb.service.bl.surveys.surveySet.ISurveySetServiceBl;
+import colruyt.pcrsejb.util.exceptions.NoSurveySetException;
 
 @Stateless
 public class SurveySetFacade implements Serializable,ISurveySetFacade{
@@ -19,6 +24,10 @@ public class SurveySetFacade implements Serializable,ISurveySetFacade{
 	private SurveySetConverter surveySetConverter = new SurveySetConverter();
 	@EJB
 	private ISurveySetServiceBl surveySetServiceBl;
+	@EJB
+	private ISurveySectionDefinitionImplServiceBl surveySectionImplBl;
+	private SurveySectionDefinitionImplConverter surveySectionDefinitionImplConverter = new SurveySectionDefinitionImplConverter();
+	private UserConverter userConverter = new UserConverter();
 	
 	@Override
 	public SurveySetBo save(SurveySetBo entityBo) {
@@ -41,21 +50,28 @@ public class SurveySetFacade implements Serializable,ISurveySetFacade{
 	}
 
 	@Override
-	public Integer getPercentageCompleteForMemberSurvey(UserBo user) {
-		// TODO Auto-generated method stub
-		return 50;
+	public Integer getPercentageCompleteForMemberSurvey(UserBo user) throws NoSurveySetException {
+		return this.surveySetServiceBl.getPercentageCompleteForMemberSurvey(this.userConverter.convertToEntity(user));
 	}
 
 	@Override
-	public Integer getPercentageCompleteForManagerSurvey(UserBo user) {
-		// TODO Auto-generated method stub
-		return 40;
+	public Integer getPercentageCompleteForManagerSurvey(UserBo user)  throws NoSurveySetException{
+		return this.surveySetServiceBl.getPercentageCompleteForManagerSurvey(this.userConverter.convertToEntity(user));
 	}
 
 	@Override
-	public Integer getPercentageCompleteForConsensusSurvey(UserBo user) {
-		// TODO Auto-generated method stub
-		return 70;
+	public Integer getPercentageCompleteForConsensusSurvey(UserBo user)  throws NoSurveySetException{ 
+		return this.surveySetServiceBl.getPercentageCompleteForConsensusSurvey(this.userConverter.convertToEntity(user));
+	}
+
+	@Override
+	public SurveySetBo generateSurveySetFor(List<SurveySectionDefinitionImplBo> sections) {
+		return surveySetConverter.convertToBo(surveySetServiceBl.createSurveySetForUser(surveySectionDefinitionImplConverter.convertToEntities(sections)));
+	}
+
+	@Override
+	public List<SurveySectionDefinitionImplBo> getPossibleSections(UserBo user) {
+		return surveySectionDefinitionImplConverter.convertToBos(surveySectionImplBl.getAllByUser(userConverter.convertToEntity(user)));
 	}
 
 }
