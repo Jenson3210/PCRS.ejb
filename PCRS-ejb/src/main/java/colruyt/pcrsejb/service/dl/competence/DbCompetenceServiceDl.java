@@ -27,6 +27,7 @@ public class DbCompetenceServiceDl implements ICompetenceServiceDl, Serializable
         else
         {
         	competence = em.merge(element);
+        	em.flush();
         }
         return competence;
         
