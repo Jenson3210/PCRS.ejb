@@ -114,6 +114,33 @@
         
         </p:panelGrid>
     </p:dialog>
+    
+    
+     <p:dialog header="Change Function" widgetVar="dlg3" modal="true" resizable="false">
+        <p:panelGrid columns="2" id="display" columnClasses="label,output">
+        
+        <p:selectOneListbox id="advanced" value="#{managerTeamViewDialog.availableList}" var="t" filter="true" filterMatchMode="contains">
+            <f:selectItems value="#{managerTeamViewDialog.availableList}}" var="theme" itemLabel="#{theme.getSurveySectionDefinitionBo().getSurveySectionTitle().getTitle()}" itemValue="#{theme}" />
+             
+            <p:column>
+                <h:outputText value="#{t.getSurveySectionDefinitionBo().getSurveySectionTitle().getTitle()}" />
+            </p:column>
+        </p:selectOneListbox>
+        
+        	
+          <p:selectOneListbox id="advanced2" value="#{managerTeamViewDialog.chosenList}" var="t" filter="true" filterMatchMode="contains">
+            <f:selectItems value="#{managerTeamViewDialog.chosenList}}" var="theme" itemLabel="#{theme.getSurveySectionDefinitionBo().getSurveySectionTitle().getTitle()}" itemValue="#{theme}" />
+             
+            <p:column>
+                <h:outputText value="#{t.getSurveySectionDefinitionBo().getSurveySectionTitle().getTitle()}" />
+            </p:column>
+        </p:selectOneListbox>
+        
+        <p:commandButton action="#{managerTeamViewDialog.submit()}" icon="pi pi-check" value="Create Survey">Create Survey</p:commandButton>
+        
+        
+        </p:panelGrid>
+    </p:dialog>
 
 
 </ui:composition>
