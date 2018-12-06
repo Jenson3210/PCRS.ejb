@@ -24,7 +24,6 @@ public class ManagerTeamViewChangeFunction implements Serializable {
 
 	private SurveyDefinitionBo function;
 
-
 	public SurveyDefinitionBo getFunction() {
 		return function;
 	}
@@ -64,19 +63,15 @@ public class ManagerTeamViewChangeFunction implements Serializable {
 		this.enrol = en;
 		this.userBo = userbo;
 
-
 		if (en.getUserPrivilege() instanceof SurveyUserPrivilegeBo) {
-
 			this.function = ((SurveyUserPrivilegeBo) en.getUserPrivilege()).getSurveyDefinition();
-
 		}
-
-	}
+	} 
 
 	public void submit() {
 		((SurveyUserPrivilegeBo) enrol.getUserPrivilege()).setSurveyDefinition(function);
-
-		userBo.getPrivileges().add(enrol.getUserPrivilege());
-		this.userFacade.save(userBo);
+ 
+		//userBo.getPrivileges().add(enrol.getUserPrivilege());
+		//this.userFacade.save(userBo);
 	}
 }
