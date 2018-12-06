@@ -16,6 +16,9 @@
 				</p:messages>
 				<p:dataTable var="surveySectionTitle"
 					value="#{adminSurveySectionTitleView.surveySectionTitles}">
+					<f:facet name="header">
+						<h:outputText value="#{msgs['surveySectionTitle.title']}" />
+					</f:facet>
 					<p:column headerText="#{msgs['surveySectionTitle.title']}">
 						<h:outputText value="#{surveySectionTitle.title}" />
 					</p:column>
