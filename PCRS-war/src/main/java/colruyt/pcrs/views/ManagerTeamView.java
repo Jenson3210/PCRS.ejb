@@ -42,17 +42,14 @@ public class ManagerTeamView implements Serializable {
 
 	@EJB
 	private ISurveySetFacade surveyFacade;
-	
-	@EJB 
-	private ISurveyDefinitionFacade  surveyDefinitionFacade;
-	
+
+	@EJB
+	private ISurveyDefinitionFacade surveyDefinitionFacade;
+
 	@Inject
 	private WebUser currentUser;
-	
-	private List<TeamBo> teams;
-	
 
-	
+	private List<TeamBo> teams;
 
 	public ITeamFacade getTeamFacade() {
 
@@ -99,8 +96,6 @@ public class ManagerTeamView implements Serializable {
 			}
 			teamEnrolments.add(teamEnrolment);
 		}
-		
-		
 
 	}
 
@@ -160,38 +155,29 @@ public class ManagerTeamView implements Serializable {
 	public boolean consensusReady(UserBo user) {
 
 		return !(this.getManagerSurveyPercentage(user) == 100 && this.getMemberSurveyPercentage(user) == 100);
-		
 
 	}
-	
 
-	
-	public String getFunctionOf(EnrolmentBo bo) {    
+	public String getFunctionOf(EnrolmentBo bo) {
 		try {
-		if(bo.getUserPrivilege()  instanceof SurveyUserPrivilegeBo) {  
-			
-			return ((SurveyUserPrivilegeBo) bo.getUserPrivilege()).getSurveyDefinition().getFunction(); 
-			
-			
-		}
-		else {
+			if (bo.getUserPrivilege() instanceof SurveyUserPrivilegeBo) {
+
+				return ((SurveyUserPrivilegeBo) bo.getUserPrivilege()).getSurveyDefinition().getFunction();
+
+			} else {
+				return "geen";
+			}
+		} catch (Exception e) {
 			return "geen";
 		}
-		
-		}
-		catch(Exception e) {
-			return "geen"; 
-		}
-		
 	}
-	
-	public boolean hasFunction(EnrolmentBo bo) { 
-		
-		
-		if(bo.getUserPrivilege()  instanceof SurveyUserPrivilegeBo) {
-			
+
+	public boolean hasFunction(EnrolmentBo bo) {
+
+		if (bo.getUserPrivilege() instanceof SurveyUserPrivilegeBo) {
+
 			return ((SurveyUserPrivilegeBo) bo.getUserPrivilege()).getSurveyDefinition() != null;
-			
+
 		}
 		return false;
 	}
