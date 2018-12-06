@@ -22,11 +22,13 @@ public class DbCompetenceServiceDl implements ICompetenceServiceDl, Serializable
         if(element.getId() == null)
         {
         	em.persist(element);
+        	em.flush();
         	competence = element;
         }
         else
         {
         	competence = em.merge(element);
+        	em.flush();
         }
         return competence;
         
