@@ -115,9 +115,9 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 		
 		q.setParameter("userPrivilegeType", PrivilegeType.TEAMMANAGER);
 		q.setParameter("team", team);
-		System.out.println( q.getResultList());
 		
-		return null;
+		
+		return q.getSingleResult();
 		
 	}
 

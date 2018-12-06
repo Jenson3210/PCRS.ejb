@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -170,32 +171,46 @@ public class ManagerTeamView implements Serializable {
 
 	}
 	
-	public void onFunctionChange(EnrolmentBo bo,UserBo userBo) {
+	public void onFunctionChange(ValueChangeEvent event) {  
+		
+		EnrolmentBo bo = (EnrolmentBo) event.getComponent().getAttributes().get("enrol");
+
+		UserBo userBo = (UserBo) event.getComponent().getAttributes().get("user");
+		
+		SurveyDefinitionBo function = (SurveyDefinitionBo) event.getNewValue();  
+		
 		
 		if(bo.getUserPrivilege()  instanceof SurveyUserPrivilegeBo) {
 			
-			//((SurveyUserPrivilegeBo) bo.getUserPrivilege()).setSurveyDefinition();
+			((SurveyUserPrivilegeBo) bo.getUserPrivilege()).setSurveyDefinition(function);
 			
-			this.userFacade.save(userBo);
+			this.userFacade.save(userBo);  
 		}
 		
 		
 		
 	}
 	
-	public String getFunctionOf(EnrolmentBo bo) {
-		
-		if(bo.getUserPrivilege()  instanceof SurveyUserPrivilegeBo) {
+	public String getFunctionOf(EnrolmentBo bo) { 
+		try {
+		if(bo.getUserPrivilege()  instanceof SurveyUserPrivilegeBo) {  
 			
 			return ((SurveyUserPrivilegeBo) bo.getUserPrivilege()).getSurveyDefinition().getFunction();
 			
 			
 		}
-		return "geen";
+		else {
+			return "geen";
+		}
+		
+		}
+		catch(Exception e) {
+			return "geen"; 
+		}
 		
 	}
 	
-	public boolean hasFunction(EnrolmentBo bo) {
+	public boolean hasFunction(EnrolmentBo bo) { 
 		
 		
 		if(bo.getUserPrivilege()  instanceof SurveyUserPrivilegeBo) {

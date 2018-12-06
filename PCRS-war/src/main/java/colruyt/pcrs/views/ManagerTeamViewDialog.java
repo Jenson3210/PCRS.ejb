@@ -32,7 +32,7 @@ public class ManagerTeamViewDialog implements Serializable {
 	private UserBo teamMember;
 		
 	private List<SurveySectionDefinitionImplBo>  chosenList = new ArrayList<>();
-	private List<SurveySectionDefinitionImplBo>  availableList = new ArrayList<>();
+	private List<SurveySectionDefinitionImplBo>  availableList = new ArrayList<>();  
 
 
 	@EJB
@@ -61,9 +61,6 @@ public class ManagerTeamViewDialog implements Serializable {
 	public void setTeamMember(UserBo teamMember) {
 		this.teamMember = teamMember;
 	}
-
-	
-
 
 	public void init(UserBo user) {
 		
@@ -107,16 +104,15 @@ public class ManagerTeamViewDialog implements Serializable {
 		return availableList;
 	}
 
-	public void setAvailableList(List<SurveySectionDefinitionImplBo> availableList) {
+	public void setAvailableList(List<SurveySectionDefinitionImplBo> availableList) { 
 		this.availableList = availableList;
 	}
 
-	
-	
 	public void submit() {
 		
 	TeamMemberUserPrivilegeBo privi = (TeamMemberUserPrivilegeBo )this.currentUser.getUser().getPrivileges().stream().filter(x->x.getPrivilegeType().equals(PrivilegeTypeBo.TEAMMEMBER) && x.isActive()).findFirst().get();
 	privi.getSurveySetTreeSet().add(this.surveyFacade.generateSurveySetFor(this.chosenList));
+	
 	this.userFacade.save(this.currentUser.getUser());
 	
 	}

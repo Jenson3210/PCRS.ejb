@@ -36,12 +36,16 @@
                             <p:column >
                             <h:form id="functionForm">
                             
-                            
-								    <p:selectOneMenu id="functionDropDown" value="#{managerTeamView.getAvailableFunctionDefinitions()}" style="width:150px">
-                						<p:ajax listener="#{managerTeamView.onCountryChange(enrolment.value)}" update="function" />
-                						<f:selectItem itemLabel="Kies een Functie" itemValue="" noSelectionOption="true" />
-                						<f:selectItems value="#{managerTeamView.functions}"  />
-           							 </p:selectOneMenu>
+                            			 <f:attribute name="user" value="#{enrolment.value}" />
+                						 <f:attribute name="enrolment" value="#{enrolment.key}" />
+                						 
+								    <p:selectOneMenu id="functionDropDown" value="" style="width:150px"  >
+                						 <f:selectItem itemLabel="Kies een Functie" itemValue="" noSelectionOption="true" />
+                						 <f:selectItems value="#{managerTeamView.getAvailableFunctionDefinitions()}"  var="function" itemLabel="#{function.getFunction()}" itemValue="#{function}"  />
+                						
+                						
+                						 <p:ajax event="valueChange" listener="#{managerTeamView.onFunctionChange}" immediate="true" process="@this"/>
+           							</p:selectOneMenu>
            							 
            							 
            					</h:form>
@@ -50,7 +54,7 @@
                             
 							<p:column >
 								<p:commandButton icon="pi pi-check" value="Generate Survey" onclick="PF('dlg3').show()"  
-								 action="#{managerTeamViewDialog.init(enrolment.value)}" rendered="#{managerTeamView.isMe(enrolment.value) && managerTeamView.hasFunction(enrolment.key,enrolment.value)}"   />
+								 action="#{managerTeamViewDialog.init(enrolment.value)}" rendered="#{managerTeamView.isMe(enrolment.value) and managerTeamView.hasFunction(enrolment.key)}"   />
 							</p:column>
 							
 					    
