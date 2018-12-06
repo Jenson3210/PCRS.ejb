@@ -39,7 +39,9 @@ public class SurveyDefinition extends AbstractEntity implements Serializable {
     @SequenceGenerator(sequenceName = "SURVEYDEFINITIONS_SEQ", allocationSize = 1, name = "SURVEYDEFINITIONS_SEQ")
 	@Column(name="ID")
 	private Integer id;
-	private String name;
+	private String function;
+	private String operatingUnit;
+	private String country;
 	@OneToMany(cascade= {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name="SURVEYDEFINITIONIMPL_ID")
 	private List<SurveySectionDefinitionImpl> surveySections = new ArrayList<>();
@@ -49,15 +51,19 @@ public class SurveyDefinition extends AbstractEntity implements Serializable {
 	public SurveyDefinition() {
 		super();
 	}
-	public SurveyDefinition(String name, List<SurveySectionDefinitionImpl> surveySections) {
+	public SurveyDefinition(String function, String operatingUnit, String country, List<SurveySectionDefinitionImpl> surveySections) {
 		super();
-		this.name = name;
+		this.function = function;
+		this.operatingUnit = operatingUnit;
+		this.country = country;
 		this.surveySections = surveySections;
 	}
-	public SurveyDefinition(Integer id, String name, List<SurveySectionDefinitionImpl> surveySections) {
+	public SurveyDefinition(Integer id, String function, String operatingUnit, String country, List<SurveySectionDefinitionImpl> surveySections) {
 		super();
 		this.id = id;
-		this.name = name;
+		this.function = function;
+		this.operatingUnit = operatingUnit;
+		this.country = country;
 		this.surveySections = surveySections;
 	}
 	/*
@@ -69,11 +75,24 @@ public class SurveyDefinition extends AbstractEntity implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
+	
+	public String getFunction() {
+		return function;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setFunction(String function) {
+		this.function = function;
+	}
+	public String getOperatingUnit() {
+		return operatingUnit;
+	}
+	public void setOperatingUnit(String operatingUnit) {
+		this.operatingUnit = operatingUnit;
+	}
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
 	}
 	public List<SurveySectionDefinitionImpl> getSurveySections() {
 		return surveySections;
