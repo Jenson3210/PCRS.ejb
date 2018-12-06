@@ -78,8 +78,8 @@ public class RespSurveyDefinitionView implements Serializable {
 	// list of all the existing competences
 	private List<CompetenceBo> existingCompetences;
 	
-	private CompetenceBo selectedCompetence;
 	
+	private CompetenceBo selectedCompetence;
 	
 	
 	// current active tab of the user
@@ -138,8 +138,7 @@ public class RespSurveyDefinitionView implements Serializable {
 	}
 	
 	public void manageCompetences() {
-	
-		
+		selectedCompetence = new CompetenceBo();
 	}
 	
 	
@@ -331,6 +330,6 @@ public class RespSurveyDefinitionView implements Serializable {
 			this.selectedCompetence = competenceFacade.get(selectedCompetence);
 		}
 	}
-		
 
+	
 }

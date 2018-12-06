@@ -12,7 +12,7 @@
 			<p:tabView
 				value="#{respSurveyDefinitionView.assignedSurveyDefinitionList}"
 				var="def">
-				<p:tab title="#{def.name}">
+				<p:tab title="#{def.function} - #{def.operatingUnit} - #{def.country}">
 					<p:outputLabel rendered="#{def.surveySections.size() == 0}"
 						value="#{msgs['respSurveyDefinition.noSectionsDefined']}" />
 					<p:repeat var="sectionImpl" value="#{def.surveySections}">
@@ -211,7 +211,7 @@
 					widgetVar="manageCompetencesDialog" modal="true" draggable="false">
 					<p:outputPanel id="manageCompetencesPanel">
 
-						<div class="ui-g">
+						<div class="ui-g-8">
 							<div class="ui-g-4">
 								<p:outputLabel
 									value="#{msgs['respSurveyDefinition.sectionToAddCompetenceTo']}" />
@@ -228,7 +228,7 @@
 							</div>
 						</div>
 
-						<div class="ui-g">
+						<div class="ui-g-8">
 							<div class="ui-g-4">
 								<p:outputLabel
 									value="#{msgs['respSurveyDefinition.competenceToAdd']}" />
@@ -240,16 +240,15 @@
 									itemValue="#{competence}" forceSelection="true"
 									emptyMessage="#{msgs['respSurveyDefinition.noResults']}"
 									value="#{respSurveyDefinitionView.selectedCompetence}"
-									converter="competenceBoConverter" >
-									<p:ajax event="itemSelect"
-											update="competenceDetails" />
+									converter="competenceBoConverter">
+									<p:ajax event="itemSelect" update="competenceDetails"/>
 								</p:autoComplete>
 
 							</div>
 						</div>
 						
-						<p:outputPanel id="competenceDetails" rendered="#{respSurveyDefinitionView.selectedCompetence != null}">
-							<div class="ui-g">
+						<p:outputPanel id="competenceDetails">
+							<div class="ui-g-8">
 								<div class="ui-g-4">
 									<p:outputLabel
 										value="#{msgs['respSurveyDefinition.selectedCompetenceTitle']}" />
@@ -260,7 +259,7 @@
 								</div>
 							</div>
 							
-							<div class="ui-g">
+							<div class="ui-g-8">
 								<div class="ui-g-4">
 									<p:outputLabel
 										value="#{msgs['respSurveyDefinition.selectedCompetenceDescription']}" />
@@ -289,12 +288,12 @@
 							</div>
 						</ui:repeat> -->
 						
-						<p:outputPanel id="radioPanel">
+						<!-- <p:outputPanel id="radioPanel">
 					    	<p:selectOneRadio id="customRadio" value="#{respSurveyDefinitionView.selectedCompetence.competenceLevels}" 
 					    						layout="custom" var="#{level}">
 				            	<f:selectItems itemLabel="#{level.orderLevel}. #{level.description}" itemValue="#{level.orderLevel}" />
 					        </p:selectOneRadio>
-    					</p:outputPanel>
+    					</p:outputPanel> -->
 						
 						
 						<div class="ui-g-2">
