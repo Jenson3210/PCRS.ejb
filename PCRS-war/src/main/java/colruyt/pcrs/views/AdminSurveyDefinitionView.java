@@ -110,7 +110,9 @@ public class AdminSurveyDefinitionView implements Serializable{
 		//UPDATE THE LIST
 		for (SurveyDefinitionBo bo : surveyDefinitions.keySet()) {
 			if (bo.getId() == manipulatedSurveyDefinitionBo.getId()) {
-				bo.setName(manipulatedSurveyDefinitionBo.getName());
+				bo.setFunction(manipulatedSurveyDefinitionBo.getFunction());
+				bo.setOperatingUnit(manipulatedSurveyDefinitionBo.getOperatingUnit());
+				bo.setCountry(manipulatedSurveyDefinitionBo.getCountry());
 				surveyDefinitions.put(bo, manipulatedUserBo);
 			}
 		}

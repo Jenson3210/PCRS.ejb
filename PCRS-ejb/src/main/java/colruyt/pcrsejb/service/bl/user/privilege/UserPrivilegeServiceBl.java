@@ -93,7 +93,9 @@ public class UserPrivilegeServiceBl implements Serializable, IUserPrivilegeServi
         			}
         		}
     			for (TeamMemberUserPrivilege p : memberPrivs) {
-    				if (p.getSurveyDefinition().getName().equalsIgnoreCase(surveyDefinition.getName())) {
+    				if (p.getSurveyDefinition().getFunction().equalsIgnoreCase(surveyDefinition.getFunction())
+    						&& p.getSurveyDefinition().getOperatingUnit().equals(surveyDefinition.getOperatingUnit())
+    						&& p.getSurveyDefinition().getCountry().equals(surveyDefinition.getCountry())) {
     					privilege = p;
     				}
     			}	
