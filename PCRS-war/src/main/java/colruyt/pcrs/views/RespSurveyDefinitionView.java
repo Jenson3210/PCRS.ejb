@@ -14,6 +14,7 @@ import javax.inject.Named;
 import colruyt.pcrs.utillibs.WebUser;
 import colruyt.pcrsejb.bo.competence.CompetenceBo;
 import colruyt.pcrsejb.bo.competence.CompetenceImplBo;
+import colruyt.pcrsejb.bo.competence.CompetenceLevelBo;
 import colruyt.pcrsejb.bo.surveyDefinition.strategy.SurveySectionStrategyBo;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveyDefinitionBo;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionBo;
@@ -55,10 +56,10 @@ public class RespSurveyDefinitionView implements Serializable {
 	@Inject
 	private WebUser webuser;
 	
-	
 	/*
 	 * List for holding the data to be shown on the screen and/or dialog pop up
 	 */
+	
 	
 	// list of survey definitions assigned to the logged in user
 	private List<SurveyDefinitionBo> assignedSurveyDefinitionList;
@@ -79,14 +80,22 @@ public class RespSurveyDefinitionView implements Serializable {
 	private List<CompetenceBo> existingCompetences;
 	
 	
+	
+	private SurveySectionDefinitionImplBo selectedSectionDefinitionImpl; 
+	
 	private CompetenceBo selectedCompetence;
+	
+	private CompetenceImplBo addedCompetenceImplBo;
+	
+	private CompetenceLevelBo selectedMinLevel;
 	
 	
 	// current active tab of the user
 	private SurveyDefinitionBo activeTab;
 	
 	private SurveySectionDefinitionImplBo implToDelete;
-	
+
+	private Integer intSelected;
 	
 	
 	// integer keeping track of the radio button selected on the dialog
@@ -129,19 +138,66 @@ public class RespSurveyDefinitionView implements Serializable {
 	
 	
 	
+	/**
+	 * called when the Manage Sections button is clicked
+	 */
+	public void manageSectionsClickListener() {
+		
+	}
+
+	
+	/**
+	 * called when the Manage Competences button is clicked
+	 */
+	public void manageCompetencesClickListener() {
+		selectedCompetence = new CompetenceBo();
+		addedCompetenceImplBo = new CompetenceImplBo();
+		selectedSectionDefinitionImpl = new SurveySectionDefinitionImplBo();
+	}
+	
+	
 	public void newSurveyDefinition() {
 		addedSurveySectionDefinition = new SurveySectionDefinitionBo();
 	}
+	
 	
 	public void newCompetence() {
 		selectedCompetence = new CompetenceBo();
 	}
 	
-	public void manageCompetences() {
-		selectedCompetence = new CompetenceBo();
+	
+	/**
+	 * create new implementation of the competence with the selected attributes
+	 */
+	public void addNewCompetence() {
+		CompetenceImplBo bo = new CompetenceImplBo(selectedCompetence, 
+				selectedCompetence.getCompetenceDescription(), selectedMinLevel.getOrderLevel());
+		
+		int index = -1;
+				
+		// get index of the selected impl
+		for(int i =0; i < assignedSurveyDefinitionList.get(getActiveIndex()).getSurveySections().size(); i++) {
+			SurveySectionDefinitionImplBo impl = assignedSurveyDefinitionList.get(getActiveIndex()).getSurveySections().get(i);
+			if (impl.getId().equals(selectedSectionDefinitionImpl.getId())) {
+				index = i;
+			}
+		}
+		
+		// add the competence implementation to the correct section 
+		assignedSurveyDefinitionList.get(getActiveIndex()).getSurveySections().get(index).getSurveySectionDefinitionBo()
+			.getSurveySectionCompetences().add(bo);
+		
+		SurveyDefinitionBo newBo = surveyDefinitionFacade.save(assignedSurveyDefinitionList.get(getActiveIndex()));
+		assignedSurveyDefinitionList.set(getActiveIndex(), newBo);
 	}
 	
-	
+		
+	/**
+	 * complete method for autocomplete textbox
+	 * @param query: text typed in by the user in the input field 
+	 * @return: List of CompetenceBo objects for which the title and/or description
+	 * 			match the query 
+	 */
 	public List<CompetenceBo> completeCompetence(String query) {
 		List<CompetenceBo> filteredResults = new ArrayList<>();
 		query = query.toLowerCase();
@@ -154,19 +210,6 @@ public class RespSurveyDefinitionView implements Serializable {
 		return filteredResults;
 	}
 
-	
-	public void addNewSurveyDefinition() {
-		// add the created survey section definition
-		
-	}
-	
-	
-	public void addExistingSurveyDefinition() {
-		
-		
-	}
-	
-	
 	
 	public void sectionChangeListener() {
 		switch(newExistingOrDeleteSection) {
@@ -183,6 +226,7 @@ public class RespSurveyDefinitionView implements Serializable {
 		}
 	}
 	
+	
 	/**
 	 * create new implementation of a section definition
 	 */
@@ -197,7 +241,6 @@ public class RespSurveyDefinitionView implements Serializable {
 	}
 
 	
-	
 	private void addExistingSection() {
 		// TEMPORARY: get the full SurveySectionDefinition from the DB
 		addedSurveySectionDefinition = surveySectionDefinitionFacade.get(addedSurveySectionDefinition);
@@ -208,6 +251,7 @@ public class RespSurveyDefinitionView implements Serializable {
 		assignedSurveyDefinitionList.set(getActiveIndex(), newBo);
 	}
 	
+	
 	private void deleteSection() {
 		implToDelete = surveySectionDefinitionImplFacade.get(implToDelete);
 		assignedSurveyDefinitionList.get(getActiveIndex()).getSurveySections().remove(implToDelete);
@@ -216,10 +260,6 @@ public class RespSurveyDefinitionView implements Serializable {
 		surveySectionDefinitionImplFacade.delete(implToDelete);
 	}
 
-	public void manageSections() {
-	
-		
-	}
 	
 	public int getActiveIndex() {
 		int index = -1;
@@ -232,11 +272,11 @@ public class RespSurveyDefinitionView implements Serializable {
 		return index;
 	}
 	
+	
 	/*
 	 *  Getters and Setters
 	 */
 	
-
 	public List<SurveyDefinitionBo> getAssignedSurveyDefinitionList() {
 		return assignedSurveyDefinitionList;
 	}
@@ -245,11 +285,9 @@ public class RespSurveyDefinitionView implements Serializable {
 		this.assignedSurveyDefinitionList = assignedSurveyDefinitionList;
 	}
 
-
 	public List<SurveySectionTitleBo> getSurveySectionTitleList() {
 		return surveySectionTitleList;
 	}
-
 
 	public void setSurveySectionTitleList(List<SurveySectionTitleBo> surveySectionTitleList) {
 		this.surveySectionTitleList = surveySectionTitleList;
@@ -331,5 +369,36 @@ public class RespSurveyDefinitionView implements Serializable {
 		}
 	}
 
-	
+	public CompetenceImplBo getAddedCompetenceImplBo() {
+		return addedCompetenceImplBo;
+	}
+
+	public void setAddedCompetenceImplBo(CompetenceImplBo addedCompetenceImplBo) {
+		this.addedCompetenceImplBo = addedCompetenceImplBo;
+	}
+
+	public CompetenceLevelBo getSelectedMinLevel() {
+		return selectedMinLevel;
+	}
+
+	public void setSelectedMinLevel(CompetenceLevelBo selectedMinLevel) {
+		this.selectedMinLevel = selectedMinLevel;
+	}
+
+	public SurveySectionDefinitionImplBo getSelectedSectionDefinitionImpl() {
+		return selectedSectionDefinitionImpl;
+	}
+
+	public void setSelectedSectionDefinitionImpl(SurveySectionDefinitionImplBo selectedSectionDefinitionImpl) {
+		this.selectedSectionDefinitionImpl = selectedSectionDefinitionImpl;
+	}
+
+	public Integer getIntSelected() {
+		return intSelected;
+	}
+
+	public void setIntSelected(Integer intSelected) {
+		this.intSelected = intSelected;
+	}
+
 }
