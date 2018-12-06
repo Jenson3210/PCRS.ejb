@@ -12,9 +12,12 @@ import javax.inject.Named;
 
 import colruyt.pcrs.DTO.TeamEnrolmentBo;
 import colruyt.pcrs.utillibs.WebUser;
+import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveyDefinitionBo;
 import colruyt.pcrsejb.bo.user.UserBo;
+import colruyt.pcrsejb.bo.user.privilege.SurveyUserPrivilegeBo;
 import colruyt.pcrsejb.bo.user.team.EnrolmentBo;
 import colruyt.pcrsejb.bo.user.team.TeamBo;
+import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveyDefinitionFacade;
 import colruyt.pcrsejb.facade.surveys.surveySet.ISurveySetFacade;
 import colruyt.pcrsejb.facade.user.IUserFacade;
 import colruyt.pcrsejb.facade.user.team.IEnrolmentFacade;
@@ -38,8 +41,26 @@ public class ManagerTeamView implements Serializable {
 
 	@EJB
 	private ISurveySetFacade surveyFacade;
-
+	
+	@EJB 
+	private ISurveyDefinitionFacade  surveyDefinitionFacade;
+	
 	private List<TeamBo> teams;
+	
+	private List<SurveyDefinitionBo> availableFunctionDefinitions = new ArrayList<>();
+	
+	
+	
+	
+	
+
+	public List<SurveyDefinitionBo> getAvailableFunctionDefinitions() {
+		return availableFunctionDefinitions;
+	}
+
+	public void setAvailableFunctionDefinitions(List<SurveyDefinitionBo> availableFunctionDefinitions) {
+		this.availableFunctionDefinitions = availableFunctionDefinitions;
+	}
 
 	@Inject
 	private WebUser currentUser;
@@ -89,6 +110,9 @@ public class ManagerTeamView implements Serializable {
 			}
 			teamEnrolments.add(teamEnrolment);
 		}
+		
+		this.setAvailableFunctionDefinitions(this.surveyDefinitionFacade.getAll());
+
 	}
 
 	public List<TeamBo> getTeams() {
@@ -147,7 +171,44 @@ public class ManagerTeamView implements Serializable {
 	public boolean consensusReady(UserBo user) {
 
 		return !(this.getManagerSurveyPercentage(user) == 100 && this.getMemberSurveyPercentage(user) == 100);
+		
 
+	}
+	
+	public void onFunctionChange(EnrolmentBo bo,UserBo userBo) {
+		
+		if(bo.getUserPrivilege()  instanceof SurveyUserPrivilegeBo) {
+			
+			//((SurveyUserPrivilegeBo) bo.getUserPrivilege()).setSurveyDefinition();
+			
+			this.userFacade.save(userBo);
+		}
+		
+		
+		
+	}
+	
+	public String getFunctionOf(EnrolmentBo bo) {
+		
+		if(bo.getUserPrivilege()  instanceof SurveyUserPrivilegeBo) {
+			
+			return ((SurveyUserPrivilegeBo) bo.getUserPrivilege()).getSurveyDefinition().getName();
+			
+			
+		}
+		return "geen";
+		
+	}
+	
+	public boolean hasFunction(EnrolmentBo bo) {
+		
+		
+		if(bo.getUserPrivilege()  instanceof SurveyUserPrivilegeBo) {
+			
+			return ((SurveyUserPrivilegeBo) bo.getUserPrivilege()).getSurveyDefinition() != null;
+			
+		}
+		return false;
 	}
 
 }
