@@ -48,11 +48,6 @@ public class ManagerTeamView implements Serializable {
 	private List<TeamBo> teams;
 	
 	private List<SurveyDefinitionBo> availableFunctionDefinitions = new ArrayList<>();
-	
-	
-	
-	
-	
 
 	public List<SurveyDefinitionBo> getAvailableFunctionDefinitions() {
 		return availableFunctionDefinitions;
@@ -192,7 +187,7 @@ public class ManagerTeamView implements Serializable {
 		
 		if(bo.getUserPrivilege()  instanceof SurveyUserPrivilegeBo) {
 			
-			return ((SurveyUserPrivilegeBo) bo.getUserPrivilege()).getSurveyDefinition().getName();
+			return ((SurveyUserPrivilegeBo) bo.getUserPrivilege()).getSurveyDefinition().getFunction();
 			
 			
 		}
