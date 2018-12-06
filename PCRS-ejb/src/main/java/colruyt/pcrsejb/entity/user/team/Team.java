@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import colruyt.pcrsejb.bo.user.team.TeamBo;
 import colruyt.pcrsejb.entity.AbstractEntity;
 
 @Entity
@@ -27,7 +25,7 @@ import colruyt.pcrsejb.entity.AbstractEntity;
 	@NamedQuery(name = "TEAM.GETALL", query = "SELECT t FROM Team t"),
 	@NamedQuery(name = "TEAM.GETTEAMFORUSER", query = "select t From Team t, User u join t.enrolments e where e.active = :isActive and u = :member"),
 	@NamedQuery(name = "TEAM.GETTEAMSOFMANAGER", query = "select t from Team t, Enrolment e, User u join t.enrolments te where e.active = true and e.userPrivilege.privilegeType = :privilegeType and te.id = e.id and u = :teamManager"),
-	@NamedQuery(name = "TEAM.GETMANAGEROFTEAM", query = "select u from Team t, Enrolment e, User u where e.userPrivilege.active = true and e.userPrivilege.privilegeType = :userPrivilegeType and t = :team"),
+	@NamedQuery(name = "TEAM.GETMANAGEROFTEAM", query = "select u from Team t, User u join t.enrolments te join u.privileges up where te.userPrivilege.active = true and t = :team and te.userPrivilege = up and te.userPrivilege.privilegeType = :userPrivilegeType"),
 	@NamedQuery(name = "TEAM.GETUSERSOFTEAM", query = "select u from User u join u.privileges p where p.active = true and p IN :team")
 })
 public class Team extends AbstractEntity implements Serializable, Comparable<Team> {
