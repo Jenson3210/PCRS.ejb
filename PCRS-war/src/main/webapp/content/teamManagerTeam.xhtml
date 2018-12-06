@@ -50,7 +50,7 @@
                             
 							<p:column >
 								<p:commandButton icon="pi pi-check" value="Generate Survey" onclick="PF('dlg3').show()"  
-								 ajax="true"  action="#{managerTeamViewDialog.init(enrolment.value)}"  rendered="#{managerTeamView.isMe(enrolment.value) && managerTeamView.hasFunction(enrolment.key,enrolment.value)}"   />
+								 action="#{managerTeamViewDialog.init(enrolment.value)}" rendered="#{managerTeamView.isMe(enrolment.value) && managerTeamView.hasFunction(enrolment.key,enrolment.value)}"   />
 							</p:column>
 							
 					    
