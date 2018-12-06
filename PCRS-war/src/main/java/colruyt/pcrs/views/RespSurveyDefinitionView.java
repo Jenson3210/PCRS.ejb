@@ -261,6 +261,7 @@ public class RespSurveyDefinitionView implements Serializable {
 		try {
 			surveySectionDefinitionImplFacade.delete(implToDelete);
 		} catch (ValidationException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -405,4 +406,5 @@ public class RespSurveyDefinitionView implements Serializable {
 	public void setIntSelected(Integer intSelected) {
 		this.intSelected = intSelected;
 	}
+
 }
