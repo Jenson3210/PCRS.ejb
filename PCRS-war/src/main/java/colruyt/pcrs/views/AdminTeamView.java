@@ -78,7 +78,7 @@ public class AdminTeamView implements Serializable {
 	}
 
 	public UserBo getUser() {
- 		return user;  
+ 		return user;   
 	}
 
 	public void setUser(UserBo user) {

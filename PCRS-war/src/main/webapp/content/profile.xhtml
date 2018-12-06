@@ -31,7 +31,7 @@
 				<p:tab title="#{msgs['profile.progress']}">
 					<h:panelGrid columns="2" >
 						<h:outputText value="#{webUser.getUser().firstName.concat(' ').concat(webUser.getUser().lastName)}"/>
-						<p:progressBar id="progressBarEmployee" value="#{userProfileView.getMemberSurveyPercentage(webUser.getUser())}"  widgetVar="pbClient"
+						<p:progressBar id="progressBarEmployee" value="#{userProfileView.getMemberSurveyPercentage()}"  widgetVar="pbClient"
 							style="width:300px" />
 						<h:outputText value="#{userProfileView.teamLeaderNaam}"/>
 						<p:progressBar id="progressBarBoss" widgetVar="pbClient" value="#{userProfileView.getManagerSurveyPercentage()}"

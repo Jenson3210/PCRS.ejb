@@ -189,10 +189,10 @@ public class UserProfileView implements Serializable {
 		}
 	}
 	
-	public Integer getManagerSurveyPercentage(UserBo user) {
+	public Integer getManagerSurveyPercentage() { 
 
 		try {
-			return this.getSurveyFacade().getPercentageCompleteForManagerSurvey(user);
+			return this.getSurveyFacade().getPercentageCompleteForManagerSurvey(webuser.getUser());
 		} catch (NoSurveySetException e) {
 			return 0;
 		}
