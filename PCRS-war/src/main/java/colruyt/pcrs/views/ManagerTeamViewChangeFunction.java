@@ -22,8 +22,6 @@ import colruyt.pcrsejb.facade.user.privilege.IUserPrivilegeFacade;
 public class ManagerTeamViewChangeFunction implements Serializable {
 
 	private SurveyDefinitionBo function;
-
-	
 	
 	public SurveyDefinitionBo getFunction() {
 		return function;

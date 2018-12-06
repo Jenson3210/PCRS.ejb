@@ -39,7 +39,6 @@ import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 public class RespSurveyDefinitionView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
 	/*
 	 * injection of the needed facade beans and user
 	 */
