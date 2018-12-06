@@ -16,8 +16,16 @@
 						<h:outputText value="#{msgs['surveyDefinition.title']}" />
 					</f:facet>
 					
-					<p:column headerText="#{msgs['surveyDefinition.title']}">
-						<h:outputText value="#{surveyDefinition.key.name}" />
+					<p:column headerText="#{msgs['surveyDefinition.function']}">
+						<h:outputText value="#{surveyDefinition.key.function}" />
+					</p:column>
+					
+					<p:column headerText="#{msgs['surveyDefinition.operatingUnit']}">
+						<h:outputText value="#{surveyDefinition.key.operatingUnit}" />
+					</p:column>
+					
+					<p:column headerText="#{msgs['surveyDefinition.country']}">
+						<h:outputText value="#{surveyDefinition.key.country}" />
 					</p:column>
 					
 					<p:column headerText="#{msgs['surveyDefinition.responsible']}">
