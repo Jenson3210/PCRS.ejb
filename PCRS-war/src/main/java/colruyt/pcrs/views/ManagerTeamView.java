@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -45,25 +46,13 @@ public class ManagerTeamView implements Serializable {
 	@EJB 
 	private ISurveyDefinitionFacade  surveyDefinitionFacade;
 	
-	private List<TeamBo> teams;
-	
-	private List<SurveyDefinitionBo> availableFunctionDefinitions = new ArrayList<>();
-	
-	
-	
-	
-	
-
-	public List<SurveyDefinitionBo> getAvailableFunctionDefinitions() {
-		return availableFunctionDefinitions;
-	}
-
-	public void setAvailableFunctionDefinitions(List<SurveyDefinitionBo> availableFunctionDefinitions) {
-		this.availableFunctionDefinitions = availableFunctionDefinitions;
-	}
-
 	@Inject
 	private WebUser currentUser;
+	
+	private List<TeamBo> teams;
+	
+
+	
 
 	public ITeamFacade getTeamFacade() {
 
@@ -111,7 +100,7 @@ public class ManagerTeamView implements Serializable {
 			teamEnrolments.add(teamEnrolment);
 		}
 		
-		this.setAvailableFunctionDefinitions(this.surveyDefinitionFacade.getAll());
+		
 
 	}
 
@@ -175,32 +164,28 @@ public class ManagerTeamView implements Serializable {
 
 	}
 	
-	public void onFunctionChange(EnrolmentBo bo,UserBo userBo) {
-		
-		if(bo.getUserPrivilege()  instanceof SurveyUserPrivilegeBo) {
-			
-			//((SurveyUserPrivilegeBo) bo.getUserPrivilege()).setSurveyDefinition();
-			
-			this.userFacade.save(userBo);
-		}
-		
-		
-		
-	}
+
 	
-	public String getFunctionOf(EnrolmentBo bo) {
-		
-		if(bo.getUserPrivilege()  instanceof SurveyUserPrivilegeBo) {
+	public String getFunctionOf(EnrolmentBo bo) {    
+		try {
+		if(bo.getUserPrivilege()  instanceof SurveyUserPrivilegeBo) {  
 			
-			return ((SurveyUserPrivilegeBo) bo.getUserPrivilege()).getSurveyDefinition().getName();
+			return ((SurveyUserPrivilegeBo) bo.getUserPrivilege()).getSurveyDefinition().getFunction(); 
 			
 			
 		}
-		return "geen";
+		else {
+			return "geen";
+		}
+		
+		}
+		catch(Exception e) {
+			return "geen"; 
+		}
 		
 	}
 	
-	public boolean hasFunction(EnrolmentBo bo) {
+	public boolean hasFunction(EnrolmentBo bo) { 
 		
 		
 		if(bo.getUserPrivilege()  instanceof SurveyUserPrivilegeBo) {

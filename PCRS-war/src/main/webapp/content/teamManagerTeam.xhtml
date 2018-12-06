@@ -29,30 +29,25 @@
                             <p:column>
                                 <h:outputText value="#{enrolment.value.firstName}  #{enrolment.value.lastName}" />
                             </p:column>
+                            
                             <p:column >
                                 <h:outputText value="#{enrolment.key.userPrivilege.privilegeType.fullName}" />
                             </p:column>
                             
-                            <p:column >
-                            <h:form id="functionForm">
-                            
-                            
-								    <p:selectOneMenu id="functionDropDown" value="#{managerTeamView.getAvailableFunctionDefinitions()}" style="width:150px">
-                						<p:ajax listener="#{managerTeamView.onCountryChange(enrolment.value)}" update="function" />
-                						<f:selectItem itemLabel="Kies een Functie" itemValue="" noSelectionOption="true" />
-                						<f:selectItems value="#{managerTeamView.functions}"  />
-           							 </p:selectOneMenu>
-           							 
-           							 
-           					</h:form>
-           					
-							</p:column>
+                            <p:column>
+                            	<h:outputText value="#{managerTeamView.getFunctionOf(enrolment.key)}"    />
+                            </p:column>
+                           
                             
 							<p:column >
 								<p:commandButton icon="pi pi-check" value="Generate Survey" onclick="PF('dlg3').show()"  
-								 ajax="true"  action="#{managerTeamViewDialog.init(enrolment.value)}"  rendered="#{managerTeamView.isMe(enrolment.value) && managerTeamView.hasFunction(enrolment.key,enrolment.value)}"   />
+								 action="#{managerTeamViewDialog.init(enrolment.value)}" rendered="#{managerTeamView.isMe(enrolment.value) and managerTeamView.hasFunction(enrolment.key)}"   />
 							</p:column>
 							
+							<p:column >
+								<p:commandButton icon="pi pi-check" value="Change Function" action="#{managerTeamViewChangeFunction.init(enrolment.value,enrolment.key)}" onclick="PF('dlg2').show()"  
+								  rendered="#{managerTeamView.isMe(enrolment.value)}"   />
+							</p:column>
 					    
 					    <p:rowExpansion>
                        
@@ -106,6 +101,35 @@
         </p:selectOneListbox>
         
         <p:commandButton action="#{managerTeamViewDialog.submit()}" icon="pi pi-check" value="Create Survey">Create Survey</p:commandButton>
+        
+        
+        </p:panelGrid>
+    </p:dialog>
+    
+    
+     <p:dialog header="Change Function" widgetVar="dlg2" modal="true" resizable="false">
+        <p:panelGrid columns="2" id="display2" columnClasses="label,output">
+        
+        		 <p:column >
+                            <h:form id="functionForm">
+                            
+                						 
+								    <p:selectOneMenu id="functionDropDown" value="#{managerTeamViewChangeFunction.function}" style="width:150px"  >
+                						 <f:selectItem itemLabel="Kies een Functie" itemValue="" noSelectionOption="true" />
+                						 <f:selectItems value="#{managerTeamViewChangeFunction.getAvailableFunctionDefinitions()}"  var="function" itemLabel="#{function.getFunction()}" itemValue="#{function}"  />
+             						</p:selectOneMenu>
+           						
+           							 
+           							 
+           					</h:form>
+           					
+							</p:column>
+							
+							<p:column>
+							     <p:commandButton action="#{managerTeamViewChangeFunction.submit()}" icon="pi pi-check" value="Submit"></p:commandButton>
+							
+							</p:column>
+        
         
         
         </p:panelGrid>

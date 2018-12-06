@@ -2,6 +2,7 @@ package colruyt.pcrsejb.service.bl.competence;
 
 import colruyt.pcrsejb.entity.competence.CompetenceImpl;
 import colruyt.pcrsejb.service.dl.competence.ICompetenceImplServiceDl;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -33,7 +34,7 @@ public class CompetenceImplServiceBl implements ICompetenceImplServiceBl, Serial
     }
 
     @Override
-    public void delete(CompetenceImpl element) {
+    public void delete(CompetenceImpl element) throws ValidationException {
         competenceimplDb.delete(element);
     }
 }

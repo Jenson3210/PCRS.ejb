@@ -1,4 +1,4 @@
-package colruyt.pcrsejb.service.bl.surveyDefinition.survey;
+package colruyt.pcrsejb.util.exceptions;
 
 import java.io.Serializable;
 import java.util.List;
@@ -8,7 +8,9 @@ import javax.ejb.Stateless;
 
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinition;
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionTitle;
+import colruyt.pcrsejb.service.bl.surveyDefinition.survey.ISurveySectionDefinitionServiceBl;
 import colruyt.pcrsejb.service.dl.surveyDefinition.survey.ISurveySectionDefinitionServiceDl;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
 public class SurveySectionDefinitionServiceBl implements Serializable,ISurveySectionDefinitionServiceBl {
@@ -33,7 +35,7 @@ public class SurveySectionDefinitionServiceBl implements Serializable,ISurveySec
 	}
 
 	@Override
-	public void delete(SurveySectionDefinition element) {
+	public void delete(SurveySectionDefinition element) throws ValidationException {
 		surveySectionDefinitionDb.delete(element);
 	}
 

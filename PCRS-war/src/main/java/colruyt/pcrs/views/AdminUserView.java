@@ -14,6 +14,7 @@ import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.facade.user.IUserFacade;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Named
 @ViewScoped
@@ -104,7 +105,11 @@ public class AdminUserView implements Serializable{
 			}
 		}
 		users.remove(u);
-		userFacade.delete(addedUser);
+		try {
+			userFacade.delete(addedUser);
+		} catch (ValidationException e) {
+			e.printStackTrace();
+		}
 		adminSelected = false;
 	}
 	

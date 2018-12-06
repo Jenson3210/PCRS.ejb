@@ -9,6 +9,8 @@ import javax.ejb.Stateless;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionBo;
 import colruyt.pcrsejb.converter.surveyDefinition.survey.SurveySectionDefinitionConverter;
 import colruyt.pcrsejb.service.bl.surveyDefinition.survey.ISurveySectionDefinitionServiceBl;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -51,7 +53,7 @@ public class SurveySectionDefinitionFacade implements Serializable,ISurveySectio
 	}
 
 	@Override
-	public void delete(SurveySectionDefinitionBo entityBo) {
+	public void delete(SurveySectionDefinitionBo entityBo) throws ValidationException {
 		this.sdserv.delete(this.sdconv.convertToEntity(entityBo)); 
 		
 	}

@@ -31,6 +31,7 @@ import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveyDefinitionFacade;
 import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveySectionDefinitionFacade;
 import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveySectionDefinitionImplFacade;
 import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveySectionTitleFacade;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Named
 @ViewScoped
@@ -257,7 +258,11 @@ public class RespSurveyDefinitionView implements Serializable {
 		assignedSurveyDefinitionList.get(getActiveIndex()).getSurveySections().remove(implToDelete);
 		SurveyDefinitionBo newBo = surveyDefinitionFacade.save(assignedSurveyDefinitionList.get(getActiveIndex()));
 		assignedSurveyDefinitionList.set(getActiveIndex(), newBo);
-		surveySectionDefinitionImplFacade.delete(implToDelete);
+		try {
+			surveySectionDefinitionImplFacade.delete(implToDelete);
+		} catch (ValidationException e) {
+			e.printStackTrace();
+		}
 	}
 
 	
@@ -400,5 +405,4 @@ public class RespSurveyDefinitionView implements Serializable {
 	public void setIntSelected(Integer intSelected) {
 		this.intSelected = intSelected;
 	}
-
 }

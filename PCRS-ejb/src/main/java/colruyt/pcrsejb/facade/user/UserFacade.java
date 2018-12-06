@@ -16,6 +16,7 @@ import colruyt.pcrsejb.converter.user.team.EnrolmentConverter;
 import colruyt.pcrsejb.service.bl.user.IUserServiceBl;
 import colruyt.pcrsejb.util.exceptions.NoExistingEmailException;
 import colruyt.pcrsejb.util.exceptions.NoExistingMemberException;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
 public class UserFacade implements Serializable, IUserFacade {
@@ -50,7 +51,7 @@ public class UserFacade implements Serializable, IUserFacade {
 	}
 
 	@Override
-	public void delete(UserBo user) {
+	public void delete(UserBo user) throws ValidationException {
 		userServiceBl.delete(userConverter.convertToEntity(user));
 	}
 	

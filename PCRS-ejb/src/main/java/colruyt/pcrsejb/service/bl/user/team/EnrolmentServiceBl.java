@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 
 import colruyt.pcrsejb.entity.user.team.Enrolment;
 import colruyt.pcrsejb.service.dl.user.team.IEnrolmentServiceDl;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
 public class EnrolmentServiceBl implements Serializable, IEnrolmentServiceBl {
@@ -36,7 +37,7 @@ public class EnrolmentServiceBl implements Serializable, IEnrolmentServiceBl {
 	}
 
 	@Override
-	public void delete(Enrolment element) {
+	public void delete(Enrolment element) throws ValidationException {
 		dlService.delete(element);
 	}
 	
