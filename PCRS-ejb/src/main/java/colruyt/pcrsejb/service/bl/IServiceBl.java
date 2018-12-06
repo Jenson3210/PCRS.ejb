@@ -2,12 +2,13 @@ package colruyt.pcrsejb.service.bl;
 
 import java.util.List;
 
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
+
 
 public interface IServiceBl<T> {
 
 	
-//	T save(T element) throws ValidationException;
-	T save(T element);
+	T save(T element) throws ValidationException;
 
 	T get(T element);
 

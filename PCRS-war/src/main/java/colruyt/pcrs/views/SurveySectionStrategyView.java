@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -27,8 +29,8 @@ public class SurveySectionStrategyView implements Serializable {
 	@PostConstruct 
 	private void fillStrategies() {
 		strategies = surveySectionStrategyFacade.getAll();
-	}
-
+	} 
+ 
 	public SurveySectionStrategyBo getSurveySectionStrategyBo() {
 		return surveySectionStrategyBo;
 	}
@@ -43,7 +45,15 @@ public class SurveySectionStrategyView implements Serializable {
 	}
  
 	public void addSurveySectionStrategy() {
-		strategies.add(surveySectionStrategyFacade.save(surveySectionStrategyBo));	
+		FacesContext context = FacesContext.getCurrentInstance();
+		try {
+			strategies.add(surveySectionStrategyFacade.save(surveySectionStrategyBo));
+		} catch (ValidationException e) {
+			System.out.println(e.getMessage() + " 1****" + e.getClass() + " 2****" + e.toString() + " 3****" + e.getLocalizedMessage() + " 4****" +
+					e.toString() + " 5****" + e.fillInStackTrace() + " 6****" + e.getCause() + " 7****" + e.getStackTrace());
+			System.out.println("komthijhier??????????????");
+			context.addMessage(null, new FacesMessage(e.getMessage()));
+		}	
 	}
 	
 	public void newSurveySectionStrategy() {
@@ -51,6 +61,7 @@ public class SurveySectionStrategyView implements Serializable {
     }
 	
 	public void editSurveySectionStrategy() {
+		FacesContext context = FacesContext.getCurrentInstance();
 		SurveySectionStrategyBo s = null;
 		for (SurveySectionStrategyBo strategy : strategies) {
 			if (strategy.getId() == surveySectionStrategyBo.getId()) {
@@ -64,7 +75,11 @@ public class SurveySectionStrategyView implements Serializable {
 				s = strategy;
 			}
 		}
-		surveySectionStrategyFacade.save(s);
+		try {
+			surveySectionStrategyFacade.save(s);
+		} catch (ValidationException e) {
+			context.addMessage(null, new FacesMessage(e.getMessage()));
+		}
 	}
 	
 	public void deleteSurveySectionStrategy()

@@ -1,4 +1,4 @@
-package colruyt.pcrsejb.util.validators.surveyDefinition.strategy;
+package colruyt.pcrsejb.util.exceptions.validation.surveyDefinition.strategy;
 
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 

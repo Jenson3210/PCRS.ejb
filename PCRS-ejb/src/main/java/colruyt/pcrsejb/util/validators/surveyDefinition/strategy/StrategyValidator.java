@@ -1,6 +1,7 @@
 package colruyt.pcrsejb.util.validators.surveyDefinition.strategy;
 
 import colruyt.pcrsejb.entity.surveyDefinition.strategy.SurveySectionStrategy;
+import colruyt.pcrsejb.util.exceptions.validation.surveyDefinition.strategy.InvalidAmountOfLevelsException;
 import colruyt.pcrsejb.util.exceptions.validation.surveyDefinition.strategy.InvalidStrategyNameException;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 import colruyt.pcrsejb.util.validators.GenericValidator;

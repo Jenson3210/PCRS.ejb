@@ -11,6 +11,9 @@
 		<div class="ui-g-1" />
 		<div class="ui-g-10">
 			<h:form id="form">
+									<p:messages id="errors"  showDetail="false" closable="true">
+   							<p:autoUpdate />
+   						</p:messages>
 				<p:dataTable var="strategy"
 					value="#{surveySectionStrategyView.strategies}">
 					<f:facet name="header">
@@ -85,17 +88,29 @@
 
 			<h:form id="addForm">
 				<div class="ui-g" id="addStrategyForm">
+				
 					<p:dialog id="addStrategyFormTitle"
 						header="#{msgs['strategy.add']}" widgetVar="addStrategyDialog"
 						modal="true">
 						<p:outputPanel id="addStrategyDetail">
+<!-- 						 <h:panelGroup layout="block" rendered="#{facesContext.validationFailed}"> -->
+						<p:messages id="errors"  showDetail="false" closable="true">
+   							<p:autoUpdate />
+   						</p:messages>
+<!--    						</h:panelGroup> -->
 							<div class="ui-g">
 								<div class="ui-g-4">
 									<p:outputLabel value="#{msgs['strategy.name']}"></p:outputLabel>
 								</div>
 								<div class="ui-g-8">
 									<p:inputText id="name"
-										value="#{surveySectionStrategyView.surveySectionStrategyBo.name}" />
+										value="#{surveySectionStrategyView.surveySectionStrategyBo.name}"/>
+<!-- 										 required="true"		requiredMessage="veld verplicht"> -->
+<!-- 										<f:validateLength minimum="2" /> -->
+<!-- 									</p:inputText> -->
+<!-- 									<p:messages for="name" id="errors" showDetail="false" closable="true"> -->
+<!--    										<p:autoUpdate /> -->
+<!--    									</p:messages> -->
 								</div>
 							</div>
 							<div class="ui-g">
@@ -104,7 +119,7 @@
 								</div>
 								<div class="ui-g-8">
 									<p:inputText id="amount"
-										value="#{surveySectionStrategyView.surveySectionStrategyBo.amountOfLevels}" />
+										value="#{surveySectionStrategyView.surveySectionStrategyBo.amountOfLevels}"/>
 								</div>
 							</div>
 							<div class="ui-g">
@@ -155,7 +170,9 @@
 							<div class="ui-g-2">
 								<p:commandButton value="#{msgs['strategy.add']}" update=":form"
 									action="#{surveySectionStrategyView.addSurveySectionStrategy}"
-									oncomplete="PF('addStrategyDialog').hide();" />
+ 									oncomplete="if (#{empty context.messageList}) PF('addStrategyDialog').hide();" />
+<!-- 									oncomplete="if (!args.validationFailed) PF('addStrategyDialog').hide();" /> -->
+<!-- 									oncomplete="if (!args.messageOccured) PF('addStrategyDialog').hide();" /> -->
 							</div>
 						</p:outputPanel>
 					</p:dialog>
