@@ -15,13 +15,18 @@ import colruyt.pcrs.utillibs.WebUser;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionImplBo;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionRequirementLevelBo;
 import colruyt.pcrsejb.bo.user.UserBo;
+import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
+import colruyt.pcrsejb.bo.user.privilege.TeamMemberUserPrivilegeBo;
 import colruyt.pcrsejb.facade.surveys.surveySet.ISurveySetFacade;
+import colruyt.pcrsejb.facade.user.IUserFacade;
 
 @Named
 @ViewScoped
 public class ManagerTeamViewDialog implements Serializable {
 			
 	
+
+	private static final long serialVersionUID = 1L;
 	private UserBo manager;
 	private UserBo teamMember;
 		
@@ -33,6 +38,9 @@ public class ManagerTeamViewDialog implements Serializable {
 	
 	@Inject
 	private WebUser currentUser;
+	
+	@EJB
+	private IUserFacade userFacade;
 	
 	
 
@@ -104,9 +112,14 @@ public class ManagerTeamViewDialog implements Serializable {
 	
 	
 	public void submit() {
-		this.surveyFacade.generateSurveySetFor(this.teamMember, this.chosenList);
+		
+	TeamMemberUserPrivilegeBo privi = (TeamMemberUserPrivilegeBo )this.currentUser.getUser().getPrivileges().stream().filter(x->x.getPrivilegeType().equals(PrivilegeTypeBo.TEAMMEMBER) && x.isActive()).findFirst().get();
+	privi.getSurveySetTreeSet().add(this.surveyFacade.generateSurveySetFor(this.chosenList));
+	this.userFacade.save(this.currentUser.getUser());
+	
 	}
-
+	
+	
 	
 	
 			
