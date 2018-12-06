@@ -11,6 +11,7 @@ import colruyt.pcrsejb.converter.user.team.EnrolmentConverter;
 import colruyt.pcrsejb.facade.user.IUserFacade;
 import colruyt.pcrsejb.facade.user.privilege.IUserPrivilegeFacade;
 import colruyt.pcrsejb.service.bl.user.team.IEnrolmentServiceBl;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
 public class EnrolmentFacade implements Serializable, IEnrolmentFacade {
@@ -47,7 +48,7 @@ public class EnrolmentFacade implements Serializable, IEnrolmentFacade {
 	}
 
 	@Override
-	public void delete(EnrolmentBo enrolment) {
+	public void delete(EnrolmentBo enrolment) throws ValidationException {
 		enrolmentServiceBl.delete(enrolmentConverter.convertToEntity(enrolment));
 	}
 	

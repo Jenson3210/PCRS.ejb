@@ -10,42 +10,38 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionTitle;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
-public class DbSurveySectionTitleServiceDl implements Serializable, ISurveySectionTitleServiceDl{
+public class DbSurveySectionTitleServiceDl implements Serializable, ISurveySectionTitleServiceDl {
 
 	@PersistenceContext(unitName = "PCRSEJB")
 	private EntityManager em;
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	public SurveySectionTitle save(SurveySectionTitle element) {
 		SurveySectionTitle surveySectionTitle;
-		if(element.getId()==null)
-		{
+		if (element.getId() == null) {
 			em.persist(element);
 			surveySectionTitle = element;
-		}
-		else
-		{
+		} else {
 			surveySectionTitle = em.merge(element);
 		}
 		return surveySectionTitle;
-		
-		/*SurveySectionTitle surveySectionTitle = em.merge(element);
-		if(surveySectionTitle == null)
-		{
-			throw new EmptyStackException();
-		}
-		return surveySectionTitle;*/
+
+		/*
+		 * SurveySectionTitle surveySectionTitle = em.merge(element);
+		 * if(surveySectionTitle == null) { throw new EmptyStackException(); } return
+		 * surveySectionTitle;
+		 */
 	}
 
 	@Override
 	public SurveySectionTitle get(SurveySectionTitle element) {
-		SurveySectionTitle  surveySectionTitle = em.find(SurveySectionTitle.class, element);
-		if(surveySectionTitle == null)
-		{
+		SurveySectionTitle surveySectionTitle = em.find(SurveySectionTitle.class, element);
+		if (surveySectionTitle == null) {
 			throw new EmptyStackException();
 		}
 		return surveySectionTitle;
@@ -59,15 +55,17 @@ public class DbSurveySectionTitleServiceDl implements Serializable, ISurveySecti
 	}
 
 	@Override
-	public void delete(SurveySectionTitle element) {
-		element = em.merge(element);
+	public void delete(SurveySectionTitle element) throws ValidationException {
+		element = em.find(SurveySectionTitle.class, element.getId());
 		if (element != null) {
-			em.remove(element);
-		}
-		else {
+			try {
+				em.remove(element);
+				em.flush();
+			} catch (Exception e) {
+				throw new ValidationException("Can not remove survey section title");
+			}
+		} else {
 			throw new EmptyStackException();
 		}
 	}
-
-
 }

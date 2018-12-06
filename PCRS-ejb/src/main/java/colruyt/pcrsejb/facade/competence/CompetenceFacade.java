@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 import colruyt.pcrsejb.bo.competence.CompetenceBo;
 import colruyt.pcrsejb.converter.competence.CompetenceConverter;
 import colruyt.pcrsejb.service.bl.competence.ICompetenceServiceBl;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
 public class CompetenceFacade implements Serializable, ICompetenceFacade {
@@ -37,7 +38,7 @@ public class CompetenceFacade implements Serializable, ICompetenceFacade {
 	}
 
 	@Override
-	public void delete(CompetenceBo entityBo) {
+	public void delete(CompetenceBo entityBo) throws ValidationException {
 		competenceServiceBl.delete(competenceConverter.convertToEntity(entityBo));
 		
 	}

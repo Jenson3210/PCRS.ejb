@@ -20,6 +20,7 @@ import colruyt.pcrsejb.entity.surveys.surveySet.SurveySet;
 import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.service.dl.surveys.surveySet.ISurveySetServiceDl;
 import colruyt.pcrsejb.util.exceptions.NoSurveySetException;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
 public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl{
@@ -44,7 +45,7 @@ public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl{
 	}
 
 	@Override
-	public void delete(SurveySet element) {
+	public void delete(SurveySet element) throws ValidationException {
 		surveySetServiceDb.delete(element);
 	}
 

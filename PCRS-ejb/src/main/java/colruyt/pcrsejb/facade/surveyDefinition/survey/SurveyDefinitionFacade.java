@@ -13,6 +13,7 @@ import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.converter.surveyDefinition.survey.SurveyDefinitionConverter;
 import colruyt.pcrsejb.converter.user.UserConverter;
 import colruyt.pcrsejb.service.bl.surveyDefinition.survey.ISurveyDefinitionServiceBl;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
 public class SurveyDefinitionFacade implements Serializable, ISurveyDefinitionFacade {
@@ -43,7 +44,7 @@ public class SurveyDefinitionFacade implements Serializable, ISurveyDefinitionFa
 	}
 
 	@Override
-	public void delete(SurveyDefinitionBo entityBo) {
+	public void delete(SurveyDefinitionBo entityBo) throws ValidationException {
 		surveyDefinitionServiceBl.delete(surveyDefinitionConverter.convertToEntity(entityBo));
 	}
 

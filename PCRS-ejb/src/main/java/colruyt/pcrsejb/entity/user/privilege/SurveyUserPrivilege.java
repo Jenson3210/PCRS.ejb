@@ -2,6 +2,7 @@ package colruyt.pcrsejb.entity.user.privilege;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -15,7 +16,7 @@ public class SurveyUserPrivilege extends UserPrivilege implements Serializable {
 	 * PROPERTIES
 	 */
 	private static final long serialVersionUID = 1L;
-	@ManyToOne
+	@ManyToOne(cascade= {CascadeType.MERGE})
 	private SurveyDefinition surveyDefinition;
 	/*
 	 * CONSTRUCTORS

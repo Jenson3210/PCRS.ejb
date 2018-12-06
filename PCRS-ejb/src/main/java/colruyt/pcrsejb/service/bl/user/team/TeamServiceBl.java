@@ -15,6 +15,7 @@ import colruyt.pcrsejb.service.bl.user.privilege.IUserPrivilegeServiceBl;
 import colruyt.pcrsejb.service.dl.user.team.ITeamServiceDl;
 import colruyt.pcrsejb.util.exceptions.MemberAlreadyHasATeamException;
 import colruyt.pcrsejb.util.exceptions.UserIsNotMemberOfTeamException;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
 public class TeamServiceBl implements Serializable,ITeamServiceBl {
@@ -54,7 +55,7 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
 	}
 
 	@Override
-	public void delete(Team element) {
+	public void delete(Team element) throws ValidationException {
 		 this.dlService.delete(element);
 	}
 
@@ -74,7 +75,7 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
 	}
 
 	
-	public void removeUserFromTeam(Team team, Enrolment enrolment, User user) {		
+	public void removeUserFromTeam(Team team, Enrolment enrolment, User user) throws ValidationException {		
 		//remove teamEnrolment
 		enrolmentServiceBl.delete(enrolment);
 		

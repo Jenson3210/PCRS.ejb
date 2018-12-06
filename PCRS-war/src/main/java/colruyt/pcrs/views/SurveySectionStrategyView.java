@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -17,14 +19,14 @@ import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 public class SurveySectionStrategyView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@EJB
-	private ISurveySectionStrategyFacade surveySectionStrategyFacade; 
+	private ISurveySectionStrategyFacade surveySectionStrategyFacade;
 	private SurveySectionStrategyBo surveySectionStrategyBo;
-	
+
 	private List<SurveySectionStrategyBo> strategies;
-	
-	@PostConstruct 
+
+	@PostConstruct
 	private void fillStrategies() {
 		strategies = surveySectionStrategyFacade.getAll();
 	}
@@ -32,24 +34,27 @@ public class SurveySectionStrategyView implements Serializable {
 	public SurveySectionStrategyBo getSurveySectionStrategyBo() {
 		return surveySectionStrategyBo;
 	}
+
 	public void setSurveySectionStrategyBo(SurveySectionStrategyBo surveySectionStrategyBo) {
 		this.surveySectionStrategyBo = surveySectionStrategyBo;
 	}
+
 	public List<SurveySectionStrategyBo> getStrategies() {
 		return strategies;
 	}
+
 	public void setStrategies(List<SurveySectionStrategyBo> strategies) {
 		this.strategies = strategies;
 	}
- 
+
 	public void addSurveySectionStrategy() {
-		strategies.add(surveySectionStrategyFacade.save(surveySectionStrategyBo));	
+		strategies.add(surveySectionStrategyFacade.save(surveySectionStrategyBo));
 	}
-	
+
 	public void newSurveySectionStrategy() {
-        surveySectionStrategyBo = new SurveySectionStrategyBo();
-    }
-	
+		surveySectionStrategyBo = new SurveySectionStrategyBo();
+	}
+
 	public void editSurveySectionStrategy() {
 		SurveySectionStrategyBo s = null;
 		for (SurveySectionStrategyBo strategy : strategies) {
@@ -66,9 +71,8 @@ public class SurveySectionStrategyView implements Serializable {
 		}
 		surveySectionStrategyFacade.save(s);
 	}
-	
-	public void deleteSurveySectionStrategy()
-	{
+
+	public void deleteSurveySectionStrategy() {
 		SurveySectionStrategyBo s = null;
 		for (SurveySectionStrategyBo strategy : strategies) {
 			if (strategy.getId() == surveySectionStrategyBo.getId()) {
@@ -76,6 +80,11 @@ public class SurveySectionStrategyView implements Serializable {
 			}
 		}
 		strategies.remove(s);
-		surveySectionStrategyFacade.delete(s);
+		try {
+			surveySectionStrategyFacade.delete(s);
+		} catch (ValidationException e) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+		}
 	}
 }

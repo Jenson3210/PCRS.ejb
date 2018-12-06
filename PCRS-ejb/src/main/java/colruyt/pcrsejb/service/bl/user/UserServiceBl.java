@@ -14,6 +14,7 @@ import colruyt.pcrsejb.entity.user.team.Enrolment;
 import colruyt.pcrsejb.service.dl.user.IUserServiceDl;
 import colruyt.pcrsejb.util.exceptions.NoExistingEmailException;
 import colruyt.pcrsejb.util.exceptions.NoExistingMemberException;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
 public class UserServiceBl implements IUserServiceBl {
@@ -33,7 +34,7 @@ public class UserServiceBl implements IUserServiceBl {
 		return usersDb.save(user);
 	}
 
-	public void delete(User user) {
+	public void delete(User user) throws ValidationException {
 		usersDb.delete(user);
 	}
 
