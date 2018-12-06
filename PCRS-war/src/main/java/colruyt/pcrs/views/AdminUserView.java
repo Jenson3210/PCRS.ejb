@@ -70,6 +70,7 @@ public class AdminUserView implements Serializable{
 				user.setCountry(addedUser.getCountry());
 				user.setEmail(addedUser.getEmail());
 				user.setPassword(addedUser.getPassword());
+				user.setShortName(addedUser.getShortName());
 
 				HashSet<UserPrivilegeBo> privs = (HashSet<UserPrivilegeBo>) user.getPrivileges();
 				if (adminSelected) {

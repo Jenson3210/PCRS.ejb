@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.view.ViewScoped; 
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -20,38 +20,36 @@ import colruyt.pcrsejb.facade.user.IUserFacade;
 import colruyt.pcrsejb.facade.user.team.IEnrolmentFacade;
 import colruyt.pcrsejb.facade.user.team.ITeamFacade;
 import colruyt.pcrsejb.util.exceptions.NoExistingMemberException;
+import colruyt.pcrsejb.util.exceptions.NoSurveySetException;
 
 @Named
 @ViewScoped
-public class ManagerTeamView implements Serializable{
+public class ManagerTeamView implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@EJB
 	private ITeamFacade teamFacade;
-	
+
 	@EJB
 	private IUserFacade userFacade;
-	
+
 	@EJB
-	private IEnrolmentFacade enrolmentFacade; 
-	
+	private IEnrolmentFacade enrolmentFacade;
+
 	@EJB
 	private ISurveySetFacade surveyFacade;
-	
-	
-	private List<TeamBo> teams; 
-	
+
+	private List<TeamBo> teams;
+
 	@Inject
-	private WebUser currentUser; 
-	
-	
-	
+	private WebUser currentUser;
+
 	public ITeamFacade getTeamFacade() {
-	
+
 		return teamFacade;
 	}
 
-	public void setTeamFacade(ITeamFacade teamFacade) { 
+	public void setTeamFacade(ITeamFacade teamFacade) {
 		this.teamFacade = teamFacade;
 	}
 
@@ -71,64 +69,85 @@ public class ManagerTeamView implements Serializable{
 		this.surveyFacade = surveyFacade;
 	}
 
-	
 	private List<TeamEnrolmentBo> teamEnrolments = new ArrayList<>();
-	
-	
-	
 
 	public List<TeamEnrolmentBo> getTeamEnrolments() {
 		return teamEnrolments;
 	}
 
-	public void setTeamEnrolments(List<TeamEnrolmentBo> teamEnrolments) { 
+	public void setTeamEnrolments(List<TeamEnrolmentBo> teamEnrolments) {
 		this.teamEnrolments = teamEnrolments;
 	}
 
 	@PostConstruct
 	private void fillList() {
-  		teams =  teamFacade.getTeamsOfManager(currentUser.getUser());
-		for(TeamBo t : teams) {
+		teams = teamFacade.getTeamsOfManager(currentUser.getUser());
+		for (TeamBo t : teams) {
 			TeamEnrolmentBo teamEnrolment = new TeamEnrolmentBo(t);
 			for (EnrolmentBo e : t.getEnrolments()) {
 				teamEnrolment.addEnrolmentToMap(e, getUserFromEnrolment(e));
 			}
-			teamEnrolments.add(teamEnrolment); 
-		} 
+			teamEnrolments.add(teamEnrolment);
+		}
 	}
 
-   
+	public List<TeamBo> getTeams() {
+		return teams;
+	}
 
-    public List<TeamBo> getTeams() { 
-        return teams;
-    }
+	public void setTeams(List<TeamBo> teams) {
+		this.teams = teams;
+	}
 
-    public void setTeams(List<TeamBo> teams) {
-        this.teams = teams; 
-    } 
-    
-    public boolean isMe(UserBo bo) {  
-    	
-    	return !this.currentUser.getUser().equals(bo); 
-    	
-    }
-    
-    
-    
-    public UserBo getUserFromEnrolment(EnrolmentBo enrolment){
+	public boolean isMe(UserBo bo) {
+
+		return !this.currentUser.getUser().equals(bo);
+
+	}
+
+	public UserBo getUserFromEnrolment(EnrolmentBo enrolment) {
 		UserBo user = null;
-		
+
 		try {
-			user = userFacade.getUserByEnrolment(enrolment);  
+			user = userFacade.getUserByEnrolment(enrolment);
 		} catch (NoExistingMemberException e) {
 			System.out.println(e.getMessage());
 		}
 		return user;
 	}
-   
-    
-    
-    
-    
+
+	public Integer getManagerSurveyPercentage(UserBo user) {
+
+		try {
+			return this.getSurveyFacade().getPercentageCompleteForManagerSurvey(user);
+		} catch (NoSurveySetException e) {
+			return 0;
+		}
+
+	}
+
+	public Integer getMemberSurveyPercentage(UserBo user) {
+
+		try {
+			return this.getSurveyFacade().getPercentageCompleteForMemberSurvey(user);
+		} catch (NoSurveySetException e) {
+			return 0;
+		}
+
+	}
+
+	public Integer getConsensusSurveyPercentage(UserBo user) {
+		try {
+			return this.getSurveyFacade().getPercentageCompleteForConsensusSurvey(user);
+		} catch (NoSurveySetException e) {
+			return 0;
+		}
+	}
+
+	public boolean consensusReady(UserBo user) {
+
+		return !(this.getManagerSurveyPercentage(user) == 100 && this.getMemberSurveyPercentage(user) == 100);
+
+	}
 
 }

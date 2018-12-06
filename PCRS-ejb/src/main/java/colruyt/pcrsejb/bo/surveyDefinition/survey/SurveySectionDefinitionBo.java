@@ -17,7 +17,7 @@ public class SurveySectionDefinitionBo extends AbstractBo implements Serializabl
 	private Boolean administratorCreated;
 	private SurveySectionTitleBo surveySectionTitle;
 	private SurveySectionStrategyBo surveySectionStrategy;
-	private List<CompetenceImplBo> surveySectionCompetences = new ArrayList<>();
+	private List<CompetenceImplBo> surveySectionCompetences = new ArrayList<>(); 
 	/*
 	 * CONSTRUCTORS
 	 */
@@ -73,7 +73,6 @@ public class SurveySectionDefinitionBo extends AbstractBo implements Serializabl
 		this.administratorCreated = administratorCreated;
 	}
 	
-	
 	@Override
 	public String toString() {
 		return "SurveySectionDefinitionBo [id=" + id + "]";
@@ -101,9 +100,5 @@ public class SurveySectionDefinitionBo extends AbstractBo implements Serializabl
 			return false;
 		return true;
 	}
-	
-	
-	
-	
 	
 }
