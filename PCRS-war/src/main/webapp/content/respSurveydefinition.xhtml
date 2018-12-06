@@ -208,8 +208,7 @@
 		<h:form id="manageCompetences">
 			<div class="ui-g" id="manageCompetencesContainer">
 				<p:dialog header="#{msgs['respSurveyDefinition.manageCompetences']}"
-					widgetVar="manageCompetencesDialog" modal="true" draggable="false"
-					style="width: 200px; height: 200px;">
+					widgetVar="manageCompetencesDialog" modal="true" draggable="false">
 					<p:outputPanel id="manageCompetencesPanel">
 
 						<div class="ui-g">
@@ -242,37 +241,43 @@
 									emptyMessage="#{msgs['respSurveyDefinition.noResults']}"
 									value="#{respSurveyDefinitionView.selectedCompetence}"
 									converter="competenceBoConverter" >
-									
 									<p:ajax event="itemSelect"
-											update="manageCompetencesPanel" />
-										
+											update="competenceDetails" />
 								</p:autoComplete>
 
 							</div>
 						</div>
 						
-						<div class="ui-g">
-							<div class="ui-g-4">
-								<p:outputLabel
-									value="#{msgs['respSurveyDefinition.selectedCompetenceTitle']}" />
+						<p:outputPanel id="competenceDetails" rendered="#{respSurveyDefinitionView.selectedCompetence != null}">
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel
+										value="#{msgs['respSurveyDefinition.selectedCompetenceTitle']}" />
+								</div>
+								<div class="ui-g-8">
+									<p:inputText value="#{respSurveyDefinitionView.selectedCompetence.name}"
+													 readonly="true"/>
+								</div>
 							</div>
-							<div class="ui-g-8">
-								<p:inputText value="#{respSurveyDefinitionView.selectedCompetence.name}"
-												 readonly="true"/>
+							
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel
+										value="#{msgs['respSurveyDefinition.selectedCompetenceDescription']}" />
+								</div>
+								<div class="ui-g-8">
+									<p:inputTextarea value="#{respSurveyDefinitionView.selectedCompetence.competenceDescription}"/>
+								</div>
 							</div>
-						</div>
+							
 						
-						<div class="ui-g">
-							<div class="ui-g-4">
-								<p:outputLabel
-									value="#{msgs['respSurveyDefinition.selectedCompetenceDescription']}" />
-							</div>
-							<div class="ui-g-8">
-								<p:inputTextarea value="#{respSurveyDefinitionView.selectedCompetence.competenceDescription}"/>
-							</div>
-						</div>
+						</p:outputPanel>
 						
-						<ui:repeat value="#{respSurveyDefinitionView.selectedCompetence.competenceLevels}" var="level" >
+						
+						
+						
+						
+						<!-- <ui:repeat value="#{respSurveyDefinitionView.selectedCompetence.competenceLevels}" var="level" >
 							<div class="ui-g">
 								<div class="ui-g-4">
 									<p:outputLabel
@@ -282,7 +287,14 @@
 									<p:inputTextarea value="#{level.description}" readonly="true"/>
 								</div>
 							</div>
-						</ui:repeat>
+						</ui:repeat> -->
+						
+						<p:outputPanel id="radioPanel">
+					    	<p:selectOneRadio id="customRadio" value="#{respSurveyDefinitionView.selectedCompetence.competenceLevels}" 
+					    						layout="custom" var="#{level}">
+				            	<f:selectItems itemLabel="#{level.orderLevel}. #{level.description}" itemValue="#{level.orderLevel}" />
+					        </p:selectOneRadio>
+    					</p:outputPanel>
 						
 						
 						<div class="ui-g-2">
