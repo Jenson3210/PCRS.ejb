@@ -32,9 +32,29 @@
                             <p:column >
                                 <h:outputText value="#{enrolment.key.userPrivilege.privilegeType.fullName}" />
                             </p:column>
+                            
+                            <p:column >
+                            <h:form id="functionForm">
+                            
+                            			 <f:attribute name="user" value="#{enrolment.value}" />
+                						 <f:attribute name="enrolment" value="#{enrolment.key}" />
+                						 
+								    <p:selectOneMenu id="functionDropDown" value="" style="width:150px"  >
+                						 <f:selectItem itemLabel="Kies een Functie" itemValue="" noSelectionOption="true" />
+                						 <f:selectItems value="#{managerTeamView.getAvailableFunctionDefinitions()}"  var="function" itemLabel="#{function.getFunction()}" itemValue="#{function}"  />
+                						
+                						
+                						 <p:ajax event="valueChange" listener="#{managerTeamView.onFunctionChange}" immediate="true" process="@this"/>
+           							</p:selectOneMenu>
+           							 
+           							 
+           					</h:form>
+           					
+							</p:column>
+                            
 							<p:column >
-								<p:commandButton value="Generate Survey" onclick="PF('dlg3').show()"  
-								 ajax="true"  action="#{managerTeamViewDialog.init(enrolment.value)}"  rendered="#{managerTeamView.isMe(enrolment.value)}"   />
+								<p:commandButton icon="pi pi-check" value="Generate Survey" onclick="PF('dlg3').show()"  
+								 action="#{managerTeamViewDialog.init(enrolment.value)}" rendered="#{managerTeamView.isMe(enrolment.value) and managerTeamView.hasFunction(enrolment.key)}"   />
 							</p:column>
 							
 					    
@@ -51,11 +71,9 @@
 						<h:outputText value="Jij"></h:outputText>
 						<p:progressBar id="progressBarBoss" widgetVar="pbClient" value="#{managerTeamView.getManagerSurveyPercentage(webUser.getUser())}" style="width:300px" />
 						
-						
-					
-					
 						<h:outputText value=""></h:outputText>
-						<p:commandButton disabled="true" value="Generate Consensus"/>
+						
+						<p:commandButton disabled="true" value="Generate Consensus" oncompleted="PF('dlg3').hide();" />
 						
            						 </p:panelGrid>
         					</p:rowExpansion>
@@ -71,7 +89,7 @@
     
     
     
-     <p:dialog header="TITLELLELEL"  widgetVar="dlg3" modal="true" resizable="false">
+     <p:dialog header="Create Survey" widgetVar="dlg3" modal="true" resizable="false">
         <p:panelGrid columns="2" id="display" columnClasses="label,output">
         
         <p:selectOneListbox id="advanced" value="#{managerTeamViewDialog.availableList}" var="t" filter="true" filterMatchMode="contains">
@@ -82,6 +100,7 @@
             </p:column>
         </p:selectOneListbox>
         
+        	
           <p:selectOneListbox id="advanced2" value="#{managerTeamViewDialog.chosenList}" var="t" filter="true" filterMatchMode="contains">
             <f:selectItems value="#{managerTeamViewDialog.chosenList}}" var="theme" itemLabel="#{theme.getSurveySectionDefinitionBo().getSurveySectionTitle().getTitle()}" itemValue="#{theme}" />
              
@@ -89,6 +108,36 @@
                 <h:outputText value="#{t.getSurveySectionDefinitionBo().getSurveySectionTitle().getTitle()}" />
             </p:column>
         </p:selectOneListbox>
+        
+        <p:commandButton action="#{managerTeamViewDialog.submit()}" icon="pi pi-check" value="Create Survey">Create Survey</p:commandButton>
+        
+        
+        </p:panelGrid>
+    </p:dialog>
+    
+    
+     <p:dialog header="Change Function" widgetVar="dlg3" modal="true" resizable="false">
+        <p:panelGrid columns="2" id="display" columnClasses="label,output">
+        
+        <p:selectOneListbox id="advanced" value="#{managerTeamViewDialog.availableList}" var="t" filter="true" filterMatchMode="contains">
+            <f:selectItems value="#{managerTeamViewDialog.availableList}}" var="theme" itemLabel="#{theme.getSurveySectionDefinitionBo().getSurveySectionTitle().getTitle()}" itemValue="#{theme}" />
+             
+            <p:column>
+                <h:outputText value="#{t.getSurveySectionDefinitionBo().getSurveySectionTitle().getTitle()}" />
+            </p:column>
+        </p:selectOneListbox>
+        
+        	
+          <p:selectOneListbox id="advanced2" value="#{managerTeamViewDialog.chosenList}" var="t" filter="true" filterMatchMode="contains">
+            <f:selectItems value="#{managerTeamViewDialog.chosenList}}" var="theme" itemLabel="#{theme.getSurveySectionDefinitionBo().getSurveySectionTitle().getTitle()}" itemValue="#{theme}" />
+             
+            <p:column>
+                <h:outputText value="#{t.getSurveySectionDefinitionBo().getSurveySectionTitle().getTitle()}" />
+            </p:column>
+        </p:selectOneListbox>
+        
+        <p:commandButton action="#{managerTeamViewDialog.submit()}" icon="pi pi-check" value="Create Survey">Create Survey</p:commandButton>
+        
         
         </p:panelGrid>
     </p:dialog>

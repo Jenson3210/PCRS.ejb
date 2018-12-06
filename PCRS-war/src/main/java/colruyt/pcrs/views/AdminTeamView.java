@@ -2,11 +2,8 @@ package colruyt.pcrs.views;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -43,22 +40,22 @@ public class AdminTeamView implements Serializable {
 	private UserBo user;
 	private String userPrivilege;
 	private List<TeamEnrolmentBo> teamEnrolments = new ArrayList<>();;
-
+   
 	@PostConstruct
-	private void fillList() {
-		teams = teamFacade.getAll();
-		for (TeamBo t : teams) {
+	private void fillList() {  
+  		teams = teamFacade.getAll();
+		for(TeamBo t : teams) {
 			TeamEnrolmentBo teamEnrolment = new TeamEnrolmentBo(t);
 			for (EnrolmentBo e : t.getEnrolments()) {
 				teamEnrolment.addEnrolmentToMap(e, getUserFromEnrolment(e));
 			}
 			teamEnrolments.add(teamEnrolment);
-		}
+		} 
 	}
-
+      
 	public List<TeamBo> getTeams() {
 		return teams;
-	}
+	} 
 
 	public void setTeams(List<TeamBo> teams) {
 		this.teams = teams;
@@ -69,7 +66,7 @@ public class AdminTeamView implements Serializable {
 	}
 
 	public void setManipulatedEnrolmentBo(EnrolmentBo manipulatedEnrolmentBo) {
-		this.manipulatedEnrolmentBo = manipulatedEnrolmentBo;
+		this.manipulatedEnrolmentBo  = manipulatedEnrolmentBo;
 	}
 
 	public TeamBo getManipulatedTeamBo() {
@@ -77,11 +74,11 @@ public class AdminTeamView implements Serializable {
 	}
 
 	public void setManipulatedTeamBo(TeamBo manipulatedTeamBo) {
-		this.manipulatedTeamBo = manipulatedTeamBo;
+		this.manipulatedTeamBo = manipulatedTeamBo; 
 	}
 
 	public UserBo getUser() {
-		return user;
+ 		return user;   
 	}
 
 	public void setUser(UserBo user) {
@@ -106,10 +103,10 @@ public class AdminTeamView implements Serializable {
 	}
 
 	public void newEnrolment() {
-		manipulatedEnrolmentBo = new EnrolmentBo();
+ 		manipulatedEnrolmentBo = new EnrolmentBo();
 
 	}
-
+	
 	public void deleteEnrolment() {
 		for (TeamBo team : teams) {
 			for (EnrolmentBo enrolment : team.getEnrolments()) {
@@ -127,13 +124,13 @@ public class AdminTeamView implements Serializable {
 	}
 
 	private void removeTeamEnrolment(TeamBo team, EnrolmentBo enrolment) {
-		for (TeamEnrolmentBo teb : teamEnrolments) {
-			if (teb.getTeam().equals(team)) {
+		for(TeamEnrolmentBo teb : teamEnrolments) {
+			if(teb.getTeam().equals(team)) {
 				Iterator<EnrolmentBo> iterator = teb.getEnrolmentMap().keySet().iterator();
-
+				
 				while (iterator.hasNext()) {
 					EnrolmentBo e = iterator.next();
-					if (enrolment.equals(e)) {
+					if(enrolment.equals(e)) {
 						iterator.remove();
 					}
 				}
@@ -142,26 +139,26 @@ public class AdminTeamView implements Serializable {
 	}
 
 	public void addEnrolment() {
-		try {
-			EnrolmentBo enrolment = teamFacade.addUserToTeam(manipulatedTeamBo, user, userPrivilege);
+    	try {
+    		EnrolmentBo enrolment = teamFacade.addUserToTeam(manipulatedTeamBo, user, userPrivilege);
 			manipulatedTeamBo.getEnrolments().add(enrolment);
-			for (TeamEnrolmentBo te : teamEnrolments) {
-				if (te.getTeam().equals(manipulatedTeamBo)) {
+			for(TeamEnrolmentBo te : teamEnrolments) {
+				if(te.getTeam().equals(manipulatedTeamBo)){
 					te.addEnrolmentToMap(enrolment, user);
 				}
 			}
-		} catch (MemberAlreadyHasATeamException ex) {
-
-		}
+    	} catch (MemberAlreadyHasATeamException ex) {
+    		
+    	}
 	}
 
 	public List<UserBo> completeUser(String query) {
 		return userFacade.getUsersByShortName("%" + query + "%");
 	}
-
-	public UserBo getUserFromEnrolment(EnrolmentBo enrolment) {
+	
+	public UserBo getUserFromEnrolment(EnrolmentBo enrolment){
 		UserBo user = null;
-
+		
 		try {
 			user = userFacade.getUserByEnrolment(enrolment);
 		} catch (NoExistingMemberException e) {
@@ -171,11 +168,11 @@ public class AdminTeamView implements Serializable {
 	}
 
 	public List<TeamEnrolmentBo> getTeamEnrolments() {
-		return teamEnrolments;
+		return teamEnrolments; 
 	}
 
 	public void setTeamEnrolments(List<TeamEnrolmentBo> teamEnrolments) {
 		this.teamEnrolments = teamEnrolments;
 	}
-
+	
 }

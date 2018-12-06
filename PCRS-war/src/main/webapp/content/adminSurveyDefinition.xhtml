@@ -205,4 +205,440 @@
 		</div>
 		<div class="ui-g-1" />
 	</div>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div class="ui-g">
+		<div class="ui-g-1" />
+		<div class="ui-g-10">
+			<h:form id="form">
+				<p:dataTable var="surveyDefinition" value="#{adminSurveyDefinitionView.surveyDefinitions}">
+					 <f:facet name="header">
+						<h:outputText value="#{msgs['surveyDefinition.title']}" />
+					</f:facet>
+					
+					<p:column headerText="#{msgs['surveyDefinition.function']}">
+						<h:outputText value="#{surveyDefinition.key.function}" />
+					</p:column>
+					
+					<p:column headerText="#{msgs['surveyDefinition.operatingUnit']}">
+						<h:outputText value="#{surveyDefinition.key.operatingUnit}" />
+					</p:column>
+					
+					<p:column headerText="#{msgs['surveyDefinition.country']}">
+						<h:outputText value="#{surveyDefinition.key.country}" />
+					</p:column>
+					
+					<p:column headerText="#{msgs['surveyDefinition.responsible']}">
+						<h:outputText value="#{surveyDefinition.value.firstName} #{surveyDefinition.value.lastName}" />
+					</p:column>
+					
+					<p:column headerText="#{msgs['edit']}"
+						style="width:65px; text-align: center">
+						<p:commandLink update=":editForm:editSurveyDefinition" id="edit"
+							oncomplete="PF('editSurveyDefinitionDialog').show()">
+							<i class="fas fa-pencil-alt"></i>
+							<f:setPropertyActionListener value="#{surveyDefinition.value}"
+								target="#{adminSurveyDefinitionView.manipulatedUserBo}" />
+							<f:setPropertyActionListener value="#{surveyDefinition.key}"
+								target="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo}" />
+						</p:commandLink>
+					</p:column>
+					
+					<p:column headerText="#{msgs['delete']}"
+						style="width:65px; text-align: center">
+						<p:commandLink id="delete" oncomplete="PF('deleteSurveyDefinitionDialog').show()">
+							<i class="fas fa-trash-alt"></i>
+							<f:setPropertyActionListener value="#{surveyDefinition.value}"
+								target="#{adminSurveyDefinitionView.manipulatedUserBo}" />
+							<f:setPropertyActionListener value="#{surveyDefinition.key}"
+								target="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo}" />
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<p:commandButton value="#{msgs['surveyDefinition.add']}"
+							action="#{adminSurveyDefinitionView.newSurveyDefinition}" styleClass="ui-priority-primary"
+							process="@this" update=":addForm:addSurveyDefinition"
+							oncomplete="PF('addSurveyDefinitionDialog').show();" />
+					</div>
+				</div>
+			</h:form>
+
+			<h:form id="addForm">
+				<div class="ui-g" id="addSurveyDefinitionForm">
+					<p:dialog id="addSurveyDefinitionFormTitle" header="#{msgs['surveyDefinition.add']}"
+						widgetVar="addSurveyDefinitionDialog" modal="true" draggable="false">
+						<p:outputPanel id="addSurveyDefinition">
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['surveyDefinition.function']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:inputText id="surveyTitleFunction" value="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo.function}" required="true"/>
+									<p:message for="surveyTitleFunction"/>
+								</div> 
+							</div> 
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['surveyDefinition.operatingUnit']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:inputText id="surveyTitleOperatingUnit" value="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo.operatingUnit}" required="true"/>
+									<p:message for="surveyTitleOperatingUnit"/>
+								</div> 
+							</div> 
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['surveyDefinition.country']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:inputText id="surveyTitleCountry" value="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo.country}" required="true"/>
+									<p:message for="surveyTitleCountry"/>
+								</div> 
+							</div> 
+							
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['surveyDefinition.responsible']}">
+									</p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									  <p:autoComplete id="shortName" completeMethod="#{adminSurveyDefinitionView.completeShortName}" 
+									  				var="user" itemLabel="#{user.email}" itemValue="#{user}" forceSelection="true" 
+									  				maxlength="5" emptyMessage="#{msgs['surveyDefinition.noResults']}"
+									 				value="#{adminSurveyDefinitionView.manipulatedUserBo}" 
+									 				required="true" converter="userBoConverter"/>
+									 <p:message for="shortName"/>
+								</div> 
+							</div> 
+							
+							<div class="ui-g-2">
+								<p:commandButton value="#{msgs['surveyDefinition.add']}" update=":form"
+									action="#{adminSurveyDefinitionView.addSurveyDefinition}"
+									oncomplete="PF('addSurveyDefinitionDialog').hide();" />
+							</div>
+						</p:outputPanel>
+					</p:dialog>
+				</div>
+			</h:form>
+				
+			<h:form id="editForm">
+				<div class="ui-g" id="editSurveyDefinitionForm">
+					<p:dialog id="editSurveyDefinitionFormTitle" header="#{msgs['surveyDefinition.edit']}"
+						widgetVar="editSurveyDefinitionDialog" modal="true" draggable="false">
+						<p:outputPanel id="editSurveyDefinition">
+							
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['surveyDefinition.function']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:inputText id="surveyTitleFunction" value="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo.function}" required="true"/>
+									<p:message for="surveyTitleFunction"/>
+								</div> 
+							</div> 
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['surveyDefinition.operatingUnit']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:inputText id="surveyTitleOperatingUnit" value="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo.operatingUnit}" required="true"/>
+									<p:message for="surveyTitleOperatingUnit"/>
+								</div> 
+							</div> 
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['surveyDefinition.country']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:inputText id="surveyTitleCountry" value="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo.country}" required="true"/>
+									<p:message for="surveyTitleCountry"/>
+								</div> 
+							</div> 
+							
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['surveyDefinition.responsible']}">
+									</p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									  <p:autoComplete id="shortName" completeMethod="#{adminSurveyDefinitionView.completeShortName}" 
+									  				var="user" itemLabel="#{user.email}" itemValue="#{user}" forceSelection="true" 
+									  				maxlength="5" emptyMessage="#{msgs['surveyDefinition.noResults']}"
+									 				value="#{adminSurveyDefinitionView.manipulatedUserBo}" 
+									 				required="true" converter="userBoConverter"/>
+									 <p:message for="shortName"/>
+								</div> 
+							</div> 
+							
+							<div class="ui-g-2">
+								<p:commandButton value="#{msgs['surveyDefinition.edit']}" update=":form"
+												oncomplete="PF('editSurveyDefinitionDialog').hide();"
+												action="#{adminSurveyDefinitionView.editSurveyDefinition}"
+												validateClient="true"/>
+							</div>
+						</p:outputPanel>
+					</p:dialog>
+				</div>
+			</h:form>
+			
+			<h:form id="deleteForm">
+				<div class="ui-g" id="deleteUserForm">
+					<p:dialog id="deleteUserFormTitle" header="#{msgs['surveyDefinition.delete']}"
+						widgetVar="deleteSurveyDefinitionDialog" modal="true" draggable="false">
+						<f:facet name="header">
+							<h:outputText value="#{msgs['surveyDefinition.delete']}" />
+						</f:facet>
+						<f:facet name="controls">
+							<h:outputLink value="#"
+								onclick="PF('deleteSurveyDefinitionDialog').hide(); return false;">X</h:outputLink>
+						</f:facet>
+						<p>
+							<h:outputText
+								value="#{msgs['surveyDefinition.deleteConfirmation']}" />
+						</p>
+						<br></br>
+						<br></br>
+						<div align="right">
+							<p:commandButton styleClass="btn btn-link" value="#{msgs['general.button.no']}"
+								onclick="PF('deleteSurveyDefinitionDialog').hide()" />
+							<p:commandButton styleClass="btn btn-primary" update=":form"
+								value="#{msgs['general.button.yes']}" 
+								oncomplete="PF('deleteSurveyDefinitionDialog').hide();" action="#{adminSurveyDefinitionView.deleteSurveyDefinition}"/>
+								
+						</div>
+					</p:dialog>
+
+				</div>
+			</h:form>
+			
+		</div>
+		<div class="ui-g-1"/>
+	</div>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div class="ui-g">
+		<div class="ui-g-1" />
+		<div class="ui-g-10">
+			<h:form id="form">
+				<p:dataTable var="surveyDefinition" value="#{adminSurveyDefinitionView.surveyDefinitions}">
+					 <f:facet name="header">
+						<h:outputText value="#{msgs['surveyDefinition.title']}" />
+					</f:facet>
+					
+					<p:column headerText="#{msgs['surveyDefinition.function']}">
+						<h:outputText value="#{surveyDefinition.key.function}" />
+					</p:column>
+					
+					<p:column headerText="#{msgs['surveyDefinition.operatingUnit']}">
+						<h:outputText value="#{surveyDefinition.key.operatingUnit}" />
+					</p:column>
+					
+					<p:column headerText="#{msgs['surveyDefinition.country']}">
+						<h:outputText value="#{surveyDefinition.key.country}" />
+					</p:column>
+					
+					<p:column headerText="#{msgs['surveyDefinition.responsible']}">
+						<h:outputText value="#{surveyDefinition.value.firstName} #{surveyDefinition.value.lastName}" />
+					</p:column>
+					
+					<p:column headerText="#{msgs['edit']}"
+						style="width:65px; text-align: center">
+						<p:commandLink update=":editForm:editSurveyDefinition" id="edit"
+							oncomplete="PF('editSurveyDefinitionDialog').show()">
+							<i class="fas fa-pencil-alt"></i>
+							<f:setPropertyActionListener value="#{surveyDefinition.value}"
+								target="#{adminSurveyDefinitionView.manipulatedUserBo}" />
+							<f:setPropertyActionListener value="#{surveyDefinition.key}"
+								target="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo}" />
+						</p:commandLink>
+					</p:column>
+					
+					<p:column headerText="#{msgs['delete']}"
+						style="width:65px; text-align: center">
+						<p:commandLink id="delete" oncomplete="PF('deleteSurveyDefinitionDialog').show()">
+							<i class="fas fa-trash-alt"></i>
+							<f:setPropertyActionListener value="#{surveyDefinition.value}"
+								target="#{adminSurveyDefinitionView.manipulatedUserBo}" />
+							<f:setPropertyActionListener value="#{surveyDefinition.key}"
+								target="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo}" />
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<p:commandButton value="#{msgs['surveyDefinition.add']}"
+							action="#{adminSurveyDefinitionView.newSurveyDefinition}" styleClass="ui-priority-primary"
+							process="@this" update=":addForm:addSurveyDefinition"
+							oncomplete="PF('addSurveyDefinitionDialog').show();" />
+					</div>
+				</div>
+			</h:form>
+
+			<h:form id="addForm">
+				<div class="ui-g" id="addSurveyDefinitionForm">
+					<p:dialog id="addSurveyDefinitionFormTitle" header="#{msgs['surveyDefinition.add']}"
+						widgetVar="addSurveyDefinitionDialog" modal="true" draggable="false">
+						<p:outputPanel id="addSurveyDefinition">
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['surveyDefinition.function']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:inputText id="surveyTitleFunction" value="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo.function}" required="true"/>
+									<p:message for="surveyTitleFunction"/>
+								</div> 
+							</div> 
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['surveyDefinition.operatingUnit']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:inputText id="surveyTitleOperatingUnit" value="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo.operatingUnit}" required="true"/>
+									<p:message for="surveyTitleOperatingUnit"/>
+								</div> 
+							</div> 
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['surveyDefinition.country']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:inputText id="surveyTitleCountry" value="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo.country}" required="true"/>
+									<p:message for="surveyTitleCountry"/>
+								</div> 
+							</div> 
+							
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['surveyDefinition.responsible']}">
+									</p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									  <p:autoComplete id="shortName" completeMethod="#{adminSurveyDefinitionView.completeShortName}" 
+									  				var="user" itemLabel="#{user.email}" itemValue="#{user}" forceSelection="true" 
+									  				maxlength="5" emptyMessage="#{msgs['surveyDefinition.noResults']}"
+									 				value="#{adminSurveyDefinitionView.manipulatedUserBo}" 
+									 				required="true" converter="userBoConverter"/>
+									 <p:message for="shortName"/>
+								</div> 
+							</div> 
+							
+							<div class="ui-g-2">
+								<p:commandButton value="#{msgs['surveyDefinition.add']}" update=":form"
+									action="#{adminSurveyDefinitionView.addSurveyDefinition}"
+									oncomplete="PF('addSurveyDefinitionDialog').hide();" />
+							</div>
+						</p:outputPanel>
+					</p:dialog>
+				</div>
+			</h:form>
+				
+			<h:form id="editForm">
+				<div class="ui-g" id="editSurveyDefinitionForm">
+					<p:dialog id="editSurveyDefinitionFormTitle" header="#{msgs['surveyDefinition.edit']}"
+						widgetVar="editSurveyDefinitionDialog" modal="true" draggable="false">
+						<p:outputPanel id="editSurveyDefinition">
+							
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['surveyDefinition.function']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:inputText id="surveyTitleFunction" value="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo.function}" required="true"/>
+									<p:message for="surveyTitleFunction"/>
+								</div> 
+							</div> 
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['surveyDefinition.operatingUnit']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:inputText id="surveyTitleOperatingUnit" value="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo.operatingUnit}" required="true"/>
+									<p:message for="surveyTitleOperatingUnit"/>
+								</div> 
+							</div> 
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['surveyDefinition.country']}"></p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									<p:inputText id="surveyTitleCountry" value="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo.country}" required="true"/>
+									<p:message for="surveyTitleCountry"/>
+								</div> 
+							</div> 
+							
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['surveyDefinition.responsible']}">
+									</p:outputLabel>
+								</div>
+								<div class="ui-g-8">
+									  <p:autoComplete id="shortName" completeMethod="#{adminSurveyDefinitionView.completeShortName}" 
+									  				var="user" itemLabel="#{user.email}" itemValue="#{user}" forceSelection="true" 
+									  				maxlength="5" emptyMessage="#{msgs['surveyDefinition.noResults']}"
+									 				value="#{adminSurveyDefinitionView.manipulatedUserBo}" 
+									 				required="true" converter="userBoConverter"/>
+									 <p:message for="shortName"/>
+								</div> 
+							</div> 
+							
+							<div class="ui-g-2">
+								<p:commandButton value="#{msgs['surveyDefinition.edit']}" update=":form"
+												oncomplete="PF('editSurveyDefinitionDialog').hide();"
+												action="#{adminSurveyDefinitionView.editSurveyDefinition}"
+												validateClient="true"/>
+							</div>
+						</p:outputPanel>
+					</p:dialog>
+				</div>
+			</h:form>
+			
+			<h:form id="deleteForm">
+				<div class="ui-g" id="deleteUserForm">
+					<p:dialog id="deleteUserFormTitle" header="#{msgs['surveyDefinition.delete']}"
+						widgetVar="deleteSurveyDefinitionDialog" modal="true" draggable="false">
+						<f:facet name="header">
+							<h:outputText value="#{msgs['surveyDefinition.delete']}" />
+						</f:facet>
+						<f:facet name="controls">
+							<h:outputLink value="#"
+								onclick="PF('deleteSurveyDefinitionDialog').hide(); return false;">X</h:outputLink>
+						</f:facet>
+						<p>
+							<h:outputText
+								value="#{msgs['surveyDefinition.deleteConfirmation']}" />
+						</p>
+						<br></br>
+						<br></br>
+						<div align="right">
+							<p:commandButton styleClass="btn btn-link" value="#{msgs['general.button.no']}"
+								onclick="PF('deleteSurveyDefinitionDialog').hide()" />
+							<p:commandButton styleClass="btn btn-primary" update=":form"
+								value="#{msgs['general.button.yes']}" 
+								oncomplete="PF('deleteSurveyDefinitionDialog').hide();" action="#{adminSurveyDefinitionView.deleteSurveyDefinition}"/>
+								
+						</div>
+					</p:dialog>
+
+				</div>
+			</h:form>
+			
+		</div>
+		<div class="ui-g-1"/>
+	</div>
 </ui:composition>
