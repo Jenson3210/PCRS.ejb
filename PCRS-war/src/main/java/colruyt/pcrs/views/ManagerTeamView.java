@@ -46,20 +46,13 @@ public class ManagerTeamView implements Serializable {
 	@EJB 
 	private ISurveyDefinitionFacade  surveyDefinitionFacade;
 	
-	private List<TeamBo> teams;
-	
-	private List<SurveyDefinitionBo> availableFunctionDefinitions = new ArrayList<>();
-
-	public List<SurveyDefinitionBo> getAvailableFunctionDefinitions() {
-		return availableFunctionDefinitions;
-	}
-
-	public void setAvailableFunctionDefinitions(List<SurveyDefinitionBo> availableFunctionDefinitions) {
-		this.availableFunctionDefinitions = availableFunctionDefinitions;
-	}
-
 	@Inject
 	private WebUser currentUser;
+	
+	private List<TeamBo> teams;
+	
+
+	
 
 	public ITeamFacade getTeamFacade() {
 
@@ -107,7 +100,7 @@ public class ManagerTeamView implements Serializable {
 			teamEnrolments.add(teamEnrolment);
 		}
 		
-		this.setAvailableFunctionDefinitions(this.surveyDefinitionFacade.getAll());
+		
 
 	}
 
@@ -171,31 +164,13 @@ public class ManagerTeamView implements Serializable {
 
 	}
 	
-	public void onFunctionChange(ValueChangeEvent event) {  
-		
-		EnrolmentBo bo = (EnrolmentBo) event.getComponent().getAttributes().get("enrol");
 
-		UserBo userBo = (UserBo) event.getComponent().getAttributes().get("user");
-		
-		SurveyDefinitionBo function = (SurveyDefinitionBo) event.getNewValue();  
-		
-		
-		if(bo.getUserPrivilege()  instanceof SurveyUserPrivilegeBo) {
-			
-			((SurveyUserPrivilegeBo) bo.getUserPrivilege()).setSurveyDefinition(function);
-			
-			this.userFacade.save(userBo);  
-		}
-		
-		
-		
-	}
 	
-	public String getFunctionOf(EnrolmentBo bo) { 
+	public String getFunctionOf(EnrolmentBo bo) {    
 		try {
 		if(bo.getUserPrivilege()  instanceof SurveyUserPrivilegeBo) {  
 			
-			return ((SurveyUserPrivilegeBo) bo.getUserPrivilege()).getSurveyDefinition().getFunction();
+			return ((SurveyUserPrivilegeBo) bo.getUserPrivilege()).getSurveyDefinition().getFunction(); 
 			
 			
 		}
