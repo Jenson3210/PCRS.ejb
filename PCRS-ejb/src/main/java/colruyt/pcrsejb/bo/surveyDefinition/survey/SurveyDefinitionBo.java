@@ -12,7 +12,9 @@ public class SurveyDefinitionBo extends AbstractBo implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Integer id;
-	private String name;
+	private String function;
+	private String operatingUnit;
+	private String country;
 	private List<SurveySectionDefinitionImplBo> surveySections = new ArrayList<>();
 	/*
 	 * CONSTRUCTORS
@@ -20,15 +22,19 @@ public class SurveyDefinitionBo extends AbstractBo implements Serializable {
 	public SurveyDefinitionBo() {
 		super();
 	}
-	public SurveyDefinitionBo(String name, List<SurveySectionDefinitionImplBo> surveySections) {
+	public SurveyDefinitionBo(String function, String operatingUnit, String country, List<SurveySectionDefinitionImplBo> surveySections) {
 		super();
-		this.name = name;
+		this.function = function;
+		this.operatingUnit = operatingUnit;
+		this.country = country;
 		this.surveySections = surveySections;
 	}
-	public SurveyDefinitionBo(Integer id, String name, List<SurveySectionDefinitionImplBo> surveySections) {
+	public SurveyDefinitionBo(Integer id, String function, String operatingUnit, String country, List<SurveySectionDefinitionImplBo> surveySections) {
 		super();
 		this.id = id;
-		this.name = name;
+		this.function = function;
+		this.operatingUnit = operatingUnit;
+		this.country = country;
 		this.surveySections = surveySections;
 	}
 	/*
@@ -40,11 +46,23 @@ public class SurveyDefinitionBo extends AbstractBo implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
+	public String getFunction() {
+		return function;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setFunction(String function) {
+		this.function = function;
+	}
+	public String getOperatingUnit() {
+		return operatingUnit;
+	}
+	public void setOperatingUnit(String operatingUnit) {
+		this.operatingUnit = operatingUnit;
+	}
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
 	}
 	public List<SurveySectionDefinitionImplBo> getSurveySections() {
 		return surveySections;
