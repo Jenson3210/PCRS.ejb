@@ -112,10 +112,13 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 	@Override
 	public User getManagerOfTeam(Team team) {
 		TypedQuery<User> q = em.createNamedQuery("TEAM.GETMANAGEROFTEAM", User.class);
+		
 		q.setParameter("userPrivilegeType", PrivilegeType.TEAMMANAGER);
 		q.setParameter("team", team);
+		System.out.println( q.getResultList());
 		
-		return q.getSingleResult();
+		return null;
+		
 	}
 
 	@Override
