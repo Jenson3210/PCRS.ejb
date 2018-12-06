@@ -15,6 +15,7 @@ import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionBo;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionTitleBo;
 import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveySectionDefinitionFacade;
 import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveySectionTitleFacade;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Named
 @ViewScoped
@@ -83,7 +84,11 @@ public class AdminSurveySectionTitleView implements Serializable {
 		if(listOfSurveySectionDefinitions.size()==0)
 		{
 			surveySectionTitles.remove(t);
-			surveySectionTitleFacade.delete(t);
+			try {
+				surveySectionTitleFacade.delete(t);
+			} catch (ValidationException e) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+			}
 		}
 		else
 		{

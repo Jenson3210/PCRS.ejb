@@ -2,14 +2,13 @@ package colruyt.pcrs.views;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -22,6 +21,7 @@ import colruyt.pcrsejb.facade.user.team.IEnrolmentFacade;
 import colruyt.pcrsejb.facade.user.team.ITeamFacade;
 import colruyt.pcrsejb.util.exceptions.MemberAlreadyHasATeamException;
 import colruyt.pcrsejb.util.exceptions.NoExistingMemberException;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Named
 @ViewScoped
@@ -106,12 +106,17 @@ public class AdminTeamView implements Serializable {
  		manipulatedEnrolmentBo = new EnrolmentBo();
 
 	}
-	 
+	
 	public void deleteEnrolment() {
 		for (TeamBo team : teams) {
 			for (EnrolmentBo enrolment : team.getEnrolments()) {
 				if (enrolment.getId() == manipulatedEnrolmentBo.getId()) {
-					teamFacade.deleteUserFromTeam(team, enrolment, user);
+					try {
+						teamFacade.deleteUserFromTeam(team, enrolment, user);
+					} catch (ValidationException e) {
+						FacesContext.getCurrentInstance().addMessage(null,
+								new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+					}
 					removeTeamEnrolment(team, enrolment);
 				}
 			}
@@ -169,8 +174,5 @@ public class AdminTeamView implements Serializable {
 	public void setTeamEnrolments(List<TeamEnrolmentBo> teamEnrolments) {
 		this.teamEnrolments = teamEnrolments;
 	}
-	 
-	
-
 	
 }
