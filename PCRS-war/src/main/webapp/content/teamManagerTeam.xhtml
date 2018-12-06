@@ -24,34 +24,35 @@
                     <p:column>
                         <p:dataTable var="enrolment" value="#{team.getEnrolmentMap()}"  >
                             <p:column style="width: 32px" >
-                              <p:rowToggler rendered="#{managerTeamView.isMe(enrolment.value)}"  />
+                              <p:rowToggler rendered="#{managerTeamView.isMe(enrolment.value)}" />
                             </p:column>
-                            <p:column >
+                            <p:column>
                                 <h:outputText value="#{enrolment.value.firstName}  #{enrolment.value.lastName}" />
                             </p:column>
                             <p:column >
                                 <h:outputText value="#{enrolment.key.userPrivilege.privilegeType.fullName}" />
                             </p:column>
-							<p:column>
+							<p:column >
 								<p:commandButton value="Generate Survey" onclick="PF('dlg3').show()"  
-								 ajax="true"  action="#{managerTeamViewDialog.init(enrolment.value)}" rendered="#{managerTeamView.isMe(enrolment.value)}"   />
+								 ajax="true"  action="#{managerTeamViewDialog.init(enrolment.value)}"  rendered="#{managerTeamView.isMe(enrolment.value)}"   />
 							</p:column>
 							
 					    
 					    <p:rowExpansion>
                        
-            			<p:panelGrid  columns="2"  style="width:100%">
+            			<p:panelGrid  columns="2"  widt="100%">
                 	
  						<h:outputText value="#{enrolment.value.firstName}  #{enrolment.value.lastName}"></h:outputText>
-						<p:progressBar id="progressBarEmployee" value="#{userProfileView.getSurveyFacade().getPercentageCompleteForMemberSurvey(webUser.getUser())}"  widgetVar="pbClient"
+						<p:progressBar id="progressBarEmployee" value="#{managerTeamView.getMemberSurveyPercentage(enrolment.value)}"  widgetVar="pbClient"
 							style="width:300px" />
+					
 						
-						
-				
+					
 						<h:outputText value="Jij"></h:outputText>
-						<p:progressBar id="progressBarBoss" widgetVar="pbClient" value="#{userProfileView.getSurveyFacade().getPercentageCompleteForMemberSurvey(webUser.getUser())}" style="width:300px" />
+						<p:progressBar id="progressBarBoss" widgetVar="pbClient" value="#{managerTeamView.getManagerSurveyPercentage(webUser.getUser())}" style="width:300px" />
 						
 						
+					
 					
 						<h:outputText value=""></h:outputText>
 						<p:commandButton disabled="true" value="Generate Consensus"/>
@@ -70,7 +71,7 @@
     
     
     
-     <p:dialog header="TITLELLELEL"  widgetVar="dlg3" modal="true">
+     <p:dialog header="TITLELLELEL"  widgetVar="dlg3" modal="true" resizable="false">
         <p:panelGrid columns="2" id="display" columnClasses="label,output">
         
         <p:selectOneListbox id="advanced" value="#{managerTeamViewDialog.availableList}" var="t" filter="true" filterMatchMode="contains">
@@ -88,9 +89,6 @@
                 <h:outputText value="#{t.getSurveySectionDefinitionBo().getSurveySectionTitle().getTitle()}" />
             </p:column>
         </p:selectOneListbox>
-        
-        <h:outputText value=""></h:outputText>
-						<p:commandButton disabled="true" value="Generate Survey"/>
         
         </p:panelGrid>
     </p:dialog>
