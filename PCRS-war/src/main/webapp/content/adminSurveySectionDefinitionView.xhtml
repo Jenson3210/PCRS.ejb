@@ -14,7 +14,7 @@
 		<div class="ui-g-10">
 			<h:form id="form">
 				<p:messages id="errors" showDetail="false" closable="true">
-					<p:autoUpdate/>
+					<p:autoUpdate />
 				</p:messages>
 				<p:dataTable var="surveySectionDefinition"
 					value="#{adminSurveySectionDefinitionView.surveySectionDefinitions}">
@@ -103,13 +103,14 @@
 									</p:selectOneMenu>
 								</div>
 							</div>
-
-							<div class="ui-g-8">
+							<div class="ui-g-2" />
+							<div class="ui-g-8" align="center">
 								<p:commandButton value="#{msgs['surveySectionDefinition.add']}"
 									update=":form"
 									action="#{adminSurveySectionDefinitionView.addSurveySectionDefinition}"
 									oncomplete="PF('addSurveySectionDefinitionDialog').hide();" />
 							</div>
+							<div class="ui-g-2" />
 						</p:outputPanel>
 					</p:dialog>
 				</div>
@@ -155,13 +156,14 @@
 									</p:selectOneMenu>
 								</div>
 							</div>
-
-							<div class="ui-g-8">
+							<div class="ui-g-2" />
+							<div class="ui-g-8" align="center">
 								<p:commandButton value="#{msgs['surveySectionDefinition.edit']}"
 									update=":form"
 									action="#{adminSurveySectionDefinitionView.editSurveySectionDefinition}"
 									oncomplete="PF('editSurveySectionDefinitionDialog').hide();" />
 							</div>
+							<div class="ui-g-2" />
 						</p:outputPanel>
 					</p:dialog>
 				</div>
@@ -187,16 +189,19 @@
 						</p>
 						<br></br>
 						<br></br>
-						<div align="right">
-							<p:commandButton styleClass="btn btn-link"
-								value="#{msgs['general.button.no']}"
-								onclick="PF('deleteSurveySectionDefinitionDialog').hide()" />
+						<div class="ui-g-4" />
+						<div class="ui-g-2">
 							<p:commandButton styleClass="btn btn-primary" update=":form"
 								value="#{msgs['general.button.yes']}"
 								action="#{adminSurveySectionDefinitionView.deleteSurveySectionDefinition}"
 								oncomplete="PF('deleteSurveySectionDefinitionDialog').hide();" />
-
 						</div>
+						<div class="ui-g-2">
+							<p:commandButton styleClass="btn btn-link"
+								value="#{msgs['general.button.no']}"
+								onclick="PF('deleteSurveySectionDefinitionDialog').hide()" />
+						</div>
+						<div class="ui-g-4" />
 					</p:dialog>
 				</div>
 			</h:form>

@@ -70,12 +70,14 @@
 										value="#{adminSurveySectionTitleView.addedSurveySectionTitle.title}" />
 								</div>
 							</div>
-							<div class="ui-g-8">
+							<div class="ui-g-4" />
+							<div class="ui-g-4" align="center">
 								<p:commandButton value="#{msgs['surveySectionTitle.add']}"
 									update=":form"
 									action="#{adminSurveySectionTitleView.addSurveySectionTitle}"
 									oncomplete="PF('addSurveySectionTitleDialog').hide();" />
 							</div>
+							<div class="ui-g-4" />
 						</p:outputPanel>
 					</p:dialog>
 				</div>
@@ -95,12 +97,14 @@
 										value="#{adminSurveySectionTitleView.addedSurveySectionTitle.title}" />
 								</div>
 							</div>
-							<div class="ui-g-8">
+							<div class="ui-g-2" />
+							<div class="ui-g-8" align="center">
 								<p:commandButton value="#{msgs['surveySectionTitle.edit']}"
 									update=":form"
 									action="#{adminSurveySectionTitleView.editSurveySectionTitle}"
 									oncomplete="PF('editSurveySectionTitleDialog').hide();" />
 							</div>
+							<div class="ui-g-2" />
 						</p:outputPanel>
 					</p:dialog>
 				</div>
@@ -123,16 +127,20 @@
 						</p>
 						<br></br>
 						<br></br>
-						<div>
-							<p:commandButton styleClass="btn btn-link"
-								value="#{msgs['general.button.no']}"
-								onclick="PF('deleteSurveySectionTitleDialog').hide()" />
+						<div class="ui-g-4" />
+						<div class="ui-g-2">
 							<p:commandButton styleClass="btn btn-primary" update=":form"
 								value="#{msgs['general.button.yes']}"
 								action="#{adminSurveySectionTitleView.deleteSurveySectionTitle}"
 								oncomplete="PF('deleteSurveySectionTitleDialog').hide();" />
 							<p:messages></p:messages>
 						</div>
+						<div class="ui-g-2">
+							<p:commandButton styleClass="btn btn-link"
+								value="#{msgs['general.button.no']}"
+								onclick="PF('deleteSurveySectionTitleDialog').hide()" />
+						</div>
+						<div class="ui-g-4" />
 					</p:dialog>
 
 				</div>
