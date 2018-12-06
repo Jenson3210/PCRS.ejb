@@ -46,11 +46,13 @@
 
 	<!-- Dialog ChangePAss -->
 	
-	 <p:dialog header="#{msgs['profile.changepass']}" widgetVar="dlg3" modal="true" >
+	 <p:dialog class="modalSM" header="#{msgs['profile.changepass']}" widgetVar="dlg3" modal="true" >
    		<h:form id="form1">
+	 		<div class="ui-g">
 	 		<p:messages id="errors"  showDetail="false" closable="true">
    				<p:autoUpdate />
    			</p:messages>
+   			</div>
 	   		<div class="ui-g">
 				<div class="ui-g-4, popupTextMsgs" >
    					<p>#{msgs['profile.currentpass']}</p>

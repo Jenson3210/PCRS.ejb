@@ -24,20 +24,18 @@ public class SurveySectionDefinitionImplFacade implements ISurveySectionDefiniti
 
 	@Override
 	public SurveySectionDefinitionImplBo get(SurveySectionDefinitionImplBo entityBo) {
-		// TODO Auto-generated method stub
-		return null;
+		return surveySectionDefinitionImplConverter.convertToBo(surveySectionDefinitionImplBl.get(
+				surveySectionDefinitionImplConverter.convertToEntity(entityBo)));  
 	}
 
 	@Override
 	public List<SurveySectionDefinitionImplBo> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return surveySectionDefinitionImplConverter.convertToBos(surveySectionDefinitionImplBl.getAll()); 
 	}
 
 	@Override
 	public void delete(SurveySectionDefinitionImplBo entityBo) {
-		// TODO Auto-generated method stub
-		
+		surveySectionDefinitionImplBl.delete(surveySectionDefinitionImplConverter.convertToEntity(entityBo));
 	}
 
 	

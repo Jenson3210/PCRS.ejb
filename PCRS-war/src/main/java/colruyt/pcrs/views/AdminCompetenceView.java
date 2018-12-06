@@ -75,7 +75,7 @@ public class AdminCompetenceView implements Serializable{
 		levels.add(new CompetenceLevelBo("", levels.size() + 1));
 	}
 	public void removeLevel(){
-		System.out.println(levels.size());
+		//System.out.println(levels.size());
 		if(levels.size() > 2) {
 			for (Iterator<CompetenceLevelBo> iterator = levels.iterator(); iterator.hasNext(); ) {
 				CompetenceLevelBo bo = iterator.next();

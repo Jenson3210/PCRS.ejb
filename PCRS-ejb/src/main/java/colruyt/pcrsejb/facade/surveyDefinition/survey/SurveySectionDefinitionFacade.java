@@ -22,7 +22,7 @@ import colruyt.pcrsejb.converter.surveyDefinition.survey.SurveySectionTitleConve
 import colruyt.pcrsejb.service.bl.surveyDefinition.survey.ISurveySectionDefinitionServiceBl;
 
 @Stateless
-public class SurveySectionDefinitionFacade implements Serializable,ISurveySectionDefinition {
+public class SurveySectionDefinitionFacade implements Serializable,ISurveySectionDefinitionFacade {
 	/** 
 	 * 
 	 */

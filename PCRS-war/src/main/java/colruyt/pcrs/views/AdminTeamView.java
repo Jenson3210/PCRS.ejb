@@ -40,7 +40,7 @@ public class AdminTeamView implements Serializable {
 	private UserBo user;
 	private String userPrivilege;
 	private List<TeamEnrolmentBo> teamEnrolments = new ArrayList<>();;
-
+   
 	@PostConstruct
 	private void fillList() {  
   		teams = teamFacade.getAll();
@@ -52,10 +52,10 @@ public class AdminTeamView implements Serializable {
 			teamEnrolments.add(teamEnrolment);
 		} 
 	}
-
+      
 	public List<TeamBo> getTeams() {
 		return teams;
-	}
+	} 
 
 	public void setTeams(List<TeamBo> teams) {
 		this.teams = teams;
@@ -74,11 +74,11 @@ public class AdminTeamView implements Serializable {
 	}
 
 	public void setManipulatedTeamBo(TeamBo manipulatedTeamBo) {
-		this.manipulatedTeamBo = manipulatedTeamBo;
+		this.manipulatedTeamBo = manipulatedTeamBo; 
 	}
 
 	public UserBo getUser() {
-		return user;
+ 		return user;  
 	}
 
 	public void setUser(UserBo user) {
@@ -103,16 +103,16 @@ public class AdminTeamView implements Serializable {
 	}
 
 	public void newEnrolment() {
-		manipulatedEnrolmentBo = new EnrolmentBo();
-	}
+ 		manipulatedEnrolmentBo = new EnrolmentBo();
 
+	}
+	 
 	public void deleteEnrolment() {
 		for (TeamBo team : teams) {
 			for (EnrolmentBo enrolment : team.getEnrolments()) {
 				if (enrolment.getId() == manipulatedEnrolmentBo.getId()) {
 					teamFacade.deleteUserFromTeam(team, enrolment, user);
 					removeTeamEnrolment(team, enrolment);
-					
 				}
 			}
 		}
@@ -169,7 +169,7 @@ public class AdminTeamView implements Serializable {
 	public void setTeamEnrolments(List<TeamEnrolmentBo> teamEnrolments) {
 		this.teamEnrolments = teamEnrolments;
 	}
-	
+	 
 	
 
 	

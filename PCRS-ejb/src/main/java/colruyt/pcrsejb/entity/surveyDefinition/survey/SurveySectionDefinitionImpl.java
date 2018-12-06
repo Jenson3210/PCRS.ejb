@@ -10,12 +10,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import colruyt.pcrsejb.entity.AbstractEntity;
 @Entity
 @Table(name="SURVEYSECTIONDEFIMPL")
+@NamedQuery(name = "SURVEYSECTIONDEFINITIONIMPL.GETALL", query="SELECT impl FROM SurveySectionDefinitionImpl impl")
 public class SurveySectionDefinitionImpl extends AbstractEntity implements Serializable {
 	/*
 	 * PROPERTIES

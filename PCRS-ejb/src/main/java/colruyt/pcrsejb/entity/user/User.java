@@ -45,7 +45,7 @@ public class User extends AbstractEntity implements Serializable {
     @Column(name="PASSWORD")
     private String password="";
     @Column(name="HOMECOUNTRY")
-    private String country;
+    private String country; 
     @Column(name="SHORTNAME")
     private String shortName;
     @OneToMany(cascade= {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval=true)

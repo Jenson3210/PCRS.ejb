@@ -53,9 +53,9 @@
 
 			<h:form id="addForm">
 				<div class="ui-g" id="addCompetenceForm">
-					<p:dialog id="addcompetenceFormTitle"
+					<p:dialog class="modalSM" id="addcompetenceFormTitle"
 						header="#{msgs['competence.add']}" widgetVar="addCompetenceDialog"
-						modal="true" width="400">
+						modal="true">
 						<p:outputPanel id="addCompetenceDetail">
 							<div class="ui-g">
 								<div class="ui-g-4">
@@ -124,9 +124,9 @@
 
 			<h:form id="editForm">
 				<div class="ui-g" id="editCompetenceForm">
-					<p:dialog id="editCompetenceFormTitle"
+					<p:dialog class="modalSM" id="editCompetenceFormTitle" 
 						header="#{msgs['competence.edit']}"
-						widgetVar="editCompetenceDialog" modal="true" width="400">
+						widgetVar="editCompetenceDialog" modal="true">
 						<p:outputPanel id="editCompetenceDetail">
 							<div class="ui-g">
 								<div class="ui-g-4">
@@ -194,9 +194,9 @@
 
 			<h:form id="deleteForm">
 				<div class="ui-g" id="deleteCompetenceForm">
-					<p:dialog id="deleteCompetenceFormTitle"
+					<p:dialog class="modalSM" id="deleteCompetenceFormTitle" 
 						header="#{msgs['competence.delete']}"
-						widgetVar="deleteCompetenceDialog" modal="true" width="400">
+						widgetVar="deleteCompetenceDialog" modal="true">
 						<f:facet name="header">
 							<h:outputText value="#{msgs['competence.delete']}" />
 						</f:facet>

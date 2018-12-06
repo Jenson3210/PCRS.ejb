@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,7 +40,7 @@ public class SurveyDefinition extends AbstractEntity implements Serializable {
 	@Column(name="ID")
 	private Integer id;
 	private String name;
-	@OneToMany
+	@OneToMany(cascade= {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name="SURVEYDEFINITIONIMPL_ID")
 	private List<SurveySectionDefinitionImpl> surveySections = new ArrayList<>();
 	/*

@@ -57,10 +57,26 @@ body .ui-datatable .ui-datatable-data > tr:last-child {
 }
 
 .popupTextInput {
-	width: 100%;
+	width: 50%;
+	margin: auto;
 }
 .popupTextMsgs {
 	width: 40%;
-	margin-right: 10px;
-	background-color: fuchsia;
+	margin: auto;
 }
+.modalSM {
+	width: 25rem !important;
+}
+.modalMM{
+	width: 40rem !important;
+}
+.modalBM {
+	width: 50rem !important;
+}
+
+.ui-selectonemenu{
+     width: 100% !important;
+}
+.ui-selectonemenu-label{
+     width: 100% !important;
+}  
