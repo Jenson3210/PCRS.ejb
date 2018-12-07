@@ -171,8 +171,7 @@ public class RespSurveyDefinitionView implements Serializable {
 	 * create new implementation of the competence with the selected attributes
 	 */
 	public void addNewCompetence() {
-		CompetenceImplBo bo = new CompetenceImplBo(selectedCompetence, 
-				selectedCompetence.getCompetenceDescription(), selectedMinLevel.getOrderLevel());
+		CompetenceImplBo bo = new CompetenceImplBo(selectedCompetence, "AAAA", selectedMinLevel.getOrderLevel());
 		
 		int index = -1;
 				

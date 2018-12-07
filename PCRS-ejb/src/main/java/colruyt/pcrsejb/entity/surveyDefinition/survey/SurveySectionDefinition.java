@@ -44,7 +44,7 @@ public class SurveySectionDefinition extends AbstractEntity implements Serializa
 	private SurveySectionTitle surveySectionTitle;
 	@OneToOne
 	private SurveySectionStrategy surveySectionStrategy;
-	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinColumn(name="SURVEYSECTIONDEFINITIONS_ID")
 	private List<CompetenceImpl> surveySectionCompetences;
 	/*
