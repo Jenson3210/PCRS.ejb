@@ -11,9 +11,9 @@
 		<div class="ui-g-1" />
 		<div class="ui-g-10">
 			<h:form id="form">
-									<p:messages id="errors"  showDetail="false" closable="true">
-   							<p:autoUpdate />
-   						</p:messages>
+				<p:messages id="errors" showDetail="false" closable="true">
+					<p:autoUpdate />
+				</p:messages>
 				<p:dataTable var="strategy"
 					value="#{surveySectionStrategyView.strategies}">
 					<f:facet name="header">
@@ -67,7 +67,8 @@
 					</p:column>
 					<p:column headerText="#{msgs['delete']}"
 						style="width:65px; text-align: center">
-						<p:commandLink id="delete" update=":deleteForm:deleteStrategyDetail"
+						<p:commandLink id="delete"
+							update=":deleteForm:deleteStrategyDetail"
 							oncomplete="PF('deleteStrategyDialog').show()">
 							<i class="fas fa-trash-alt"></i>
 							<f:setPropertyActionListener value="#{strategy}"
@@ -88,29 +89,22 @@
 
 			<h:form id="addForm">
 				<div class="ui-g" id="addStrategyForm">
-				
 					<p:dialog id="addStrategyFormTitle"
 						header="#{msgs['strategy.add']}" widgetVar="addStrategyDialog"
 						modal="true">
 						<p:outputPanel id="addStrategyDetail">
-<!-- 						 <h:panelGroup layout="block" rendered="#{facesContext.validationFailed}"> -->
-						<p:messages id="errors"  showDetail="false" closable="true">
-   							<p:autoUpdate />
-   						</p:messages>
-<!--    						</h:panelGroup> -->
+							<p:messages id="addEx" showDetail="false" closable="true"
+								globalOnly="true">
+								<p:autoUpdate />
+							</p:messages>
 							<div class="ui-g">
 								<div class="ui-g-4">
 									<p:outputLabel value="#{msgs['strategy.name']}"></p:outputLabel>
 								</div>
 								<div class="ui-g-8">
 									<p:inputText id="name"
-										value="#{surveySectionStrategyView.surveySectionStrategyBo.name}"/>
-<!-- 										 required="true"		requiredMessage="veld verplicht"> -->
-<!-- 										<f:validateLength minimum="2" /> -->
-<!-- 									</p:inputText> -->
-<!-- 									<p:messages for="name" id="errors" showDetail="false" closable="true"> -->
-<!--    										<p:autoUpdate /> -->
-<!--    									</p:messages> -->
+										value="#{surveySectionStrategyView.surveySectionStrategyBo.name}">
+									</p:inputText>
 								</div>
 							</div>
 							<div class="ui-g">
@@ -119,7 +113,7 @@
 								</div>
 								<div class="ui-g-8">
 									<p:inputText id="amount"
-										value="#{surveySectionStrategyView.surveySectionStrategyBo.amountOfLevels}"/>
+										value="#{surveySectionStrategyView.surveySectionStrategyBo.amountOfLevels}" />
 								</div>
 							</div>
 							<div class="ui-g">
@@ -170,9 +164,8 @@
 							<div class="ui-g-2">
 								<p:commandButton value="#{msgs['strategy.add']}" update=":form"
 									action="#{surveySectionStrategyView.addSurveySectionStrategy}"
- 									oncomplete="if (#{empty context.messageList}) PF('addStrategyDialog').hide();" />
-<!-- 									oncomplete="if (!args.validationFailed) PF('addStrategyDialog').hide();" /> -->
-<!-- 									oncomplete="if (!args.messageOccured) PF('addStrategyDialog').hide();" /> -->
+									oncomplete="{PF('addStrategyDialog').hide();}" />
+<!-- 									oncomplete=" if ( args.validationSucces ){PF('addStrategyDialog').hide();}" /> don't remove-->
 							</div>
 						</p:outputPanel>
 					</p:dialog>
@@ -262,33 +255,33 @@
 					<p:dialog id="deleteStrategy" header="#{msgs['strategy.delete']}"
 						widgetVar="deleteStrategyDialog" modal="true">
 						<p:outputPanel id="deleteStrategyDetail">
-						<f:facet name="header">
-							<h:outputText value="#{msgs['strategy.delete']}" />
-						</f:facet>
-						<f:facet name="controls">
-							<h:outputLink value="#"
-								onclick="PF('deleteStrategy').hide(); return false;">X</h:outputLink>
-						</f:facet>
-						
-						<p>
-							<h:outputText value="#{msgs['strategy.delete.sure']}" />
-						</p>
-						<p>
-							<h:outputText
-								value="#{surveySectionStrategyView.surveySectionStrategyBo.name}"
-								style="text-align: center" />
-						</p>
-						<br></br>
-						<br></br>
-						<div align="right">
-							<p:commandButton styleClass="btn btn-link"
-								value="#{msgs['general.button.no']}"
-								onclick="PF('deleteStrategyDialog').hide()" />
-							<p:commandButton styleClass="btn btn-primary" update=":form"
-								value="#{msgs['general.button.yes']}"
-								action="#{surveySectionStrategyView.deleteSurveySectionStrategy}"
-								oncomplete="PF('deleteStrategyDialog').hide();" />
-						</div>
+							<f:facet name="header">
+								<h:outputText value="#{msgs['strategy.delete']}" />
+							</f:facet>
+							<f:facet name="controls">
+								<h:outputLink value="#"
+									onclick="PF('deleteStrategy').hide(); return false;">X</h:outputLink>
+							</f:facet>
+
+							<p>
+								<h:outputText value="#{msgs['strategy.delete.sure']}" />
+							</p>
+							<p>
+								<h:outputText
+									value="#{surveySectionStrategyView.surveySectionStrategyBo.name}"
+									style="text-align: center" />
+							</p>
+							<br></br>
+							<br></br>
+							<div align="right">
+								<p:commandButton styleClass="btn btn-link"
+									value="#{msgs['general.button.no']}"
+									onclick="PF('deleteStrategyDialog').hide()" />
+								<p:commandButton styleClass="btn btn-primary" update=":form"
+									value="#{msgs['general.button.yes']}"
+									action="#{surveySectionStrategyView.deleteSurveySectionStrategy}"
+									oncomplete="PF('deleteStrategyDialog').hide();" />
+							</div>
 						</p:outputPanel>
 					</p:dialog>
 

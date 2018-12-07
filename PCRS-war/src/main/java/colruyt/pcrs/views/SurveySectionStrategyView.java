@@ -9,6 +9,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletResponse;
+
+import org.primefaces.PrimeFaces;
+import org.primefaces.context.RequestContext;
 
 import colruyt.pcrsejb.bo.surveyDefinition.strategy.SurveySectionStrategyBo;
 import colruyt.pcrsejb.facade.surveyDefinition.strategy.ISurveySectionStrategyFacade;
@@ -32,7 +36,7 @@ public class SurveySectionStrategyView implements Serializable {
 	} 
  
 	public SurveySectionStrategyBo getSurveySectionStrategyBo() {
-		return surveySectionStrategyBo;
+		return surveySectionStrategyBo; 
 	}
 	public void setSurveySectionStrategyBo(SurveySectionStrategyBo surveySectionStrategyBo) {
 		this.surveySectionStrategyBo = surveySectionStrategyBo;
@@ -45,15 +49,15 @@ public class SurveySectionStrategyView implements Serializable {
 	}
  
 	public void addSurveySectionStrategy() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		try {
-			strategies.add(surveySectionStrategyFacade.save(surveySectionStrategyBo));
-		} catch (ValidationException e) {
-			System.out.println(e.getMessage() + " 1****" + e.getClass() + " 2****" + e.toString() + " 3****" + e.getLocalizedMessage() + " 4****" +
-					e.toString() + " 5****" + e.fillInStackTrace() + " 6****" + e.getCause() + " 7****" + e.getStackTrace());
-			System.out.println("komthijhier??????????????");
-			context.addMessage(null, new FacesMessage(e.getMessage()));
-		}	
+		strategies.add(surveySectionStrategyFacade.save(surveySectionStrategyBo));
+//		PrimeFaces pf = PrimeFaces.current();
+//		try {
+//			strategies.add(surveySectionStrategyFacade.save(surveySectionStrategyBo));
+//			pf.ajax().addCallbackParam("validationSucces", true);
+//		} catch (ValidationException e) {
+//			pf.ajax().addCallbackParam("validationSucces", false);
+//			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+//		}	 don't remove
 	}
 	
 	public void newSurveySectionStrategy() {
@@ -61,7 +65,6 @@ public class SurveySectionStrategyView implements Serializable {
     }
 	
 	public void editSurveySectionStrategy() {
-		FacesContext context = FacesContext.getCurrentInstance();
 		SurveySectionStrategyBo s = null;
 		for (SurveySectionStrategyBo strategy : strategies) {
 			if (strategy.getId() == surveySectionStrategyBo.getId()) {
@@ -75,11 +78,7 @@ public class SurveySectionStrategyView implements Serializable {
 				s = strategy;
 			}
 		}
-		try {
-			surveySectionStrategyFacade.save(s);
-		} catch (ValidationException e) {
-			context.addMessage(null, new FacesMessage(e.getMessage()));
-		}
+		surveySectionStrategyFacade.save(s);
 	}
 	
 	public void deleteSurveySectionStrategy()

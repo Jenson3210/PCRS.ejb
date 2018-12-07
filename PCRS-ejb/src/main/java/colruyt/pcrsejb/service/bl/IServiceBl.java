@@ -8,7 +8,7 @@ import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 public interface IServiceBl<T> {
 
 	
-	T save(T element) throws ValidationException;
+	T save(T element)/* throws ValidationException*/;
 
 	T get(T element);
 
