@@ -8,44 +8,48 @@ import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import colruyt.pcrsejb.bo.competence.CompetenceBo;
 import colruyt.pcrsejb.bo.competence.CompetenceLevelBo;
-import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 import colruyt.pcrsejb.facade.competence.CompetenceLevelFacade;
 import colruyt.pcrsejb.facade.competence.ICompetenceFacade;
 import colruyt.pcrsejb.facade.competence.ICompetenceLevelFacade;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Named
 @ViewScoped
-public class AdminCompetenceView implements Serializable{
+public class AdminCompetenceView implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@EJB
 	private ICompetenceFacade competenceFacade;
+	@EJB
 	private ICompetenceLevelFacade competenceLevelFacade;
 	private CompetenceBo competenceBo;
 	private CompetenceLevelBo level;
 	private List<CompetenceBo> competences;
 	private Set<CompetenceLevelBo> levels = new HashSet<>();
-	
+	FacesContext context = FacesContext.getCurrentInstance();
+
 	@PostConstruct
 	private void fillCompetences() {
 		competences = competenceFacade.getAll();
 		newLevels();
 	}
-	
+
 	public void newCompetence() {
 		competenceBo = new CompetenceBo();
 		newLevels();
 	}
-	
+
 	public void addCompetence() {
 		competenceBo.setCompetenceLevels(levels);
 		competences.add(competenceFacade.save(competenceBo));
-    }
-	
+	}
+
 	public void editCompetence() {
 		CompetenceBo c = null;
 		for (CompetenceBo competence : competences) {
@@ -56,12 +60,16 @@ public class AdminCompetenceView implements Serializable{
 			}
 			c = competence;
 		}
-		competenceFacade.save(c); 
+		competenceFacade.save(c);
 	}
-	
+
 	public void deleteCompetence() {
 		competences.remove(competenceBo);
-		competenceFacade.delete(competenceBo);
+		try {
+			competenceFacade.delete(competenceBo);
+		} catch (ValidationException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void newLevels() {
@@ -70,22 +78,40 @@ public class AdminCompetenceView implements Serializable{
 			levels.add(new CompetenceLevelBo("", i));
 		}
 	}
-	
-	public void newLevel() { 
+
+	public void newLevel() {
 		levels.add(new CompetenceLevelBo("", levels.size() + 1));
 	}
-	public void removeLevel(){
-		System.out.println("OK");
-		for (Iterator<CompetenceLevelBo> iterator = levels.iterator(); iterator.hasNext(); ) {
-			CompetenceLevelBo bo = iterator.next();
-			if (bo.getOrderLevel() == level.getOrderLevel()) {
-				iterator.remove();
-				levels.remove(bo);
+
+	public void removeLevel() {
+		// System.out.println(levels.size());
+		if (levels.size() > 2) {
+			for (Iterator<CompetenceLevelBo> iterator = levels.iterator(); iterator.hasNext();) {
+				CompetenceLevelBo bo = iterator.next();
+				if (bo.getOrderLevel() == level.getOrderLevel()) {
+					iterator.remove();
+					levels.remove(bo);
+					if (level.getId() != null) {
+						try {
+							competenceLevelFacade.delete(level);
+						} catch (ValidationException e) {
+							FacesContext.getCurrentInstance().addMessage(null,
+									new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+						}
+					}
+				}
+			}
+			int j = 1;
+			for (CompetenceLevelBo clevel : levels) {
+				if (j != clevel.getOrderLevel()) {
+					clevel.setOrderLevel(j);
+				}
+				j = j + 1;
 			}
 		}
-		//competenceLevelFacade.delete(c); 
+
 	}
-	
+
 	public CompetenceBo getCompetenceBo() {
 		return competenceBo;
 	}
@@ -96,7 +122,7 @@ public class AdminCompetenceView implements Serializable{
 	}
 
 	public List<CompetenceBo> getCompetences() {
-		//competences = competenceFacade.getAll();
+		// competences = competenceFacade.getAll();
 		return competences;
 	}
 

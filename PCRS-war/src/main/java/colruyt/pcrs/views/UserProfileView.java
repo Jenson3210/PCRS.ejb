@@ -15,6 +15,7 @@ import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.facade.surveys.surveySet.ISurveySetFacade;
 import colruyt.pcrsejb.facade.user.IUserFacade;
 import colruyt.pcrsejb.facade.user.team.ITeamFacade;
+import colruyt.pcrsejb.util.exceptions.NoSurveySetException;
 import colruyt.pcrsejb.util.exceptions.UserIsNotMemberOfTeamException;
 
 @Named
@@ -34,7 +35,7 @@ public class UserProfileView implements Serializable {
 	private boolean hasTeam = true;
 
 	@PostConstruct
-	public void init() {
+	public void init() { 
 		this.setHasTeam(true);
 
 	}
@@ -48,7 +49,7 @@ public class UserProfileView implements Serializable {
 	}
 
 	public ISurveySetFacade getSurveyFacade() {
-		return surveyFacade;
+		return surveyFacade; 
 	}
 
 	public void setSurveyFacade(ISurveySetFacade surveyFacade) {
@@ -185,6 +186,36 @@ public class UserProfileView implements Serializable {
 
 				return true;
 			}
+		}
+	}
+	
+	public Integer getManagerSurveyPercentage() { 
+
+		try {
+			return this.getSurveyFacade().getPercentageCompleteForManagerSurvey(webuser.getUser());
+		} catch (NoSurveySetException e) {
+			return 0;
+		}
+
+	}
+
+	public Integer getMemberSurveyPercentage() {
+
+		try {
+			return this.getSurveyFacade().getPercentageCompleteForMemberSurvey(this.teamFacade.getManagerForUser(webuser.getUser()));
+		} catch (NoSurveySetException e) {
+			return 0;
+		} catch (UserIsNotMemberOfTeamException e) {
+			return 0;
+		}
+
+	}
+
+	public Integer getConsensusSurveyPercentage(UserBo user) {
+		try {
+			return this.getSurveyFacade().getPercentageCompleteForConsensusSurvey(user);
+		} catch (NoSurveySetException e) {
+			return 0;
 		}
 	}
 

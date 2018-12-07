@@ -14,6 +14,8 @@ import colruyt.pcrsejb.converter.surveys.surveySet.SurveySetConverter;
 import colruyt.pcrsejb.converter.user.UserConverter;
 import colruyt.pcrsejb.service.bl.surveyDefinition.survey.ISurveySectionDefinitionImplServiceBl;
 import colruyt.pcrsejb.service.bl.surveys.surveySet.ISurveySetServiceBl;
+import colruyt.pcrsejb.util.exceptions.NoSurveySetException;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
 public class SurveySetFacade implements Serializable,ISurveySetFacade{
@@ -44,31 +46,28 @@ public class SurveySetFacade implements Serializable,ISurveySetFacade{
 	}
 
 	@Override
-	public void delete(SurveySetBo entityBo) {
+	public void delete(SurveySetBo entityBo) throws ValidationException {
 		surveySetServiceBl.delete(surveySetConverter.convertToEntity(entityBo));
 	}
 
 	@Override
-	public Integer getPercentageCompleteForMemberSurvey(UserBo user) {
-		// TODO Auto-generated method stub
-		return 50;
+	public Integer getPercentageCompleteForMemberSurvey(UserBo user) throws NoSurveySetException {
+		return this.surveySetServiceBl.getPercentageCompleteForMemberSurvey(this.userConverter.convertToEntity(user));
 	}
 
 	@Override
-	public Integer getPercentageCompleteForManagerSurvey(UserBo user) {
-		// TODO Auto-generated method stub
-		return 40;
+	public Integer getPercentageCompleteForManagerSurvey(UserBo user)  throws NoSurveySetException{
+		return this.surveySetServiceBl.getPercentageCompleteForManagerSurvey(this.userConverter.convertToEntity(user));
 	}
 
 	@Override
-	public Integer getPercentageCompleteForConsensusSurvey(UserBo user) {
-		// TODO Auto-generated method stub
-		return 70;
+	public Integer getPercentageCompleteForConsensusSurvey(UserBo user)  throws NoSurveySetException{ 
+		return this.surveySetServiceBl.getPercentageCompleteForConsensusSurvey(this.userConverter.convertToEntity(user));
 	}
 
 	@Override
-	public SurveySetBo generateSurveySetFor(UserBo user, List<SurveySectionDefinitionImplBo> sections) {
-		return surveySetConverter.convertToBo(surveySetServiceBl.createSurveySetForUser(userConverter.convertToEntity(user), surveySectionDefinitionImplConverter.convertToEntities(sections)));
+	public SurveySetBo generateSurveySetFor(List<SurveySectionDefinitionImplBo> sections) {
+		return surveySetConverter.convertToBo(surveySetServiceBl.createSurveySetForUser(surveySectionDefinitionImplConverter.convertToEntities(sections)));
 	}
 
 	@Override

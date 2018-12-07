@@ -7,6 +7,8 @@ import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -15,20 +17,19 @@ import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.facade.surveys.surveySet.ISurveySetFacade;
 import colruyt.pcrsejb.facade.user.IUserFacade;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Named
 @ViewScoped
-public class UsersView implements Serializable{
+public class UsersView implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@EJB
 	private IUserFacade userFacade;
 	private UserBo addedUser;
-	private List<UserBo> users; 
+	private List<UserBo> users;
 	private Boolean adminSelected;
-	
 
-
-	@PostConstruct 
+	@PostConstruct
 	private void fillusers() {
 		users = userFacade.getAll();
 	}
@@ -36,7 +37,7 @@ public class UsersView implements Serializable{
 	public List<UserBo> getUsers() {
 		return users;
 	}
-	
+
 	public void setUsers(List<UserBo> users) {
 		this.users = users;
 	}
@@ -62,8 +63,8 @@ public class UsersView implements Serializable{
 		}
 		addedUser.setPrivileges(privs);
 		users.add(userFacade.save(addedUser));
-    }
-	
+	}
+
 	public void editUser() {
 		UserBo u = null;
 		for (UserBo user : users) {
@@ -79,8 +80,7 @@ public class UsersView implements Serializable{
 					if (!(hasAdminPrivilege(addedUser))) {
 						addedUser.getPrivileges().add(new UserPrivilegeBo(PrivilegeTypeBo.ADMINISTRATOR, true));
 					}
-				}
-				else {
+				} else {
 					if (!(hasAdminPrivilege(addedUser))) {
 						UserPrivilegeBo userPrivilegeBo = null;
 						for (UserPrivilegeBo up : addedUser.getPrivileges()) {
@@ -95,9 +95,9 @@ public class UsersView implements Serializable{
 				u = user;
 			}
 		}
-		userFacade.save(u); 
+		userFacade.save(u);
 	}
-	
+
 	public void deleteUser() {
 		UserBo u = null;
 		for (UserBo user : users) {
@@ -106,19 +106,23 @@ public class UsersView implements Serializable{
 			}
 		}
 		users.remove(u);
-		userFacade.delete(addedUser);
+		try {
+			userFacade.delete(addedUser);
+		} catch (ValidationException e) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+		}
 		adminSelected = false;
 	}
-	
-	public Boolean hasAdminPrivilege(UserBo userBo)
-	{
+
+	public Boolean hasAdminPrivilege(UserBo userBo) {
 		return userFacade.hasPrivilege(userBo, PrivilegeTypeBo.ADMINISTRATOR, true);
 	}
 
 	public void newUser() {
-        addedUser = new UserBo(); 
-        adminSelected = false;
-    }
+		addedUser = new UserBo();
+		adminSelected = false;
+	}
 
 	public Boolean getAdminSelected() {
 		return adminSelected;
@@ -126,6 +130,5 @@ public class UsersView implements Serializable{
 
 	public void setAdminSelected(Boolean adminSelected) {
 		this.adminSelected = adminSelected;
-	} 
+	}
 }
-

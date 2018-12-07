@@ -8,7 +8,7 @@ import colruyt.pcrsejb.entity.AbstractEntity;
 
 @Entity
 @Table(name="COMPETENCEIMPLEMENTATIONS")
-@SecondaryTable(name="COMPETENCEDESCRIPTIONS")
+@SecondaryTable(name="COMPETENCEIMPLDESCRIPTIONS")
 @NamedQuery(name="COMPETENCEIMPL.GETALL", query="SELECT c FROM CompetenceImpl c")
 public class CompetenceImpl extends AbstractEntity implements Serializable {
 	/*
@@ -22,7 +22,7 @@ public class CompetenceImpl extends AbstractEntity implements Serializable {
     private Integer id;
     @ManyToOne
     private Competence competence;
-    @Column(name="DESCRIPTION",table="COMPETENCEDESCRIPTIONS")
+    @Column(name="DESCRIPTION",table="COMPETENCEIMPLDESCRIPTIONS")
     private String competenceDescription;
     @Column(name="MINLEVEL")
     private Integer minLevel;

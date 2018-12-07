@@ -45,7 +45,7 @@
 						<a href="#"
 							onclick="javascript:openHelp('help.xhtml?currentPage=#{view.viewId}&amp;lang=#{localeView.locale}');return false;">
 							<i class="fa fa-question-circle"></i> <!-- <div>#{webutillibmsgs['help']}</div> -->
-							<div>#{msgs['help']}</div>
+							<span>#{msgs['help']}</span>
 						</a>
 					</div>
 					<script>
@@ -72,43 +72,30 @@
 									<!-- <h:link outcome="/sessionContext">#{webutillibmsgs.changeSettings}</h:link> -->
 									<h:link outcome="/profile.xhtml">#{msgs['changeSettings']}</h:link>
 								</div>
-
-
 								<div>
 									<div class="c-header-language" style="padding-left: 1.87rem;">
 										<ui:repeat value="#{appContext.supportedLanguages}" var="lang">
 											<a href="javascript:setLanguage('#{lang}');"
 												class="#{appContext.currentLanguage == lang ? 'actvlang' : ''}"
 												style="padding: 0.3rem 0.3rem 0.3rem 0.5rem; border-style: solid; margin: -0.1rem; border-width: 0.01rem">#{lang}</a>
-
 										</ui:repeat>
 									</div>
-
-
 								</div>
-
 								<div>
 									<!-- <h:outputLink onclick="PF('popup').show();return false;">#{webutillibmsgs.logout}</h:outputLink>-->
 									<h:outputLink onclick="PF('popup').show();return false;">#{msgs['logout']}</h:outputLink>
 								</div>
-
-
-
 							</div>
 						</div>
 					</h:panelGroup>
 				</div>
 			</div>
-
 			<!-- Horizontal menu -->
 			<div id="c-header-menubar">
 				<ui:include src="appMenu.xhtml" />
-
 			</div>
-
 			<p:messages id="messages" showDetail="true" globalOnly="false"
 				showSummary="false" style="margin: 10px;" />
-
 		</div>
 
 
@@ -145,7 +132,7 @@
 
 		<!-- Logout dialog -->
 		<h:form id="logoutForm">
-			<p:dialog widgetVar="popup" modal="true" autosized="true"
+			<p:dialog class="modalSM" widgetVar="popup" modal="true" autosized="true"
 				resizeable="false" responsive="true"
 				onShow="$('#logoutForm\\:okButton').focus();">
 				<f:facet name="header">
@@ -159,7 +146,7 @@
 				</f:facet>
 				<p>
 					<!-- <h:outputText value="#{webutillibmsgs.logoffConfirmMessage}" /> -->
-					<h:outputText value="#{msgs.logoffconfirmmessage}" />
+					<h:outputText value="#{msgs['logoffConfirmMessage']}" />
 				</p>
 				<br></br>
 				<br></br>
@@ -168,10 +155,10 @@
 					<!-- value="#{webutillibmsgs.cancel}" onclick="PF('popup').hide()" /> -->
 					<!-- <p:commandButton id="okButton" styleClass="btn btn-primary" -->
 					<!-- value="#{webutillibmsgs.ok}" onclick="#{logonView.logoutURL}" /> -->
-					<p:commandButton styleClass="btn btn-link" value="#{msgs.cancel}"
+					<p:commandButton class="cancel" styleClass="btn btn-link" value="#{msgs['msgs.cancel']}"
 						onclick="PF('popup').hide()" />
 					<p:commandButton id="okButton" styleClass="btn btn-primary"
-						value="#{msgs.ok}" action="#{logonView.logoutURL}" ajax="false" />
+						value="#{msgs['msgs.ok']}" action="#{logonView.logoutURL}" ajax="false" />
 				</div>
 			</p:dialog>
 		</h:form>

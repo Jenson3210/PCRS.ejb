@@ -39,7 +39,7 @@ public class UserPrivilege extends AbstractEntity implements Serializable {
     @SequenceGenerator(sequenceName = "USERPRIVILEGES_SEQ", allocationSize = 1, name = "USERPRIVILEGES_SEQ")
 	@Column(name="ID")
 	private Integer id;
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.STRING) 
 	@NotNull
 	private PrivilegeType privilegeType;
 	@NotNull

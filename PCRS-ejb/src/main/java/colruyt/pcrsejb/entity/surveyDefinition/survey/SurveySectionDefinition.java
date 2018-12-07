@@ -3,6 +3,7 @@ package colruyt.pcrsejb.entity.surveyDefinition.survey;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,7 +44,7 @@ public class SurveySectionDefinition extends AbstractEntity implements Serializa
 	private SurveySectionTitle surveySectionTitle;
 	@OneToOne
 	private SurveySectionStrategy surveySectionStrategy;
-	@OneToMany
+	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinColumn(name="SURVEYSECTIONDEFINITIONS_ID")
 	private List<CompetenceImpl> surveySectionCompetences;
 	/*

@@ -10,6 +10,7 @@ import colruyt.pcrsejb.entity.user.team.Team;
 import colruyt.pcrsejb.service.bl.IServiceBl;
 import colruyt.pcrsejb.util.exceptions.MemberAlreadyHasATeamException;
 import colruyt.pcrsejb.util.exceptions.UserIsNotMemberOfTeamException;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Local
 public interface ITeamServiceBl extends IServiceBl<Team>{
@@ -17,7 +18,7 @@ public interface ITeamServiceBl extends IServiceBl<Team>{
 	User getManagerForUser(User user) throws UserIsNotMemberOfTeamException;
 	Team getTeamForUser(User user) throws UserIsNotMemberOfTeamException;
 	List<Team> getTeamsOfManager(User manager);
-	void removeUserFromTeam(Team convertToEntity, User convertToEntity2);
+	void removeUserFromTeam(Team team, Enrolment enrolment, User user) throws ValidationException;
 	Enrolment addUserToTeam(Team team, User user, String userPrivilege) throws MemberAlreadyHasATeamException;
 	List<User> getUsersOfTeam(Team team);
 }

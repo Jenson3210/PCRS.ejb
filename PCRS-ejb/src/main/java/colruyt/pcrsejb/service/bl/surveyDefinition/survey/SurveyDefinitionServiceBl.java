@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveyDefinition;
 import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.service.dl.surveyDefinition.survey.ISurveyDefinitionDl;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
 public class SurveyDefinitionServiceBl implements ISurveyDefinitionServiceBl {
@@ -32,7 +33,7 @@ public class SurveyDefinitionServiceBl implements ISurveyDefinitionServiceBl {
 	}
 
 	@Override
-	public void delete(SurveyDefinition element) {
+	public void delete(SurveyDefinition element) throws ValidationException {
 		surveyDefinitionDl.delete(element);
 	}
 

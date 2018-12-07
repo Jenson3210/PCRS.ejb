@@ -14,6 +14,7 @@ import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.facade.user.IUserFacade;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Named
 @ViewScoped
@@ -70,6 +71,7 @@ public class AdminUserView implements Serializable{
 				user.setCountry(addedUser.getCountry());
 				user.setEmail(addedUser.getEmail());
 				user.setPassword(addedUser.getPassword());
+				user.setShortName(addedUser.getShortName());
 
 				HashSet<UserPrivilegeBo> privs = (HashSet<UserPrivilegeBo>) user.getPrivileges();
 				if (adminSelected) {
@@ -103,7 +105,11 @@ public class AdminUserView implements Serializable{
 			}
 		}
 		users.remove(u);
-		userFacade.delete(addedUser);
+		try {
+			userFacade.delete(addedUser);
+		} catch (ValidationException e) {
+			e.printStackTrace();
+		}
 		adminSelected = false;
 	}
 	

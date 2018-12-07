@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionImplBo;
 import colruyt.pcrsejb.converter.surveyDefinition.survey.SurveySectionDefinitionImplConverter;
 import colruyt.pcrsejb.service.bl.surveyDefinition.survey.ISurveySectionDefinitionImplServiceBl;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
 public class SurveySectionDefinitionImplFacade implements ISurveySectionDefinitionImplFacade {
@@ -24,20 +25,18 @@ public class SurveySectionDefinitionImplFacade implements ISurveySectionDefiniti
 
 	@Override
 	public SurveySectionDefinitionImplBo get(SurveySectionDefinitionImplBo entityBo) {
-		// TODO Auto-generated method stub
-		return null;
+		return surveySectionDefinitionImplConverter.convertToBo(surveySectionDefinitionImplBl.get(
+				surveySectionDefinitionImplConverter.convertToEntity(entityBo)));  
 	}
 
 	@Override
 	public List<SurveySectionDefinitionImplBo> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return surveySectionDefinitionImplConverter.convertToBos(surveySectionDefinitionImplBl.getAll()); 
 	}
 
 	@Override
-	public void delete(SurveySectionDefinitionImplBo entityBo) {
-		// TODO Auto-generated method stub
-		
+	public void delete(SurveySectionDefinitionImplBo entityBo) throws ValidationException {
+		surveySectionDefinitionImplBl.delete(surveySectionDefinitionImplConverter.convertToEntity(entityBo));
 	}
 
 	

@@ -3,12 +3,21 @@ package colruyt.pcrsejb.service.dl.surveys.surveySet;
 import java.io.Serializable;
 import java.util.EmptyStackException;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.TreeSet;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import colruyt.pcrsejb.entity.surveys.surveySet.SurveySet;
+import colruyt.pcrsejb.entity.user.User;
+import colruyt.pcrsejb.entity.user.privilege.PrivilegeType;
+import colruyt.pcrsejb.entity.user.privilege.TeamMemberUserPrivilege;
+import colruyt.pcrsejb.util.exceptions.NoSurveySetException;
+
+@Stateless
 public class DbSurveySetServiceDl implements Serializable, ISurveySetServiceDl {
 
 	@PersistenceContext(unitName = "PCRSEJB")
@@ -30,17 +39,11 @@ public class DbSurveySetServiceDl implements Serializable, ISurveySetServiceDl {
 		}
 		return surveySet;
 		
-		/*SurveySet surveySet = em.merge(element);
-		if(surveySet == null)
-		{
-			throw new EmptyStackException();
 		}
-		return surveySet;*/
-	}
 
 	@Override
 	public SurveySet get(SurveySet element) {
-		SurveySet  surveySet = em.find(SurveySet.class, element);
+		SurveySet  surveySet = em.find(SurveySet.class, element.getId());
 		if(surveySet == null)
 		{
 			throw new EmptyStackException();
@@ -64,6 +67,26 @@ public class DbSurveySetServiceDl implements Serializable, ISurveySetServiceDl {
 		else {
 			throw new EmptyStackException();
 		}
+	}
+
+	@Override
+	public SurveySet getLatestSetFor(User user) throws NoSurveySetException { 
+		
+		try {
+		User u = em.find(User.class, user.getId());
+		
+		TeamMemberUserPrivilege privi = (TeamMemberUserPrivilege)u.getPrivileges().stream().filter(x->x.getPrivilegeType().equals(PrivilegeType.TEAMMEMBER) && x.isActive()).findFirst().get();
+		
+		TreeSet<SurveySet> tree = new TreeSet<>(privi.getSurveySetTreeSet());
+		
+		return tree.first();
+		
+		}
+		catch(NoSuchElementException e) {
+			throw new NoSurveySetException();
+		}
+		
+		
 	}
 
 

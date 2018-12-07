@@ -11,22 +11,28 @@
 		<div class="ui-g-1" />
 		<div class="ui-g-10">
 			<h:form id="form">
+				<p:messages id="errors" showDetail="false" closable="true">
+					<p:autoUpdate />
+				</p:messages>
 				<p:dataTable var="surveySectionTitle"
 					value="#{adminSurveySectionTitleView.surveySectionTitles}">
-					<p:column headerText="#{msgs['surveySectionTitle.title']}">
+					<f:facet name="header">
+						<h:outputText value="#{msgs['surveySectionTitle.title']}" />
+					</f:facet>
+					<p:column headerText="#{msgs['surveySectionTitle']}">
 						<h:outputText value="#{surveySectionTitle.title}" />
 					</p:column>
 					<p:column headerText="#{msgs['edit']}"
-						style="width:65px; text-align: center">
-						<p:commandLink update=":editForm:editSurveySectionTitleDetail" id="edit"
-							oncomplete="PF('editSurveySectionTitleDialog').show()">
+						style="width:100px; text-align: center">
+						<p:commandLink update=":editForm:editSurveySectionTitleDetail"
+							id="edit" oncomplete="PF('editSurveySectionTitleDialog').show()">
 							<i class="fas fa-pencil-alt"></i>
 							<f:setPropertyActionListener value="#{surveySectionTitle}"
 								target="#{adminSurveySectionTitleView.addedSurveySectionTitle}" />
 						</p:commandLink>
 					</p:column>
 					<p:column headerText="#{msgs['delete']}"
-						style="width:65px; text-align: center">
+						style="width:100px; text-align: center">
 						<p:commandLink id="delete"
 							oncomplete="PF('deleteSurveySectionTitleDialog').show()">
 							<i class="fas fa-trash-alt"></i>
@@ -52,7 +58,8 @@
 				<div class="ui-g" id="addSurveySectionTitleForm">
 					<p:dialog id="addSurveySectionTitleFormTitle"
 						header="#{msgs['surveySectionTitle.add']}"
-						widgetVar="addSurveySectionTitleDialog" modal="true">
+						widgetVar="addSurveySectionTitleDialog" modal="true"
+						class="modalSM">
 						<p:outputPanel id="addSurveySectionTitleDetail">
 							<div class="ui-g">
 								<div class="ui-g-4">
@@ -63,12 +70,14 @@
 										value="#{adminSurveySectionTitleView.addedSurveySectionTitle.title}" />
 								</div>
 							</div>
-							<div class="ui-g-2">
+							<div class="ui-g-4" />
+							<div class="ui-g-4" align="center">
 								<p:commandButton value="#{msgs['surveySectionTitle.add']}"
 									update=":form"
 									action="#{adminSurveySectionTitleView.addSurveySectionTitle}"
 									oncomplete="PF('addSurveySectionTitleDialog').hide();" />
 							</div>
+							<div class="ui-g-4" />
 						</p:outputPanel>
 					</p:dialog>
 				</div>
@@ -76,29 +85,36 @@
 			<h:form id="editForm">
 				<div class="ui-g" id="editSurveySectionTitleForm">
 					<p:dialog id="editSurveySectionTitleFormTitle" header="Edit Title"
-						widgetVar="editSurveySectionTitleDialog" modal="true">
+						widgetVar="editSurveySectionTitleDialog" modal="true"
+						class="modalSM">
 						<p:outputPanel id="editSurveySectionTitleDetail">
 							<div class="ui-g">
 								<div class="ui-g-4">
 									<p:outputLabel value="#{msgs['surveySectionTitle.title']}"></p:outputLabel>
 								</div>
 								<div class="ui-g-8">
-									<p:inputText id="fn" value="#{adminSurveySectionTitleView.addedSurveySectionTitle.title}" />
+									<p:inputText id="fn"
+										value="#{adminSurveySectionTitleView.addedSurveySectionTitle.title}" />
 								</div>
 							</div>
-							<div class="ui-g-2">
-								<p:commandButton value="Wijzigen" update=":form"
+							<div class="ui-g-2" />
+							<div class="ui-g-8" align="center">
+								<p:commandButton value="#{msgs['surveySectionTitle.edit']}"
+									update=":form"
 									action="#{adminSurveySectionTitleView.editSurveySectionTitle}"
 									oncomplete="PF('editSurveySectionTitleDialog').hide();" />
 							</div>
+							<div class="ui-g-2" />
 						</p:outputPanel>
 					</p:dialog>
 				</div>
 			</h:form>
 			<h:form id="deleteForm">
 				<div class="ui-g" id="deleteSurveySectionTitleForm">
-					<p:dialog id="deleteSurveySectionTitleFormTitle" header="#{msgs['surveySectionTitle.delete']}"
-						widgetVar="deleteSurveySectionTitleDialog" modal="true">
+					<p:dialog id="deleteSurveySectionTitleFormTitle"
+						header="#{msgs['surveySectionTitle.delete']}"
+						widgetVar="deleteSurveySectionTitleDialog" modal="true"
+						class="modelSM">
 						<f:facet name="header">
 							<h:outputText value="#{msgs['surveySectionTitle.delete']}" />
 						</f:facet>
@@ -107,20 +123,24 @@
 								onclick="PF('deleteSurveySectionTitleFormTitle').hide(); return false;">X</h:outputLink>
 						</f:facet>
 						<p>
-							<h:outputText
-								value="Ben je zeker dat je deze titel wilt verwijderen?" />
+							<h:outputText value="#{msgs['surveySectionTitle.confirmdelete']}" />
 						</p>
 						<br></br>
 						<br></br>
-						<div>
-							<p:commandButton styleClass="btn btn-link"
-								value="#{msgs['button.no']}"
-								onclick="PF('deleteSurveySectionTitleDialog').hide()" />
+						<div class="ui-g-4" />
+						<div class="ui-g-2">
 							<p:commandButton styleClass="btn btn-primary" update=":form"
-								value="#{msgs['button.yes']}" action="#{adminSurveySectionTitleView.deleteSurveySectionTitle}"
+								value="#{msgs['general.button.yes']}"
+								action="#{adminSurveySectionTitleView.deleteSurveySectionTitle}"
 								oncomplete="PF('deleteSurveySectionTitleDialog').hide();" />
 							<p:messages></p:messages>
 						</div>
+						<div class="ui-g-2">
+							<p:commandButton styleClass="btn btn-link"
+								value="#{msgs['general.button.no']}"
+								onclick="PF('deleteSurveySectionTitleDialog').hide()" />
+						</div>
+						<div class="ui-g-4" />
 					</p:dialog>
 
 				</div>

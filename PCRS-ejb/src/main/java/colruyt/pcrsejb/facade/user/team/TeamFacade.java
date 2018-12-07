@@ -16,6 +16,7 @@ import colruyt.pcrsejb.converter.user.team.TeamConverter;
 import colruyt.pcrsejb.service.bl.user.team.ITeamServiceBl;
 import colruyt.pcrsejb.util.exceptions.MemberAlreadyHasATeamException;
 import colruyt.pcrsejb.util.exceptions.UserIsNotMemberOfTeamException;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
 public class TeamFacade implements Serializable, ITeamFacade {
@@ -46,7 +47,7 @@ public class TeamFacade implements Serializable, ITeamFacade {
 	}
 
 	@Override
-	public void delete(TeamBo entityBo) {
+	public void delete(TeamBo entityBo) throws ValidationException {
 		this.teamBl.delete(teamConv.convertToEntity(entityBo));
 		
 	}
@@ -67,8 +68,8 @@ public class TeamFacade implements Serializable, ITeamFacade {
 	}
 
 	@Override
-	public void deleteUserFromTeam(TeamBo manipulatedTeamBo, UserBo user) {
-		teamBl.removeUserFromTeam(teamConv.convertToEntity(manipulatedTeamBo), userConv.convertToEntity(user));
+	public void deleteUserFromTeam(TeamBo manipulatedTeamBo, EnrolmentBo enrolment, UserBo user) throws ValidationException {
+		teamBl.removeUserFromTeam(teamConv.convertToEntity(manipulatedTeamBo),enrolmentConv.convertToEntity(enrolment), userConv.convertToEntity(user));
 	}
 
 	@Override
@@ -78,7 +79,6 @@ public class TeamFacade implements Serializable, ITeamFacade {
 
 	@Override
 	public List<UserBo> getUsersOfTeam(TeamBo team) {
-		
 		return this.userConv.convertToBos(this.teamBl.getUsersOfTeam(this.teamConv.convertToEntity(team)));
 	}
 	

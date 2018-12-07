@@ -10,10 +10,12 @@ import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 import colruyt.pcrsejb.entity.user.team.Enrolment;
 import colruyt.pcrsejb.entity.user.team.Team;
+import colruyt.pcrsejb.service.bl.user.IUserServiceBl;
 import colruyt.pcrsejb.service.bl.user.privilege.IUserPrivilegeServiceBl;
 import colruyt.pcrsejb.service.dl.user.team.ITeamServiceDl;
 import colruyt.pcrsejb.util.exceptions.MemberAlreadyHasATeamException;
 import colruyt.pcrsejb.util.exceptions.UserIsNotMemberOfTeamException;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
 public class TeamServiceBl implements Serializable,ITeamServiceBl {
@@ -24,7 +26,12 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
 	@EJB
 	private ITeamServiceDl dlService;
 	@EJB
-	private IUserPrivilegeServiceBl userPrivilegeServiceBl;	
+	private IUserPrivilegeServiceBl userPrivilegeServiceBl;
+	@EJB
+	private IEnrolmentServiceBl enrolmentServiceBl;
+	@EJB
+	private IUserServiceBl userServiceBl;
+	
 	
 	private static final long serialVersionUID = 1L;
 
@@ -48,7 +55,7 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
 	}
 
 	@Override
-	public void delete(Team element) {
+	public void delete(Team element) throws ValidationException {
 		 this.dlService.delete(element);
 	}
 
@@ -67,16 +74,24 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
 		return this.dlService.getTeamsOfManager(manager);
 	}
 
-	@Override
-	public void removeUserFromTeam(Team convertToEntity, User convertToEntity2) {
-		// TODO Auto-generated method stub
+	
+	public void removeUserFromTeam(Team team, Enrolment enrolment, User user) throws ValidationException {		
+		//remove teamEnrolment
+		enrolmentServiceBl.delete(enrolment);
 		
+		//set userPrivilege to unactive
+		for(UserPrivilege p : user.getPrivileges()) {
+			if(enrolment.getUserPrivilege().getPrivilegeType().equals(p.getPrivilegeType())) {
+				p.setActive(false);
+			}
+		}
+		userServiceBl.save(user);
 	}
 
 	@Override
 	public Enrolment addUserToTeam(Team team, User user, String userPrivilege) throws MemberAlreadyHasATeamException {
 		UserPrivilege enrolmentUserPrivilege = userPrivilegeServiceBl.setUserPrivilege(user, userPrivilege);
-		
+
     	Enrolment enrolment = new Enrolment();
     	enrolment.setUserPrivilege(enrolmentUserPrivilege);
     	enrolment.setActive(true);
@@ -85,7 +100,7 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
     	
     	save(team);
     	return enrolment;
-	}
+	} 
 
 	@Override
 	public List<User> getUsersOfTeam(Team team) {

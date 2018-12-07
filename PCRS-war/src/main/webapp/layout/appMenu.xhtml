@@ -65,7 +65,7 @@
 						<li
 							class="#{request.getParameter('target') == 'craftmanagement' ? 'c-active' : ''}">
 							<h:link value="#{msgs['menu.craftmanagement']}"
-								outcome="/admin/competence.xhtml" />
+								outcome="/admin/adminCompetenceImp.xhtml" />
 						</li>
 					</ul>
 				</li>
@@ -99,6 +99,10 @@
 						<li
 							class="#{request.getParameter('target') == 'users' ? 'c-active' : ''}">
 							<h:link value="#{msgs['menu.users']}" outcome="/admin/adminUser.xhtml" />
+						</li>
+						<li
+							class="#{request.getParameter('target') == 'users' ? 'c-active' : ''}">
+							<h:link value="#{msgs['menu.adminSurveySectionDefinition']}" outcome="/admin/adminSurveySectionDefinitionView.xhtml" />
 						</li>
 					</ul>
 				</li>
