@@ -1,0 +1,99 @@
+<header>
+  <div class="header">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- LOGO -->
+          <div class="header__logo d-flex flex-column justify-content-center">
+            <a href="#" title="PCRS-ng">
+              <img
+                src="/assets/img/colruyt-group-logo.png"
+                class="d-md-none"
+              />
+              <img
+                src="/assets/img/colruyt-group-logo.png"
+                class="d-none d-md-block"
+              />
+            </a>
+          </div>
+          <!-- END LOGO -->
+          <!-- FACET NAV -->
+          <div class="header__facet d-inline-flex align-items-center">
+            <!-- USER NAVIGATION -->
+            <div class="header__user user">
+              <div class="user__dropdown">
+                <p class="user__cta">
+                  <i class="fas fa-user"></i
+                  ><span>{{ user.firstName }} {{ user.lastName }}</span
+                  ><i class="fas fa-angle-down d-none d-md-inline"></i>
+                </p>
+                <div class="user__content">
+                  <ul class="user__nav">
+                    <li class="user__nav-item">
+                      <a href="#logoff" title="Log off from the application"
+                        >Log off</a
+                      >
+                    </li>
+                  </ul>
+                  <!-- LANGUAGE -->
+                  <ul class="user__language language">
+                    <li>
+                      <a
+                        href="#dutch"
+                        class="language__item language__item--active"
+                        title="Nederlands"
+                        >NL</a
+                      >
+                    </li>
+                    <li>
+                      <a href="#dutch" class="language__item" title="English"
+                        >EN</a
+                      >
+                    </li>
+                    <li>
+                      <a href="#dutch" class="language__item" title="Français"
+                        >FR</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+                <!-- END LANGUAGE -->
+              </div>
+            </div>
+          </div>
+          <!-- END USER NAVIGATION -->
+        </div>
+        <!-- END FACET -->
+      </div>
+    </div>
+  </div>
+  <!-- END HEADER -->
+  <!-- HORIZONTAL NAVIGATION -->
+  <div class="navigation navigation--horizontal d-none d-md-block">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- NAV MENU -->
+          <ul class="navigation__menu">
+            <li class="navigation__item navigation__item--active">
+              <a href="#">Vragenlijst</a>
+            </li>
+            <li class="navigation__item navigation__item--has-submenu">
+              <a href="#">History</a>
+              <ul class="navigation__submenu">
+                <li
+                  class="navigation__subitem"
+                  *ngFor="let surveySet of surveySets"
+                >
+                  <a href="#"> {{ surveySet.surveyYear.getFullYear() }} </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <!-- END NAV MENU -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END HORIZONTAL NAVIGATION -->
+</header>

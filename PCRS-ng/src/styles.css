@@ -1,0 +1,24 @@
+ngb-tabset {
+  width: 100%;
+}
+.content {
+  margin-top: 3rem;
+}
+.table {
+  display: table !important;
+}
+th:first-child {
+  padding-left: 1rem !important;
+}
+tbody>tr>td:first-child {
+  padding-left: 1rem !important;
+}
+th:last-child {
+  padding-right: 1rem !important;
+}
+tbody>tr>td:last-child {
+  padding-right: 1rem !important;
+}
+ol {
+  padding-left: 1rem;;
+}
