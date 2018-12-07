@@ -5,14 +5,8 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletResponse;
-
-import org.primefaces.PrimeFaces;
-import org.primefaces.context.RequestContext;
 
 import colruyt.pcrsejb.bo.surveyDefinition.strategy.SurveySectionStrategyBo;
 import colruyt.pcrsejb.facade.surveyDefinition.strategy.ISurveySectionStrategyFacade;
@@ -56,7 +50,7 @@ public class SurveySectionStrategyView implements Serializable {
 //			pf.ajax().addCallbackParam("validationSucces", true);
 //		} catch (ValidationException e) {
 //			pf.ajax().addCallbackParam("validationSucces", false);
-//			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+//			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 //		}	 don't remove
 	}
 	
@@ -94,7 +88,7 @@ public class SurveySectionStrategyView implements Serializable {
 			surveySectionStrategyFacade.delete(s);
 		} catch (ValidationException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+ 			e.printStackTrace();
 		}
 	}
 }
