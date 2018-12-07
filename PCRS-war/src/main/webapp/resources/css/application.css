@@ -29,8 +29,8 @@ body .ui-button-text-icon-left.ui-button .ui-icon {
 
 
 /********************************************************************************************************************
-OWN CSS AFTER THIS POINT
- */
+										OWN CSS AFTER THIS POINT
+ *******************************************************************************************************************/
 #addUserForm {
 	width: 300px;
 	height: 250px;
@@ -79,4 +79,10 @@ body .ui-datatable .ui-datatable-data > tr:last-child {
 }
 .ui-selectonemenu-label{
      width: 100% !important;
-}  
+} 
+.cancel {
+	margin-right: 1rem;	
+}	
+body .ui-button {
+	margin: 0.5rem;
+}	

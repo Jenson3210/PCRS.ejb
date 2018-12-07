@@ -1,3 +1,4 @@
+
 package colruyt.pcrs.views;
 
 import java.io.Serializable;
@@ -22,7 +23,7 @@ import colruyt.pcrsejb.facade.user.privilege.IUserPrivilegeFacade;
 public class ManagerTeamViewChangeFunction implements Serializable {
 
 	private SurveyDefinitionBo function;
-	
+
 	public SurveyDefinitionBo getFunction() {
 		return function;
 	}
@@ -36,18 +37,19 @@ public class ManagerTeamViewChangeFunction implements Serializable {
 
 	@EJB
 	private ISurveyDefinitionFacade surveyDefinitionFacade;
-	
+
 	@EJB
 	private IUserPrivilegeFacade privilegeFacade;
 
 	@Inject
 	private WebUser currentUser;
 
-	private EnrolmentBo bo;
+	private EnrolmentBo enrol;
 
 	private UserBo userBo;
 
 	private List<SurveyDefinitionBo> availableFunctionDefinitions;
+
 	public List<SurveyDefinitionBo> getAvailableFunctionDefinitions() {
 		return this.surveyDefinitionFacade.getAll();
 	}
@@ -56,28 +58,20 @@ public class ManagerTeamViewChangeFunction implements Serializable {
 		this.availableFunctionDefinitions = availableFunctionDefinitions;
 	}
 
-	public void init(UserBo bo, EnrolmentBo en) {
+	public void init(UserBo userbo, EnrolmentBo en) {
 
-		this.bo = en;
-		this.userBo = bo;
-		
+		this.enrol = en;
+		this.userBo = userbo;
 
-		if (en.getUserPrivilege() instanceof SurveyUserPrivilegeBo)
-
+		if (en.getUserPrivilege() instanceof SurveyUserPrivilegeBo) {
 			this.function = ((SurveyUserPrivilegeBo) en.getUserPrivilege()).getSurveyDefinition();
-
-	}
+		}
+	} 
 
 	public void submit() {
-
-		
-
-			((SurveyUserPrivilegeBo) bo.getUserPrivilege()).setSurveyDefinition(function);
-			
-			this.privilegeFacade.save(bo.getUserPrivilege());
-		    this.userFacade.save(userBo);
-		
-
+		((SurveyUserPrivilegeBo) enrol.getUserPrivilege()).setSurveyDefinition(function);
+ 
+		//userBo.getPrivileges().add(enrol.getUserPrivilege());
+		//this.userFacade.save(userBo);
 	}
-
 }
