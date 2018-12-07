@@ -39,7 +39,7 @@ public class SurveySectionStrategyFacade implements Serializable, ISurveySection
 	}
 
 	@Override
-	public void delete(SurveySectionStrategyBo entityBo) {
+	public void delete(SurveySectionStrategyBo entityBo) throws ValidationException {
 		surveySectionStrategyServiceBl.delete(surveySectionStrategyConverter.convertToEntity(entityBo));
 	}
 }

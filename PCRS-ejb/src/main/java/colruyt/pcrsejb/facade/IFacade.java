@@ -8,5 +8,5 @@ public interface IFacade<T> {
 	T save(T entityBo)/* throws ValidationException*/;
 	T get(T entityBo);
 	List<T> getAll();
-	void delete(T entityBo);
+	void delete(T entityBo) throws ValidationException;
 }

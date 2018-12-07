@@ -40,7 +40,7 @@ public class SurveySectionStrategyServiceBl implements Serializable, ISurveySect
 	}
 
 	@Override
-	public void delete(SurveySectionStrategy element) {
+	public void delete(SurveySectionStrategy element) throws ValidationException {
 		surveySectionStrategyServiceDL.delete(element);	
 	}
 }

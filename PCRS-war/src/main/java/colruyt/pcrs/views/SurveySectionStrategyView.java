@@ -90,6 +90,11 @@ public class SurveySectionStrategyView implements Serializable {
 			}
 		}
 		strategies.remove(s);
-		surveySectionStrategyFacade.delete(s);
+		try {
+			surveySectionStrategyFacade.delete(s);
+		} catch (ValidationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
