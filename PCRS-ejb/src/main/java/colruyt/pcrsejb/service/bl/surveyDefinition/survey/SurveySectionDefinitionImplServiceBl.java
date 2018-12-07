@@ -13,6 +13,7 @@ import colruyt.pcrsejb.entity.user.privilege.PrivilegeType;
 import colruyt.pcrsejb.entity.user.privilege.SurveyUserPrivilege;
 import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 import colruyt.pcrsejb.service.dl.surveyDefinition.survey.ISurveySectionDefinitionImplServiceDl;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
 public class SurveySectionDefinitionImplServiceBl implements ISurveySectionDefinitionImplServiceBl, Serializable {
@@ -39,7 +40,7 @@ public class SurveySectionDefinitionImplServiceBl implements ISurveySectionDefin
 	}
 
 	@Override
-	public void delete(SurveySectionDefinitionImpl element) {
+	public void delete(SurveySectionDefinitionImpl element) throws ValidationException {
 		surveySectionDefinitionImplServiceDl.delete(element);
 	}
 	

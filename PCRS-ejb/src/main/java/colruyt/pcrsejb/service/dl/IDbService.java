@@ -2,6 +2,8 @@ package colruyt.pcrsejb.service.dl;
 
 import java.util.List;
 
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
+
 public interface IDbService<T> {
 
 	T save(T element);
@@ -10,6 +12,6 @@ public interface IDbService<T> {
 
 	List<T> getAll();
 
-	void delete(T element);
+	void delete(T element) throws ValidationException;
 
 }

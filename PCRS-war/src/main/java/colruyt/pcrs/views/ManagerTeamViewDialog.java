@@ -17,6 +17,7 @@ import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionRequirementLevelB
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
 import colruyt.pcrsejb.bo.user.privilege.TeamMemberUserPrivilegeBo;
+import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveyDefinition;
 import colruyt.pcrsejb.facade.surveys.surveySet.ISurveySetFacade;
 import colruyt.pcrsejb.facade.user.IUserFacade;
 
@@ -31,8 +32,9 @@ public class ManagerTeamViewDialog implements Serializable {
 	private UserBo teamMember;
 		
 	private List<SurveySectionDefinitionImplBo>  chosenList = new ArrayList<>();
-	private List<SurveySectionDefinitionImplBo>  availableList = new ArrayList<>();
-	
+	private List<SurveySectionDefinitionImplBo>  availableList = new ArrayList<>();  
+
+
 	@EJB
 	private ISurveySetFacade surveyFacade;
 	
@@ -60,9 +62,6 @@ public class ManagerTeamViewDialog implements Serializable {
 		this.teamMember = teamMember;
 	}
 
-	
-
-
 	public void init(UserBo user) {
 		
 		this.setTeamMember(user);
@@ -72,7 +71,7 @@ public class ManagerTeamViewDialog implements Serializable {
 		
 	}
 	private void loadCompetences() {
-		this.setAvailableList(this.surveyFacade.getPossibleSections(this.manager));
+		this.setAvailableList(this.surveyFacade.getPossibleSections(this.teamMember));
 		Iterator<SurveySectionDefinitionImplBo> it  = this.getAvailableList().stream().filter(x->x.getSurveySectionRequirementLevelBo().equals(SurveySectionRequirementLevelBo.OBLIGATED)).collect(Collectors.toList()).iterator();
 
 		for(;it.hasNext();) {
@@ -105,20 +104,20 @@ public class ManagerTeamViewDialog implements Serializable {
 		return availableList;
 	}
 
-	public void setAvailableList(List<SurveySectionDefinitionImplBo> availableList) {
+	public void setAvailableList(List<SurveySectionDefinitionImplBo> availableList) { 
 		this.availableList = availableList;
 	}
 
-	
-	
 	public void submit() {
 		
 	TeamMemberUserPrivilegeBo privi = (TeamMemberUserPrivilegeBo )this.currentUser.getUser().getPrivileges().stream().filter(x->x.getPrivilegeType().equals(PrivilegeTypeBo.TEAMMEMBER) && x.isActive()).findFirst().get();
 	privi.getSurveySetTreeSet().add(this.surveyFacade.generateSurveySetFor(this.chosenList));
+	
 	this.userFacade.save(this.currentUser.getUser());
 	
 	}
 	
+
 	
 	
 	

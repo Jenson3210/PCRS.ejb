@@ -6,15 +6,19 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import colruyt.pcrs.DTO.TeamEnrolmentBo;
 import colruyt.pcrs.utillibs.WebUser;
+import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveyDefinitionBo;
 import colruyt.pcrsejb.bo.user.UserBo;
+import colruyt.pcrsejb.bo.user.privilege.SurveyUserPrivilegeBo;
 import colruyt.pcrsejb.bo.user.team.EnrolmentBo;
 import colruyt.pcrsejb.bo.user.team.TeamBo;
+import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveyDefinitionFacade;
 import colruyt.pcrsejb.facade.surveys.surveySet.ISurveySetFacade;
 import colruyt.pcrsejb.facade.user.IUserFacade;
 import colruyt.pcrsejb.facade.user.team.IEnrolmentFacade;
@@ -39,10 +43,13 @@ public class ManagerTeamView implements Serializable {
 	@EJB
 	private ISurveySetFacade surveyFacade;
 
-	private List<TeamBo> teams;
+	@EJB
+	private ISurveyDefinitionFacade surveyDefinitionFacade;
 
 	@Inject
 	private WebUser currentUser;
+
+	private List<TeamBo> teams;
 
 	public ITeamFacade getTeamFacade() {
 
@@ -89,6 +96,7 @@ public class ManagerTeamView implements Serializable {
 			}
 			teamEnrolments.add(teamEnrolment);
 		}
+
 	}
 
 	public List<TeamBo> getTeams() {
@@ -148,6 +156,30 @@ public class ManagerTeamView implements Serializable {
 
 		return !(this.getManagerSurveyPercentage(user) == 100 && this.getMemberSurveyPercentage(user) == 100);
 
+	}
+
+	public String getFunctionOf(EnrolmentBo bo) {
+		try {
+			if (bo.getUserPrivilege() instanceof SurveyUserPrivilegeBo) {
+
+				return ((SurveyUserPrivilegeBo) bo.getUserPrivilege()).getSurveyDefinition().getFunction();
+
+			} else {
+				return "geen";
+			}
+		} catch (Exception e) {
+			return "geen";
+		}
+	}
+
+	public boolean hasFunction(EnrolmentBo bo) {
+
+		if (bo.getUserPrivilege() instanceof SurveyUserPrivilegeBo) {
+
+			return ((SurveyUserPrivilegeBo) bo.getUserPrivilege()).getSurveyDefinition() != null;
+
+		}
+		return false;
 	}
 
 }

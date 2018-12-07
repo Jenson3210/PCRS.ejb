@@ -45,7 +45,7 @@
 						<a href="#"
 							onclick="javascript:openHelp('help.xhtml?currentPage=#{view.viewId}&amp;lang=#{localeView.locale}');return false;">
 							<i class="fa fa-question-circle"></i> <!-- <div>#{webutillibmsgs['help']}</div> -->
-							<div>#{msgs['help']}</div>
+							<span>#{msgs['help']}</span>
 						</a>
 					</div>
 					<script>
@@ -132,7 +132,7 @@
 
 		<!-- Logout dialog -->
 		<h:form id="logoutForm">
-			<p:dialog widgetVar="popup" modal="true" autosized="true"
+			<p:dialog class="modalSM" widgetVar="popup" modal="true" autosized="true"
 				resizeable="false" responsive="true"
 				onShow="$('#logoutForm\\:okButton').focus();">
 				<f:facet name="header">
@@ -146,7 +146,7 @@
 				</f:facet>
 				<p>
 					<!-- <h:outputText value="#{webutillibmsgs.logoffConfirmMessage}" /> -->
-					<h:outputText value="#{msgs.logoffconfirmmessage}" />
+					<h:outputText value="#{msgs['logoffConfirmMessage']}" />
 				</p>
 				<br></br>
 				<br></br>
@@ -155,10 +155,10 @@
 					<!-- value="#{webutillibmsgs.cancel}" onclick="PF('popup').hide()" /> -->
 					<!-- <p:commandButton id="okButton" styleClass="btn btn-primary" -->
 					<!-- value="#{webutillibmsgs.ok}" onclick="#{logonView.logoutURL}" /> -->
-					<p:commandButton styleClass="btn btn-link" value="#{msgs.cancel}"
+					<p:commandButton class="cancel" styleClass="btn btn-link" value="#{msgs['msgs.cancel']}"
 						onclick="PF('popup').hide()" />
 					<p:commandButton id="okButton" styleClass="btn btn-primary"
-						value="#{msgs.ok}" action="#{logonView.logoutURL}" ajax="false" />
+						value="#{msgs['msgs.ok']}" action="#{logonView.logoutURL}" ajax="false" />
 				</div>
 			</p:dialog>
 		</h:form>

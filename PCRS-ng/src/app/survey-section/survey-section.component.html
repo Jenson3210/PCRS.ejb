@@ -1,0 +1,87 @@
+<table class="table table__content" border="0" cellpadding="0" cellspacing="0">
+  <thead class="table__head">
+    <tr>
+      <th style="width: 5%;" align="center">Info</th>
+      <th style="width: 50%;">Competence</th>
+      <th [ngStyle]="{'width.%': levelStyle}" align="center" *ngFor="let item of arrayCreator(surveySection.surveySectionDefinition.surveySectionDefinition.surveySectionStrategy.amountOfLevels); index as i">{{i + 1}}</th>
+      <th style="width: 10%;" align="center" *ngIf="surveySection.surveySectionDefinition.surveySectionDefinition.surveySectionStrategy.energyRated">Energy</th>
+      <!-- INTERESSE -->
+      <th style="width: 10%;" align="center" *ngIf="surveySection.surveySectionDefinition.surveySectionDefinition.surveySectionStrategy.interestRated">Interesse</th>
+      <!-- COMMENT -->
+      <th style="width: 5%;" align="center" *ngIf="isConsensus()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+    </tr>
+  </thead>
+
+  <tbody class="table__body">
+    <!-- COMPETENCE 1 -->
+    <ng-container *ngFor="let rating of surveySection.ratings">
+      <tr class="table__row table__row--even table__row--interactive">
+        <td
+          data-toggle="collapse"
+          [attr.data-target]="'#competenceDescription' + rating.id"
+          class="accordion-toggle"
+          align="center"
+        >
+          <i class="fas fa-info"></i>
+        </td>
+        <td>{{ rating.competenceImpl.competence.name }}</td>
+        <td align="center" *ngFor="let level of rating.competenceImpl.competence.getOrderedLevels()">
+          <input
+            type="radio"
+            [attr.name]="'competence' + rating.id"
+            value="level.orderLevel"
+            [title]="level.description"
+            (click)="rating.setLevel(level.orderLevel)"
+          />
+        </td>
+        <td align="center" *ngIf="surveySection.surveySectionDefinition.surveySectionDefinition.surveySectionStrategy.energyRated">
+          <select [(ngModel)]="rating.energy">
+            <option selected disabled>Energy</option>
+            <option [ngValue]="-1">Neen</option>
+            <option [ngValue]="1">Ja</option>
+            <option [ngValue]="0">Ik weet niet</option>
+          </select>
+        </td>
+        <td align="center" *ngIf="surveySection.surveySectionDefinition.surveySectionDefinition.surveySectionStrategy.interestRated">
+          <select [(ngModel)]="rating.interest">
+            <option selected disabled>Interesse</option>
+            <option [ngValue]="-1">Neen</option>
+            <option [ngValue]="1">Ja</option>
+            <option [ngValue]="0">Ik weet niet</option>
+          </select>
+        </td>
+        <td align="center" *ngIf="isConsensus()">
+          <i *ngIf="rating?.comment != null" class="fas fa-comment"></i>
+          <i *ngIf="rating?.comment == null" class="far fa-comment"></i>
+        </td>
+      </tr>
+      <tr class="table__row table__row--even">
+        <!-- .hiddenRow style padding: 0 !important -->
+        <td></td>
+        <td colspan="20" class="hiddenRow" style="padding: 0 !important;">
+          <div
+            class="accordian-body collapse"
+            [attr.id]="'competenceDescription' + rating.id"
+          >
+            <div class="row">
+              <b>Beschrijving:</b>
+            </div>
+            <div class="row">
+              {{ rating.competenceImpl.competenceDescription }}
+            </div>
+            <div class="row">
+              <b>Levels:</b>
+            </div>
+            <div class="row">
+              <ol>
+                  <li *ngFor="let level of rating.competenceImpl.competence.getOrderedLevels()">{{ level.description }}</li>
+              </ol>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+<!-- END TABLE CONTENT -->
+<!-- TABLE CONTENT -->
