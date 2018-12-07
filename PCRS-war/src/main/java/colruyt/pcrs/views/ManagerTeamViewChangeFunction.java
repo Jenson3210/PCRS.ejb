@@ -71,7 +71,7 @@ public class ManagerTeamViewChangeFunction implements Serializable {
 	public void submit() {
 		((SurveyUserPrivilegeBo) enrol.getUserPrivilege()).setSurveyDefinition(function);
  
-		//userBo.getPrivileges().add(enrol.getUserPrivilege());
-		//this.userFacade.save(userBo);
+		userBo.getPrivileges().add(enrol.getUserPrivilege());
+		this.userFacade.save(userBo);
 	}
 }
