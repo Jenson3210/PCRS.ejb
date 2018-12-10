@@ -46,18 +46,23 @@
 								<h:outputText
 									value="#{managerTeamView.getFunctionOf(enrolment.key)}" />
 							</p:column>
+						
+
 							<p:column>
-								<p:commandButton icon="pi pi-check" value="Generate Survey"
+							
+								<p:commandLink 
+									action="#{managerTeamViewChangeFunction.init(enrolment.value,enrolment.key)}"
+									onclick="PF('dlg2').show()"
+									rendered="#{managerTeamView.isMe(enrolment.value)}" ><i class="fas fa-pencil-alt"></i></p:commandLink>
+									
+							</p:column>
+							
+								<p:column>
+								<p:commandButton value="Generate Survey"
 									onclick="PF('dlg3').show()"
 									action="#{managerTeamViewDialog.init(enrolment.value)}"
 									rendered="#{managerTeamView.isMe(enrolment.value) and managerTeamView.hasFunction(enrolment.key)}" />
-							</p:column>
-
-							<p:column>
-								<p:commandButton icon="pi pi-check" value="Change Function"
-									action="#{managerTeamViewChangeFunction.init(enrolment.value,enrolment.key)}"
-									onclick="PF('dlg2').show()"
-									rendered="#{managerTeamView.isMe(enrolment.value)}" />
+									
 							</p:column>
 
 							<p:rowExpansion>
@@ -120,7 +125,7 @@
 			</p:selectOneListbox>
 
 			<p:commandButton action="#{managerTeamViewDialog.submit()}"
-				icon="pi pi-check" value="Create Survey">Create Survey</p:commandButton>
+				 value="Create Survey"></p:commandButton>
 
 		</p:panelGrid>
 	</p:dialog>
@@ -129,17 +134,20 @@
 		resizable="false">
 		<p:panelGrid columns="2" id="display2" columnClasses="label,output">
 			<h:form id="functionForm">
+				<div class="ui-g">
 				<p:selectOneMenu value="#{managerTeamViewChangeFunction.function}"
 					converter="SurveyDefinitionBoConverter">
-
+			
 					<f:selectItems
 						value="#{managerTeamViewChangeFunction.availableFunctionDefinitions}"
 						var="function" itemLabel="#{function.function}"
 						itemValue="#{function}" />
 				</p:selectOneMenu>
-
+			
 				<p:commandButton action="#{managerTeamViewChangeFunction.submit}"
-					icon="pi pi-check" value="Submit"  onComplete="PF('dlg2').hide();" update=":form" />
+					value="Submit" onComplete="PF('dlg2').hide();" update=":form" />
+					
+			     </div>
 			</h:form>
 		</p:panelGrid>
 	</p:dialog>

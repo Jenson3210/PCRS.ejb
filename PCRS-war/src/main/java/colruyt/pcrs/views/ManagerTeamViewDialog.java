@@ -84,6 +84,7 @@ public class ManagerTeamViewDialog implements Serializable {
 	}
 	
 	public void removeFromChosen(SurveySectionDefinitionImplBo surveysec) {
+		
 		if(surveysec.getSurveySectionRequirementLevelBo().equals(SurveySectionRequirementLevelBo.OBLIGATED)) {
 		this.getAvailableList().add(surveysec);
 		this.getChosenList().remove(surveysec);
