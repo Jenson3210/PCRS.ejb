@@ -1,3 +1,4 @@
+import { User2 } from './../model/user2';
 import { Component, OnInit } from '@angular/core';
 import { Survey } from '../model/survey';
 import { EnergyOrInterestOption } from '../model/energy-or-interest-option.enum';
@@ -10,10 +11,18 @@ import { SurveyService } from '../service/survey.service';
 })
 export class SurveyComponent implements OnInit {
   survey: Survey;
+  private u: User2;
 
   constructor(public surveyService: SurveyService) {}
 
   ngOnInit() {
+    
+    this.surveyService.testFakeUrl().subscribe(
+      x => {
+        this.u = x;
+        console.log("observable :" + JSON.stringify(this.u));
+      }
+    );
     this.survey = this.surveyService.getSurveyForUser();
   }
 

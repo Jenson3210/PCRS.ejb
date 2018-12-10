@@ -10,6 +10,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { SurveyOverviewComponent } from './survey-overview/survey-overview.component';
 import { FormsModule } from '@angular/forms';
 import { SurveyService } from './service/survey.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { SurveyService } from './service/survey.service';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    HttpClientModule
   ],
   providers: [
     SurveyService
