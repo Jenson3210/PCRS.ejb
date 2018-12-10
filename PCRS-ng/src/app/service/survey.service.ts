@@ -14,13 +14,12 @@ import { EnergyOrInterestOption } from '../model/energy-or-interest-option.enum'
 import { ConsensusRating } from '../model/consensus-rating';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
-import { User2 } from '../model/user2';
 import { Observable } from 'rxjs';
 
 @Injectable()
 export class SurveyService {
   
-  private testUrl: string = "WebServiceExercise1/personservice/persons/1";
+  private testUrl: string = "PCRS-api/rest/v1/users";
 
   constructor(private http: HttpClient) { }
 
@@ -28,8 +27,8 @@ export class SurveyService {
    
   }
 
-  testFakeUrl(): Observable<User2> {
-    return this.http.get<User2>(this.testUrl).pipe(
+  testFakeUrl() {
+    return this.http.get(this.testUrl).pipe(
       tap(x => console.log(x))
     );
   }
