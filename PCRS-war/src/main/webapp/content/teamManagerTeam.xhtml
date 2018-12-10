@@ -99,9 +99,11 @@
 
 			<p:selectOneListbox id="advanced"
 				value="#{managerTeamViewDialog.availableList}" var="t" filter="true"
+				converter="DefinitionImplBoConverter"
 				filterMatchMode="contains">
 				<f:selectItems value="#{managerTeamViewDialog.availableList}}"
 					var="theme"
+					
 					itemLabel="#{theme.surveySectionDefinitionBo.surveySectionTitle.title}"
 					itemValue="#{theme}" />
 
@@ -111,6 +113,7 @@
 				</p:column>
 			</p:selectOneListbox>
 			<p:selectOneListbox id="advanced2"
+				converter="DefinitionImplBoConverter"
 				value="#{managerTeamViewDialog.chosenList}" var="t" filter="true"
 				filterMatchMode="contains">
 				<f:selectItems value="#{managerTeamViewDialog.chosenList}}"

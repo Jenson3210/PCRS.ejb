@@ -25,19 +25,20 @@ import colruyt.pcrsejb.facade.user.IUserFacade;
 @ViewScoped
 public class ManagerTeamViewDialog implements Serializable {
 			
-	
-
 	private static final long serialVersionUID = 1L;
+	
 	private UserBo manager;
+	
 	private UserBo teamMember;
 		
 	private List<SurveySectionDefinitionImplBo>  chosenList = new ArrayList<>();
+	
 	private List<SurveySectionDefinitionImplBo>  availableList = new ArrayList<>();  
-
+	
 
 	@EJB
 	private ISurveySetFacade surveyFacade;
-	
+	 
 	@Inject
 	private WebUser currentUser;
 	
