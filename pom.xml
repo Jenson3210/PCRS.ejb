@@ -19,6 +19,7 @@
     <modules>
         <module>PCRS-ejb</module>
         <module>PCRS-war</module>
+        <module>PCRS-api</module>
         <module>PCRS-ear</module>
-    </modules>
+  </modules>
 </project>
