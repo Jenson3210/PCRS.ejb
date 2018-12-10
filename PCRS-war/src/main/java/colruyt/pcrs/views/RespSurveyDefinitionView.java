@@ -61,7 +61,7 @@ public class RespSurveyDefinitionView implements Serializable {
 	 * List for holding the data to be shown on the screen and/or dialog pop up
 	 */
 	
-	
+
 	// list of survey definitions assigned to the logged in user
 	private List<SurveyDefinitionBo> assignedSurveyDefinitionList;
 	
@@ -89,7 +89,7 @@ public class RespSurveyDefinitionView implements Serializable {
 	private CompetenceImplBo addedCompetenceImplBo;
 	
 	private CompetenceLevelBo selectedMinLevel;
-	
+
 	
 	// current active tab of the user
 	private SurveyDefinitionBo activeTab;
@@ -111,9 +111,11 @@ public class RespSurveyDefinitionView implements Serializable {
 	
 	
 	
+	
 	public RespSurveyDefinitionView() {
 	}
 
+	
 	@PostConstruct
 	public void setup() {
 		UserBo userBo = webuser.getUser();
@@ -137,7 +139,7 @@ public class RespSurveyDefinitionView implements Serializable {
 		this.activeTab = this.assignedSurveyDefinitionList.get(0);
 	}
 	
-	
+
 	
 	/**
 	 * called when the Manage Sections button is clicked
@@ -171,7 +173,8 @@ public class RespSurveyDefinitionView implements Serializable {
 	 * create new implementation of the competence with the selected attributes
 	 */
 	public void addNewCompetence() {
-		CompetenceImplBo bo = new CompetenceImplBo(selectedCompetence, "AAAA", selectedMinLevel.getOrderLevel());
+		CompetenceImplBo bo = new CompetenceImplBo(selectedCompetence, selectedCompetence.getCompetenceDescription(), 
+				selectedMinLevel.getOrderLevel());
 		
 		int index = -1;
 				
@@ -265,7 +268,7 @@ public class RespSurveyDefinitionView implements Serializable {
 		}
 	}
 
-	
+
 	public int getActiveIndex() {
 		int index = -1;
 		for (int i = 0; i < assignedSurveyDefinitionList.size(); i++) {
