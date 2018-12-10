@@ -49,7 +49,7 @@ public class UserProfileView implements Serializable {
 	}
 
 	public ISurveySetFacade getSurveyFacade() {
-		return surveyFacade; 
+		return surveyFacade;   
 	}
 
 	public void setSurveyFacade(ISurveySetFacade surveyFacade) {
