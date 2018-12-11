@@ -23,7 +23,7 @@ public class SurveySectionDefinitionImplBoConverter implements Converter {
 		SurveySectionDefinitionImplBo bo = (SurveySectionDefinitionImplBo) value;
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append(bo.getId()).append(";");
+		sb.append(bo.getId()).append(";").append(bo.getSurveySectionDefinitionBo().getSurveySectionTitle().getTitle());
 		return sb.toString();
 	}
 
