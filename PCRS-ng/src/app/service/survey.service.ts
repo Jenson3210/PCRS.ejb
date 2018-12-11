@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Survey } from '../model/survey';
 import { SurveyKind } from '../model/survey-kind.enum';
 import { SurveySection } from '../model/survey-section';
@@ -12,11 +12,27 @@ import { Competence } from '../model/competence';
 import { CompetenceLevel } from '../model/competence-level';
 import { EnergyOrInterestOption } from '../model/energy-or-interest-option.enum';
 import { ConsensusRating } from '../model/consensus-rating';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { User } from '../model/newModel/User';
 
 @Injectable()
 export class SurveyService {
+  
+  private testUrl: string = "PCRS-api/rest/v1/users";
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+
+  ngOnInit(): void {
+   
+  }
+
+  testFakeUrl(): Observable<User[]> {
+    return this.http.get<User[]>(this.testUrl).pipe(
+      tap(x => console.log(x))
+    );
+  }
 
   save(survey: Survey) {
 
