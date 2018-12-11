@@ -13,8 +13,7 @@ public class SurveySectionDefinitionImplBoConverter implements Converter {
 	@Override
 	public SurveySectionDefinitionImplBo getAsObject(FacesContext context, UIComponent component, String value) {
 		SurveySectionDefinitionImplBo bo = new SurveySectionDefinitionImplBo();
-		String[] parts = value.split(";");
-		bo.setId(Integer.valueOf(parts[0]));
+		bo.setId(Integer.valueOf(value));
 		return bo;
 	}
 
@@ -23,7 +22,7 @@ public class SurveySectionDefinitionImplBoConverter implements Converter {
 		SurveySectionDefinitionImplBo bo = (SurveySectionDefinitionImplBo) value;
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append(bo.getId()).append(";").append(bo.getSurveySectionDefinitionBo().getSurveySectionTitle().getTitle());
+		sb.append(bo.getId());
 		return sb.toString();
 	}
 
