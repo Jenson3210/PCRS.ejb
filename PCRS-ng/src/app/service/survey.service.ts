@@ -15,6 +15,7 @@ import { ConsensusRating } from '../model/consensus-rating';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { User } from '../model/newModel/User';
 
 @Injectable()
 export class SurveyService {
@@ -27,8 +28,8 @@ export class SurveyService {
    
   }
 
-  testFakeUrl() {
-    return this.http.get(this.testUrl).pipe(
+  testFakeUrl(): Observable<User[]> {
+    return this.http.get<User[]>(this.testUrl).pipe(
       tap(x => console.log(x))
     );
   }
