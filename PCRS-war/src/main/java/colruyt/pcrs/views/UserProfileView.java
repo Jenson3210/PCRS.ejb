@@ -22,11 +22,11 @@ import colruyt.pcrsejb.util.exceptions.UserIsNotMemberOfTeamException;
 @ViewScoped
 public class UserProfileView implements Serializable {
 
-	private String newpassword, repeatpassword, currentpass; 
+	private String newpassword, repeatpassword, currentpass;  
 
 	@EJB
 	private IUserFacade userfac;
-	@EJB
+	@EJB 
 	private ITeamFacade teamFacade;
 
 	@EJB
@@ -36,7 +36,7 @@ public class UserProfileView implements Serializable {
 
 	@PostConstruct
 	public void init() { 
-		this.setHasTeam(true);
+		this.setHasTeam(true);  
 
 	}
 

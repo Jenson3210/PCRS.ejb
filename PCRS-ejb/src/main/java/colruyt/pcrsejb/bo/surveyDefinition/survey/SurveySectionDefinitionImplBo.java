@@ -16,7 +16,8 @@ public class SurveySectionDefinitionImplBo extends AbstractBo implements Seriali
 	/*
 	 * CONSTRUCTORS
 	 */
-    public SurveySectionDefinitionImplBo() {
+    public SurveySectionDefinitionImplBo() {  
+    	
     	super();
     }
     public SurveySectionDefinitionImplBo(SurveySectionRequirementLevelBo surveySectionRequirementLevelBo, SurveySectionDefinitionBo surveySectionDefinitionBo) {
