@@ -16,7 +16,6 @@ export class SurveyComponent implements OnInit {
   constructor(public surveyService: SurveyService) {}
 
   ngOnInit() {
-    
     this.surveyService.testFakeUrl().subscribe(
       x => {
         this.users = x;

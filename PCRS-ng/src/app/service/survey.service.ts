@@ -28,7 +28,7 @@ export class SurveyService {
    
   }
 
-  testFakeUrl(): Observable<User[]> {
+  testFakeUrl() {
     return this.http.get<User[]>(this.testUrl).pipe(
       tap(x => console.log(x))
     );
