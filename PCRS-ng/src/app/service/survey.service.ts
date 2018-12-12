@@ -16,6 +16,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { User } from '../model/newModel/User';
+import { UserClass } from '../model/newModel/UserClass';
 
 @Injectable()
 export class SurveyService {
@@ -28,7 +29,7 @@ export class SurveyService {
    
   }
 
-  testFakeUrl() {
+  testFakeUrl(): Observable<User[]> {
     return this.http.get<User[]>(this.testUrl).pipe(
       tap(x => console.log(x))
     );

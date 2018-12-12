@@ -3,6 +3,7 @@ import { Survey } from '../model/survey';
 import { EnergyOrInterestOption } from '../model/energy-or-interest-option.enum';
 import { SurveyService } from '../service/survey.service';
 import { User } from '../model/newModel/User';
+import { UserClass } from '../model/newModel/UserClass';
 
 @Component({
   selector: 'app-survey',
@@ -20,6 +21,12 @@ export class SurveyComponent implements OnInit {
       x => {
         this.users = x;
         console.log("Users: " + JSON.stringify(this.users));
+        let u2 : UserClass = new UserClass(this.users[0]);
+        console.log(u2);
+        //u.calculate();
+        u2.calculate();
+        //console.log(this.users[0].calculate());
+        
       }
     );
     this.survey = this.surveyService.getSurveyForUser();
