@@ -33,7 +33,4 @@ public class UserService {
 		
 		return Response.ok().entity(users).build();
 	}
-
-	
-
 }
