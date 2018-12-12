@@ -35,7 +35,7 @@ public class Competence extends AbstractEntity implements Serializable {
     private Integer id;
     @Column(name="NAME")
     private String name;
-    @Column(name="DESCRIPTION",table="COMPETENCEDESCRIPTIONS")
+    @Column(name="DESCRIPTION",table="COMPETENCEDESCRIPTIONS", length = 1337)
     private String competenceDescription;
     @OneToMany(cascade= {CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="COMPETENCES_ID")
