@@ -1,4 +1,4 @@
 export enum SurveyKind {
 
-  TEAMMEMBER, TEAMMANAGER, CONSENSUS
+  TeamMember, TeamManager, Consensus
 }
