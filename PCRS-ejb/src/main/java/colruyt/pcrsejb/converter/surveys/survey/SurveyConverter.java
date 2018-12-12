@@ -10,6 +10,7 @@ import colruyt.pcrsejb.entity.surveys.survey.SurveyKind;
 public class SurveyConverter implements GenericConverter<Survey, SurveyBo> {
 
 	private SurveySectionConverter surveySectionConverter = new SurveySectionConverter();
+	private SurveyKindTranslator surveyKindTranslator = new SurveyKindTranslator();
 
 	@Override
 	public Survey convertToEntity(SurveyBo bo) {
@@ -18,17 +19,7 @@ public class SurveyConverter implements GenericConverter<Survey, SurveyBo> {
 			entity = new Survey();
 			ConverterUtils.setIfNotNull(bo::getId, entity::setId);
 			ConverterUtils.setIfNotNull(bo::getDateCompleted, entity::setDateCompleted);
-			switch (bo.getSurveyKind()) {
-				case TeamMember:
-					entity.setSurveyKind(SurveyKind.TeamMember);
-					break;
-				case TeamManager:
-					entity.setSurveyKind(SurveyKind.TeamManager);
-					break;
-				case Consensus:
-					entity.setSurveyKind(SurveyKind.Consensus);
-					break;
-			}
+			entity.setSurveyKind(surveyKindTranslator.convertToEntity(bo.getSurveyKind()));
 			entity.setSurveySections(surveySectionConverter.convertToEntities(bo.getSurveySections()));
 		} 
 		return entity;
@@ -41,17 +32,7 @@ public class SurveyConverter implements GenericConverter<Survey, SurveyBo> {
 			bo = new SurveyBo();
 			ConverterUtils.setIfNotNull(entity::getId, bo::setId);
 			ConverterUtils.setIfNotNull(entity::getDateCompleted, bo::setDateCompleted);
-			switch (entity.getSurveyKind()) {
-				case TeamMember:
-					bo.setSurveyKind(SurveyKindBo.TeamMember);
-					break;
-				case TeamManager:
-					bo.setSurveyKind(SurveyKindBo.TeamManager);
-					break;
-				case Consensus:
-					bo.setSurveyKind(SurveyKindBo.Consensus);
-					break;
-			}
+			bo.setSurveyKind(surveyKindTranslator.convertToBo(entity.getSurveyKind()));
 			bo.setSurveySections(surveySectionConverter.convertToBos(entity.getSurveySections()));
 		} 
 		return bo;

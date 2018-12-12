@@ -19,17 +19,22 @@ import colruyt.pcrsejb.entity.surveys.survey.SurveyKind;
 import colruyt.pcrsejb.entity.surveys.survey.SurveySection;
 import colruyt.pcrsejb.entity.surveys.surveySet.SurveySet;
 import colruyt.pcrsejb.entity.user.User;
+import colruyt.pcrsejb.entity.user.privilege.TeamMemberUserPrivilege;
+import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
+import colruyt.pcrsejb.service.bl.user.IUserServiceBl;
 import colruyt.pcrsejb.service.dl.surveys.surveySet.ISurveySetServiceDl;
 import colruyt.pcrsejb.util.exceptions.NoSurveySetException;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
-public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl{
+public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl {
 
 	private static final long serialVersionUID = 1L;
 	@EJB
 	private ISurveySetServiceDl surveySetServiceDb;
-	
+	@EJB
+	private IUserServiceBl userServiceBl;
+
 	@Override
 	public SurveySet save(SurveySet element) {
 		return surveySetServiceDb.save(element);
@@ -70,12 +75,12 @@ public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl{
 			SurveySection tempSection = new SurveySection();
 			tempSection.setSurveySectionDefinition(surveySectionDefinitionImpl);
 			List<Rating> ratings = new ArrayList<>();
-			for (CompetenceImpl competence : surveySectionDefinitionImpl.getSurveySectionDefinition().getSurveySectionCompetences()) {
+			for (CompetenceImpl competence : surveySectionDefinitionImpl.getSurveySectionDefinition()
+					.getSurveySectionCompetences()) {
 				Rating rating = null;
 				if (kind.equals(SurveyKind.Consensus)) {
 					rating = new ConsensusRating();
-				}
-				else {
+				} else {
 					rating = new Rating();
 				}
 				rating.setCompetence(competence);
@@ -90,19 +95,23 @@ public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl{
 	}
 
 	@Override
-	public Integer getPercentageCompleteForMemberSurvey(User user) throws NoSurveySetException{
-	SurveySet set = surveySetServiceDb.getLatestSetFor(user);
-	
-	Survey survey = set.getSurveyList().stream().filter(x->x.getSurveyKind().equals(SurveyKind.TeamMember)).findFirst().get();
-	
-	return this.berekenPercentage(survey);
-	
-	
+	public Integer getPercentageCompleteForMemberSurvey(User user) throws NoSurveySetException {
+		SurveySet set = surveySetServiceDb.getLatestSetFor(user);
+
+		Survey survey = set.getSurveyList().stream().filter(x -> x.getSurveyKind().equals(SurveyKind.TeamMember))
+				.findFirst().get();
+
+		if (survey != null)
+
+			return this.berekenPercentage(survey);
+
+		else
+
+			return 0;
 	}
-	
+
 	private Integer berekenPercentage(Survey surv) {
-		
-		
+
 		int totaal = 0;
 		int beantwoord = 0;
 
@@ -110,35 +119,55 @@ public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl{
 
 			for (Rating r : suy.getRatings()) {
 				totaal = totaal + 1;
-				if (r.getLevel() != 0) {
+				if (r.getLevel() != null) {
 					beantwoord = beantwoord + 1;
 				}
-
 			}
-			
-	}
-	
-	return Math.round(beantwoord / totaal);
-		
-		
-	}
-	
+		}
 
-	@Override
-	public Integer getPercentageCompleteForManagerSurvey(User user) throws NoSurveySetException{
-		
-		SurveySet set = surveySetServiceDb.getLatestSetFor(user);
-		Survey survey = set.getSurveyList().stream().filter(x->x.getSurveyKind().equals(SurveyKind.TeamManager)).findFirst().get();
-		
-		return this.berekenPercentage(survey);
+		if (totaal > 0) {
+			return Math.round((beantwoord / totaal) * 100);
+		} else {
+			return 0;
+		}
 	}
 
 	@Override
-	public Integer getPercentageCompleteForConsensusSurvey(User user)  throws NoSurveySetException{
+	public Integer getPercentageCompleteForManagerSurvey(User user) throws NoSurveySetException {
+
 		SurveySet set = surveySetServiceDb.getLatestSetFor(user);
-		
-		Survey survey = set.getSurveyList().stream().filter(x->x.getSurveyKind().equals(SurveyKind.Consensus)).findFirst().get();
-		
-		return this.berekenPercentage(survey);
+
+		Survey survey = set.getSurveyList().stream().filter(x -> x.getSurveyKind().equals(SurveyKind.TeamManager))
+				.findFirst().get();
+		if (survey != null)
+
+			return this.berekenPercentage(survey);
+
+		else
+			return 0;
+	}
+
+	@Override
+	public Integer getPercentageCompleteForConsensusSurvey(User user) throws NoSurveySetException {
+		SurveySet set = surveySetServiceDb.getLatestSetFor(user);
+
+		Survey survey = set.getSurveyList().stream().filter(x -> x.getSurveyKind().equals(SurveyKind.Consensus))
+				.findFirst().get();
+
+		if (survey != null)
+			return this.berekenPercentage(survey);
+		else
+			return 0;
+	}
+
+	@Override
+	public Survey getSurveyForUser(User user, SurveyKind surveyKind) throws NoSurveySetException {
+		Survey survey = null;
+		for (Survey s : surveySetServiceDb.getLatestSetFor(user).getSurveyList()) {
+			if (survey.getSurveyKind().equals(surveyKind)) {
+				survey = s;
+			}
+		}
+		return survey;
 	}
 }

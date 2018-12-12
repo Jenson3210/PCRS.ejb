@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -19,6 +20,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import colruyt.pcrsejb.entity.AbstractEntity;
+import colruyt.pcrsejb.util.general.LocalDateAttributeConverter;
 
 
 @Entity
@@ -34,6 +36,7 @@ public class Survey extends AbstractEntity implements Serializable {
 	@Column(name="ID")
 	private Integer id;
 	@Column(name="DATECOMPLETED")
+	@Convert(converter = LocalDateAttributeConverter.class)
     private LocalDate dateCompleted;
 	@OneToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name="SURVEY_ID")
