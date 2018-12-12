@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Survey } from '../model/survey';
 import { EnergyOrInterestOption } from '../model/energy-or-interest-option.enum';
 import { SurveyService } from '../service/survey.service';
-import { User } from '../model/newModel/User';
-import { UserClass } from '../model/newModel/UserClass';
+import { IUser } from '../model/newModel/User';
+import { SurveyKind } from '../model/survey-kind.enum';
 
 @Component({
   selector: 'app-survey',
@@ -12,23 +12,27 @@ import { UserClass } from '../model/newModel/UserClass';
 })
 export class SurveyComponent implements OnInit {
   survey: Survey;
-  users: User[];
+  users: IUser[];
 
   constructor(public surveyService: SurveyService) {}
 
   ngOnInit() {
+    
     this.surveyService.testFakeUrl().subscribe(
       x => {
         this.users = x;
         console.log("Users: " + JSON.stringify(this.users));
-        let u2 : UserClass = new UserClass(this.users[0]);
-        console.log(u2);
-        //u.calculate();
-        u2.calculate();
-        //console.log(this.users[0].calculate());
-        
-      }
+      },
+      null,
+      () => {
+      this.surveyService.getSurveyForUserAPI(this.users.find(u => u.id != null), SurveyKind.TeamMember).subscribe(
+        x => {
+          //this.survey = x;
+          console.log("Survey: " + JSON.stringify(this.survey));
+        }
+      )}
     );
+    
     this.survey = this.surveyService.getSurveyForUser();
   }
 

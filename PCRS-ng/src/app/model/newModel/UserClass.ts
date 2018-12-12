@@ -1,9 +1,11 @@
-import { User } from 'src/app/model/newModel/User';
+import { IUser } from 'src/app/model/newModel/User';
 
 
 export class UserClass {
     
-    constructor(public user: User){}
+    constructor(public user: IUser){
+
+    }
 
     calculate(){
         console.log("***" + this.user.email);

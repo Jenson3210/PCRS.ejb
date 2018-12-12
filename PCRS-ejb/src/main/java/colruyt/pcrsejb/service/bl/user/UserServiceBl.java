@@ -7,8 +7,10 @@ import javax.ejb.Stateless;
 
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.bo.user.team.EnrolmentBo;
+import colruyt.pcrsejb.entity.surveys.surveySet.SurveySet;
 import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.privilege.PrivilegeType;
+import colruyt.pcrsejb.entity.user.privilege.TeamMemberUserPrivilege;
 import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 import colruyt.pcrsejb.entity.user.team.Enrolment;
 import colruyt.pcrsejb.service.dl.user.IUserServiceDl;
@@ -61,5 +63,17 @@ public class UserServiceBl implements IUserServiceBl {
 	@Override
 	public User getUserByEnrolment(Enrolment enrolment) throws NoExistingMemberException {
 		return usersDb.getUserByEnrolment(enrolment);
+	}
+
+	@Override
+	public TeamMemberUserPrivilege getActiveTeamMemberPrivilege(User user) {
+		TeamMemberUserPrivilege returnPrivilege = null;
+		
+		for(UserPrivilege tmup : user.getPrivileges()) {
+			if(tmup.isActive() && tmup.getPrivilegeType().equals(PrivilegeType.TEAMMEMBER)) {
+				returnPrivilege = (TeamMemberUserPrivilege) tmup;
+			}
+		}
+		return returnPrivilege;
 	}
 }

@@ -6,6 +6,8 @@ import javax.ejb.Local;
 
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinitionImpl;
+import colruyt.pcrsejb.entity.surveys.survey.Survey;
+import colruyt.pcrsejb.entity.surveys.survey.SurveyKind;
 import colruyt.pcrsejb.entity.surveys.surveySet.SurveySet;
 import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.service.bl.IServiceBl;
@@ -17,6 +19,7 @@ public interface ISurveySetServiceBl extends IServiceBl<SurveySet> {
 	public Integer getPercentageCompleteForMemberSurvey(User user) throws NoSurveySetException ;
 	public Integer getPercentageCompleteForManagerSurvey(User user) throws NoSurveySetException;
 	public Integer getPercentageCompleteForConsensusSurvey(User user) throws NoSurveySetException;
+	Survey getSurveyForUser(User convertToEntity, SurveyKind surveyKind) throws NoSurveySetException;
 	
 	
 	
