@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +17,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import colruyt.pcrsejb.entity.AbstractEntity;
-import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinition;
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinitionImpl;
 import colruyt.pcrsejb.entity.surveys.rating.Rating;
 
@@ -35,12 +35,11 @@ public class SurveySection extends AbstractEntity implements Serializable {
 	private Integer id;
 	@ManyToOne
 	private SurveySectionDefinitionImpl surveySectionDefinition;
-	@OneToMany
+	@OneToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name="SURVEYSECTIONS_ID")
 	private List<Rating> ratings = new ArrayList<>();
-    /*
-     * CONSTRUCTORS
-     */
+
+	
 	public SurveySection() {
 		super();
 	}

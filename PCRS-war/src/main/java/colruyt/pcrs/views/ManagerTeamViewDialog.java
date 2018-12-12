@@ -126,9 +126,11 @@ public class ManagerTeamViewDialog implements Serializable {
 
 	public void submit() {
 	List<SurveySectionDefinitionImplBo> sections = new ArrayList<>();
-	for (SurveySectionDefinitionImplBo section : chosenList) {
+	for (SurveySectionDefinitionImplBo section : this.availableList.getTarget()) {
 		sections.add(surveySectionDefinitionImplFacade.get(section));
 	}	
+	
+	
 	TeamMemberUserPrivilegeBo privi = (TeamMemberUserPrivilegeBo )this.currentUser.getUser().getPrivileges().stream().filter(x->x.getPrivilegeType().equals(PrivilegeTypeBo.TEAMMEMBER) && x.isActive()).findFirst().get();
 	privi.getSurveySetTreeSet().add(this.surveyFacade.generateSurveySetFor(sections));
 	

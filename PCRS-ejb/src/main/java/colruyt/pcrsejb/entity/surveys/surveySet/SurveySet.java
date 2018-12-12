@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,8 +38,9 @@ public class SurveySet  extends AbstractEntity implements Serializable{
     private Integer id;
 	@Column(name="YEAR")
     private LocalDate surveyYear;
-    @OneToMany
+    @OneToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="SURVEYSET_ID")
+   
     private List<Survey> surveyList = new ArrayList<>();
     /*
      * CONSTRUCTORS
