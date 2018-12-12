@@ -4,6 +4,7 @@ import { EnergyOrInterestOption } from '../model/energy-or-interest-option.enum'
 import { SurveyService } from '../service/survey.service';
 import { IUser } from '../model/newModel/User';
 import { SurveyKind } from '../model/survey-kind.enum';
+import { ISurvey } from '../model/isurvey';
 
 @Component({
   selector: 'app-survey',
@@ -11,7 +12,7 @@ import { SurveyKind } from '../model/survey-kind.enum';
   styleUrls: ['./survey.component.css']
 })
 export class SurveyComponent implements OnInit {
-  survey: Survey;
+  survey: ISurvey;
   users: IUser[];
 
   constructor(public surveyService: SurveyService) {}
@@ -27,8 +28,10 @@ export class SurveyComponent implements OnInit {
       () => {
       this.surveyService.getSurveyForUserAPI(this.users.find(u => u.id != null), SurveyKind.TeamMember).subscribe(
         x => {
-          //this.survey = x;
-          console.log("Survey: " + JSON.stringify(this.survey));
+          this.survey = x;
+          console.log("Survey: " )
+          console.log(JSON.stringify(this.survey));
+          console.log("\n");
         }
       )}
     );
