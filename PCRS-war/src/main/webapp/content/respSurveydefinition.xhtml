@@ -17,7 +17,7 @@
 					<p:outputLabel rendered="#{def.surveySections.size() == 0}"
 						value="#{msgs['respSurveyDefinition.noSectionsDefined']}" />
 					<p:repeat var="sectionImpl" value="#{def.surveySections}">
-						<br/>
+						<br />
 						<p:dataTable
 							value="#{sectionImpl.surveySectionDefinitionBo.surveySectionCompetences}"
 							var="comp">
@@ -36,8 +36,9 @@
 							<p:column headerText="#{msgs['competence.description']}">
 								<h:outputText value="#{comp.competenceDescription}" />
 							</p:column>
-							
-							<p:column headerText="#{msgs['competence.minimumLevel']}" style="text-alignment:center;">
+
+							<p:column headerText="#{msgs['competence.minimumLevel']}"
+								style="text-alignment:center;">
 								<h:outputText value="#{comp.minLevel}" />
 							</p:column>
 
@@ -65,7 +66,7 @@
 
 
 						</p:dataTable>
-						<br/>
+						<br />
 					</p:repeat>
 					<div class="ui-g" style="margin-top: 20px; float: right;">
 						<div class="ui-g-12">
@@ -260,12 +261,12 @@
 							<div class="ui-g-8">
 								<p:selectOneMenu
 									value="#{respSurveyDefinitionView.selectedSectionDefinitionImpl}"
-									converter="DefinitionImplBoConverter">
+									converter="DefinitionImplBoConverter" >
 									<f:selectItems
 										value="#{respSurveyDefinitionView.activeTab.surveySections}"
 										var="section"
 										itemLabel="#{section.surveySectionDefinitionBo.surveySectionTitle.title}"
-										itemValue="#{section}" />
+										itemValue="#{section}"  />
 								</p:selectOneMenu>
 							</div>
 						</div>
@@ -322,61 +323,60 @@
 				</p:dialog>
 			</div>
 		</h:form>
-		
+
 		<h:form id="editForm">
-				<div class="ui-g" id="editCompetenceImplForm">
-					<p:dialog id="editCompetenceImplTitle"
-						header="#{msgs['surveyDefinition.edit']}"
-						widgetVar="editCompetenceImplDialog" modal="true"
-						draggable="false">
-						<p:outputPanel id="editCompetenceImpl">
+			<div class="ui-g" id="editCompetenceImplForm">
+				<p:dialog id="editCompetenceImplTitle"
+					header="#{msgs['surveyDefinition.edit']}"
+					widgetVar="editCompetenceImplDialog" modal="true" draggable="false">
+					<p:outputPanel id="editCompetenceImpl">
 
 
-							<div class="ui-g-2">
-								<p:commandButton value="#{msgs['surveyDefinition.edit']}"
-									update=":form"
-									oncomplete="PF('editCompetenceImplDialog').hide();"
-									action="#{adminSurveyDefinitionView.editSurveyDefinition}"
-									validateClient="true" />
-							</div>
-						</p:outputPanel>
-					</p:dialog>
-				</div>
-			</h:form>
-
-			<h:form id="deleteForm">
-				<div class="ui-g" id="deleteCompetenceImplForm">
-					<p:dialog id="deleteCompetenceImplTitle"
-						header="#{msgs['surveyDefinition.delete']}"
-						widgetVar="deleteCompetenceImplDialog" modal="true"
-						draggable="false">
-						<f:facet name="header">
-							<h:outputText value="#{msgs['surveyDefinition.delete']}" />
-						</f:facet>
-						<f:facet name="controls">
-							<h:outputLink value="#"
-								onclick="PF('deleteSurveyDefinitionDialog').hide(); return false;">X</h:outputLink>
-						</f:facet>
-						<p>
-							<h:outputText
-								value="#{msgs['surveyDefinition.deleteConfirmation']}" />
-						</p>
-						<br></br>
-						<br></br>
-						<div align="right">
-							<p:commandButton styleClass="btn btn-link"
-								value="#{msgs['general.button.no']}"
-								onclick="PF('deleteCompetenceImplDialog').hide()" />
-							<p:commandButton styleClass="btn btn-primary" update=":form"
-								value="#{msgs['general.button.yes']}"
-								oncomplete="PF('deleteCompetenceImplDialog').hide();"
-								action="#{adminSurveyDefinitionView.deleteSurveyDefinition}" />
-
+						<div class="ui-g-2">
+							<p:commandButton value="#{msgs['surveyDefinition.edit']}"
+								update=":form"
+								oncomplete="PF('editCompetenceImplDialog').hide();"
+								action="#{adminSurveyDefinitionView.editSurveyDefinition}"
+								validateClient="true" />
 						</div>
-					</p:dialog>
+					</p:outputPanel>
+				</p:dialog>
+			</div>
+		</h:form>
 
-				</div>
-			</h:form>
+		<h:form id="deleteForm">
+			<div class="ui-g" id="deleteCompetenceImplForm">
+				<p:dialog id="deleteCompetenceImplTitle"
+					header="#{msgs['surveyDefinition.delete']}"
+					widgetVar="deleteCompetenceImplDialog" modal="true"
+					draggable="false">
+					<f:facet name="header">
+						<h:outputText value="#{msgs['surveyDefinition.delete']}" />
+					</f:facet>
+					<f:facet name="controls">
+						<h:outputLink value="#"
+							onclick="PF('deleteSurveyDefinitionDialog').hide(); return false;">X</h:outputLink>
+					</f:facet>
+					<p>
+						<h:outputText
+							value="#{msgs['surveyDefinition.deleteConfirmation']}" />
+					</p>
+					<br></br>
+					<br></br>
+					<div align="right">
+						<p:commandButton styleClass="btn btn-link"
+							value="#{msgs['general.button.no']}"
+							onclick="PF('deleteCompetenceImplDialog').hide()" />
+						<p:commandButton styleClass="btn btn-primary" update=":form"
+							value="#{msgs['general.button.yes']}"
+							oncomplete="PF('deleteCompetenceImplDialog').hide();"
+							action="#{adminSurveyDefinitionView.deleteSurveyDefinition}" />
+
+					</div>
+				</p:dialog>
+
+			</div>
+		</h:form>
 
 
 	</div>

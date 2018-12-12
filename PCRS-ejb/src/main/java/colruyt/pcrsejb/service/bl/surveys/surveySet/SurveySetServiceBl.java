@@ -101,8 +101,13 @@ public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl {
 		Survey survey = set.getSurveyList().stream().filter(x -> x.getSurveyKind().equals(SurveyKind.TeamMember))
 				.findFirst().get();
 
-		return this.berekenPercentage(survey);
+		if (survey != null)
 
+			return this.berekenPercentage(survey);
+
+		else
+
+			return 0;
 	}
 
 	private Integer berekenPercentage(Survey surv) {
@@ -114,23 +119,32 @@ public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl {
 
 			for (Rating r : suy.getRatings()) {
 				totaal = totaal + 1;
-				if (r.getLevel() != 0) {
+				if (r.getLevel() != null) {
 					beantwoord = beantwoord + 1;
 				}
 			}
 		}
 
-		return Math.round(beantwoord / totaal);
+		if (totaal > 0) {
+			return Math.round((beantwoord / totaal) * 100);
+		} else {
+			return 0;
+		}
 	}
 
 	@Override
 	public Integer getPercentageCompleteForManagerSurvey(User user) throws NoSurveySetException {
 
 		SurveySet set = surveySetServiceDb.getLatestSetFor(user);
+
 		Survey survey = set.getSurveyList().stream().filter(x -> x.getSurveyKind().equals(SurveyKind.TeamManager))
 				.findFirst().get();
+		if (survey != null)
 
-		return this.berekenPercentage(survey);
+			return this.berekenPercentage(survey);
+
+		else
+			return 0;
 	}
 
 	@Override
@@ -140,7 +154,10 @@ public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl {
 		Survey survey = set.getSurveyList().stream().filter(x -> x.getSurveyKind().equals(SurveyKind.Consensus))
 				.findFirst().get();
 
-		return this.berekenPercentage(survey);
+		if (survey != null)
+			return this.berekenPercentage(survey);
+		else
+			return 0;
 	}
 
 	@Override

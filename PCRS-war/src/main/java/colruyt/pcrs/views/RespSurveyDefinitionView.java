@@ -63,22 +63,22 @@ public class RespSurveyDefinitionView implements Serializable {
 	
 
 	// list of survey definitions assigned to the logged in user
-	private List<SurveyDefinitionBo> assignedSurveyDefinitionList;
+	private List<SurveyDefinitionBo> assignedSurveyDefinitionList = new ArrayList<>();
 	
 	// list of survey section definitions already defined
-	private List<SurveySectionDefinitionBo> existingSurveySectionDefinitionList;
+	private List<SurveySectionDefinitionBo> existingSurveySectionDefinitionList = new ArrayList<>();;
 	
 	// list of survey section titles defined by the admin
-	private List<SurveySectionTitleBo> surveySectionTitleList;
+	private List<SurveySectionTitleBo> surveySectionTitleList = new ArrayList<>();;
 	
 	// list of survey strategies defined by the admin
-	private List<SurveySectionStrategyBo> surveySectionStrategyList;
+	private List<SurveySectionStrategyBo> surveySectionStrategyList = new ArrayList<>();;
 	
 	// list of the survey section requirement levels
-	private List<SurveySectionRequirementLevelBo> surveySectionRequirementLevels;
+	private List<SurveySectionRequirementLevelBo> surveySectionRequirementLevels = new ArrayList<>();;
 	
 	// list of all the existing competences
-	private List<CompetenceBo> existingCompetences;
+	private List<CompetenceBo> existingCompetences = new ArrayList<>();;
 	
 	
 	
@@ -119,6 +119,7 @@ public class RespSurveyDefinitionView implements Serializable {
 	@PostConstruct
 	public void setup() {
 		UserBo userBo = webuser.getUser();
+		//List<SurveyDefinitionBo> bos = surveyDefinitionFacade.getSurveyDefinitionsOfUser(userBo);
 		assignedSurveyDefinitionList = new ArrayList<>();
 		for (UserPrivilegeBo up : userBo.getPrivileges()) {
 			System.out.println(up);
@@ -129,13 +130,6 @@ public class RespSurveyDefinitionView implements Serializable {
 			}
 		}
 		
-		this.surveySectionTitleList = surveySectionTitleFacade.getAll();
-		this.surveySectionStrategyList = surveySectionStrategyFacade.getAll();
-		this.existingSurveySectionDefinitionList = surveySectionDefinitionFacade.getAll();
-		this.surveySectionRequirementLevels =  Arrays.asList(SurveySectionRequirementLevelBo.values());
-		this.existingCompetences = competenceFacade.getAll();
-		System.out.println(existingCompetences.size());
-		this.newSurveyDefinition();
 		this.activeTab = this.assignedSurveyDefinitionList.get(0);
 	}
 	
@@ -145,7 +139,10 @@ public class RespSurveyDefinitionView implements Serializable {
 	 * called when the Manage Sections button is clicked
 	 */
 	public void manageSectionsClickListener() {
-		
+		this.surveySectionTitleList = surveySectionTitleFacade.getAll();
+		this.surveySectionStrategyList = surveySectionStrategyFacade.getAll();
+		this.existingSurveySectionDefinitionList = surveySectionDefinitionFacade.getAll();
+		this.surveySectionRequirementLevels =  Arrays.asList(SurveySectionRequirementLevelBo.values());
 	}
 
 	
@@ -155,7 +152,7 @@ public class RespSurveyDefinitionView implements Serializable {
 	public void manageCompetencesClickListener() {
 		selectedCompetence = new CompetenceBo();
 		addedCompetenceImplBo = new CompetenceImplBo();
-		selectedSectionDefinitionImpl = new SurveySectionDefinitionImplBo();
+		this.existingCompetences = competenceFacade.getAll();
 	}
 	
 	
@@ -202,6 +199,8 @@ public class RespSurveyDefinitionView implements Serializable {
 	 * 			match the query 
 	 */
 	public List<CompetenceBo> completeCompetence(String query) {
+		System.out.println(getSelectedSectionDefinitionImpl());
+		System.out.println(selectedSectionDefinitionImpl.getSurveySectionDefinitionBo());
 		List<CompetenceBo> filteredResults = new ArrayList<>();
 		query = query.toLowerCase();
 		for (CompetenceBo bo : existingCompetences) {
@@ -213,7 +212,7 @@ public class RespSurveyDefinitionView implements Serializable {
 		return filteredResults;
 	}
 
-	
+
 	public void sectionChangeListener() {
 		switch(newExistingOrDeleteSection) {
 		case 0:
@@ -280,6 +279,7 @@ public class RespSurveyDefinitionView implements Serializable {
 		return index;
 	}
 	
+
 	
 	/*
 	 *  Getters and Setters
@@ -399,6 +399,7 @@ public class RespSurveyDefinitionView implements Serializable {
 
 	public void setSelectedSectionDefinitionImpl(SurveySectionDefinitionImplBo selectedSectionDefinitionImpl) {
 		this.selectedSectionDefinitionImpl = selectedSectionDefinitionImpl;
+		System.out.println(selectedSectionDefinitionImpl);
 	}
 
 	public Integer getIntSelected() {
