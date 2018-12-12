@@ -164,7 +164,7 @@ public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl {
 	public Survey getSurveyForUser(User user, SurveyKind surveyKind) throws NoSurveySetException {
 		Survey survey = null;
 		for (Survey s : surveySetServiceDb.getLatestSetFor(user).getSurveyList()) {
-			if (survey.getSurveyKind().equals(surveyKind)) {
+			if (s.getSurveyKind().equals(surveyKind)) {
 				survey = s;
 			}
 		}
