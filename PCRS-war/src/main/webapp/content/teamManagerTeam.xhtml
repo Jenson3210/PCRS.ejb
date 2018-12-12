@@ -52,22 +52,20 @@
 
 								<p:commandLink
 									action="#{managerTeamViewChangeFunction.init(enrolment.value,enrolment.key)}"
-									
 									oncomplete="PF('changeFunction').show()"
-									
 									rendered="#{managerTeamView.isMe(enrolment.value)}">
-									
+
 									<i class="fas fa-pencil-alt"> </i>
 								</p:commandLink>
 
 							</p:column>
 
 							<p:column>
-								<p:commandButton value="Generate Survey" action="#{managerTeamViewDialog.initDialog(enrolment.value)}"
-									
-									oncomplete="PF('createSurvey').show()" />
-<!-- 									rendered="#{managerTeamView.isMe(enrolment.value) and managerTeamView.hasFunction(enrolment.key)}"
- -->									
+								<p:commandButton value="Generate Survey"
+									action="#{managerTeamViewDialog.initDialog(enrolment.value)}"
+									oncomplete="PF('createSurvey').show()" update=":createSurvey" />
+								<!-- 									rendered="#{managerTeamView.isMe(enrolment.value) and managerTeamView.hasFunction(enrolment.key)}"
+ -->
 
 							</p:column>
 
@@ -99,7 +97,7 @@
 	</div>
 
 
-		<p:dialog header="Change Function" widgetVar="changeFunction"
+	<p:dialog header="Change Function" widgetVar="changeFunction"
 		modal="true" resizable="false">
 		<p:panelGrid columns="2" id="display2" columnClasses="label,output">
 			<h:form id="functionForm">
@@ -122,29 +120,24 @@
 		</p:panelGrid>
 	</p:dialog>
 
-
-	<p:dialog header="Create Survey" widgetVar="createSurvey" modal="true"
-		resizable="false">
-		<p:panelGrid columns="2" id="display" columnClasses="label,output">
-		
-			<form id="hallo">
-
-			<p:pickList id="pickList"
-				value="#{managerTeamViewDialog.availableList}" var="section"
-				itemValue="#{section}"
-				itemLabel="#{section.surveySectionDefinitionBo.surveySectionTitle.title}"
-				
-				converter="DefinitionImplBoConverter" />
-
-			<p:commandButton action="#{managerTeamViewDialog.submit()}"
-				value="Create Survey"></p:commandButton>
-				
-				</form>
-
-		</p:panelGrid>
-	</p:dialog>
-
+	<h:form id="createSurvey">
+		<p:dialog header="Create Survey" widgetVar="createSurvey" modal="true"
+			resizable="false">
+			<p:panelGrid columns="2" id="display" columnClasses="label,output">
 	
+					<p:pickList id="pickList"
+						value="#{managerTeamViewDialog.availableList}" var="section"
+						itemValue="#{section}"
+						itemLabel="#{section.surveySectionDefinitionBo.surveySectionTitle.title}"
+						converter="DefinitionImplBoConverter" />
+	
+					<p:commandButton action="#{managerTeamViewDialog.submit()}"
+						value="Create Survey"></p:commandButton>
+	
+			</p:panelGrid>
+		</p:dialog>
+	</h:form>
+
 
 </ui:composition>
 

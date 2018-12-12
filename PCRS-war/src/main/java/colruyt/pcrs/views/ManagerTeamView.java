@@ -60,7 +60,7 @@ public class ManagerTeamView implements Serializable {
 		this.teamFacade = teamFacade;
 	}
 
-	public IEnrolmentFacade getEnrolmentFacade() {
+	public IEnrolmentFacade getEnrolmentFacade() { 
 		return enrolmentFacade;
 	}
 
