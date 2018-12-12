@@ -7,6 +7,7 @@ import java.util.TreeSet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -14,6 +15,7 @@ import javax.persistence.OneToMany;
 
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveyDefinition;
 import colruyt.pcrsejb.entity.surveys.surveySet.SurveySet;
+import colruyt.pcrsejb.util.general.LocalDateAttributeConverter;
 
 @Entity
 @DiscriminatorValue(value="TEAMMEMBER")
@@ -23,6 +25,7 @@ public class TeamMemberUserPrivilege extends SurveyUserPrivilege implements Seri
 	 */
 	private static final long serialVersionUID = 1L;
 	@Column(name="STARTDATE")
+	@Convert(converter = LocalDateAttributeConverter.class)
 	private LocalDate startDateCurrentSurveyDefinition; 
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name="USERPRIVILEGE_ID")

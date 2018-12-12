@@ -2,6 +2,7 @@
 package colruyt.pcrs.views;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -13,6 +14,7 @@ import colruyt.pcrs.utillibs.WebUser;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveyDefinitionBo;
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.SurveyUserPrivilegeBo;
+import colruyt.pcrsejb.bo.user.privilege.TeamMemberUserPrivilegeBo;
 import colruyt.pcrsejb.bo.user.team.EnrolmentBo;
 import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveyDefinitionFacade;
 import colruyt.pcrsejb.facade.user.IUserFacade;
@@ -69,7 +71,9 @@ public class ManagerTeamViewChangeFunction implements Serializable {
 	} 
 
 	public void submit() {
-		((SurveyUserPrivilegeBo) enrol.getUserPrivilege()).setSurveyDefinition(function);
+		
+		((TeamMemberUserPrivilegeBo) enrol.getUserPrivilege()).setSurveyDefinition(function);
+		((TeamMemberUserPrivilegeBo) enrol.getUserPrivilege()).setStartDateCurrentSurveyDefinition(LocalDate.now());
 			
 		userBo.getPrivileges().add(enrol.getUserPrivilege());
 		this.userFacade.save(userBo);

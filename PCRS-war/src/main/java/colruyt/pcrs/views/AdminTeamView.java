@@ -39,7 +39,7 @@ public class AdminTeamView implements Serializable {
 	private EnrolmentBo manipulatedEnrolmentBo;
 	private UserBo user;
 	private String userPrivilege;
-	private List<TeamEnrolmentBo> teamEnrolments = new ArrayList<>();;
+	private List<TeamEnrolmentBo> teamEnrolments = new ArrayList<>();
    
 	@PostConstruct
 	private void fillList() {  
