@@ -22,30 +22,26 @@ public class DbSurveySetServiceDl implements Serializable, ISurveySetServiceDl {
 
 	@PersistenceContext(unitName = "PCRSEJB")
 	private EntityManager em;
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	public SurveySet save(SurveySet element) {
 		SurveySet surveySet;
-		if(element.getId() == null)
-		{
+		if (element.getId() == null) {
 			em.persist(element);
-			surveySet=element;
-		}
-		else
-		{
-			surveySet=em.merge(element);
+			surveySet = element;
+		} else {
+			surveySet = em.merge(element);
 		}
 		return surveySet;
-		
-		}
+
+	}
 
 	@Override
 	public SurveySet get(SurveySet element) {
-		SurveySet  surveySet = em.find(SurveySet.class, element.getId());
-		if(surveySet == null)
-		{
+		SurveySet surveySet = em.find(SurveySet.class, element.getId());
+		if (surveySet == null) {
 			throw new EmptyStackException();
 		}
 		return surveySet;
@@ -63,32 +59,29 @@ public class DbSurveySetServiceDl implements Serializable, ISurveySetServiceDl {
 		element = em.merge(element);
 		if (element != null) {
 			em.remove(element);
-		}
-		else {
+		} else {
 			throw new EmptyStackException();
 		}
 	}
 
 	@Override
-	public SurveySet getLatestSetFor(User user) throws NoSurveySetException { 
-		
+	public SurveySet getLatestSetFor(User user) throws NoSurveySetException {
+
 		try {
-		User u = em.find(User.class, user.getId());
-		
-		TeamMemberUserPrivilege privi = (TeamMemberUserPrivilege)u.getPrivileges().stream().filter(x->x.getPrivilegeType().equals(PrivilegeType.TEAMMEMBER) && x.isActive()).findFirst().get();
-		
-		TreeSet<SurveySet> tree = new TreeSet<>(privi.getSurveySetTreeSet());
-		
-		return tree.first();
-		
-		}
-		catch(NoSuchElementException e) {
+			User u = em.find(User.class, user.getId());
+
+			TeamMemberUserPrivilege privi = (TeamMemberUserPrivilege) u.getPrivileges().stream()
+					.filter(x -> x.getPrivilegeType().equals(PrivilegeType.TEAMMEMBER) && x.isActive()).findFirst()
+					.get();
+
+			TreeSet<SurveySet> tree = new TreeSet<>(privi.getSurveySetTreeSet());
+
+			return tree.first();
+
+		} catch (NoSuchElementException e) {
 			throw new NoSurveySetException();
 		}
-		
-		
+
 	}
-
-
 
 }

@@ -11,9 +11,6 @@ import colruyt.pcrsejb.util.exceptions.NoSurveySetException;
 public interface ISurveySetServiceDl extends IDbService<SurveySet>{
 
 
-	public SurveySet getLatestSetFor(User user) throws NoSurveySetException;     
-		
-		
-	
+	public SurveySet getLatestSetFor(User user) throws NoSurveySetException;
 	
 }

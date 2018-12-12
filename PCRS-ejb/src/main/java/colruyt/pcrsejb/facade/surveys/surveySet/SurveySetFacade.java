@@ -7,9 +7,13 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionImplBo;
+import colruyt.pcrsejb.bo.surveys.survey.SurveyBo;
+import colruyt.pcrsejb.bo.surveys.survey.SurveyKindBo;
 import colruyt.pcrsejb.bo.surveys.surveySet.SurveySetBo;
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.converter.surveyDefinition.survey.SurveySectionDefinitionImplConverter;
+import colruyt.pcrsejb.converter.surveys.survey.SurveyConverter;
+import colruyt.pcrsejb.converter.surveys.survey.SurveyKindTranslator;
 import colruyt.pcrsejb.converter.surveys.surveySet.SurveySetConverter;
 import colruyt.pcrsejb.converter.user.UserConverter;
 import colruyt.pcrsejb.service.bl.surveyDefinition.survey.ISurveySectionDefinitionImplServiceBl;
@@ -23,6 +27,9 @@ public class SurveySetFacade implements Serializable,ISurveySetFacade{
 	private static final long serialVersionUID = 1L;
 
 	private SurveySetConverter surveySetConverter = new SurveySetConverter();
+	private SurveyConverter surveyConverter = new SurveyConverter();
+	private SurveyKindTranslator SurveyKindTranslator = new SurveyKindTranslator();
+	
 	@EJB
 	private ISurveySetServiceBl surveySetServiceBl;
 	@EJB
@@ -73,6 +80,11 @@ public class SurveySetFacade implements Serializable,ISurveySetFacade{
 	@Override
 	public List<SurveySectionDefinitionImplBo> getPossibleSections(UserBo user) {
 		return surveySectionDefinitionImplConverter.convertToBos(surveySectionImplBl.getAllByUser(userConverter.convertToEntity(user)));
+	}
+
+	@Override
+	public SurveyBo getSurveyForUser(UserBo user, SurveyKindBo surveyKind) throws NoSurveySetException {
+		return surveyConverter.convertToBo(surveySetServiceBl.getSurveyForUser(userConverter.convertToEntity(user), SurveyKindTranslator.convertToEntity(surveyKind)));
 	}
 
 }
