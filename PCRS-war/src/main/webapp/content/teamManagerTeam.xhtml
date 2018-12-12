@@ -61,7 +61,7 @@
 							</p:column>
 
 							<p:column>
-								<p:commandButton value="Generate Survey"
+								<p:commandButton value="#{msgs['create.survey']}"
 									action="#{managerTeamViewDialog.initDialog(enrolment.value)}"
 									oncomplete="PF('createSurvey').show()" update=":createSurvey" 
 									rendered="#{managerTeamView.isMe(enrolment.value)}"
@@ -78,17 +78,27 @@
 
 									<h:outputText
 										value="#{enrolment.value.firstName}  #{enrolment.value.lastName}"></h:outputText>
-									<p:progressBar id="progressBarEmployee"
+										
+		<!-- 								<div class="knob-container ui-corner-all">
+    <p:knob labelTemplate="{value}%" disabled="true" value="#{managerTeamView.getMemberSurveyPercentage(enrolment.value)}"/>
+</div> -->
+										
+								<p:progressBar id="progressBarEmployee"
 										value="#{managerTeamView.getMemberSurveyPercentage(enrolment.value)}"
-										widgetVar="pbClient" style="width:300px" />
+										widgetVar="pbClient" style="width:300px" /> 
 									<h:outputText value="Jij"></h:outputText>
+		<!-- 					        <div class="knob-container ui-corner-all">
+    <p:knob labelTemplate="{value}%"  disabled="true" value="75"/>
+</div>
+			 -->
+									
 									<p:progressBar id="progressBarBoss" widgetVar="pbClient"
 										value="#{managerTeamView.getManagerSurveyPercentage(webUser.getUser())}"
-										style="width:300px" />
+										style="width:300px" /> 
 
 									<h:outputText value=""></h:outputText>
 
-									<p:commandButton disabled="true" value="Generate Consensus" />
+									<p:commandButton disabled="true" value="#{msgs['consensus.button']}" />
 
 								</p:panelGrid>
 							</p:rowExpansion>
@@ -100,7 +110,7 @@
 	</div>
 
 
-	<p:dialog header="Change Function" widgetVar="changeFunction"
+	<p:dialog header="#{msgs['change.function']}" widgetVar="changeFunction"
 		modal="true" resizable="false">
 		<p:panelGrid columns="2" id="display2" columnClasses="label,output">
 			<h:form id="functionForm">
@@ -115,7 +125,7 @@
 					</p:selectOneMenu>
 
 					<p:commandButton action="#{managerTeamViewChangeFunction.submit}"
-						value="Submit" onComplete="PF('changeFunction').hide();"
+						value="#{msgs['submit']}" onComplete="PF('changeFunction').hide();"
 						update=":form" />
 
 				</div>
@@ -124,9 +134,9 @@
 	</p:dialog>
 
 	<h:form id="createSurvey">
-		<p:dialog header="Create Survey" widgetVar="createSurvey" modal="true"
+		<p:dialog header="#{msgs['create.survey']}" widgetVar="createSurvey" modal="true"
 			resizable="false">
-			<p:panelGrid columns="2" id="display" columnClasses="label,output">
+			<p:panelGrid columns="1" id="display" columnClasses="label,output">
 	
 					<p:pickList id="pickList"
 						value="#{managerTeamViewDialog.availableList}" var="section"
@@ -135,7 +145,7 @@
 						converter="DefinitionImplBoConverter" />
 	
 					<p:commandButton action="#{managerTeamViewDialog.submit()}"
-						value="Create Survey"></p:commandButton>
+						value="#{msgs['create.survey']}"></p:commandButton>
 	
 			</p:panelGrid>
 		</p:dialog>

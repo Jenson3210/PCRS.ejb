@@ -95,7 +95,13 @@ public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl{
 	
 	Survey survey = set.getSurveyList().stream().filter(x->x.getSurveyKind().equals(SurveyKind.TeamMember)).findFirst().get();
 	
-	return this.berekenPercentage(survey);
+		if(survey != null)
+		
+		return this.berekenPercentage(survey);
+		
+		else
+			
+		return 0;
 	
 	
 	}
@@ -107,10 +113,10 @@ public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl{
 		int beantwoord = 0;
 
 		for (SurveySection suy : surv.getSurveySections()) {
-
+			
 			for (Rating r : suy.getRatings()) {
 				totaal = totaal + 1;
-				if (r.getLevel() != 0) {
+				if (r.getLevel() != null) {
 					beantwoord = beantwoord + 1;
 				}
 
@@ -118,7 +124,12 @@ public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl{
 			
 	}
 	
-	return Math.round(beantwoord / totaal);
+		if(totaal > 0) {
+	return Math.round((beantwoord / totaal)*100);
+		}
+		else {
+			return 0;
+		}
 		
 		
 	}
@@ -128,10 +139,17 @@ public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl{
 	public Integer getPercentageCompleteForManagerSurvey(User user) throws NoSurveySetException{
 		
 		SurveySet set = surveySetServiceDb.getLatestSetFor(user);
-		Survey survey = set.getSurveyList().stream().filter(x->x.getSurveyKind().equals(SurveyKind.TeamManager)).findFirst().get();
+		Survey survey = set.getSurveyList().stream()
+				.filter(x->x.getSurveyKind().equals(SurveyKind.TeamManager))
+				.findFirst().get();
+		if(survey != null)
 		
 		return this.berekenPercentage(survey);
-	}
+		
+		else
+			return 0;
+		}
+	
 
 	@Override
 	public Integer getPercentageCompleteForConsensusSurvey(User user)  throws NoSurveySetException{
@@ -139,6 +157,9 @@ public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl{
 		
 		Survey survey = set.getSurveyList().stream().filter(x->x.getSurveyKind().equals(SurveyKind.Consensus)).findFirst().get();
 		
-		return this.berekenPercentage(survey);
+		if(survey != null)	
+				return this.berekenPercentage(survey);
+			else
+				return 0;
 	}
 }
