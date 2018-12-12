@@ -211,6 +211,11 @@ public class RespSurveyDefinitionView implements Serializable {
 		}
 		return filteredResults;
 	}
+	
+	
+	public List<SurveySectionDefinitionImplBo> completeSection(String query){
+		return activeTab.getSurveySections();
+	}
 
 
 	public void sectionChangeListener() {
@@ -398,8 +403,10 @@ public class RespSurveyDefinitionView implements Serializable {
 	}
 
 	public void setSelectedSectionDefinitionImpl(SurveySectionDefinitionImplBo selectedSectionDefinitionImpl) {
-		this.selectedSectionDefinitionImpl = selectedSectionDefinitionImpl;
-		System.out.println(selectedSectionDefinitionImpl);
+		if (selectedSectionDefinitionImpl.getSurveySectionDefinitionBo() == null) {
+			selectedSectionDefinitionImpl = surveySectionDefinitionImplFacade.get(selectedSectionDefinitionImpl);
+		}
+		System.out.println("***" + selectedSectionDefinitionImpl.getSurveySectionDefinitionBo());
 	}
 
 	public Integer getIntSelected() {
