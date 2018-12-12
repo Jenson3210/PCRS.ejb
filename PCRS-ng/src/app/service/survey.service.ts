@@ -19,23 +19,19 @@ import { User } from '../model/newModel/User';
 
 @Injectable()
 export class SurveyService {
-  
-  private testUrl: string = "PCRS-api/rest/v1/";
+
+  private testUrl: String = 'PCRS-api/rest/v1/';
 
   constructor(private http: HttpClient) { }
 
-  ngOnInit(): void {
-   
-  }
-
   testFakeUrl(): Observable<User[]> {
-    return this.http.get<User[]>(this.testUrl + "users").pipe(
+    return this.http.get<User[]>(this.testUrl + 'users').pipe(
       tap(x => console.log(x))
     );
   }
 
   getSurveyForUserAPI(user: User, surveyKind: SurveyKind): Observable<Survey> {
-    return this.http.get<Survey>(this.testUrl + "usersurveys/" + user.id, {
+    return this.http.get<Survey>(this.testUrl + 'usersurveys/' + user.id, {
       params: {
         surveyKind : SurveyKind[surveyKind]
       }
@@ -49,7 +45,7 @@ export class SurveyService {
   getSurveyForUser(): Survey {
     const survey: Survey = new Survey();
     survey.id = 5;
-    survey.surveyKind = SurveyKind.CONSENSUS;
+    survey.surveyKind = SurveyKind.Consensus;
     //
     /* dummy section 1 */
     const surveySection1: SurveySection = new SurveySection();

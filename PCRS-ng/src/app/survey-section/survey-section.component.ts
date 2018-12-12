@@ -26,7 +26,7 @@ export class SurveySectionComponent implements OnInit {
     if (this.surveySection.surveySectionDefinition.surveySectionDefinition.surveySectionStrategy.interestRated) {
       width = width - 10;
     }
-    if (this.surveyKind === SurveyKind.CONSENSUS) {
+    if (this.surveyKind === SurveyKind.Consensus) {
       width = width - 5;
     }
     this.levelWidth =  width / this.surveySection.surveySectionDefinition.surveySectionDefinition.surveySectionStrategy.amountOfLevels;
@@ -38,7 +38,7 @@ export class SurveySectionComponent implements OnInit {
   }
   isConsensus() {
     let consensus = false;
-    if (this.surveyKind === SurveyKind.CONSENSUS) {
+    if (this.surveyKind === SurveyKind.Consensus) {
       consensus = true;
     }
     return consensus;

@@ -1,6 +1,6 @@
 import { Privilege } from './Privilege';
 
-export interface User {
+export interface IUser {
     id: number;
     firstName: string;
     lastName: string;
