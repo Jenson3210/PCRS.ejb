@@ -47,7 +47,6 @@ public class SurveyService {
 			user = userFacade.get(user);
 			SurveyKindBo kind = SurveyKindBo.valueOf(surveyKind);
 			survey = surveySetFacade.getSurveyForUser(user, kind);
-			System.out.println(survey.getSurveySections());
 			return Response.ok().entity(survey).build();
 		} catch (NoSurveySetException e) {
 			return Response.status(Response.Status.NOT_FOUND).build();
