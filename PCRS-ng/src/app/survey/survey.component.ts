@@ -3,6 +3,7 @@ import { Survey } from '../model/survey';
 import { EnergyOrInterestOption } from '../model/energy-or-interest-option.enum';
 import { SurveyService } from '../service/survey.service';
 import { User } from '../model/newModel/User';
+import { SurveyKind } from '../model/survey-kind.enum';
 
 @Component({
   selector: 'app-survey',
@@ -21,8 +22,17 @@ export class SurveyComponent implements OnInit {
       x => {
         this.users = x;
         console.log("Users: " + JSON.stringify(this.users));
-      }
+      },
+      null,
+      () => {
+      this.surveyService.getSurveyForUserAPI(this.users.find(u => u.id != null), SurveyKind.TEAMMEMBER).subscribe(
+        x => {
+          this.survey = x;
+          console.log("Survey: " + JSON.stringify(this.survey));
+        }
+      )}
     );
+    
     this.survey = this.surveyService.getSurveyForUser();
   }
 
