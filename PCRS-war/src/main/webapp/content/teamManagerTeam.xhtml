@@ -64,10 +64,10 @@
 
 							<p:column>
 								<p:commandButton value="Generate Survey" action="#{managerTeamViewDialog.initDialog(enrolment.value)}"
-									
+									rendered="#{managerTeamView.isMe(enrolment.value) and managerTeamView.hasFunction(enrolment.key)}"
 									oncomplete="PF('createSurvey').show()" />
-<!-- 									rendered="#{managerTeamView.isMe(enrolment.value) and managerTeamView.hasFunction(enrolment.key)}"
- -->									
+									
+							
 
 							</p:column>
 
@@ -125,7 +125,7 @@
 
 	<p:dialog header="Create Survey" widgetVar="createSurvey" modal="true"
 		resizable="false">
-		<p:panelGrid columns="2" id="display" columnClasses="label,output">
+		<p:panelGrid  id="display">
 		
 			<form id="hallo">
 
@@ -137,12 +137,12 @@
 				converter="DefinitionImplBoConverter" />
 
 			<p:commandButton action="#{managerTeamViewDialog.submit()}"
-				value="Create Survey"></p:commandButton>
+				value="Create Survey" />
 				
 				</form>
 
-		</p:panelGrid>
-	</p:dialog>
+				</p:panelGrid>
+		</p:dialog>
 
 	
 

@@ -70,7 +70,7 @@ public class ManagerTeamViewDialog implements Serializable {
 		this.availableList = availableList; 
 	}
 
-	public void initDialog(UserBo user) { 
+	public void initDialog(UserBo user) {  
 		
 		this.setTeamMember(user);
 		this.setManager(this.currentUser.getUser());
