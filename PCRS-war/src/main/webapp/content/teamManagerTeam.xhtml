@@ -63,9 +63,12 @@
 							<p:column>
 								<p:commandButton value="Generate Survey"
 									action="#{managerTeamViewDialog.initDialog(enrolment.value)}"
-									oncomplete="PF('createSurvey').show()" update=":createSurvey" />
-								<!-- 									rendered="#{managerTeamView.isMe(enrolment.value) and managerTeamView.hasFunction(enrolment.key)}"
- -->
+									oncomplete="PF('createSurvey').show()" update=":createSurvey" 
+									rendered="#{managerTeamView.isMe(enrolment.value)}"
+									enabled="#{managerTeamView.hasFunction(enrolment.key)}"
+									
+									/>
+
 
 							</p:column>
 

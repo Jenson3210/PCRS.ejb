@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,6 +21,7 @@ import javax.persistence.Table;
 
 import colruyt.pcrsejb.entity.AbstractEntity;
 import colruyt.pcrsejb.entity.surveys.survey.Survey;
+import colruyt.pcrsejb.util.general.LocalDateAttributeConverter;
 
 @Entity
 @Table(name="SURVEYSETS")
@@ -37,6 +39,8 @@ public class SurveySet  extends AbstractEntity implements Serializable,Comparabl
 	@Column(name="ID")
     private Integer id;
 	@Column(name="YEAR")
+	
+	@Convert(converter = LocalDateAttributeConverter.class)
     private LocalDate surveyYear;
     @OneToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="SURVEYSET_ID")
@@ -82,7 +86,12 @@ public class SurveySet  extends AbstractEntity implements Serializable,Comparabl
 	}
 	@Override
 	public int compareTo(SurveySet arg0) {
+		if(arg0 != null) {
 		return this.surveyYear.compareTo(arg0.surveyYear);
+		}
+		else {
+		return 0;
+		}
 	}
 	
 	
