@@ -199,8 +199,6 @@ public class RespSurveyDefinitionView implements Serializable {
 	 * 			match the query 
 	 */
 	public List<CompetenceBo> completeCompetence(String query) {
-		System.out.println(getSelectedSectionDefinitionImpl());
-		System.out.println(selectedSectionDefinitionImpl.getSurveySectionDefinitionBo());
 		List<CompetenceBo> filteredResults = new ArrayList<>();
 		query = query.toLowerCase();
 		for (CompetenceBo bo : existingCompetences) {
@@ -406,7 +404,6 @@ public class RespSurveyDefinitionView implements Serializable {
 		if (selectedSectionDefinitionImpl.getSurveySectionDefinitionBo() == null) {
 			selectedSectionDefinitionImpl = surveySectionDefinitionImplFacade.get(selectedSectionDefinitionImpl);
 		}
-		System.out.println("***" + selectedSectionDefinitionImpl.getSurveySectionDefinitionBo());
 	}
 
 	public Integer getIntSelected() {
