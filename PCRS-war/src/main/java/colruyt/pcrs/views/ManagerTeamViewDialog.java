@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -19,6 +20,7 @@ import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionRequirementLevelB
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
 import colruyt.pcrsejb.bo.user.privilege.TeamMemberUserPrivilegeBo;
+import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveySectionDefinitionImplFacade;
 import colruyt.pcrsejb.facade.surveys.surveySet.ISurveySetFacade;
 import colruyt.pcrsejb.facade.user.IUserFacade;
 
@@ -28,15 +30,17 @@ public class ManagerTeamViewDialog implements Serializable {
 	
 	
 	private static final long serialVersionUID = 1L;
-	
 	private UserBo manager;
-	
 	private UserBo teamMember;
-	
 	private SurveySectionDefinitionImplBo chosen = new SurveySectionDefinitionImplBo();
+	private List<SurveySectionDefinitionImplBo>  chosenList = new ArrayList<>();
+	private List<SurveySectionDefinitionImplBo>  allList = new ArrayList<>();
+	private DualListModel<SurveySectionDefinitionImplBo>  availableList;
 	
 	@EJB
 	private ISurveySetFacade surveyFacade;
+	@EJB 
+	private ISurveySectionDefinitionImplFacade surveySectionDefinitionImplFacade;
 	 
 	@Inject
 	private WebUser currentUser;
@@ -44,7 +48,11 @@ public class ManagerTeamViewDialog implements Serializable {
 	@EJB
 	private IUserFacade userFacade;
 	 
-		
+	@PostConstruct
+	public void emptyPickList() {
+		availableList = new DualListModel<>(allList, chosenList);
+	}
+	
 	public SurveySectionDefinitionImplBo getChosen() {
 		return chosen;
 	}
@@ -52,12 +60,6 @@ public class ManagerTeamViewDialog implements Serializable {
 	public void setChosen(SurveySectionDefinitionImplBo chosen) {
 		this.chosen = chosen;
 	}
-
-	private List<SurveySectionDefinitionImplBo>  chosenList = new ArrayList<>();
-	private List<SurveySectionDefinitionImplBo>  allList = new ArrayList<>();
-	
-	private DualListModel<SurveySectionDefinitionImplBo>  availableList;
-	
 	
 	
 	public DualListModel<SurveySectionDefinitionImplBo> getAvailableList() {
@@ -71,13 +73,9 @@ public class ManagerTeamViewDialog implements Serializable {
 	}
 
 	public void initDialog(UserBo user) { 
-		
 		this.setTeamMember(user);
 		this.setManager(this.currentUser.getUser());
 		this.loadCompetences();
-		
-		availableList = new DualListModel<SurveySectionDefinitionImplBo>(allList, chosenList);
-
 	}
 	
 	public UserBo getManager() {
@@ -109,7 +107,8 @@ public class ManagerTeamViewDialog implements Serializable {
 		List<SurveySectionDefinitionImplBo> lijst = this.allList.stream().filter(x->x.getSurveySectionRequirementLevelBo().equals(SurveySectionRequirementLevelBo.OBLIGATED)).collect(Collectors.toList());
 		this.chosenList.addAll(lijst);
 		this.allList.removeAll(this.chosenList);
-		
+		availableList.setSource(getAllList());
+		availableList.setTarget(getChosenList());
 	}
 	
 	
@@ -126,17 +125,23 @@ public class ManagerTeamViewDialog implements Serializable {
 	
 
 	public void submit() {
-		
+	List<SurveySectionDefinitionImplBo> sections = new ArrayList<>();
+	for (SurveySectionDefinitionImplBo section : this.availableList.getTarget()) {
+		sections.add(surveySectionDefinitionImplFacade.get(section));
+	}	
+	
+	
 	TeamMemberUserPrivilegeBo privi = (TeamMemberUserPrivilegeBo )this.currentUser.getUser().getPrivileges().stream().filter(x->x.getPrivilegeType().equals(PrivilegeTypeBo.TEAMMEMBER) && x.isActive()).findFirst().get();
-	privi.getSurveySetTreeSet().add(this.surveyFacade.generateSurveySetFor(this.availableList.getTarget()));
+	privi.getSurveySetTreeSet().add(this.surveyFacade.generateSurveySetFor(sections));
 	
 	this.userFacade.save(this.currentUser.getUser());
-	
 	}
-	
 
-	
-	
-	
-			
+	public List<SurveySectionDefinitionImplBo> getAllList() {
+		return allList;
+	}
+
+	public void setAllList(List<SurveySectionDefinitionImplBo> allList) {
+		this.allList = allList;
+	}
 }

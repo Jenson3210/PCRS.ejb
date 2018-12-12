@@ -24,7 +24,7 @@ public class TeamMemberUserPrivilege extends SurveyUserPrivilege implements Seri
 	private static final long serialVersionUID = 1L;
 	@Column(name="STARTDATE")
 	private LocalDate startDateCurrentSurveyDefinition; 
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name="USERPRIVILEGE_ID")
     private Set<SurveySet> surveySetTreeSet = new TreeSet<>();
 	/*

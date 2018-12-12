@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +26,7 @@ import colruyt.pcrsejb.entity.surveys.survey.Survey;
 @NamedQueries({
 	@NamedQuery(name= "SURVEYSET.GETALL", query = "SELECT ss FROM SurveySet ss")
 })
-public class SurveySet  extends AbstractEntity implements Serializable{
+public class SurveySet  extends AbstractEntity implements Serializable,Comparable<SurveySet>{
 	/*
 	 * PROPERTIES
 	 */
@@ -37,8 +38,9 @@ public class SurveySet  extends AbstractEntity implements Serializable{
     private Integer id;
 	@Column(name="YEAR")
     private LocalDate surveyYear;
-    @OneToMany
+    @OneToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="SURVEYSET_ID")
+
     private List<Survey> surveyList = new ArrayList<>();
     /*
      * CONSTRUCTORS
@@ -76,5 +78,12 @@ public class SurveySet  extends AbstractEntity implements Serializable{
 	}
 	public void setSurveyList(List<Survey> surveyList) {
 		this.surveyList = surveyList;
+
 	}
+	@Override
+	public int compareTo(SurveySet arg0) {
+		return this.surveyYear.compareTo(arg0.surveyYear);
+	}
+	
+	
 }
