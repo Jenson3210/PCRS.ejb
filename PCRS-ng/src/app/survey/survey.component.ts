@@ -19,23 +19,24 @@ export class SurveyComponent implements OnInit {
   ngOnInit() {
   if (this.userService.user == null) {
     this.router.navigate(['login']);
-  }
-  this.surveyService.getSurveyForUser(this.userService.user, SurveyKind.TeamMember).subscribe(
-    x => {
-      this.survey$ = x.body;
-    },
-    (error) => {
-      switch (error.status) {
-        case 404: {
-          this.router.navigate(['survey'], {
-            queryParams: {
-              error: 'no survey for user'
-            }
-          });
+  } else {
+    this.surveyService.getSurveyForUser(this.userService.user, SurveyKind.TeamMember).subscribe(
+      x => {
+        this.survey$ = x.body;
+      },
+      (error) => {
+        switch (error.status) {
+          case 404: {
+            this.router.navigate(['survey'], {
+              queryParams: {
+                error: 'no survey for user'
+              }
+            });
+          }
         }
       }
-    }
-  );
+    );
+  }
   }
 
   finished() {
@@ -70,12 +71,5 @@ export class SurveyComponent implements OnInit {
   }
   saveSurvey() {
     this.surveyService.save(this.survey$);
-    for (const surveySection of this.survey$.surveySections) {
-      for (const rating of surveySection.ratings) {
-        console.log(rating);
-        console.log(EnergyOrInterestOption[rating.energy] + 'energy');
-        console.log(EnergyOrInterestOption[rating.interest] + 'interest');
-      }
-    }
   }
 }
