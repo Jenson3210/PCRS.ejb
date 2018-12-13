@@ -199,8 +199,6 @@ public class RespSurveyDefinitionView implements Serializable {
 	 * 			match the query 
 	 */
 	public List<CompetenceBo> completeCompetence(String query) {
-		System.out.println(getSelectedSectionDefinitionImpl());
-		System.out.println(selectedSectionDefinitionImpl.getSurveySectionDefinitionBo());
 		List<CompetenceBo> filteredResults = new ArrayList<>();
 		query = query.toLowerCase();
 		for (CompetenceBo bo : existingCompetences) {
@@ -210,6 +208,11 @@ public class RespSurveyDefinitionView implements Serializable {
 			}
 		}
 		return filteredResults;
+	}
+	
+	
+	public List<SurveySectionDefinitionImplBo> completeSection(String query){
+		return activeTab.getSurveySections();
 	}
 
 
@@ -398,8 +401,9 @@ public class RespSurveyDefinitionView implements Serializable {
 	}
 
 	public void setSelectedSectionDefinitionImpl(SurveySectionDefinitionImplBo selectedSectionDefinitionImpl) {
-		this.selectedSectionDefinitionImpl = selectedSectionDefinitionImpl;
-		System.out.println(selectedSectionDefinitionImpl);
+		if (selectedSectionDefinitionImpl.getSurveySectionDefinitionBo() == null) {
+			selectedSectionDefinitionImpl = surveySectionDefinitionImplFacade.get(selectedSectionDefinitionImpl);
+		}
 	}
 
 	public Integer getIntSelected() {

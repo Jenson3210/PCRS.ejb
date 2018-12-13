@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { SurveySection } from '../model/survey-section';
 import { SurveyKind } from '../model/survey-kind.enum';
+import { ISurveySection } from '../model/Interfaces/ISurveySection';
 
 @Component({
   selector: 'app-survey-section',
@@ -9,7 +9,7 @@ import { SurveyKind } from '../model/survey-kind.enum';
 })
 export class SurveySectionComponent implements OnInit {
   @Input()
-  surveySection: SurveySection;
+  surveySection: ISurveySection;
   @Input()
   surveyKind: SurveyKind;
   levelWidth: number;
@@ -20,16 +20,16 @@ export class SurveySectionComponent implements OnInit {
   ngOnInit() {
     let width: number;
     width = 35;
-    if (this.surveySection.surveySectionDefinition.surveySectionDefinition.surveySectionStrategy.energyRated) {
+    if (this.surveySection.surveySectionDefinition.surveySectionDefinitionBo.surveySectionStrategy.energyRated) {
       width = width - 10;
     }
-    if (this.surveySection.surveySectionDefinition.surveySectionDefinition.surveySectionStrategy.interestRated) {
+    if (this.surveySection.surveySectionDefinition.surveySectionDefinitionBo.surveySectionStrategy.interestRated) {
       width = width - 10;
     }
     if (this.surveyKind === SurveyKind.Consensus) {
       width = width - 5;
     }
-    this.levelWidth =  width / this.surveySection.surveySectionDefinition.surveySectionDefinition.surveySectionStrategy.amountOfLevels;
+    this.levelWidth =  width / this.surveySection.surveySectionDefinition.surveySectionDefinitionBo.surveySectionStrategy.amountOfLevels;
   }
 
   arrayCreator(n: number) {

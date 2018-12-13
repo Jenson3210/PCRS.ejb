@@ -16,13 +16,13 @@ public class ConsensusRatingBo extends RatingBo implements Serializable{
     public ConsensusRatingBo(){
     	super();
     }
-	public ConsensusRatingBo(Integer level, Boolean energy, CompetenceImplBo competence,
+	public ConsensusRatingBo(Integer level, EnergyOrInterestOptionBo energy, EnergyOrInterestOptionBo interest, CompetenceImplBo competence,
 			String comment) {
-		super(level, energy, competence);
+		super(level, energy, interest, competence);
 		this.comment = comment;
 	}
-	public ConsensusRatingBo(Integer id, Integer level, Boolean energy, CompetenceImplBo competence, String comment) {
-		super(id, level, energy, competence);
+	public ConsensusRatingBo(Integer id, Integer level, EnergyOrInterestOptionBo energy, EnergyOrInterestOptionBo interest, CompetenceImplBo competence, String comment) {
+		super(id, level, energy, interest, competence);
 		this.comment = comment;
 	}
 	/*
