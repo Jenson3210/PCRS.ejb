@@ -80,10 +80,10 @@
         <div class="col-md-12">
           <!-- NAV MENU -->
           <ul class="navigation__menu">
-            <li class="navigation__item navigation__item--active">
+            <li class="navigation__item navigation__item--active" *ngIf="loggedIn()">
               <a href="#">Vragenlijst</a>
             </li>
-            <li class="navigation__item navigation__item--has-submenu">
+            <li class="navigation__item navigation__item--has-submenu" *ngIf="loggedIn()">
               <a href="#">History</a>
               <ul class="navigation__submenu">
                 <li

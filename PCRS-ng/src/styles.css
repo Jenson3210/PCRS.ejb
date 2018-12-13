@@ -25,3 +25,6 @@ ol {
 #loginForm{
   margin: 25px auto 0px auto;
 }
+.navigation__menu {
+  min-height: 3.75rem;
+}
