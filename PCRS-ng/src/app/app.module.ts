@@ -11,6 +11,7 @@ import { SurveyOverviewComponent } from './survey-overview/survey-overview.compo
 import { FormsModule } from '@angular/forms';
 import { SurveyService } from './service/survey.service';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
     SurveyComponent,
     SurveySectionComponent,
     RatingComponent,
-    SurveyOverviewComponent
+    SurveyOverviewComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

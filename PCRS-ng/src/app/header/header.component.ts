@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IUser } from '../model/Interfaces/IUser';
 import { ISurveySet } from '../model/Interfaces/ISurveySet';
+import { Router } from '@angular/router';
+import { UserService } from '../service/user.service';
 
 @Component({
   selector: 'app-header',
@@ -12,12 +14,11 @@ export class HeaderComponent implements OnInit {
   public user = {} as IUser;
   public surveySets: ISurveySet[] = [];
 
-  constructor() { }
+  constructor(
+    private userService: UserService,
+    private router: Router) { }
 
   ngOnInit() {
-    this.user.firstName = 'Laura';
-    this.user.lastName = 'Lynn';
-    this.user.id = 3;
     const surveySet = {} as ISurveySet;
     surveySet.id = 2;
     surveySet.surveyYear = new Date(2017, 2, 12);
@@ -31,5 +32,19 @@ export class HeaderComponent implements OnInit {
     surveySet3.surveyYear = new Date(2015, 2, 12);
     this.surveySets.push(surveySet3);
   }
+  logoff() {
+    this.userService.logoff();
+    this.router.navigate(['login']);
 
+  }
+  loggedIn() {
+    let loggedIn = false;
+    if (this.userService.user != null) {
+      loggedIn = true;
+    }
+    return loggedIn;
+  }
+  getUser(): IUser {
+    return this.userService.user;
+  }
 }
