@@ -1,6 +1,7 @@
 package colruyt.pcrsejb.service.dl.competence;
 
 import colruyt.pcrsejb.entity.competence.Competence;
+import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinitionImpl;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -66,4 +67,11 @@ public class DbCompetenceServiceDl implements ICompetenceServiceDl, Serializable
             em.remove(competence);
         }
     }
+
+	@Override
+	public List<Competence> getCompetencesBySection(SurveySectionDefinitionImpl sectionImpl) {
+		TypedQuery<Competence> query = em.createNamedQuery("COMPETENCE.GETALLBYSECTION", Competence.class);
+		query.setParameter("size",sectionImpl.getSurveySectionDefinition().getSurveySectionStrategy().getAmountOfLevels());
+		return query.getResultList();
+	}
 }

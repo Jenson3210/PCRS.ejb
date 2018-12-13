@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SecondaryTable;
@@ -22,7 +23,11 @@ import colruyt.pcrsejb.entity.AbstractEntity;
 @Entity
 @Table(name="COMPETENCES")
 @SecondaryTable(name="COMPETENCEDESCRIPTIONS")
-@NamedQuery(name="COMPETENCE.GETALL", query="SELECT c FROM Competence c")
+@NamedQueries({
+	@NamedQuery(name="COMPETENCE.GETALL", query="SELECT c FROM Competence c"),
+	@NamedQuery(name="COMPETENCE.GETALLBYSECTION", query="SELECT c FROM Competence c WHERE size(c.competenceLevels) = :size")
+})
+
 public class Competence extends AbstractEntity implements Serializable {
 	/*
 	 * PROPERTIES

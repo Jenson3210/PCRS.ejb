@@ -7,6 +7,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import colruyt.pcrsejb.entity.competence.Competence;
+import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinitionImpl;
 import colruyt.pcrsejb.service.dl.competence.ICompetenceServiceDl;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
@@ -39,5 +40,10 @@ public class CompetenceServiceBl implements Serializable, ICompetenceServiceBl {
 	public void delete(Competence element) throws ValidationException {
 		competencedb.delete(element);
 		
+	}
+
+	@Override
+	public List<Competence> getCompetencesBySection(SurveySectionDefinitionImpl sectionImpl) {
+		return competencedb.getCompetencesBySection(sectionImpl);
 	}
 }

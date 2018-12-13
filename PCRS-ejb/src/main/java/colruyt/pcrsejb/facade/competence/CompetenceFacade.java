@@ -7,7 +7,10 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import colruyt.pcrsejb.bo.competence.CompetenceBo;
+import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionImplBo;
 import colruyt.pcrsejb.converter.competence.CompetenceConverter;
+import colruyt.pcrsejb.converter.surveyDefinition.survey.SurveySectionDefinitionImplConverter;
+import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinitionImpl;
 import colruyt.pcrsejb.service.bl.competence.ICompetenceServiceBl;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
@@ -20,6 +23,7 @@ public class CompetenceFacade implements Serializable, ICompetenceFacade {
 	@EJB
 	private ICompetenceServiceBl competenceServiceBl;
 	private CompetenceConverter competenceConverter = new CompetenceConverter();
+	private SurveySectionDefinitionImplConverter implConv = new SurveySectionDefinitionImplConverter();
 
 	@Override
 	public CompetenceBo save(CompetenceBo entityBo) {
@@ -41,5 +45,12 @@ public class CompetenceFacade implements Serializable, ICompetenceFacade {
 	public void delete(CompetenceBo entityBo) throws ValidationException {
 		competenceServiceBl.delete(competenceConverter.convertToEntity(entityBo));
 		
+	}
+
+	@Override
+	public List<CompetenceBo> getCompetencesBySection(SurveySectionDefinitionImplBo sectionImpl) {
+		return competenceConverter.convertToBos(
+				competenceServiceBl.getCompetencesBySection(
+						implConv.convertToEntity(sectionImpl)));
 	}
 }
