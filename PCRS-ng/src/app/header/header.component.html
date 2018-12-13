@@ -59,11 +59,6 @@
                 </div>
                 <!-- END LANGUAGE -->
               </div>
-              <div class="user__dropdown" *ngIf="!loggedIn()">
-                <p class="user__cta">
-                    <span><a routerLink="/login">Login</a></span>
-                </p>
-              </div>
             </div>
           </div>
           <!-- END USER NAVIGATION -->
@@ -88,9 +83,9 @@
               <ul class="navigation__submenu">
                 <li
                   class="navigation__subitem"
-                  *ngFor="let surveySet of surveySets"
+                  *ngFor="let surveySet of getSurveySets()"
                 >
-                  <a href="#"> {{ surveySet.surveyYear.getFullYear() }} </a>
+                  <a href="#"> {{ surveySet.surveyYear }} </a>
                 </li>
               </ul>
             </li>

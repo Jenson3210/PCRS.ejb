@@ -18,20 +18,7 @@ export class HeaderComponent implements OnInit {
     private userService: UserService,
     private router: Router) { }
 
-  ngOnInit() {
-    const surveySet = {} as ISurveySet;
-    surveySet.id = 2;
-    surveySet.surveyYear = new Date(2017, 2, 12);
-    this.surveySets.push(surveySet);
-    const surveySet2 = {} as ISurveySet;
-    surveySet2.id = 3;
-    surveySet2.surveyYear = new Date(2016, 2, 12);
-    this.surveySets.push(surveySet2);
-    const surveySet3 = {} as ISurveySet;
-    surveySet3.id = 4;
-    surveySet3.surveyYear = new Date(2015, 2, 12);
-    this.surveySets.push(surveySet3);
-  }
+  ngOnInit() { }
   logoff() {
     this.userService.logoff();
     this.router.navigate(['login']);
@@ -43,6 +30,9 @@ export class HeaderComponent implements OnInit {
       loggedIn = true;
     }
     return loggedIn;
+  }
+  getSurveySets() {
+    return this.userService.getSurveySets();
   }
   getUser(): IUser {
     return this.userService.user;
