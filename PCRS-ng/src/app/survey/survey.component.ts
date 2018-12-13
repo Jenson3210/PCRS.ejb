@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { EnergyOrInterestOption } from '../model/energy-or-interest-option.enum';
 import { SurveyService } from '../service/survey.service';
 import { ISurvey } from '../model/Interfaces/ISurvey';
-import { IUser } from '../model/Interfaces/IUser';
 import { SurveyKind } from '../model/survey-kind.enum';
+import { UserService } from '../service/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-survey',
@@ -13,18 +14,25 @@ import { SurveyKind } from '../model/survey-kind.enum';
 export class SurveyComponent implements OnInit {
   survey$: ISurvey;
 
-  constructor(public surveyService: SurveyService) {}
+  constructor(public surveyService: SurveyService, private userService: UserService, private router: Router) {}
 
   ngOnInit() {
-
-  const user = {} as IUser;
-  user.id = 8;
-  this.surveyService.getSurveyForUserAPI(user, SurveyKind.TeamMember).subscribe(
+  this.surveyService.getSurveyForUser(this.userService.user, SurveyKind.TeamMember).subscribe(
     x => {
-      this.survey$ = x;
-  });
-
-    // this.survey = this.surveyService.getSurveyForUser();
+      this.survey$ = x.body;
+    },
+    (error) => {
+      switch (error.status) {
+        case 404: {
+          this.router.navigate(['survey'], {
+            queryParams: {
+              error: 'no survey for user'
+            }
+          });
+        }
+      }
+    }
+  );
   }
 
   finished() {

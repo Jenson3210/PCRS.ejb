@@ -21,16 +21,16 @@
           <div class="header__facet d-inline-flex align-items-center">
             <!-- USER NAVIGATION -->
             <div class="header__user user">
-              <div class="user__dropdown">
+              <div class="user__dropdown" *ngIf="loggedIn()">
                 <p class="user__cta">
                   <i class="fas fa-user"></i
-                  ><span>{{ user.firstName }} {{ user.lastName }}</span
+                  ><span>{{getUser().firstName}} {{getUser().lastName}}</span
                   ><i class="fas fa-angle-down d-none d-md-inline"></i>
                 </p>
                 <div class="user__content">
                   <ul class="user__nav">
                     <li class="user__nav-item">
-                      <a href="#logoff" title="Log off from the application"
+                      <a title="Log off from the application" (click)="logoff()"
                         >Log off</a
                       >
                     </li>
@@ -58,6 +58,11 @@
                   </ul>
                 </div>
                 <!-- END LANGUAGE -->
+              </div>
+              <div class="user__dropdown" *ngIf="!loggedIn()">
+                <p class="user__cta">
+                    <span><a routerLink="/login">Login</a></span>
+                </p>
               </div>
             </div>
           </div>
