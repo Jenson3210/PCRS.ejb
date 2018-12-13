@@ -1,14 +1,14 @@
-<div class="container content">
+<div class="container content" *ngIf="survey$">
   <div class="row">
     <div class="col-md-12">
       <div class="page-header">
-        <h1 align="center" *ngIf="survey.dateCompleted == null && finished()">
+        <h1 align="center" *ngIf="survey$.dateCompleted == null && finished()">
           Click submit to submit your survey.
         </h1>
-        <h1 align="center" *ngIf="survey.dateCompleted == null && !finished()">
+        <h1 align="center" *ngIf="survey$.dateCompleted == null && !finished()">
           Please fill in your survey.
         </h1>
-        <h1 align="center" *ngIf="survey.dateCompleted != null">
+        <h1 align="center" *ngIf="survey$.dateCompleted != null">
           Your survey was submitted.
         </h1>
       </div>
@@ -18,12 +18,12 @@
       <ngb-tabset class="surveySections" #sectionTabs [justify]="currentJustify">
           <ngb-tab title="Overview">
               <ng-template ngbTabContent>
-                  <app-survey-overview [survey]="survey"></app-survey-overview>
+                  <app-survey-overview [survey]="survey$"></app-survey-overview>
               </ng-template>
           </ngb-tab>
-          <ngb-tab [id]="surveySection.id" *ngFor="let surveySection of survey.surveySections;" [title]="surveySection.surveySectionDefinition.surveySectionDefinition.surveySectionTitle.title">
+          <ngb-tab [id]="surveySection.id" *ngFor="let surveySection of survey$.surveySections" [title]="surveySection.surveySectionDefinition.surveySectionDefinitionBo.surveySectionTitle.title">
             <ng-template ngbTabContent>
-              <app-survey-section [surveySection]="surveySection" [surveyKind]="survey.surveyKind"></app-survey-section>
+              <app-survey-section [surveySection]="surveySection" [surveyKind]="survey$.surveyKind"></app-survey-section>
             </ng-template>
           </ngb-tab>
       </ngb-tabset>
@@ -35,7 +35,7 @@
         type="button"
         (click)="submitSurvey()"
         class="btn btn-primary btn-md"
-        *ngIf="survey.dateCompleted == null && finished()">
+        *ngIf="survey$.dateCompleted == null && finished()">
         Submit
       </button>
     </div>

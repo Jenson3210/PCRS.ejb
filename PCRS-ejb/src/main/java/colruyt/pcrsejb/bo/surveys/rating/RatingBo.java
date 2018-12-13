@@ -12,7 +12,8 @@ public class RatingBo extends AbstractBo implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
     private Integer level;
-    private Boolean energy;
+    private EnergyOrInterestOptionBo energy;
+    private EnergyOrInterestOptionBo interest;
     private CompetenceImplBo competence;
     /*
      * CONSTRUCTORS
@@ -20,16 +21,18 @@ public class RatingBo extends AbstractBo implements Serializable {
     public RatingBo(){
     	super();
     }
-    public RatingBo(Integer level, Boolean energy, CompetenceImplBo competence){
-        setLevel(level);
-        setEnergy(energy);
-        setCompetence(competence);
+    public RatingBo(Integer level, EnergyOrInterestOptionBo energy, EnergyOrInterestOptionBo interest, CompetenceImplBo competence){
+        this.level = level;
+        this.energy = energy;
+        this.interest = interest;
+        this.competence  = competence;
     }   
-	public RatingBo(Integer id, Integer level, Boolean energy, CompetenceImplBo competence) {
+	public RatingBo(Integer id, Integer level, EnergyOrInterestOptionBo energy, EnergyOrInterestOptionBo interest, CompetenceImplBo competence) {
 		super();
 		this.id = id;
 		this.level = level;
 		this.energy = energy;
+		this.interest = interest;
 		this.competence = competence;
 	}
 	/*
@@ -47,10 +50,10 @@ public class RatingBo extends AbstractBo implements Serializable {
 	public void setLevel(Integer level) {
 		this.level = level;
 	}
-	public Boolean getEnergy() {
+	public EnergyOrInterestOptionBo getEnergy() {
 		return energy;
 	}
-	public void setEnergy(Boolean energy) {
+	public void setEnergy(EnergyOrInterestOptionBo energy) {
 		this.energy = energy;
 	}
 	public CompetenceImplBo getCompetence() {
@@ -58,5 +61,11 @@ public class RatingBo extends AbstractBo implements Serializable {
 	}
 	public void setCompetence(CompetenceImplBo competence) {
 		this.competence = competence;
+	}
+	public EnergyOrInterestOptionBo getInterest() {
+		return interest;
+	}
+	public void setInterest(EnergyOrInterestOptionBo interest) {
+		this.interest = interest;
 	}
 }

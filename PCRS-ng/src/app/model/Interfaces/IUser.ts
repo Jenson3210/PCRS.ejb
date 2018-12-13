@@ -1,4 +1,4 @@
-import { Privilege } from './Privilege';
+import { IPrivilege } from './IPrivilege';
 
 export interface IUser {
     id: number;
@@ -7,6 +7,6 @@ export interface IUser {
     country: string;
     email: string;
     password: string;
-    privileges: Privilege[];
+    privileges: IPrivilege[];
     shortName: string;
 }

@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,7 +18,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import colruyt.pcrsejb.entity.AbstractEntity;
-import colruyt.pcrsejb.entity.competence.Competence;
 import colruyt.pcrsejb.entity.competence.CompetenceImpl;
 
 @Entity
@@ -36,7 +37,10 @@ public class Rating extends AbstractEntity implements Serializable {
 	private Integer id;
 	@Column(name="RATING_LEVEL")
     private Integer level;
-    private Boolean energy;
+	@Enumerated(EnumType.STRING) 
+    private EnergyOrInterestOption energy;
+	@Enumerated(EnumType.STRING) 
+    private EnergyOrInterestOption interest;
     @ManyToOne
     private CompetenceImpl competence;
     /*
@@ -45,17 +49,19 @@ public class Rating extends AbstractEntity implements Serializable {
     public Rating(){
     	super();
     }
-    public Rating(Integer level, Boolean energy, CompetenceImpl competence){
+    public Rating(Integer level, EnergyOrInterestOption energy, EnergyOrInterestOption interest, CompetenceImpl competence){
         setLevel(level);
         setEnergy(energy);
+        setInterest(interest);
         setCompetence(competence);
     }   
-	public Rating(Integer id, Integer level, Boolean energy, CompetenceImpl competence) {
+	public Rating(Integer id, Integer level, EnergyOrInterestOption energy, EnergyOrInterestOption interest, CompetenceImpl competence) {
 		super();
 		this.id = id;
 		this.level = level;
 		this.energy = energy;
 		this.competence = competence;
+		this.interest = interest;
 	}
 	/*
 	 * GETTERS AND SETTERS
@@ -72,10 +78,10 @@ public class Rating extends AbstractEntity implements Serializable {
 	public void setLevel(Integer level) {
 		this.level = level;
 	}
-	public Boolean getEnergy() {
+	public EnergyOrInterestOption getEnergy() {
 		return energy;
 	}
-	public void setEnergy(Boolean energy) {
+	public void setEnergy(EnergyOrInterestOption energy) {
 		this.energy = energy;
 	}
 	public CompetenceImpl getCompetence() {
@@ -83,5 +89,11 @@ public class Rating extends AbstractEntity implements Serializable {
 	}
 	public void setCompetence(CompetenceImpl competence) {
 		this.competence = competence;
+	}
+	public EnergyOrInterestOption getInterest() {
+		return interest;
+	}
+	public void setInterest(EnergyOrInterestOption interest) {
+		this.interest = interest;
 	}
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Survey } from '../model/survey';
+import { ISurvey } from '../model/Interfaces/ISurvey';
 
 @Component({
   selector: 'app-survey-overview',
@@ -9,7 +9,7 @@ import { Survey } from '../model/survey';
 export class SurveyOverviewComponent implements OnInit {
 
   @Input()
-  survey: Survey;
+  survey: ISurvey;
 
 
   constructor() { }

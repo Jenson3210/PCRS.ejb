@@ -1,64 +1,44 @@
-import { Injectable, OnInit } from '@angular/core';
-import { Survey } from '../model/survey';
+import { Injectable } from '@angular/core';
 import { SurveyKind } from '../model/survey-kind.enum';
-import { SurveySection } from '../model/survey-section';
-import { SurveySectionDefinitionImpl } from '../model/survey-section-definition-impl';
-import { SurveySectionDefinition } from '../model/survey-section-definition';
-import { SurveySectionStrategy } from '../model/survey-section-strategy';
-import { SurveySectionTitle } from '../model/survey-section-title';
-import { Rating } from '../model/rating';
-import { CompetenceImpl } from '../model/competence-impl';
-import { Competence } from '../model/competence';
-import { CompetenceLevel } from '../model/competence-level';
-import { EnergyOrInterestOption } from '../model/energy-or-interest-option.enum';
-import { ConsensusRating } from '../model/consensus-rating';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IUser } from '../model/newModel/User';
+import { IUser } from '../model/Interfaces/IUser';
+import { ISurvey } from '../model/Interfaces/ISurvey';
 
 @Injectable()
 export class SurveyService {
-  
-  private testUrl: string = "PCRS-api/rest/v1/";
+
+  private testUrl: String = 'PCRS-api/rest/v1/';
 
   constructor(private http: HttpClient) { }
 
-  ngOnInit(): void {
-   
-  }
-
-  testFakeUrl(): Observable<IUser[]> {
-    return this.http.get<IUser[]>(this.testUrl + "users").pipe(
-      tap(x => console.log(x))
-    );
-  }
-
-  getSurveyForUserAPI(user: IUser, surveyKind: SurveyKind): Observable<Survey> {
-    return this.http.get<Survey>(this.testUrl + "usersurveys/" + user.id, {
+  getSurveyForUserAPI(user: IUser, surveyKind: SurveyKind): Observable<ISurvey> {
+    return this.http.get<ISurvey>(this.testUrl + 'usersurveys/' + user.id, {
       params: {
         surveyKind : SurveyKind[surveyKind]
       }
     });
   }
 
-  save(survey: Survey) {
+  save(survey: ISurvey) {
 
   }
-
-  getSurveyForUser(): Survey {
-    const survey: Survey = new Survey();
+  /*
+  getSurveyForUser(): ISurvey {
+    const survey = {} as ISurvey;
     survey.id = 5;
-    survey.surveyKind = SurveyKind.CONSENSUS;
+    survey.surveyKind = SurveyKind.Consensus;
+    */
     //
     /* dummy section 1 */
-    const surveySection1: SurveySection = new SurveySection();
+    /*
+    const surveySection1 = {} as ISurveySection;
     surveySection1.id = 1;
-    const surveySectionDefinitionImpl1: SurveySectionDefinitionImpl = new SurveySectionDefinitionImpl();
+    const surveySectionDefinitionImpl1 = {} as ISurveySectionDefinitionImpl ;
     surveySectionDefinitionImpl1.id = 468;
-    const surveySectionDefinition: SurveySectionDefinition = new SurveySectionDefinition();
+    const surveySectionDefinition = {} as ISurveySectionDefinition;
     surveySectionDefinition.id = 4827;
-    const surveySectionStrategy: SurveySectionStrategy = new SurveySectionStrategy();
+    const surveySectionStrategy = {} as ISurveySectionStrategy;
     surveySectionStrategy.id = 4272;
     surveySectionStrategy.amountOfLevels = 4;
     surveySectionStrategy.interestRated = true;
@@ -66,17 +46,18 @@ export class SurveyService {
     surveySectionStrategy.flexibleDescription = true;
     surveySectionStrategy.hasMinimumLevel = false;
     surveySectionStrategy.descriptionRequired = true ;
-    const surveySectionTitle: SurveySectionTitle = new SurveySectionTitle();
+    const surveySectionTitle = {} as ISurveySectionTitle;
     surveySectionTitle.id = 137424;
     surveySectionTitle.title = 'Titel 1';
     surveySectionDefinition.surveySectionStrategy = surveySectionStrategy;
     surveySectionDefinition.surveySectionTitle = surveySectionTitle;
     surveySectionDefinitionImpl1.surveySectionDefinition = surveySectionDefinition;
-    surveySection1.surveySectionDefinition = surveySectionDefinitionImpl1;
-
+    surveySection1.surveySectionDefinitionBo = surveySectionDefinitionImpl1;
+    */
     //
     /*competences in titel 1*/
-    const rating1: Rating = new Rating();
+    /*
+    const rating1 =  Rating = new Rating();
 
     const competenceLevel1: CompetenceLevel = new CompetenceLevel();
     competenceLevel1.id = 7;
@@ -119,9 +100,10 @@ export class SurveyService {
     rating1.energy = EnergyOrInterestOption.NOIDEA;
     rating1.id = 134;
     rating1.level = 2;
-    surveySection1.ratings.push(rating1);
+    surveySection1.ratings.push(rating1); */
     //
     /* dummy section 1 */
+    /*
     const surveySection2: SurveySection = new SurveySection();
     surveySection2.id = 10;
     const surveySectionDefinitionImpl2: SurveySectionDefinitionImpl = new SurveySectionDefinitionImpl();
@@ -154,5 +136,5 @@ export class SurveyService {
     survey.surveySections.push(surveySection2);
 
     return survey;
-  }
+  }*/
 }
