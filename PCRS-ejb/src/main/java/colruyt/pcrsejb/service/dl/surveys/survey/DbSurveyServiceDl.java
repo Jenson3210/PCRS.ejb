@@ -1,28 +1,31 @@
-package colruyt.pcrsejb.service.bl.surveys.survey;
+package colruyt.pcrsejb.service.dl.surveys.survey;
 
-import java.io.Serializable;
 import java.util.List;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import colruyt.pcrsejb.entity.surveys.survey.Survey;
-import colruyt.pcrsejb.service.dl.surveys.survey.ISurveyServiceDl;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
-public class SurveyServiceBl implements Serializable, ISurveyServiceBl {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	@EJB
-	private ISurveyServiceDl surveyService;
+public class DbSurveyServiceDl implements ISurveyServiceDl {
 
+	
+	@PersistenceContext(unitName = "PCRSEJB")
+	private EntityManager em;
+	
 	@Override
 	public Survey save(Survey element) {
-		return surveyService.save(element);
+		Survey survey;
+		if (element.getId() == null) {
+			em.persist(element);
+			survey = element;
+		} else {
+			survey = em.merge(element);
+		}
+		return survey;
 	}
 
 	@Override
@@ -42,5 +45,5 @@ public class SurveyServiceBl implements Serializable, ISurveyServiceBl {
 		// TODO Auto-generated method stub
 		
 	}
-	
+
 }
