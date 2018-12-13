@@ -1,0 +1,30 @@
+<div class="col-md-4" id="loginForm">
+<form class="form-horizontal" (ngSubmit)="login()">
+  <fieldset>
+  <!-- Text input-->
+  <div class="form-group">
+    <label class="col-md-4 control-label" for="textinput">Email</label>
+    <div class="col-md-8">
+      <input id="textinput" name="textinput" type="text" (input)="email=$event.target.value" class="form-control input-md">
+    </div>
+  </div>
+
+    <!-- Password input-->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="passwordinput">Password Input</label>
+      <div class="col-md-8">
+        <input id="passwordinput" name="passwordinput" type="password" (input)="password=$event.target.value" class="form-control input-md">
+      </div>
+    </div>
+
+    <!-- Button -->
+    <div class="form-group">
+      <label class="col-md-4 control-label"></label>
+      <div class="col-md-8">
+        <button id="login" class="btn btn-primary" type="submit">Login</button>
+      </div>
+    </div>
+
+    </fieldset>
+    </form>
+  </div>

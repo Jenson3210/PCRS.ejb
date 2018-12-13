@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Survey } from '../model/survey';
 import { EnergyOrInterestOption } from '../model/energy-or-interest-option.enum';
 import { SurveyService } from '../service/survey.service';
-import { IUser } from '../model/newModel/User';
+import { ISurvey } from '../model/Interfaces/ISurvey';
 import { SurveyKind } from '../model/survey-kind.enum';
-import { ISurvey } from '../model/isurvey';
+import { UserService } from '../service/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-survey',
@@ -12,48 +12,47 @@ import { ISurvey } from '../model/isurvey';
   styleUrls: ['./survey.component.css']
 })
 export class SurveyComponent implements OnInit {
-  survey: ISurvey;
-  users: IUser[];
+  survey$: ISurvey;
 
-  constructor(public surveyService: SurveyService) {}
+  constructor(public surveyService: SurveyService, private userService: UserService, private router: Router) {}
 
   ngOnInit() {
-    
-    this.surveyService.testFakeUrl().subscribe(
-      x => {
-        this.users = x;
-        console.log("Users: " + JSON.stringify(this.users));
-      },
-      null,
-      () => {
-      this.surveyService.getSurveyForUserAPI(this.users.find(u => u.id != null), SurveyKind.TeamMember).subscribe(
-        x => {
-          this.survey = x;
-          console.log("Survey: " )
-          console.log(JSON.stringify(this.survey));
-          console.log("\n");
+  if (this.userService.user == null) {
+    this.router.navigate(['login']);
+  }
+  this.surveyService.getSurveyForUser(this.userService.user, SurveyKind.TeamMember).subscribe(
+    x => {
+      this.survey$ = x.body;
+    },
+    (error) => {
+      switch (error.status) {
+        case 404: {
+          this.router.navigate(['survey'], {
+            queryParams: {
+              error: 'no survey for user'
+            }
+          });
         }
-      )}
-    );
-    
-    this.survey = this.surveyService.getSurveyForUser();
+      }
+    }
+  );
   }
 
   finished() {
     let finished = true;
-    for (const surveySection of this.survey.surveySections) {
+    for (const surveySection of this.survey$.surveySections) {
       if (finished) {
         for (const rating of surveySection.ratings) {
           if (finished) {
             if (rating.level == null) {
               finished = false;
             }
-            if (surveySection.surveySectionDefinition.surveySectionDefinition.surveySectionStrategy.energyRated) {
+            if (surveySection.surveySectionDefinition.surveySectionDefinitionBo.surveySectionStrategy.energyRated) {
               if (rating.energy == null) {
                 finished = false;
               }
             }
-            if (surveySection.surveySectionDefinition.surveySectionDefinition.surveySectionStrategy.interestRated) {
+            if (surveySection.surveySectionDefinition.surveySectionDefinitionBo.surveySectionStrategy.interestRated) {
               if (rating.interest == null) {
                 finished = false;
               }
@@ -66,15 +65,16 @@ export class SurveyComponent implements OnInit {
   }
 
   submitSurvey() {
-    this.survey.dateCompleted = new Date();
+    this.survey$.dateCompleted = new Date();
     this.saveSurvey();
   }
   saveSurvey() {
-    this.surveyService.save(this.survey);
-    for (const surveySection of this.survey.surveySections) {
+    this.surveyService.save(this.survey$);
+    for (const surveySection of this.survey$.surveySections) {
       for (const rating of surveySection.ratings) {
         console.log(rating);
         console.log(EnergyOrInterestOption[rating.energy] + 'energy');
+        console.log(EnergyOrInterestOption[rating.interest] + 'interest');
       }
     }
   }
