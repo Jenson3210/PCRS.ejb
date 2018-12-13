@@ -22,3 +22,6 @@ tbody>tr>td:last-child {
 ol {
   padding-left: 1rem;;
 }
+#loginForm{
+  margin: 25px auto 0px auto;
+}
