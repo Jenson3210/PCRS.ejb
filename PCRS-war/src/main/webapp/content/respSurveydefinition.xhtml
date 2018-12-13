@@ -259,15 +259,15 @@
 									value="#{msgs['respSurveyDefinition.sectionToAddCompetenceTo']}" />
 							</div>
 							<div class="ui-g-8">
-								<p:selectOneMenu
+								<p:autoComplete id="section"
+									completeMethod="#{respSurveyDefinitionView.completeSection}"
+									var="sectionImpl" itemLabel="#{sectionImpl.surveySectionDefinitionBo.surveySectionTitle.title}"
+									itemValue="#{sectionImpl}" forceSelection="true"
+									emptyMessage="#{msgs['respSurveyDefinition.noResults']}"
 									value="#{respSurveyDefinitionView.selectedSectionDefinitionImpl}"
-									converter="DefinitionImplBoConverter" >
-									<f:selectItems
-										value="#{respSurveyDefinitionView.activeTab.surveySections}"
-										var="section"
-										itemLabel="#{section.surveySectionDefinitionBo.surveySectionTitle.title}"
-										itemValue="#{section}"  />
-								</p:selectOneMenu>
+									converter="DefinitionImplBoConverter">
+									<p:ajax event="itemSelect" update="competenceDetails" />
+								</p:autoComplete>
 							</div>
 						</div>
 
