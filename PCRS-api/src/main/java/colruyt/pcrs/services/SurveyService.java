@@ -1,7 +1,9 @@
 package colruyt.pcrs.services;
 
 import javax.ejb.EJB;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -13,6 +15,7 @@ import colruyt.pcrsejb.bo.surveys.survey.SurveyBo;
 import colruyt.pcrsejb.bo.surveys.survey.SurveyKindBo;
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.entity.user.User;
+import colruyt.pcrsejb.facade.surveys.survey.ISurveyFacade;
 import colruyt.pcrsejb.facade.surveys.surveySet.ISurveySetFacade;
 import colruyt.pcrsejb.facade.user.IUserFacade;
 import colruyt.pcrsejb.facade.user.UserFacade;
@@ -29,6 +32,8 @@ public class SurveyService {
 	private ISurveySetFacade surveySetFacade;
 	@EJB
 	private IUserFacade userFacade;
+	@EJB
+	private ISurveyFacade surveyFacade;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -51,5 +56,11 @@ public class SurveyService {
 		} catch (NoSurveySetException e) {
 			return Response.status(Response.Status.NOT_FOUND).build();
 		}
+	}
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void saveSurvey(SurveyBo survey) {
+		surveyFacade.save(survey);
 	}
 }
