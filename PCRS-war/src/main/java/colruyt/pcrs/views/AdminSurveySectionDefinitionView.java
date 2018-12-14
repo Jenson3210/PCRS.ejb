@@ -10,6 +10,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
+import org.primefaces.PrimeFaces;
+
 import colruyt.pcrsejb.bo.surveyDefinition.strategy.SurveySectionStrategyBo;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionBo;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionTitleBo;
@@ -23,10 +25,14 @@ import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 public class AdminSurveySectionDefinitionView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
 	@EJB
 	private ISurveySectionDefinitionFacade surveySectionDefinitionFacade;
+	private SurveySectionDefinitionBo surveySectionDefinitionBo;
+	
 	@EJB
 	private ISurveySectionTitleFacade surveySectionTitleFacade;
+	
 	@EJB
 	private ISurveySectionStrategyFacade surveySectionStrategyFacade;
 	private List<SurveySectionDefinitionBo> surveySectionDefinitions;
@@ -82,8 +88,14 @@ public class AdminSurveySectionDefinitionView implements Serializable {
 	}
 
 	public void addSurveySectionDefinition() {
-		SurveySectionDefinitionBo ssd = surveySectionDefinitionFacade.save(addedSurveySectionDefinition);
-		surveySectionDefinitions.add(ssd);
+		PrimeFaces pf = PrimeFaces.current();
+		try {
+			surveySectionDefinitions.add(surveySectionDefinitionFacade.save(surveySectionDefinitionBo));
+			pf.ajax().addCallbackParam("validationSucces", true);
+		} catch (ValidationException e) {
+			pf.ajax().addCallbackParam("validationSuccess", false);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+		}
 	}
 
 	public void newSurveySectionDefinition() {
@@ -93,15 +105,26 @@ public class AdminSurveySectionDefinitionView implements Serializable {
 	}
 
 	public void editSurveySectionDefinition() {
-		SurveySectionDefinitionBo d = null;
+		
+		PrimeFaces pf = PrimeFaces.current();
 
+		SurveySectionDefinitionBo d = null;
+		
 		for (SurveySectionDefinitionBo definition : surveySectionDefinitions) {
 			if (definition.getId() == addedSurveySectionDefinition.getId()) {
-				surveySectionDefinitionFacade.save(addedSurveySectionDefinition);
+				definition.setSurveySectionTitle(addedSurveySectionDefinition.getSurveySectionTitle());
+				definition.setSurveySectionStrategy(addedSurveySectionDefinition.getSurveySectionStrategy());			
 				d = definition;
 			}
 		}
-		surveySectionDefinitionFacade.save(d);
+		
+		try {
+			surveySectionDefinitionFacade.save(d);
+			pf.ajax().addCallbackParam("validationSuccess", true);	
+		} catch (ValidationException e) {
+			pf.ajax().addCallbackParam("validationSuccess", false);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+		}
 	}
 
 	public void deleteSurveySectionDefinition() {

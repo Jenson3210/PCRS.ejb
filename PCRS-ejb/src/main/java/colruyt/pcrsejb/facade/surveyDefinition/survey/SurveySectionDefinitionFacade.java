@@ -37,13 +37,12 @@ public class SurveySectionDefinitionFacade implements Serializable,ISurveySectio
 	private SurveySectionTitleConverter sstconv = new SurveySectionTitleConverter();
 
 	@Override
-	public SurveySectionDefinitionBo save(SurveySectionDefinitionBo entityBo) {
-
+	public SurveySectionDefinitionBo save(SurveySectionDefinitionBo entityBo) throws ValidationException {
 		return sdconv.convertToBo(sdserv.save(sdconv.convertToEntity(entityBo)));
 	}
 
 	@Override
-	public SurveySectionDefinitionBo get(SurveySectionDefinitionBo entityBo) {
+	public SurveySectionDefinitionBo get(SurveySectionDefinitionBo entityBo) throws ValidationException {
 		return sdconv.convertToBo(this.sdserv.get(sdconv.convertToEntity(entityBo)));  
 	}
 
