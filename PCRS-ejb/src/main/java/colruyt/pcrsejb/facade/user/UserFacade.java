@@ -69,5 +69,7 @@ public class UserFacade implements Serializable, IUserFacade {
 	public UserBo getUserByEnrolment(EnrolmentBo enrolment) throws NoExistingMemberException {
 		return userConverter.convertToBo(userServiceBl.getUserByEnrolment(enrolmentConverter.convertToEntity(enrolment)));
 	}
+	
+	
 
 }

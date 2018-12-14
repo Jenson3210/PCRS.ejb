@@ -18,4 +18,5 @@ public interface IUserFacade extends IFacade<UserBo> {
 	Boolean hasPrivilege(UserBo userBo, PrivilegeTypeBo privilege, Boolean active);
 	List<UserBo> getUsersByShortName(String shortName);
 	UserBo getUserByEnrolment(EnrolmentBo enrolment) throws NoExistingMemberException;
+	
 }
