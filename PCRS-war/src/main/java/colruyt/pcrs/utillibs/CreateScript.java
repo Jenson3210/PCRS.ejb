@@ -1,11 +1,8 @@
 package colruyt.pcrs.utillibs;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -13,14 +10,10 @@ import javax.inject.Named;
 import colruyt.pcrsejb.bo.competence.CompetenceBo;
 import colruyt.pcrsejb.bo.competence.CompetenceLevelBo;
 import colruyt.pcrsejb.bo.surveyDefinition.strategy.SurveySectionStrategyBo;
-import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveyDefinitionBo;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionTitleBo;
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
-import colruyt.pcrsejb.bo.user.privilege.SurveyDefinitionResponsibleUserPrivilegeBo;
-import colruyt.pcrsejb.bo.user.privilege.TeamMemberUserPrivilegeBo;
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
-import colruyt.pcrsejb.bo.user.team.EnrolmentBo;
 import colruyt.pcrsejb.bo.user.team.TeamBo;
 import colruyt.pcrsejb.facade.competence.ICompetenceFacade;
 import colruyt.pcrsejb.facade.surveyDefinition.strategy.ISurveySectionStrategyFacade;
@@ -28,6 +21,7 @@ import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveyDefinitionFacade;
 import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveySectionTitleFacade;
 import colruyt.pcrsejb.facade.user.IUserFacade;
 import colruyt.pcrsejb.facade.user.team.ITeamFacade;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Named
 public class CreateScript implements Serializable {
@@ -56,7 +50,9 @@ public class CreateScript implements Serializable {
 		Set<CompetenceLevelBo> cLevels = new HashSet<>();
 		cLevels.add(new CompetenceLevelBo("testLevel1", 1));
 		cLevels.add(new CompetenceLevelBo("testLevel2", 2));
-		compFacade.save(new CompetenceBo("test", "", cLevels));
+		try {
+			compFacade.save(new CompetenceBo("test", "", cLevels));
+		
 
 		//SurveyDefinitionBo sDevBo = new SurveyDefinitionBo("SE BPS BE", new ArrayList<>());
 		//sDevBo = surveyDefinitionFacade.save(sDevBo);
@@ -79,6 +75,10 @@ public class CreateScript implements Serializable {
 		userFacade.save(thomas);
 
 		teamFacade.save(new TeamBo("Java Trainees", new HashSet<>()));
+		} catch (ValidationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private void additionalSetup() {
