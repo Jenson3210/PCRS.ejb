@@ -42,12 +42,9 @@ public class UserService {
 		if (email != null && password != null) {
 			//TODO MOVE TO BL
 			try {
-			
-				UserBo u = this.userFacade.getUserByEmail(email);
-				if(u.getPassword().equalsIgnoreCase(password)) {
-					users.add(u);
-					return Response.ok().entity(users).build();
-				}
+				
+				UserBo userbo = this.userFacade.login(email, password);
+				return Response.status(Response.Status.OK).entity(userbo).build();
 			}
 			catch(Exception e) {
 				return Response.status(Response.Status.FORBIDDEN).build();

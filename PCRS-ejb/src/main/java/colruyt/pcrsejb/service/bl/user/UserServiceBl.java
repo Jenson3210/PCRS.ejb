@@ -12,6 +12,7 @@ import colruyt.pcrsejb.entity.user.privilege.TeamMemberUserPrivilege;
 import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 import colruyt.pcrsejb.entity.user.team.Enrolment;
 import colruyt.pcrsejb.service.dl.user.IUserServiceDl;
+import colruyt.pcrsejb.util.exceptions.LoginException;
 import colruyt.pcrsejb.util.exceptions.NoExistingEmailException;
 import colruyt.pcrsejb.util.exceptions.NoExistingMemberException;
 import colruyt.pcrsejb.util.exceptions.UserDoesNotExistException;
@@ -95,5 +96,22 @@ public class UserServiceBl implements IUserServiceBl {
 			}
 		}
 		return returnPrivilege;
+	}
+
+	@Override
+	public User login(String email, String password) throws ValidationException {
+		User u;
+		try {
+			u = this.usersDb.getElementByEmail(email);
+			if(u.getPassword().equals(password)) {
+				return u;
+			} 
+		}
+			catch (NoExistingEmailException e) {
+				throw new LoginException();
+			}
+		
+		throw new LoginException();
+			
 	}
 }
