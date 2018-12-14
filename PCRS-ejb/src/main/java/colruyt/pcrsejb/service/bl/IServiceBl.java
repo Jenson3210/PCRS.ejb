@@ -12,7 +12,7 @@ public interface IServiceBl<T> {
 
 	T get(T element) throws ValidationException;
 	
-	List<T> getAll() throws ValidationException;
+	List<T> getAll();
 
 	void delete(T element) throws ValidationException;
 	
