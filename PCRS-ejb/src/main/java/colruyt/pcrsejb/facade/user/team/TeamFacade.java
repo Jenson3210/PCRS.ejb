@@ -31,12 +31,12 @@ public class TeamFacade implements Serializable, ITeamFacade {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public TeamBo save(TeamBo entityBo) {
+	public TeamBo save(TeamBo entityBo) throws ValidationException {
 			return teamConv.convertToBo(this.teamBl.save(teamConv.convertToEntity(entityBo)));
 	}
 
 	@Override
-	public TeamBo get(TeamBo entityBo) {
+	public TeamBo get(TeamBo entityBo) throws ValidationException {
 		
 			return teamConv.convertToBo(this.teamBl.get(teamConv.convertToEntity(entityBo)));
 	}

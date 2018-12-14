@@ -15,6 +15,7 @@ import colruyt.pcrsejb.service.bl.user.privilege.IUserPrivilegeServiceBl;
 import colruyt.pcrsejb.service.dl.user.team.ITeamServiceDl;
 import colruyt.pcrsejb.util.exceptions.MemberAlreadyHasATeamException;
 import colruyt.pcrsejb.util.exceptions.UserIsNotMemberOfTeamException;
+import colruyt.pcrsejb.util.exceptions.validation.Team.TeamDoesNotExistExeption;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
@@ -40,8 +41,13 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
 	}
 
 	@Override
-	public Team save(Team element) {
-		return this.dlService.save(element);
+	public Team save(Team element) throws ValidationException{
+		Team t = null;
+		t= this.dlService.save(element);
+		if (t == null){
+			throw new  TeamDoesNotExistExeption("Team Does not exist");
+		}
+		return t;
 	}
 
 	@Override
@@ -89,7 +95,7 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
 	}
 
 	@Override
-	public Enrolment addUserToTeam(Team team, User user, String userPrivilege) throws MemberAlreadyHasATeamException {
+	public Enrolment addUserToTeam(Team team, User user, String userPrivilege) throws MemberAlreadyHasATeamException, ValidationException {
 		UserPrivilege enrolmentUserPrivilege = userPrivilegeServiceBl.setUserPrivilege(user, userPrivilege);
 
     	Enrolment enrolment = new Enrolment();
