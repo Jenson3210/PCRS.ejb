@@ -43,14 +43,14 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
 
 	@Override
 	public Team save(Team element) throws ValidationException{
-		Team t = null;
-		for (Team team : this.getAll()){
-			if(t.getName().equals(team.getName())){
-				throw new TeamAlreadyExistsExeption("The team already exists");
-			}
-		}
-		t= this.dlService.save(element);
-		return t;
+
+        for (Team team : this.getAll()){
+            if(element.getName().equals(team.getName())){
+                throw new TeamAlreadyExistsExeption("The team already exists");
+            }
+        }
+		//this.dlService.save(element);
+		return this.dlService.save(element);
 	}
 
 	@Override
