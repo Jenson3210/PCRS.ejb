@@ -42,21 +42,15 @@ public class UserService {
 		Response resp = Response.status(Response.Status.FORBIDDEN).entity("Password & E-mail is must be filled in!").build();
 		
 		if (email != null && password != null) {
-			//TODO MOVE TO BL
 			try {
-
-				
 				UserBo userbo = this.userFacade.login(email, password);
 				resp = Response.status(Response.Status.OK).entity(userbo).build();
-
-			
 			}
 			catch(Exception e) {
 				resp = Response.status(Response.Status.FORBIDDEN)
 						.entity("Wrong password!")
 						.build();
 			}
-
 		}
 		return resp;
 	}
