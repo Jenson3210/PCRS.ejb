@@ -22,6 +22,8 @@ import colruyt.pcrsejb.service.bl.user.IUserServiceBl;
 import colruyt.pcrsejb.service.dl.surveys.surveySet.ISurveySetServiceDl;
 import colruyt.pcrsejb.util.exceptions.NoSurveySetException;
 import colruyt.pcrsejb.util.exceptions.SurveyDoesNotExistException;
+import colruyt.pcrsejb.util.exceptions.validation.surveySet.SurveySetDoesNotExistException;
+//github.com/Jenson3210/PCRS.ejb.git
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
@@ -39,14 +41,13 @@ public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl {
 	}
 
 	@Override
-	public SurveySet get(SurveySet element) throws SurveyDoesNotExistException {
-		try {
-		return surveySetServiceDb.get(element);
+	public SurveySet get(SurveySet element) throws ValidationException {
+		SurveySet set = null;
+		set = surveySetServiceDb.get(element);
+		if (set == null) {
+			throw new SurveySetDoesNotExistException();
 		}
-		catch(EmptyStackException e) {
-			
-			throw new SurveyDoesNotExistException();
-		}
+		return set;
 	}
 
 	@Override
