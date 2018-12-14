@@ -28,7 +28,7 @@ public class SurveySectionStrategyView implements Serializable {
 	
 	private List<SurveySectionStrategyBo> strategies;
 	
-	@PostConstruct 
+	@PostConstruct
 	private void fillStrategies() {
 		strategies = surveySectionStrategyFacade.getAll();
 	} 
@@ -47,14 +47,13 @@ public class SurveySectionStrategyView implements Serializable {
 	}
  
 	public void addSurveySectionStrategy() {
-		strategies.add(surveySectionStrategyFacade.save(surveySectionStrategyBo));
 		PrimeFaces pf = PrimeFaces.current();
 		try {
 			strategies.add(surveySectionStrategyFacade.save(surveySectionStrategyBo));
 			pf.ajax().addCallbackParam("validationSucces", true);
 		} catch (ValidationException e) {
 			pf.ajax().addCallbackParam("validationSucces", false);
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+			FacesContext.getCurrentInstance().addMessage("addForm", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 		}	
 	}
 	
@@ -76,7 +75,14 @@ public class SurveySectionStrategyView implements Serializable {
 				s = strategy;
 			}
 		}
-		surveySectionStrategyFacade.save(s);
+		PrimeFaces pf = PrimeFaces.current();
+		try {
+			surveySectionStrategyFacade.save(s);
+			pf.ajax().addCallbackParam("validationSucces", true);
+		} catch (ValidationException e) { 
+			pf.ajax().addCallbackParam("validationSucces", false);
+			FacesContext.getCurrentInstance().addMessage("editForm", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));	
+		}
 	}
 	
 	public void deleteSurveySectionStrategy()
@@ -94,5 +100,6 @@ public class SurveySectionStrategyView implements Serializable {
 			// TODO Auto-generated catch block
  			e.printStackTrace();
 		}
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "succesfully deleted", null));
 	}
 }

@@ -17,6 +17,7 @@ import colruyt.pcrsejb.facade.user.IUserFacade;
 import colruyt.pcrsejb.facade.user.team.ITeamFacade;
 import colruyt.pcrsejb.util.exceptions.NoSurveySetException;
 import colruyt.pcrsejb.util.exceptions.UserIsNotMemberOfTeamException;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Named
 @ViewScoped
@@ -123,7 +124,11 @@ public class UserProfileView implements Serializable {
 
 			this.getUser().setPassword(newpassword);
 
-			this.setUser(userfac.save(this.getUser()));
+			try {
+				this.setUser(userfac.save(this.getUser()));
+			} catch (ValidationException e) {
+				//NOP
+			}
 
 			String message = context.getApplication().evaluateExpressionGet(context, "#{msgs['succes.changepass']}",
 					String.class);

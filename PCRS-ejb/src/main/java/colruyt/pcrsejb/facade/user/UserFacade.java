@@ -41,12 +41,12 @@ public class UserFacade implements Serializable, IUserFacade {
 	}
 
 	@Override
-	public UserBo save(UserBo user) {
+	public UserBo save(UserBo user) throws ValidationException {
 		return userConverter.convertToBo(userServiceBl.save(userConverter.convertToEntity(user)));
 	}
 
 	@Override
-	public UserBo get(UserBo user) {
+	public UserBo get(UserBo user) throws ValidationException {
 		return userConverter.convertToBo(userServiceBl.get(userConverter.convertToEntity(user)));
 	}
 

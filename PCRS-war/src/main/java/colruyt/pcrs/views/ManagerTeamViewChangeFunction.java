@@ -19,10 +19,14 @@ import colruyt.pcrsejb.bo.user.team.EnrolmentBo;
 import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveyDefinitionFacade;
 import colruyt.pcrsejb.facade.user.IUserFacade;
 import colruyt.pcrsejb.facade.user.privilege.IUserPrivilegeFacade;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @ViewScoped
 @Named
 public class ManagerTeamViewChangeFunction implements Serializable {
+
+	
+	private static final long serialVersionUID = 1L;
 
 	private SurveyDefinitionBo function;
 
@@ -76,6 +80,12 @@ public class ManagerTeamViewChangeFunction implements Serializable {
 		((TeamMemberUserPrivilegeBo) enrol.getUserPrivilege()).setStartDateCurrentSurveyDefinition(LocalDate.now());
 			
 		userBo.getPrivileges().add(enrol.getUserPrivilege());
-		this.userFacade.save(userBo);
+		
+			try {
+				this.userFacade.save(userBo);
+			} catch (ValidationException e) {
+				//NOP
+			}
+		
 	}
 }

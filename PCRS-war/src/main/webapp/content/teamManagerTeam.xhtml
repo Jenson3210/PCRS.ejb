@@ -44,7 +44,9 @@
 
 							<p:column>
 								<h:outputText
-									value="#{managerTeamView.getFunctionOf(enrolment.key)}" />
+									value="#{managerTeamView.getFunctionOf(enrolment.key)}"
+								rendered="#{managerTeamView.hasFunction(enrolment.key)}"
+									 />
 							</p:column>
 
 
@@ -110,8 +112,8 @@
 	</div>
 
 
-	<p:dialog header="#{msgs['change.function']}" widgetVar="changeFunction"
-		modal="true" resizable="false">
+	<p:dialog header="#{msgs['change.function']}" draggable="false" widgetVar="changeFunction"
+		modal="true" resizable="false" >
 		<p:panelGrid columns="2" id="display2" columnClasses="label,output">
 			<h:form id="functionForm">
 				<div class="ui-g">
@@ -125,7 +127,7 @@
 					</p:selectOneMenu>
 
 					<p:commandButton action="#{managerTeamViewChangeFunction.submit}"
-						value="#{msgs['submit']}" onComplete="PF('changeFunction').hide();"
+						value="#{msgs['submit']}" oncomplete="PF('changeFunction').hide();"
 						update=":form" />
 
 				</div>
@@ -134,7 +136,7 @@
 	</p:dialog>
 
 	<h:form id="createSurvey">
-		<p:dialog header="#{msgs['create.survey']}" widgetVar="createSurvey" modal="true"
+		<p:dialog header="#{msgs['create.survey']}" widgetVar="createSurvey" draggable="false" modal="true"
 			resizable="false">
 			<p:panelGrid columns="1" id="display" columnClasses="label,output">
 	
@@ -145,6 +147,7 @@
 						converter="DefinitionImplBoConverter" />
 	
 					<p:commandButton action="#{managerTeamViewDialog.submit()}"
+						oncomplete="PF('createSurvey').hide();"
 						value="#{msgs['create.survey']}"></p:commandButton>
 	
 			</p:panelGrid>
