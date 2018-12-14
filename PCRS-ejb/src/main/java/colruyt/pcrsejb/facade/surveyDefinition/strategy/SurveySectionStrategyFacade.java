@@ -13,9 +13,7 @@ import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
 public class SurveySectionStrategyFacade implements Serializable, ISurveySectionStrategyFacade {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
 	@EJB
@@ -29,7 +27,7 @@ public class SurveySectionStrategyFacade implements Serializable, ISurveySection
 	}
 
 	@Override
-	public SurveySectionStrategyBo get(SurveySectionStrategyBo entityBo) {
+	public SurveySectionStrategyBo get(SurveySectionStrategyBo entityBo) throws ValidationException {
 		return surveySectionStrategyConverter.convertToBo(surveySectionStrategyServiceBl.get(surveySectionStrategyConverter.convertToEntity(entityBo)));
 	}
 

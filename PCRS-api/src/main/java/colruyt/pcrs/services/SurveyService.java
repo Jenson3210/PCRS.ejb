@@ -14,12 +14,11 @@ import javax.ws.rs.core.Response;
 import colruyt.pcrsejb.bo.surveys.survey.SurveyBo;
 import colruyt.pcrsejb.bo.surveys.survey.SurveyKindBo;
 import colruyt.pcrsejb.bo.user.UserBo;
-import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.facade.surveys.survey.ISurveyFacade;
 import colruyt.pcrsejb.facade.surveys.surveySet.ISurveySetFacade;
 import colruyt.pcrsejb.facade.user.IUserFacade;
-import colruyt.pcrsejb.facade.user.UserFacade;
 import colruyt.pcrsejb.util.exceptions.NoSurveySetException;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -39,7 +38,7 @@ public class SurveyService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Find active survey for user", notes = "Retrieve survey for user.", response = SurveyBo.class, responseContainer = "List")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Surveys found", response = SurveyBo.class),
-	@ApiResponse(code = 404, message = "Surveys not found") })
+			@ApiResponse(code = 404, message = "Surveys not found") })
 	@Path("{userId}")
 	public Response userActiveSurveyGet(
 			@ApiParam(value = "For which user do you want the survey?", required = true) @PathParam("userId") Integer userId,
@@ -54,13 +53,23 @@ public class SurveyService {
 			survey = surveySetFacade.getSurveyForUser(user, kind);
 			return Response.ok().entity(survey).build();
 		} catch (NoSurveySetException e) {
-			return Response.status(Response.Status.NOT_FOUND).build();
+			return Response.status(Response.Status.NOT_FOUND)
+					.entity("No survey found!")
+					.build();
+		} catch (ValidationException e) {
+			return Response.status(Response.Status.NOT_FOUND)
+					.entity("No user found!")
+					.build();
 		}
 	}
-	
+
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void saveSurvey(SurveyBo survey) {
-		surveyFacade.save(survey);
+		try {
+			surveyFacade.save(survey);
+		} catch (ValidationException e) {
+			System.out.println("Could not save!");
+		}
 	}
 }

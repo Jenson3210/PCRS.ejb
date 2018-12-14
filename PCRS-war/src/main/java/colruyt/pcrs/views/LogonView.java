@@ -20,9 +20,8 @@ import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 @Named
 @SessionScoped
 public class LogonView implements Serializable {
-	/**
-	 * 
-	 */
+
+	
 	private static final long serialVersionUID = 1L;
 
 	@EJB
