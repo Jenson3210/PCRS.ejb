@@ -22,7 +22,7 @@ public class CompetenceImpl extends AbstractEntity implements Serializable {
     private Integer id;
     @ManyToOne
     private Competence competence;
-    @Column(name="DESCRIPTION",table="COMPETENCEIMPLDESCRIPTIONS")
+    @Column(name="DESCRIPTION",table="COMPETENCEIMPLDESCRIPTIONS", length = 1337)
     private String competenceDescription;
     @Column(name="MINLEVEL")
     private Integer minLevel;
