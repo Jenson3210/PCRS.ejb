@@ -4,7 +4,9 @@ import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
@@ -13,12 +15,15 @@ import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 @Named
 @SessionScoped
 public class WebUser implements Serializable{
-	/**
-	 * 
-	 */
+	
+	
+	 
+	
 	private static final long serialVersionUID = 1L;
 
 	public WebUser() {
+		
+	
 	}
 
 	public UserBo getUser() {

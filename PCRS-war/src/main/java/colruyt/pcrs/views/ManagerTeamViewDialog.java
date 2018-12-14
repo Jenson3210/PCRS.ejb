@@ -2,7 +2,6 @@ package colruyt.pcrs.views;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +22,7 @@ import colruyt.pcrsejb.bo.user.privilege.TeamMemberUserPrivilegeBo;
 import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveySectionDefinitionImplFacade;
 import colruyt.pcrsejb.facade.surveys.surveySet.ISurveySetFacade;
 import colruyt.pcrsejb.facade.user.IUserFacade;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Named
 @ViewScoped
@@ -127,14 +127,23 @@ public class ManagerTeamViewDialog implements Serializable {
 	public void submit() {
 	List<SurveySectionDefinitionImplBo> sections = new ArrayList<>();
 	for (SurveySectionDefinitionImplBo section : this.availableList.getTarget()) {
-		sections.add(surveySectionDefinitionImplFacade.get(section));
+		try {
+			sections.add(surveySectionDefinitionImplFacade.get(section));
+		} catch (ValidationException e) {
+			//NOP
+		}
 	}	
 	
 	
 	TeamMemberUserPrivilegeBo privi = (TeamMemberUserPrivilegeBo )this.teamMember.getPrivileges().stream().filter(x->x.getPrivilegeType().equals(PrivilegeTypeBo.TEAMMEMBER) && x.isActive()).findFirst().get();
 	privi.getSurveySetTreeSet().add(this.surveyFacade.generateSurveySetFor(sections));
 	
-	this.userFacade.save(this.teamMember);
+	try {
+		this.userFacade.save(this.teamMember);
+	} catch (ValidationException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 	}
 
 	public List<SurveySectionDefinitionImplBo> getAllList() {
