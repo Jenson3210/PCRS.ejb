@@ -24,8 +24,8 @@ public class SurveySectionStrategyServiceBl implements Serializable, ISurveySect
 	private StrategyValidator strategyValidator = new StrategyValidator();
 
 	@Override
-	public SurveySectionStrategy save(SurveySectionStrategy element) /*throws ValidationException*/ {
-//		strategyValidator.validate(element); don't remove
+	public SurveySectionStrategy save(SurveySectionStrategy element) throws ValidationException {
+		strategyValidator.validate(element);
 		return surveySectionStrategyServiceDL.save(element);
 	}
 

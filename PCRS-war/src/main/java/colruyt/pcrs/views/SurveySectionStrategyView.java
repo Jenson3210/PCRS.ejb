@@ -5,8 +5,12 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+
+import org.primefaces.PrimeFaces;
 
 import colruyt.pcrsejb.bo.surveyDefinition.strategy.SurveySectionStrategyBo;
 import colruyt.pcrsejb.facade.surveyDefinition.strategy.ISurveySectionStrategyFacade;
@@ -44,14 +48,14 @@ public class SurveySectionStrategyView implements Serializable {
  
 	public void addSurveySectionStrategy() {
 		strategies.add(surveySectionStrategyFacade.save(surveySectionStrategyBo));
-//		PrimeFaces pf = PrimeFaces.current();
-//		try {
-//			strategies.add(surveySectionStrategyFacade.save(surveySectionStrategyBo));
-//			pf.ajax().addCallbackParam("validationSucces", true);
-//		} catch (ValidationException e) {
-//			pf.ajax().addCallbackParam("validationSucces", false);
-//			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
-//		}	 don't remove
+		PrimeFaces pf = PrimeFaces.current();
+		try {
+			strategies.add(surveySectionStrategyFacade.save(surveySectionStrategyBo));
+			pf.ajax().addCallbackParam("validationSucces", true);
+		} catch (ValidationException e) {
+			pf.ajax().addCallbackParam("validationSucces", false);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+		}	
 	}
 	
 	public void newSurveySectionStrategy() {

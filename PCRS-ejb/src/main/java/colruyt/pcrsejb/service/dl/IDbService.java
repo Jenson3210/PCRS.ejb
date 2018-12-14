@@ -12,6 +12,6 @@ public interface IDbService<T> {
 
 	List<T> getAll();
 
-	void delete(T element) throws ValidationException;
+	void delete(T element);
 
 }
