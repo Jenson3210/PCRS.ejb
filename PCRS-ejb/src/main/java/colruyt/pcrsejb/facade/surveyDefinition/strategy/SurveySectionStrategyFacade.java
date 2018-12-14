@@ -29,7 +29,7 @@ public class SurveySectionStrategyFacade implements Serializable, ISurveySection
 	}
 
 	@Override
-	public SurveySectionStrategyBo get(SurveySectionStrategyBo entityBo) {
+	public SurveySectionStrategyBo get(SurveySectionStrategyBo entityBo) throws ValidationException {
 		return surveySectionStrategyConverter.convertToBo(surveySectionStrategyServiceBl.get(surveySectionStrategyConverter.convertToEntity(entityBo)));
 	}
 

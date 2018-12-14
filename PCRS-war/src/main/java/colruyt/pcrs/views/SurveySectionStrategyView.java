@@ -98,6 +98,7 @@ public class SurveySectionStrategyView implements Serializable {
 			surveySectionStrategyFacade.delete(s);
 		} catch (ValidationException e) {
 			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
  			e.printStackTrace();
 		}
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "succesfully deleted", null));
