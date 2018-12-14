@@ -2,6 +2,7 @@ package colruyt.pcrsejb.entity.competence;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -91,4 +92,19 @@ public class Competence extends AbstractEntity implements Serializable {
 	public void setCompetenceLevels(Set<CompetenceLevel> competenceLevels) {
 		this.competenceLevels = competenceLevels;
 	};
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Competence)) return false;
+		Competence that = (Competence) o;
+		return Objects.equals(getName(), that.getName()) &&
+				Objects.equals(getCompetenceDescription(), that.getCompetenceDescription()) &&
+				Objects.equals(getCompetenceLevels(), that.getCompetenceLevels());
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(getName(), getCompetenceDescription(), getCompetenceLevels());
+	}
 }
