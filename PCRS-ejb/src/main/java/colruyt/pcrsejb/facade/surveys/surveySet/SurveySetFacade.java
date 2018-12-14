@@ -63,12 +63,12 @@ public class SurveySetFacade implements Serializable,ISurveySetFacade{
 	}
 
 	@Override
-	public Integer getPercentageCompleteForManagerSurvey(UserBo user)  throws NoSurveySetException{
+	public Integer getPercentageCompleteForManagerSurvey(UserBo user) throws NoSurveySetException{
 		return this.surveySetServiceBl.getPercentageCompleteForManagerSurvey(this.userConverter.convertToEntity(user));
 	}
 
 	@Override
-	public Integer getPercentageCompleteForConsensusSurvey(UserBo user)  throws NoSurveySetException{ 
+	public Integer getPercentageCompleteForConsensusSurvey(UserBo user) throws NoSurveySetException{ 
 		return this.surveySetServiceBl.getPercentageCompleteForConsensusSurvey(this.userConverter.convertToEntity(user));
 	}
 

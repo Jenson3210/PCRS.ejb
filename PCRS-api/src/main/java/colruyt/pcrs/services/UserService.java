@@ -42,12 +42,23 @@ public class UserService {
 		if (email != null && password != null) {
 			//TODO MOVE TO BL
 			try {
+<<<<<<< HEAD
 				
 				UserBo userbo = this.userFacade.login(email, password);
 				return Response.status(Response.Status.OK).entity(userbo).build();
+=======
+			
+				UserBo u = this.userFacade.getUserByEmail(email);
+				if(u.getPassword().equalsIgnoreCase(password)) {
+					users.add(u);
+					return Response.ok().entity(users).build();
+				}
+>>>>>>> branch 'master' of https://github.com/Jenson3210/PCRS.ejb.git
 			}
 			catch(Exception e) {
-				return Response.status(Response.Status.FORBIDDEN).build();
+				return Response.status(Response.Status.FORBIDDEN)
+						.entity("Wrong password!")
+						.build();
 			}
 
 		}
