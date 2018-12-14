@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
@@ -32,19 +33,13 @@ public class DbSurveySectionDefinitionServiceDl implements Serializable, ISurvey
 			surveySectionDefinition = em.merge(element);
 		}
 		return surveySectionDefinition;
-
-		/*
-		 * SurveySectionDefinition surveySectionDefinition = em.merge(element);
-		 * if(surveySectionDefinition == null) { throw new EmptyStackException(); }
-		 * return surveySectionDefinition;
-		 */
 	}
 
 	@Override
 	public SurveySectionDefinition get(SurveySectionDefinition element) {
 		SurveySectionDefinition surveySectionDefinition = em.find(SurveySectionDefinition.class, element.getId());
 		if (surveySectionDefinition == null) {
-			throw new EmptyStackException();
+			throw new EntityNotFoundException();
 		}
 		return surveySectionDefinition;
 	}
@@ -57,19 +52,13 @@ public class DbSurveySectionDefinitionServiceDl implements Serializable, ISurvey
 		return listOfSurveySectionDefinitions;
 	}
 
-	// TODO: Add logic (given dependencies for element)
 	@Override
-	public void delete(SurveySectionDefinition element) throws ValidationException {
+	public void delete(SurveySectionDefinition element) throws PersistenceException {
 		element = em.find(SurveySectionDefinition.class, element.getId());
 		if (element != null) {
-			try {
-				em.remove(element);
-				em.flush();
-			} catch (Exception e) {
-				throw new ValidationException("Can not remove survey section definition");
-			}
+			em.remove(element);
 		} else {
-			throw new EmptyStackException();
+			throw new EntityNotFoundException();
 		}
 	}
 
