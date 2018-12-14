@@ -26,13 +26,13 @@ public class CompetenceFacade implements Serializable, ICompetenceFacade {
 	private SurveySectionDefinitionImplConverter implConv = new SurveySectionDefinitionImplConverter();
 
 	@Override
-	public CompetenceBo save(CompetenceBo entityBo) {
+	public CompetenceBo save(CompetenceBo entityBo) throws ValidationException {
 
 		return competenceConverter.convertToBo(competenceServiceBl.save(competenceConverter.convertToEntity(entityBo)));
 	}
 
 	@Override
-	public CompetenceBo get(CompetenceBo entityBo) {
+	public CompetenceBo get(CompetenceBo entityBo) throws ValidationException {
 		return competenceConverter.convertToBo(competenceServiceBl.get(competenceConverter.convertToEntity(entityBo)));
 	}
 
