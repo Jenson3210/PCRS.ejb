@@ -22,10 +22,10 @@ import io.swagger.annotations.ApiResponses;
 
 @Path("users")
 public class UserService {
-	
+
 	@EJB
 	private IUserFacade userFacade;
-	
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Find all users", notes = "Retrieve all users", response = User[].class, responseContainer = "List")
@@ -41,25 +41,23 @@ public class UserService {
 		
 		if (email != null && password != null) {
 			//TODO MOVE TO BL
-			for (UserBo u : userFacade.getAll()) {
-				if (u.getEmail().equalsIgnoreCase(email)) {
-					if (u.getPassword().equalsIgnoreCase(password)) {
-						users.add(u);
-					}
-					else {
-						return Response.status(Response.Status.FORBIDDEN)
-										.type(MediaType.TEXT_PLAIN)
-										.entity("Wrong password!")
-										.build();
-					}
+			try {
+			
+				UserBo u = this.userFacade.getUserByEmail(email);
+				if(u.getPassword().equalsIgnoreCase(password)) {
+					users.add(u);
+					return Response.ok().entity(users).build();
 				}
 			}
+			catch(Exception e) {
+				return Response.status(Response.Status.FORBIDDEN)
+						.type(MediaType.TEXT_PLAIN)
+						.entity("Wrong password!")
+						.build();
+			}
+
 		}
-		else {
-			users= userFacade.getAll();
-		}
-		
-		
-		return Response.ok().entity(users).build();
+		return Response.status(Response.Status.FORBIDDEN).build();
 	}
-}
+
+} 

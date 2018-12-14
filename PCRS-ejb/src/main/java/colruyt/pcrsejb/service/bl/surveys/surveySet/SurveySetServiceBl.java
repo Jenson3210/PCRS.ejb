@@ -112,14 +112,14 @@ public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl {
 
 		if (survey != null)
 
-			return this.berekenPercentage(survey);
+			return this.calculatePercentage(survey);
 
 		else
 
 			return 0;
 	}
 
-	private Integer berekenPercentage(Survey surv) {
+	private Integer calculatePercentage(Survey surv) {
 
 		int totaal = 0;
 		int beantwoord = 0;
@@ -150,7 +150,7 @@ public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl {
 				.findFirst().get();
 		if (survey != null)
 
-			return this.berekenPercentage(survey);
+			return this.calculatePercentage(survey);
 
 		else
 			return 0;
@@ -164,7 +164,7 @@ public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl {
 				.findFirst().get();
 
 		if (survey != null)
-			return this.berekenPercentage(survey);
+			return this.calculatePercentage(survey);
 		else
 			return 0;
 	}

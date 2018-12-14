@@ -1,6 +1,7 @@
 package colruyt.pcrsejb.service.bl.surveys.survey;
 
 import java.io.Serializable;
+import java.util.EmptyStackException;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -21,8 +22,14 @@ public class SurveyServiceBl implements Serializable, ISurveyServiceBl {
 	private ISurveyServiceDl surveyService;
 
 	@Override
-	public Survey save(Survey element) {
+	public Survey save(Survey element) throws ValidationException {
+		
+		try {
 		return surveyService.save(element);
+		}
+		catch(Exception e) {
+			throw new ValidationException("e");
+		}
 	}
 
 	@Override
