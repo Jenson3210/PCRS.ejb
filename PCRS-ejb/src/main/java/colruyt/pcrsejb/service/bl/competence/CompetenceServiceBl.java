@@ -29,7 +29,7 @@ public class CompetenceServiceBl implements Serializable, ICompetenceServiceBl {
         if(!allCompeteces.isEmpty()){
             for(Competence c : allCompeteces){
                 if(c.equals(element)){
-                    throw new CompetenceAlreadyExistExeption();
+                    throw new CompetenceAlreadyExistExeption("This is not a Competence already exists !");
                 }
             }
         }
@@ -42,7 +42,7 @@ public class CompetenceServiceBl implements Serializable, ICompetenceServiceBl {
 		Competence c = null;
 		c= competencedb.get(element);
 		if(c == null){
-			throw new CompetenceDoesNotExistExeption();
+			throw new CompetenceDoesNotExistExeption("This is not a Competence !");
 		}
 		return c;
 	}
