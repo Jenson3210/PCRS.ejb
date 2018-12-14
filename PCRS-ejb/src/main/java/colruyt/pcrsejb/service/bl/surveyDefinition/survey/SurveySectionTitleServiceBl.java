@@ -5,27 +5,41 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.PersistenceException;
 
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionTitle;
 import colruyt.pcrsejb.service.dl.surveyDefinition.survey.ISurveySectionTitleServiceDl;
+import colruyt.pcrsejb.util.exceptions.validation.surveyDefinition.survey.SurveySectionTitleCantBeDeletedException;
+import colruyt.pcrsejb.util.exceptions.validation.surveyDefinition.survey.SurveySectionTitleNotFoundException;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
+import colruyt.pcrsejb.util.validators.surveyDefinition.survey.SurveySectionTitleValidator;
 
 @Stateless
 public class SurveySectionTitleServiceBl implements ISurveySectionTitleServiceBl, Serializable {
 
+	
 	private static final long serialVersionUID = 1L;
 	@EJB
 	private ISurveySectionTitleServiceDl surveySectionTitleDb;
 
+	private SurveySectionTitleValidator surveySectionTitleValidator = new SurveySectionTitleValidator();
 	
 	@Override
-	public SurveySectionTitle save(SurveySectionTitle element) {
+	public SurveySectionTitle save(SurveySectionTitle element) throws ValidationException {
+		surveySectionTitleValidator.validate(element);
 		return surveySectionTitleDb.save(element);
 	}
 
 	@Override
-	public SurveySectionTitle get(SurveySectionTitle element) {
-		return surveySectionTitleDb.get(element);
+	public SurveySectionTitle get(SurveySectionTitle element) throws ValidationException {
+		try
+		{
+			return surveySectionTitleDb.get(element);
+		}catch(EntityNotFoundException e)
+		{
+			throw new SurveySectionTitleNotFoundException();
+		}
 	}
 
 	@Override
@@ -35,6 +49,15 @@ public class SurveySectionTitleServiceBl implements ISurveySectionTitleServiceBl
 
 	@Override
 	public void delete(SurveySectionTitle element) throws ValidationException {
-		surveySectionTitleDb.delete(element);
+		try {
+			surveySectionTitleDb.delete(element);
+		} catch(EntityNotFoundException e)
+		{
+			throw new SurveySectionTitleNotFoundException();
+		} catch(PersistenceException e)
+		{
+			throw new SurveySectionTitleCantBeDeletedException();
+		}
+		
 	}
 }
