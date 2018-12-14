@@ -21,12 +21,12 @@ public class SurveySectionTitleFacade implements Serializable, ISurveySectionTit
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public SurveySectionTitleBo save(SurveySectionTitleBo entityBo) {
+	public SurveySectionTitleBo save(SurveySectionTitleBo entityBo) throws ValidationException{
 		return surveySectionTitleConverter.convertToBo(surveySectionTitleServiceBl.save(surveySectionTitleConverter.convertToEntity(entityBo)));
 	}
 
 	@Override
-	public SurveySectionTitleBo get(SurveySectionTitleBo entityBo) {
+	public SurveySectionTitleBo get(SurveySectionTitleBo entityBo) throws ValidationException {
 		return surveySectionTitleConverter.convertToBo(surveySectionTitleServiceBl.get(surveySectionTitleConverter.convertToEntity(entityBo)));
 	}
 
