@@ -3,6 +3,7 @@ package colruyt.pcrsejb.service.bl.surveys.surveySet;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -20,7 +21,9 @@ import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.service.bl.user.IUserServiceBl;
 import colruyt.pcrsejb.service.dl.surveys.surveySet.ISurveySetServiceDl;
 import colruyt.pcrsejb.util.exceptions.NoSurveySetException;
+import colruyt.pcrsejb.util.exceptions.SurveyDoesNotExistException;
 import colruyt.pcrsejb.util.exceptions.validation.surveySet.SurveySetDoesNotExistException;
+//github.com/Jenson3210/PCRS.ejb.git
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
@@ -54,7 +57,12 @@ public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl {
 
 	@Override
 	public void delete(SurveySet element) throws ValidationException {
+		try {
 		surveySetServiceDb.delete(element);
+		}
+		catch(EmptyStackException e) {
+			throw new SurveyDoesNotExistException();
+		}
 	}
 
 	@Override
@@ -105,14 +113,14 @@ public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl {
 
 		if (survey != null)
 
-			return this.berekenPercentage(survey);
+			return this.calculatePercentage(survey);
 
 		else
 
 			return 0;
 	}
 
-	private Integer berekenPercentage(Survey surv) {
+	private Integer calculatePercentage(Survey surv) {
 
 		int totaal = 0;
 		int beantwoord = 0;
@@ -143,7 +151,7 @@ public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl {
 				.findFirst().get();
 		if (survey != null)
 
-			return this.berekenPercentage(survey);
+			return this.calculatePercentage(survey);
 
 		else
 			return 0;
@@ -157,7 +165,7 @@ public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl {
 				.findFirst().get();
 
 		if (survey != null)
-			return this.berekenPercentage(survey);
+			return this.calculatePercentage(survey);
 		else
 			return 0;
 	}

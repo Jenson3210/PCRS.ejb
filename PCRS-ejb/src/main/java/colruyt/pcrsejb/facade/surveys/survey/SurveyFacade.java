@@ -25,7 +25,7 @@ public class SurveyFacade implements Serializable, ISurveyFacade {
 	private SurveyConverter surveyConverter = new SurveyConverter();
 
 	@Override
-	public SurveyBo save(SurveyBo entityBo) {
+	public SurveyBo save(SurveyBo entityBo) throws ValidationException {
 		return surveyConverter.convertToBo(surveyService.save(surveyConverter.convertToEntity(entityBo)));
 	}
 

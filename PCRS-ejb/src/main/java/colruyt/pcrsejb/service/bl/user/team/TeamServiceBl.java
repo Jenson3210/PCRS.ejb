@@ -89,7 +89,7 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
 	}
 
 	@Override
-	public Enrolment addUserToTeam(Team team, User user, String userPrivilege) throws MemberAlreadyHasATeamException {
+	public Enrolment addUserToTeam(Team team, User user, String userPrivilege) throws MemberAlreadyHasATeamException, ValidationException {
 		UserPrivilege enrolmentUserPrivilege = userPrivilegeServiceBl.setUserPrivilege(user, userPrivilege);
 
     	Enrolment enrolment = new Enrolment();

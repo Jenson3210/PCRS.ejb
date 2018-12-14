@@ -22,12 +22,12 @@ public class CompetenceLevelFacade implements Serializable, ICompetenceLevelFaca
 	private CompetenceLevelConverter competenceLevelConverter = new CompetenceLevelConverter();
 
 	@Override
-	public CompetenceLevelBo save(CompetenceLevelBo entityBo) {
+	public CompetenceLevelBo save(CompetenceLevelBo entityBo) throws ValidationException {
 		return competenceLevelConverter.convertToBo(competenceLevelServiceBl.save(competenceLevelConverter.convertToEntity(entityBo)));
 	}
 
 	@Override
-	public CompetenceLevelBo get(CompetenceLevelBo entityBo) {
+	public CompetenceLevelBo get(CompetenceLevelBo entityBo) throws ValidationException {
 		return competenceLevelConverter.convertToBo(competenceLevelServiceBl.get(competenceLevelConverter.convertToEntity(entityBo)));
 	}
 

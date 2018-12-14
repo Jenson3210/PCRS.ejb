@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -146,7 +147,7 @@ public class ManagerTeamView implements Serializable {
 
 	public Integer getConsensusSurveyPercentage(UserBo user) {
 		try {
-			return this.getSurveyFacade().getPercentageCompleteForConsensusSurvey(user);
+		    return this.getSurveyFacade().getPercentageCompleteForConsensusSurvey(user);
 		} catch (NoSurveySetException e) {
 			return 0;
 		}
@@ -159,25 +160,30 @@ public class ManagerTeamView implements Serializable {
 	}
 
 	public String getFunctionOf(EnrolmentBo bo) {
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		String function = null;
 		try {
 			if (bo.getUserPrivilege() instanceof SurveyUserPrivilegeBo) {
 
-				return ((SurveyUserPrivilegeBo) bo.getUserPrivilege()).getSurveyDefinition().getFunction();
+				function  = ((SurveyUserPrivilegeBo) bo.getUserPrivilege()).getSurveyDefinition().getFunction();
 
 			} else {
-				return "geen";
+				function =  context.getApplication().evaluateExpressionGet(context, "#{msgs['error.required']}", String.class);
+						
 			}
 		} catch (Exception e) {
-			return "geen";
+			function = context.getApplication().evaluateExpressionGet(context, "#{msgs['error.required']}", String.class);
+					
 		}
+			return function;
+		
 	}
 
 	public boolean hasFunction(EnrolmentBo bo) {
 
-		if (bo.getUserPrivilege() instanceof SurveyUserPrivilegeBo) {
-
+		if (bo.getUserPrivilege() instanceof SurveyUserPrivilegeBo) {			
 			return ((SurveyUserPrivilegeBo) bo.getUserPrivilege()).getSurveyDefinition() != null;
-
 		}
 		return false;
 	}

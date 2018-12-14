@@ -2,6 +2,7 @@ package colruyt.pcrsejb.service.bl.competence;
 
 import colruyt.pcrsejb.entity.competence.CompetenceImpl;
 import colruyt.pcrsejb.service.dl.competence.ICompetenceImplServiceDl;
+import colruyt.pcrsejb.util.exceptions.validation.competence.CompetenceImplDoesNotExistExepion;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 import javax.ejb.EJB;
@@ -23,9 +24,13 @@ public class CompetenceImplServiceBl implements ICompetenceImplServiceBl, Serial
     }
 
     @Override
-    public CompetenceImpl get(CompetenceImpl element) {
-
-        return competenceimplDb.get(element);
+    public CompetenceImpl get(CompetenceImpl element) throws ValidationException {
+        CompetenceImpl compimp = null;
+        compimp = competenceimplDb.get(element);
+        if(compimp == null){
+            throw new CompetenceImplDoesNotExistExepion("This is not a Competence Implementation !");
+        }
+        return compimp;
     }
 
     @Override

@@ -47,7 +47,11 @@ public class AdminCompetenceView implements Serializable {
 
 	public void addCompetence() {
 		competenceBo.setCompetenceLevels(levels);
-		competences.add(competenceFacade.save(competenceBo));
+		try {
+			competences.add(competenceFacade.save(competenceBo));
+		} catch (ValidationException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void editCompetence() {
@@ -60,7 +64,11 @@ public class AdminCompetenceView implements Serializable {
 			}
 			c = competence;
 		}
-		competenceFacade.save(c);
+		try {
+			competenceFacade.save(c);
+		} catch (ValidationException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void deleteCompetence() {
