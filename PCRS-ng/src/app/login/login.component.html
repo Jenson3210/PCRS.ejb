@@ -1,6 +1,9 @@
-<ngb-alert *ngIf="error != null">
-  {{error}}
-</ngb-alert>
+<ng-container *ngFor="let error of errors">
+  <ngb-alert [type]="error.type" >
+    {{error.message}}
+  </ngb-alert>
+</ng-container>
+
 
 <div class="col-md-4" id="loginForm">
 <form class="form-horizontal" (ngSubmit)="login()">
