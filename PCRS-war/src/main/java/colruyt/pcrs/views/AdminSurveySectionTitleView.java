@@ -59,7 +59,7 @@ public class AdminSurveySectionTitleView implements Serializable {
 			pf.ajax().addCallbackParam("validationSucces", true);
 		} catch (ValidationException e) {
 			pf.ajax().addCallbackParam("validationSucces", false);
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+			FacesContext.getCurrentInstance().addMessage("addForm", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 		}
 	}
 	
@@ -83,7 +83,7 @@ public class AdminSurveySectionTitleView implements Serializable {
 			pf.ajax().addCallbackParam("validationSucces", true);
 		} catch (ValidationException e) {
 			pf.ajax().addCallbackParam("validationSucces", false);
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+			FacesContext.getCurrentInstance().addMessage("editForm", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 		} 
 	}
 	
@@ -95,15 +95,12 @@ public class AdminSurveySectionTitleView implements Serializable {
 				t = title;
 			}
 		}
-		PrimeFaces pf = PrimeFaces.current();
 		try {
-			surveySectionTitles.remove(t);
 			surveySectionTitleFacade.delete(t);
-			pf.ajax().addCallbackParam("validationSucces", false);
+			surveySectionTitles.remove(t);
 		} catch(ValidationException e)
 		{
-			pf.ajax().addCallbackParam("validationSucces", false);
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+			FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 		}
 	}
 }
