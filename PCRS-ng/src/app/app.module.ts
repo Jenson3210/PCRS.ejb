@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { SurveyComponent } from './survey/survey.component';
 import { SurveySectionComponent } from './survey-section/survey-section.component';
-import { RatingComponent } from './rating/rating.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { SurveyOverviewComponent } from './survey-overview/survey-overview.component';
 import { FormsModule } from '@angular/forms';
@@ -19,7 +18,6 @@ import { LoginComponent } from './login/login.component';
     HeaderComponent,
     SurveyComponent,
     SurveySectionComponent,
-    RatingComponent,
     SurveyOverviewComponent,
     LoginComponent
   ],
