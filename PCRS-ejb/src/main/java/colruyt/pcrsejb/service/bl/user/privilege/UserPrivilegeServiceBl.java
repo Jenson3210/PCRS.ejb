@@ -18,6 +18,7 @@ import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 import colruyt.pcrsejb.service.bl.user.IUserServiceBl;
 import colruyt.pcrsejb.service.dl.user.privilege.IUserPrivilegeServiceDl;
 import colruyt.pcrsejb.util.exceptions.MemberAlreadyHasATeamException;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
 public class UserPrivilegeServiceBl implements Serializable, IUserPrivilegeServiceBl {
@@ -56,14 +57,14 @@ public class UserPrivilegeServiceBl implements Serializable, IUserPrivilegeServi
 	}
 
 	@Override
-	public User grantUserPrivilegeToUser(User user, UserPrivilege userPrivilege) {
+	public User grantUserPrivilegeToUser(User user, UserPrivilege userPrivilege) throws ValidationException {
 		user.getPrivileges().add(userPrivilege);
 		user = userServiceBl.save(user);
 		return user;
 	}
 
 	@Override
-	public void revokeUserPrivilegeToUser(User user, UserPrivilege userPrivilege) {
+	public void revokeUserPrivilegeToUser(User user, UserPrivilege userPrivilege) throws ValidationException {
 		for(UserPrivilege up : user.getPrivileges()) {
 			if(up.getId().equals(userPrivilege.getId())) {
 				up.setActive(false);
@@ -73,7 +74,7 @@ public class UserPrivilegeServiceBl implements Serializable, IUserPrivilegeServi
 	}
 
 	@Override
-	public UserPrivilege setUserPrivilege(User user, String userPrivilege) throws MemberAlreadyHasATeamException {
+	public UserPrivilege setUserPrivilege(User user, String userPrivilege) throws MemberAlreadyHasATeamException, ValidationException {
 		UserPrivilege privilege = null;
 		SurveyDefinition surveyDefinition = null;
 		user = userServiceBl.get(user);
@@ -130,7 +131,7 @@ public class UserPrivilegeServiceBl implements Serializable, IUserPrivilegeServi
 	}
 
 	@Override
-	public void revokeUserPrivilegeTypeToUser(User user, PrivilegeType privilegeType, SurveyDefinition surveyDefinition) {
+	public void revokeUserPrivilegeTypeToUser(User user, PrivilegeType privilegeType, SurveyDefinition surveyDefinition) throws ValidationException {
 		for (Iterator<UserPrivilege> privileges = user.getPrivileges().iterator(); privileges.hasNext(); ) {
 			UserPrivilege up = privileges.next();
 			if((up.getPrivilegeType().equals(privilegeType))) {

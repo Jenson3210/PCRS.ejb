@@ -10,7 +10,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.team.Enrolment;
 import colruyt.pcrsejb.util.exceptions.NoExistingEmailException;
@@ -25,25 +24,11 @@ public class DbUserServiceDl implements Serializable, IUserServiceDl {
 
 	@Override
 	public User save(User element) {
-/*		User user = null;
-		try {
-		user = em.createNamedQuery("USER.GETBYEMAIL", User.class)
-					.setParameter("email", element.getEmail())
-					.getSingleResult();
-		} catch (NoResultException ex) {
-			
-		}
-		if (user == null) {
-			em.persist(element);
-			user = element;
-		}else {
-			element.setId(user.getId());
-			user = em.merge(element);
-		}
-		return user;*/
+		
 		User user = em.merge(element);
 		em.flush();
 		return user;
+		
 	}
 
 	@Override
@@ -65,7 +50,10 @@ public class DbUserServiceDl implements Serializable, IUserServiceDl {
 	@Override
 	public void delete(User element) {
 		User user = em.find(User.class, element.getId());
-		if (user != null) {
+		
+		if (user == null) {
+			throw new EntityNotFoundException();
+		}else{
 			em.remove(user);
 		}
 	}
