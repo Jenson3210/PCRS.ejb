@@ -39,20 +39,20 @@ public class UserService {
 		
 		List<UserBo> users = new ArrayList<>();
 		
+		Response resp = Response.status(Response.Status.FORBIDDEN).entity("Password & E-mail is must be filled in!").build();
+		
 		if (email != null && password != null) {
-			//TODO MOVE TO BL
-			try {				
+			try {
 				UserBo userbo = this.userFacade.login(email, password);
-				return Response.status(Response.Status.OK).entity(userbo).build();
+				resp = Response.status(Response.Status.OK).entity(userbo).build();
 			}
 			catch(Exception e) {
-				return Response.status(Response.Status.FORBIDDEN)
+				resp = Response.status(Response.Status.FORBIDDEN)
 						.entity("Wrong password!")
 						.build();
 			}
-
 		}
-		return Response.status(Response.Status.FORBIDDEN).build();
+		return resp;
 	}
 
 } 
