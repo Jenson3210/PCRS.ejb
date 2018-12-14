@@ -15,6 +15,7 @@ import colruyt.pcrsejb.service.bl.user.privilege.IUserPrivilegeServiceBl;
 import colruyt.pcrsejb.service.dl.user.team.ITeamServiceDl;
 import colruyt.pcrsejb.util.exceptions.MemberAlreadyHasATeamException;
 import colruyt.pcrsejb.util.exceptions.UserIsNotMemberOfTeamException;
+import colruyt.pcrsejb.util.exceptions.validation.Team.TeamAlreadyExistsExeption;
 import colruyt.pcrsejb.util.exceptions.validation.Team.TeamDoesNotExistExeption;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
@@ -36,23 +37,30 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
 	
 	private static final long serialVersionUID = 1L;
 
-	public User getManagerOfUser(User u) {
+	/*public User getManagerOfUser(User u) {
 		return null;
-	}
+	}*/
 
 	@Override
 	public Team save(Team element) throws ValidationException{
 		Team t = null;
-		t= this.dlService.save(element);
-		if (t == null){
-			throw new  TeamDoesNotExistExeption("Team Does not exist");
+		for (Team team : this.getAll()){
+			if(t.getName().equals(team.getName())){
+				throw new TeamAlreadyExistsExeption("The team already exists");
+			}
 		}
+		t= this.dlService.save(element);
 		return t;
 	}
 
 	@Override
-	public Team get(Team element) {
-		return this.dlService.get(element);
+	public Team get(Team element) throws ValidationException{
+		Team t = null;
+		t = this.dlService.get(element);
+		if (t == null){
+			throw new  TeamDoesNotExistExeption("Team Does not exist");
+		}
+		return t;
 	}
 
 	@Override
