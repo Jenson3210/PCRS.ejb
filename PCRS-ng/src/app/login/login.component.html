@@ -1,5 +1,5 @@
-<ngb-alert>
-  You did not enter the fields.
+<ngb-alert *ngIf="error != null">
+  {{error}}
 </ngb-alert>
 
 <div class="col-md-4" id="loginForm">

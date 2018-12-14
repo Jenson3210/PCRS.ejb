@@ -11,6 +11,7 @@ export class LoginComponent implements OnInit {
 
   private email: string;
   private password: string;
+  private error: string;
 
   constructor(private userService: UserService, private router: Router) { }
 
@@ -25,10 +26,7 @@ export class LoginComponent implements OnInit {
       }, (error) => {
         switch (error.status) {
           case 403: {
-              console.log(error)
-              this.router.navigate(['login'], {
-              queryParams: {error: 'password'}
-            });
+              this.error = error.statusText;
             break;
           }
           default: {
