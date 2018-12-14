@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
       }, (error) => {
         switch (error.status) {
           case 403: {
+              console.log(error)
               this.router.navigate(['login'], {
               queryParams: {error: 'password'}
             });

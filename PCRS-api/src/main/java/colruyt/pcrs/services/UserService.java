@@ -47,7 +47,10 @@ public class UserService {
 						users.add(u);
 					}
 					else {
-						return Response.status(Response.Status.FORBIDDEN).build();
+						return Response.status(Response.Status.FORBIDDEN)
+										.type(MediaType.TEXT_PLAIN)
+										.entity("Wrong password!")
+										.build();
 					}
 				}
 			}
