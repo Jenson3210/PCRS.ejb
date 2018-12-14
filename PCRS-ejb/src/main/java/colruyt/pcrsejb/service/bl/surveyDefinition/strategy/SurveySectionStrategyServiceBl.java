@@ -7,7 +7,9 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import colruyt.pcrsejb.entity.surveyDefinition.strategy.SurveySectionStrategy;
+import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinition;
 import colruyt.pcrsejb.service.dl.surveyDefinition.strategy.ISurveySectionStrategyServiceDL;
+import colruyt.pcrsejb.service.dl.surveyDefinition.survey.DbSurveySectionDefinitionServiceDl;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 import colruyt.pcrsejb.util.validators.surveyDefinition.strategy.StrategyValidator;
 
@@ -41,6 +43,15 @@ public class SurveySectionStrategyServiceBl implements Serializable, ISurveySect
 
 	@Override
 	public void delete(SurveySectionStrategy element) throws ValidationException {
-		surveySectionStrategyServiceDL.delete(element);	
+		DbSurveySectionDefinitionServiceDl dbsdsdl = new DbSurveySectionDefinitionServiceDl();
+		List<SurveySectionDefinition> sdsList = dbsdsdl.getSurveySectionDefinitionsForStrategy(element);
+		if ( sdsList == null) {
+			surveySectionStrategyServiceDL.delete(element);
+			System.out.println("+++++++ na delete +++++++++");
+		}
+		else {
+			System.out.println("++++++++++ komt in exception +++++++++");
+			throw new ValidationException("Can't remove survey strategy, still in use");
+		}
 	}
 }
