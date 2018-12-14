@@ -41,8 +41,9 @@ public class DbSurveyServiceDl implements ISurveyServiceDl {
 	}
 
 	@Override
-	public void delete(Survey element) throws ValidationException {
+	public void delete(Survey element)   {
 		// TODO Auto-generated method stub
+		
 		
 	}
 

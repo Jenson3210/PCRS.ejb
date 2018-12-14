@@ -28,7 +28,7 @@ public class CompetenceImplServiceBl implements ICompetenceImplServiceBl, Serial
         CompetenceImpl compimp = null;
         compimp = competenceimplDb.get(element);
         if(compimp == null){
-            throw new CompetenceImplDoesNotExistExepion();
+            throw new CompetenceImplDoesNotExistExepion("This is not a Competence Implementation !");
         }
         return compimp;
     }

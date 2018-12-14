@@ -120,6 +120,7 @@ public class UserProfileView implements Serializable {
 	public void changePass() { 
 
 		FacesContext context = FacesContext.getCurrentInstance();
+
 		if (this.isCurrentPassword() && this.isSamePassword()) {
 
 			this.getUser().setPassword(newpassword);
@@ -177,6 +178,7 @@ public class UserProfileView implements Serializable {
 			FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR,  message,"" );
 			context.addMessage(null, myFacesMessage);
 			return false;
+			
 		} else {
 
 			if (!this.currentpass.equals(this.getUser().getPassword())) {
