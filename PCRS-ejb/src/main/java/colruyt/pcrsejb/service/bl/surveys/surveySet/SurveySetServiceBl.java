@@ -4,12 +4,10 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.entity.competence.CompetenceImpl;
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinitionImpl;
 import colruyt.pcrsejb.entity.surveys.rating.ConsensusRating;
@@ -19,11 +17,10 @@ import colruyt.pcrsejb.entity.surveys.survey.SurveyKind;
 import colruyt.pcrsejb.entity.surveys.survey.SurveySection;
 import colruyt.pcrsejb.entity.surveys.surveySet.SurveySet;
 import colruyt.pcrsejb.entity.user.User;
-import colruyt.pcrsejb.entity.user.privilege.TeamMemberUserPrivilege;
-import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 import colruyt.pcrsejb.service.bl.user.IUserServiceBl;
 import colruyt.pcrsejb.service.dl.surveys.surveySet.ISurveySetServiceDl;
 import colruyt.pcrsejb.util.exceptions.NoSurveySetException;
+import colruyt.pcrsejb.util.exceptions.validation.surveySet.SurveySetDoesNotExistException;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
@@ -41,8 +38,13 @@ public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl {
 	}
 
 	@Override
-	public SurveySet get(SurveySet element) {
-		return surveySetServiceDb.get(element);
+	public SurveySet get(SurveySet element) throws ValidationException {
+		SurveySet set = null;
+		set = surveySetServiceDb.get(element);
+		if (set == null) {
+			throw new SurveySetDoesNotExistException();
+		}
+		return set;
 	}
 
 	@Override
