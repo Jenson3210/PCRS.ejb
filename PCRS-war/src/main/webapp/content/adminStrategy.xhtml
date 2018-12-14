@@ -164,8 +164,7 @@
 							<div class="ui-g-2">
 								<p:commandButton value="#{msgs['strategy.add']}" update=":form"
 									action="#{surveySectionStrategyView.addSurveySectionStrategy}"
-									oncomplete="{PF('addStrategyDialog').hide();}" />
-<!-- 									oncomplete=" if ( args.validationSucces ){PF('addStrategyDialog').hide();}" /> don't remove-->
+									oncomplete=" if ( args.validationSucces ){PF('addStrategyDialog').hide();}" />
 							</div>
 						</p:outputPanel>
 					</p:dialog>
