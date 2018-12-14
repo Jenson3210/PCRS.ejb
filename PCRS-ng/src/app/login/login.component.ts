@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../service/user.service';
 import { Router } from '@angular/router';
+import { IAlert } from '../model/Interfaces/IAlert';
+import { AlertType } from '../model/alert-type.enum';
 
 @Component({
   selector: 'app-login',
@@ -11,13 +13,14 @@ export class LoginComponent implements OnInit {
 
   private email: string;
   private password: string;
+  private errors: IAlert[];
 
   constructor(private userService: UserService, private router: Router) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   login() {
+    this.errors = [];
     this.userService.getUser(this.email, this.password).subscribe(
       x => {
         this.userService.login(x.body[0]);
@@ -25,15 +28,11 @@ export class LoginComponent implements OnInit {
       }, (error) => {
         switch (error.status) {
           case 403: {
-              this.router.navigate(['login'], {
-              queryParams: {error: 'password'}
-            });
+              this.errors.push({message: error.statusText, type: AlertType.DANGER});
             break;
           }
           default: {
-            this.router.navigate(['login'], {
-              queryParams: { error: 'unknown'}
-            });
+            this.errors.push({message: error.statusText, type: AlertType.DANGER});
             break;
           }
         }

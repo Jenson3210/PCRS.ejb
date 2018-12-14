@@ -41,12 +41,12 @@ public class UserFacade implements Serializable, IUserFacade {
 	}
 
 	@Override
-	public UserBo save(UserBo user) {
+	public UserBo save(UserBo user) throws ValidationException {
 		return userConverter.convertToBo(userServiceBl.save(userConverter.convertToEntity(user)));
 	}
 
 	@Override
-	public UserBo get(UserBo user) {
+	public UserBo get(UserBo user) throws ValidationException {
 		return userConverter.convertToBo(userServiceBl.get(userConverter.convertToEntity(user)));
 	}
 
@@ -69,5 +69,13 @@ public class UserFacade implements Serializable, IUserFacade {
 	public UserBo getUserByEnrolment(EnrolmentBo enrolment) throws NoExistingMemberException {
 		return userConverter.convertToBo(userServiceBl.getUserByEnrolment(enrolmentConverter.convertToEntity(enrolment)));
 	}
+
+	@Override
+	public UserBo login(String email, String password) throws ValidationException {
+		// TODO Auto-generated method stub
+		return this.userConverter.convertToBo(this.userServiceBl.login(email, password));
+	}
+	
+	
 
 }

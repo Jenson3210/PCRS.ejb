@@ -6,7 +6,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 
 @Stateless
@@ -22,6 +21,7 @@ public class DbUserPrivilegeServiceDl implements IUserPrivilegeServiceDl{
 		{
 			em.persist(element);
 			userPrivilege= element;
+		
 		}
 		else
 		{

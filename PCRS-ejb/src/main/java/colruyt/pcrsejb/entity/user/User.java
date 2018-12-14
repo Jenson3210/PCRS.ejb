@@ -40,7 +40,7 @@ public class User extends AbstractEntity implements Serializable {
     private String firstName;
     @Column(name="LASTNAME")
     private String lastName;
-    @Column(name="EMAIL")
+    @Column(name="EMAIL",unique=true)
     private String email;
     @Column(name="PASSWORD")
     private String password="";
