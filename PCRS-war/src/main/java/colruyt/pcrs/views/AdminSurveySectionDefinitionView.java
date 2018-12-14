@@ -25,20 +25,19 @@ import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 public class AdminSurveySectionDefinitionView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@EJB
 	private ISurveySectionDefinitionFacade surveySectionDefinitionFacade;
-	private SurveySectionDefinitionBo surveySectionDefinitionBo;
-	
+	private SurveySectionDefinitionBo addedSurveySectionDefinition;
+
 	@EJB
 	private ISurveySectionTitleFacade surveySectionTitleFacade;
-	
+
 	@EJB
 	private ISurveySectionStrategyFacade surveySectionStrategyFacade;
 	private List<SurveySectionDefinitionBo> surveySectionDefinitions;
 	private List<SurveySectionTitleBo> surveySectionTitles;
 	private List<SurveySectionStrategyBo> surveySectionStrategies;
-	private SurveySectionDefinitionBo addedSurveySectionDefinition;
 
 	@PostConstruct
 	private void fillSurveySectionDefinitions() {
@@ -90,11 +89,12 @@ public class AdminSurveySectionDefinitionView implements Serializable {
 	public void addSurveySectionDefinition() {
 		PrimeFaces pf = PrimeFaces.current();
 		try {
-			surveySectionDefinitions.add(surveySectionDefinitionFacade.save(surveySectionDefinitionBo));
-			pf.ajax().addCallbackParam("validationSucces", true);
+			surveySectionDefinitions.add(surveySectionDefinitionFacade.save(addedSurveySectionDefinition));
+			pf.ajax().addCallbackParam("validationSuccess", true);
 		} catch (ValidationException e) {
 			pf.ajax().addCallbackParam("validationSuccess", false);
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+			FacesContext.getCurrentInstance().addMessage("addForm",
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 		}
 	}
 
@@ -105,25 +105,26 @@ public class AdminSurveySectionDefinitionView implements Serializable {
 	}
 
 	public void editSurveySectionDefinition() {
-		
+
 		PrimeFaces pf = PrimeFaces.current();
 
 		SurveySectionDefinitionBo d = null;
-		
+
 		for (SurveySectionDefinitionBo definition : surveySectionDefinitions) {
 			if (definition.getId() == addedSurveySectionDefinition.getId()) {
 				definition.setSurveySectionTitle(addedSurveySectionDefinition.getSurveySectionTitle());
-				definition.setSurveySectionStrategy(addedSurveySectionDefinition.getSurveySectionStrategy());			
+				definition.setSurveySectionStrategy(addedSurveySectionDefinition.getSurveySectionStrategy());
 				d = definition;
 			}
 		}
-		
+
 		try {
 			surveySectionDefinitionFacade.save(d);
-			pf.ajax().addCallbackParam("validationSuccess", true);	
+			pf.ajax().addCallbackParam("validationSuccess", true);
 		} catch (ValidationException e) {
 			pf.ajax().addCallbackParam("validationSuccess", false);
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+			FacesContext.getCurrentInstance().addMessage("editForm",
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 		}
 	}
 
@@ -138,7 +139,8 @@ public class AdminSurveySectionDefinitionView implements Serializable {
 			surveySectionDefinitionFacade.delete(d);
 			surveySectionDefinitions.remove(d);
 		} catch (ValidationException e) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Succesfully deleted", null));
 		}
 	}
 }
