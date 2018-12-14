@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 
 import colruyt.pcrsejb.entity.competence.CompetenceLevel;
 import colruyt.pcrsejb.service.dl.competence.ICompetenceLevelServiceDl;
+import colruyt.pcrsejb.util.exceptions.validation.competence.CompetenceLevelDoesNotExistExeption;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 @Stateless
 public class CompetenceLevelServiceBl implements Serializable, ICompetenceLevelServiceBl{
@@ -26,8 +27,13 @@ public class CompetenceLevelServiceBl implements Serializable, ICompetenceLevelS
 	}
 
 	@Override
-	public CompetenceLevel get(CompetenceLevel element) {
-		return competencelevelDb.get(element);
+	public CompetenceLevel get(CompetenceLevel element) throws ValidationException{
+		CompetenceLevel cl = null;
+		cl = competencelevelDb.get(element);
+		if(cl == null){
+			throw new CompetenceLevelDoesNotExistExeption("This is not a Competence Level !");
+		}
+		return cl;
 	}
 
 	@Override

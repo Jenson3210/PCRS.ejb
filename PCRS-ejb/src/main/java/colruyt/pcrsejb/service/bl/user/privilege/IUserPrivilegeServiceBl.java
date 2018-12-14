@@ -10,12 +10,13 @@ import colruyt.pcrsejb.entity.user.privilege.PrivilegeType;
 import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 import colruyt.pcrsejb.service.bl.IServiceBl;
 import colruyt.pcrsejb.util.exceptions.MemberAlreadyHasATeamException;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Local
 public interface IUserPrivilegeServiceBl extends IServiceBl<UserPrivilege> {
 
-	User grantUserPrivilegeToUser(User user, UserPrivilege userPrivilege);
-	void revokeUserPrivilegeToUser(User user, UserPrivilege userPrivilege);
-	UserPrivilege setUserPrivilege(User user, String userPrivilege) throws MemberAlreadyHasATeamException;
-	void revokeUserPrivilegeTypeToUser(User user, PrivilegeType privilegeType, SurveyDefinition surveyDefinition);
+	User grantUserPrivilegeToUser(User user, UserPrivilege userPrivilege) throws ValidationException ;
+	void revokeUserPrivilegeToUser(User user, UserPrivilege userPrivilege) throws ValidationException ;
+	UserPrivilege setUserPrivilege(User user, String userPrivilege) throws MemberAlreadyHasATeamException,ValidationException;
+	void revokeUserPrivilegeTypeToUser(User user, PrivilegeType privilegeType, SurveyDefinition surveyDefinition) throws ValidationException ;
 }

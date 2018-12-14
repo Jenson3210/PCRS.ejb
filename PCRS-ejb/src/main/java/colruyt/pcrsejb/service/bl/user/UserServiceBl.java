@@ -4,18 +4,19 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.EntityExistsException;
 
-import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
-import colruyt.pcrsejb.bo.user.team.EnrolmentBo;
-import colruyt.pcrsejb.entity.surveys.surveySet.SurveySet;
 import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.privilege.PrivilegeType;
 import colruyt.pcrsejb.entity.user.privilege.TeamMemberUserPrivilege;
 import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 import colruyt.pcrsejb.entity.user.team.Enrolment;
 import colruyt.pcrsejb.service.dl.user.IUserServiceDl;
+import colruyt.pcrsejb.util.exceptions.LoginException;
 import colruyt.pcrsejb.util.exceptions.NoExistingEmailException;
 import colruyt.pcrsejb.util.exceptions.NoExistingMemberException;
+import colruyt.pcrsejb.util.exceptions.UserDoesNotExistException;
+import colruyt.pcrsejb.util.exceptions.UserEmailAddressAlreadyExistsException;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
@@ -32,16 +33,36 @@ public class UserServiceBl implements IUserServiceBl {
 		return usersDb.getAll();
 	}
 
-	public User save(User user) {
+	public User save(User user) throws ValidationException {
+		try {
 		return usersDb.save(user);
+		
+		}catch(Exception e) {	
+			
+			
+				throw new UserEmailAddressAlreadyExistsException();
+		}
 	}
 
 	public void delete(User user) throws ValidationException {
+		try {
 		usersDb.delete(user);
+		}
+		catch(EntityExistsException e) {
+			throw new UserDoesNotExistException();
+			
+		}
 	}
 
-	public User get(User user) {
+	public User get(User user) throws ValidationException{
+		
+		try {
 		return usersDb.get(user);
+		}
+		catch(EntityExistsException e) {
+			throw new UserDoesNotExistException();
+			
+		}
 	}
 	
 
@@ -75,5 +96,22 @@ public class UserServiceBl implements IUserServiceBl {
 			}
 		}
 		return returnPrivilege;
+	}
+
+	@Override
+	public User login(String email, String password) throws ValidationException {
+		User u;
+		try {
+			u = this.usersDb.getElementByEmail(email);
+			if(u.getPassword().equals(password)) {
+				return u;
+			} 
+		}
+			catch (NoExistingEmailException e) {
+				throw new LoginException();
+			}
+		
+		throw new LoginException();
+			
 	}
 }

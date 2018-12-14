@@ -1,7 +1,6 @@
 package colruyt.pcrs.views;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,7 +10,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
-import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionBo;
+import org.primefaces.PrimeFaces;
+
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionTitleBo;
 import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveySectionDefinitionFacade;
 import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveySectionTitleFacade;
@@ -53,7 +53,14 @@ public class AdminSurveySectionTitleView implements Serializable {
 
 	public void addSurveySectionTitle()
 	{
-		surveySectionTitles.add(surveySectionTitleFacade.save(addedSurveySectionTitle));
+		PrimeFaces pf = PrimeFaces.current();
+		try {
+			surveySectionTitles.add(surveySectionTitleFacade.save(addedSurveySectionTitle));
+			pf.ajax().addCallbackParam("validationSucces", true);
+		} catch (ValidationException e) {
+			pf.ajax().addCallbackParam("validationSucces", false);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+		}
 	}
 	
 	public void newSurveySectionTitle() {
@@ -61,6 +68,8 @@ public class AdminSurveySectionTitleView implements Serializable {
     }
 	
 	public void editSurveySectionTitle() {
+		PrimeFaces pf = PrimeFaces.current();
+		
 		SurveySectionTitleBo t = null;
 		for (SurveySectionTitleBo title : surveySectionTitles) {
 			if (title.getId() == addedSurveySectionTitle.getId()) {
@@ -68,31 +77,33 @@ public class AdminSurveySectionTitleView implements Serializable {
 				t = title;
 			}
 		}
-		surveySectionTitleFacade.save(t); 
+		
+		try {
+			surveySectionTitleFacade.save(t);
+			pf.ajax().addCallbackParam("validationSucces", true);
+		} catch (ValidationException e) {
+			pf.ajax().addCallbackParam("validationSucces", false);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+		} 
 	}
 	
 	public void deleteSurveySectionTitle()
 	{
-		FacesContext context = FacesContext.getCurrentInstance();
 		SurveySectionTitleBo t = null;
 		for (SurveySectionTitleBo title : surveySectionTitles) {
 			if (title.getId() == addedSurveySectionTitle.getId()) {
 				t = title;
 			}
 		}
-		List<SurveySectionDefinitionBo> listOfSurveySectionDefinitions = surveySectionDefinitionFacade.getSurveySectionDefinitionsForTitle(t);
-		if(listOfSurveySectionDefinitions.size()==0)
-		{
+		PrimeFaces pf = PrimeFaces.current();
+		try {
 			surveySectionTitles.remove(t);
-			try {
-				surveySectionTitleFacade.delete(t);
-			} catch (ValidationException e) {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
-			}
-		}
-		else
+			surveySectionTitleFacade.delete(t);
+			pf.ajax().addCallbackParam("validationSucces", false);
+		} catch(ValidationException e)
 		{
-			context.addMessage(null, new FacesMessage("This title cannot be deleted, it is still used in one or more SurveySectionDefinitions."));
+			pf.ajax().addCallbackParam("validationSucces", false);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 		}
 	}
 }

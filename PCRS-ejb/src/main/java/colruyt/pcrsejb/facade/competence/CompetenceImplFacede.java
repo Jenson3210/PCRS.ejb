@@ -22,13 +22,13 @@ public class CompetenceImplFacede implements ICompetenceImplFacade, Serializable
     private ICompetenceImplServiceBl competenceImplServiceBl;
     private CompetenceImplConverter competenceImplConverter = new CompetenceImplConverter();
     @Override
-    public CompetenceImplBo save(CompetenceImplBo entityBo) {
+    public CompetenceImplBo save(CompetenceImplBo entityBo) throws ValidationException {
         return competenceImplConverter.convertToBo(competenceImplServiceBl.save(competenceImplConverter.convertToEntity(entityBo)));
 
     }
 
     @Override
-    public CompetenceImplBo get(CompetenceImplBo entityBo) {
+    public CompetenceImplBo get(CompetenceImplBo entityBo) throws ValidationException {
 
         return competenceImplConverter.convertToBo(competenceImplServiceBl.get(competenceImplConverter.convertToEntity(entityBo)));
 

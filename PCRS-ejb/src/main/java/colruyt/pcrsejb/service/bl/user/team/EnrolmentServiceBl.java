@@ -13,9 +13,6 @@ import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 @Stateless
 public class EnrolmentServiceBl implements Serializable, IEnrolmentServiceBl {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	@EJB

@@ -1,6 +1,7 @@
 package colruyt.pcrsejb.service.bl.competence;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -9,6 +10,8 @@ import javax.ejb.Stateless;
 import colruyt.pcrsejb.entity.competence.Competence;
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinitionImpl;
 import colruyt.pcrsejb.service.dl.competence.ICompetenceServiceDl;
+import colruyt.pcrsejb.util.exceptions.validation.competence.CompetenceAlreadyExistExeption;
+import colruyt.pcrsejb.util.exceptions.validation.competence.CompetenceDoesNotExistExeption;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
@@ -21,14 +24,27 @@ public class CompetenceServiceBl implements Serializable, ICompetenceServiceBl {
 	private ICompetenceServiceDl competencedb;
 
 	@Override
-	public Competence save(Competence element) {
+	public Competence save(Competence element) throws ValidationException {
+        List<Competence> allCompeteces = this.getAll();
+        if(!allCompeteces.isEmpty()){
+            for(Competence c : allCompeteces){
+                if(c.equals(element)){
+                    throw new CompetenceAlreadyExistExeption("This is not a Competence already exists !");
+                }
+            }
+        }
 		competencedb.save(element);
 		return element;
 	}
 
 	@Override
-	public Competence get(Competence element) {
-		return competencedb.get(element);
+	public Competence get(Competence element) throws ValidationException{
+		Competence c = null;
+		c= competencedb.get(element);
+		if(c == null){
+			throw new CompetenceDoesNotExistExeption("This is not a Competence !");
+		}
+		return c;
 	}
 
 	@Override

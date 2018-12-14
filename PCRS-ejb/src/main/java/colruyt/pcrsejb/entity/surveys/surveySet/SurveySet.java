@@ -29,9 +29,7 @@ import colruyt.pcrsejb.util.general.LocalDateAttributeConverter;
 	@NamedQuery(name= "SURVEYSET.GETALL", query = "SELECT ss FROM SurveySet ss")
 })
 public class SurveySet  extends AbstractEntity implements Serializable,Comparable<SurveySet>{
-	/*
-	 * PROPERTIES
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SURVEYSETS_SEQ")
@@ -42,7 +40,7 @@ public class SurveySet  extends AbstractEntity implements Serializable,Comparabl
 	
 	@Convert(converter = LocalDateAttributeConverter.class)
     private LocalDate surveyYear;
-    @OneToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(name="SURVEYSET_ID")
 
     private List<Survey> surveyList = new ArrayList<>();
