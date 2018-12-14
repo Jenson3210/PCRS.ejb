@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,7 +25,7 @@ import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @ViewScoped
 @Named
-public class ManagerTeamViewChangeFunction implements Serializable {
+public class ManagerTeamViewChangeFunctionDialog implements Serializable {
 
 	
 	private static final long serialVersionUID = 1L;
@@ -84,7 +86,10 @@ public class ManagerTeamViewChangeFunction implements Serializable {
 			try {
 				this.userFacade.save(userBo);
 			} catch (ValidationException e) {
-				//NOP
+				FacesContext context = FacesContext.getCurrentInstance();
+				String message= context.getApplication().evaluateExpressionGet(context, "#{msgs['error.general']}",
+						String.class);
+				FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, null, message);
 			}
 		
 	}

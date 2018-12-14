@@ -26,7 +26,7 @@ import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Named
 @ViewScoped
-public class ManagerTeamViewDialog implements Serializable {
+public class ManagerTeamViewCreateSurveyDialog implements Serializable {
 	
 	
 	private static final long serialVersionUID = 1L;
@@ -98,7 +98,7 @@ public class ManagerTeamViewDialog implements Serializable {
 	
 	
 	  
-	public ManagerTeamViewDialog() {
+	public ManagerTeamViewCreateSurveyDialog() {
 		super();
 	}
 
