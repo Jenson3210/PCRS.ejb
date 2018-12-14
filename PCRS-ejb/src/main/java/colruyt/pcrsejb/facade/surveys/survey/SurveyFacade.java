@@ -22,7 +22,7 @@ public class SurveyFacade implements Serializable, ISurveyFacade {
 	@EJB
 	private ISurveyServiceBl surveyService; 
 	
-	private SurveyConverter surveyConverter;
+	private SurveyConverter surveyConverter = new SurveyConverter();
 
 	@Override
 	public SurveyBo save(SurveyBo entityBo) {

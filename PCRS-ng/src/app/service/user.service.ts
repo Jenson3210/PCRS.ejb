@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { IUser } from '../model/Interfaces/IUser';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ISurveySet } from '../model/Interfaces/ISurveySet';
+import { IPrivilege } from '../model/Interfaces/IPrivilege';
+import { PrivilegeType } from '../model/PrivilegeType.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +31,17 @@ export class UserService {
   login(user: IUser): boolean {
     this.user = user;
     return true;
+  }
+  getSurveySets(): ISurveySet[] {
+    const surveySets: ISurveySet[] = [];
+    console.log(this.user);
+    for (const privilege of this.user.privileges) {
+      if (privilege.privilegeType as PrivilegeType === PrivilegeType.TEAMMEMBER) {
+        for (const surveySet of privilege.surveySetTreeSet) {
+          surveySets.push(surveySet);
+        }
+      }
+    }
+    return surveySets;
   }
 }

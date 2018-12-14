@@ -22,6 +22,6 @@ export class SurveyService {
   }
 
   save(survey: ISurvey) {
-    // TODO
+    this.http.post<ISurvey>(this.baseUrl + 'usersurveys/', survey).subscribe();
   }
 }

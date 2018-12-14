@@ -3,7 +3,7 @@
     <tr>
       <th style="width: 5%;" align="center">Info</th>
       <th style="width: 50%;">Competence</th>
-      <th [ngStyle]="{'width.%': levelStyle}" align="center" *ngFor="let item of arrayCreator(surveySection.surveySectionDefinition.surveySectionDefinitionBo.surveySectionStrategy.amountOfLevels); index as i">{{i + 1}}</th>
+      <th [ngStyle]="{'width.%': levelWidth}" align="center" *ngFor="let item of arrayCreator(surveySection.surveySectionDefinition.surveySectionDefinitionBo.surveySectionStrategy.amountOfLevels); index as i">{{i + 1}}</th>
       <th style="width: 10%;" align="center" *ngIf="surveySection.surveySectionDefinition.surveySectionDefinitionBo.surveySectionStrategy.energyRated">Energy</th>
       <!-- INTERESSE -->
       <th style="width: 10%;" align="center" *ngIf="surveySection.surveySectionDefinition.surveySectionDefinitionBo.surveySectionStrategy.interestRated">Interesse</th>
