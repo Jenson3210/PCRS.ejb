@@ -22,10 +22,6 @@ export class SurveyService {
   }
 
   save(survey: ISurvey) {
-    this.http.post<IUser>(this.baseUrl + 'usersurveys/',  {
-      param: {
-        survey : survey
-      }
-    }).subscribe();
+    this.http.post<ISurvey>(this.baseUrl + 'usersurveys/', survey).subscribe();
   }
 }

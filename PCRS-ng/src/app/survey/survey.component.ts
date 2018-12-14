@@ -39,7 +39,7 @@ export class SurveyComponent implements OnInit {
   }
   }
 
-  finished() {
+  finished(): boolean {
     let finished = true;
     for (const surveySection of this.survey$.surveySections) {
       if (finished) {
@@ -66,8 +66,9 @@ export class SurveyComponent implements OnInit {
   }
 
   submitSurvey() {
-    this.survey$.dateCompleted = new Date();
+    this.survey$.dateCompleted = (new Date()).toISOString().substring(0, 10);
     this.saveSurvey();
+    this.router.navigate(['survey']);
   }
   saveSurvey() {
     this.surveyService.save(this.survey$);

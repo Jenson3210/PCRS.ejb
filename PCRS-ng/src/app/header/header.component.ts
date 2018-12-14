@@ -11,9 +11,6 @@ import { UserService } from '../service/user.service';
 })
 export class HeaderComponent implements OnInit {
 
-  public user = {} as IUser;
-  public surveySets: ISurveySet[] = [];
-
   constructor(
     private userService: UserService,
     private router: Router) { }

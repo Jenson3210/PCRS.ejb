@@ -19,7 +19,7 @@ export class SurveySectionComponent implements OnInit {
 
   ngOnInit() {
     let width: number;
-    width = 35;
+    width = 45;
     if (this.surveySection.surveySectionDefinition.surveySectionDefinitionBo.surveySectionStrategy.energyRated) {
       width = width - 10;
     }
