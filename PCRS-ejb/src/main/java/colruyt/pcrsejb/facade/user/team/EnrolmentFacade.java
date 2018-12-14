@@ -33,12 +33,12 @@ public class EnrolmentFacade implements Serializable, IEnrolmentFacade {
 	
 
 	@Override
-	public EnrolmentBo save(EnrolmentBo enrolment) {
+	public EnrolmentBo save(EnrolmentBo enrolment) throws ValidationException {
 		return enrolmentConverter.convertToBo(enrolmentServiceBl.save(enrolmentConverter.convertToEntity(enrolment)));
 	}
 
 	@Override
-	public EnrolmentBo get(EnrolmentBo enrolment) {
+	public EnrolmentBo get(EnrolmentBo enrolment) throws ValidationException {
 		return enrolmentConverter.convertToBo(enrolmentServiceBl.get(enrolmentConverter.convertToEntity(enrolment)));
 	}
 

@@ -51,7 +51,6 @@ public class UserService {
 			}
 			catch(Exception e) {
 				return Response.status(Response.Status.FORBIDDEN)
-						.type(MediaType.TEXT_PLAIN)
 						.entity("Wrong password!")
 						.build();
 			}
