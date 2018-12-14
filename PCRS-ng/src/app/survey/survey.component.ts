@@ -17,6 +17,9 @@ export class SurveyComponent implements OnInit {
   constructor(public surveyService: SurveyService, private userService: UserService, private router: Router) {}
 
   ngOnInit() {
+  if (this.userService.user == null) {
+    this.router.navigate(['login']);
+  }
   this.surveyService.getSurveyForUser(this.userService.user, SurveyKind.TeamMember).subscribe(
     x => {
       this.survey$ = x.body;

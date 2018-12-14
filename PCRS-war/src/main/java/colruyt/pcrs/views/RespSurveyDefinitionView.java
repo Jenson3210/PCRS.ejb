@@ -75,7 +75,9 @@ public class RespSurveyDefinitionView implements Serializable {
 	private List<SurveySectionStrategyBo> surveySectionStrategyList = new ArrayList<>();;
 	
 	// list of the survey section requirement levels
-	private List<SurveySectionRequirementLevelBo> surveySectionRequirementLevels = new ArrayList<>();;
+	private List<SurveySectionRequirementLevelBo> surveySectionRequirementLevels = new ArrayList<>();
+	
+	private List<CompetenceBo> filteredResults = new ArrayList<>();
 	
 	// list of all the existing competences
 	private List<CompetenceBo> existingCompetences = new ArrayList<>();;
@@ -150,9 +152,9 @@ public class RespSurveyDefinitionView implements Serializable {
 	 * called when the Manage Competences button is clicked
 	 */
 	public void manageCompetencesClickListener() {
+		selectedSectionDefinitionImpl = new SurveySectionDefinitionImplBo();
 		selectedCompetence = new CompetenceBo();
 		addedCompetenceImplBo = new CompetenceImplBo();
-		this.existingCompetences = competenceFacade.getAll();
 	}
 	
 	
@@ -170,6 +172,7 @@ public class RespSurveyDefinitionView implements Serializable {
 	 * create new implementation of the competence with the selected attributes
 	 */
 	public void addNewCompetence() {
+		System.out.println(this.selectedSectionDefinitionImpl);
 		CompetenceImplBo bo = new CompetenceImplBo(selectedCompetence, selectedCompetence.getCompetenceDescription(), 
 				selectedMinLevel.getOrderLevel());
 		
@@ -178,7 +181,7 @@ public class RespSurveyDefinitionView implements Serializable {
 		// get index of the selected impl
 		for(int i =0; i < assignedSurveyDefinitionList.get(getActiveIndex()).getSurveySections().size(); i++) {
 			SurveySectionDefinitionImplBo impl = assignedSurveyDefinitionList.get(getActiveIndex()).getSurveySections().get(i);
-			if (impl.getId().equals(selectedSectionDefinitionImpl.getId())) {
+			if (impl.getId().equals(getSelectedSectionDefinitionImpl().getId())) {
 				index = i;
 			}
 		}
@@ -199,20 +202,27 @@ public class RespSurveyDefinitionView implements Serializable {
 	 * 			match the query 
 	 */
 	public List<CompetenceBo> completeCompetence(String query) {
-		List<CompetenceBo> filteredResults = new ArrayList<>();
+		List<CompetenceBo> newResults = new ArrayList<>();
 		query = query.toLowerCase();
-		for (CompetenceBo bo : existingCompetences) {
+		for (CompetenceBo bo : filteredResults) {
+			// filter on name and description
 			if (bo.getName().toLowerCase().contains(query) || 
 					bo.getCompetenceDescription().toLowerCase().contains(query)) {
-				filteredResults.add(bo);
+				newResults.add(bo);
 			}
 		}
-		return filteredResults;
+		return newResults;
 	}
 	
 	
 	public List<SurveySectionDefinitionImplBo> completeSection(String query){
-		return activeTab.getSurveySections();
+		List<SurveySectionDefinitionImplBo> bos = new ArrayList<>();
+		for (SurveySectionDefinitionImplBo bo : activeTab.getSurveySections()) {
+			if (bo.getSurveySectionDefinitionBo().getSurveySectionTitle().getTitle().contains(query)) {
+				bos.add(bo);
+			}
+		}
+		return bos;
 	}
 
 
@@ -402,7 +412,8 @@ public class RespSurveyDefinitionView implements Serializable {
 
 	public void setSelectedSectionDefinitionImpl(SurveySectionDefinitionImplBo selectedSectionDefinitionImpl) {
 		if (selectedSectionDefinitionImpl.getSurveySectionDefinitionBo() == null) {
-			selectedSectionDefinitionImpl = surveySectionDefinitionImplFacade.get(selectedSectionDefinitionImpl);
+			this.selectedSectionDefinitionImpl = surveySectionDefinitionImplFacade.get(selectedSectionDefinitionImpl);
+			this.filteredResults = competenceFacade.getCompetencesBySection(this.selectedSectionDefinitionImpl);
 		}
 	}
 
@@ -413,5 +424,16 @@ public class RespSurveyDefinitionView implements Serializable {
 	public void setIntSelected(Integer intSelected) {
 		this.intSelected = intSelected;
 	}
+
+
+	public List<CompetenceBo> getFilteredResults() {
+		return filteredResults;
+	}
+
+
+	public void setFilteredResults(List<CompetenceBo> filteredResults) {
+		this.filteredResults = filteredResults;
+	}
+	
 
 }
