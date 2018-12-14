@@ -47,7 +47,6 @@ public class SurveySectionStrategyView implements Serializable {
 	}
  
 	public void addSurveySectionStrategy() {
-		strategies.add(surveySectionStrategyFacade.save(surveySectionStrategyBo));
 		PrimeFaces pf = PrimeFaces.current();
 		try {
 			strategies.add(surveySectionStrategyFacade.save(surveySectionStrategyBo));
