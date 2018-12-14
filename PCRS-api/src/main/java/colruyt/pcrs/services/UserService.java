@@ -22,10 +22,10 @@ import io.swagger.annotations.ApiResponses;
 
 @Path("users")
 public class UserService {
-	
+
 	@EJB
 	private IUserFacade userFacade;
-	
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Find all users", notes = "Retrieve all users", response = User[].class, responseContainer = "List")
@@ -39,24 +39,20 @@ public class UserService {
 		
 		List<UserBo> users = new ArrayList<>();
 		
+		Response resp = Response.status(Response.Status.FORBIDDEN).entity("Password & E-mail is must be filled in!").build();
+		
 		if (email != null && password != null) {
-			//TODO MOVE TO BL
-			for (UserBo u : userFacade.getAll()) {
-				if (u.getEmail().equalsIgnoreCase(email)) {
-					if (u.getPassword().equalsIgnoreCase(password)) {
-						users.add(u);
-					}
-					else {
-						return Response.status(Response.Status.FORBIDDEN).build();
-					}
-				}
+			try {
+				UserBo userbo = this.userFacade.login(email, password);
+				resp = Response.status(Response.Status.OK).entity(userbo).build();
+			}
+			catch(Exception e) {
+				resp = Response.status(Response.Status.FORBIDDEN)
+						.entity("Wrong password!")
+						.build();
 			}
 		}
-		else {
-			users= userFacade.getAll();
-		}
-		
-		
-		return Response.ok().entity(users).build();
+		return resp;
 	}
-}
+
+} 

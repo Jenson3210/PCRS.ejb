@@ -31,7 +31,7 @@ public class CompetenceLevelServiceBl implements Serializable, ICompetenceLevelS
 		CompetenceLevel cl = null;
 		cl = competencelevelDb.get(element);
 		if(cl == null){
-			throw new CompetenceLevelDoesNotExistExeption();
+			throw new CompetenceLevelDoesNotExistExeption("This is not a Competence Level !");
 		}
 		return cl;
 	}

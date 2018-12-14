@@ -15,13 +15,13 @@ import colruyt.pcrs.utillibs.CreateScript;
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.facade.user.IUserFacade;
 import colruyt.pcrsejb.util.exceptions.NoExistingEmailException;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Named
 @SessionScoped
 public class LogonView implements Serializable {
-	/**
-	 * 
-	 */
+
+	
 	private static final long serialVersionUID = 1L;
 
 	@EJB
@@ -44,29 +44,30 @@ public class LogonView implements Serializable {
 	public void login() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
-		
-		try {
-		UserBo user = userFacade.getUserByEmail(email);
-		if (user != null && this.password.equals(user.getPassword())) {
-			context.getExternalContext().getSessionMap().put("user", user);
-			try {
-				context.getExternalContext().redirect("profile.xhtml");
-				
-			} catch (IOException e) {
-				e.printStackTrace(); 
-			}
-		} else {
-			// Send an error message on Login Failure
-			context.addMessage(null, new FacesMessage("Authentication Failed. Check username or password."));
 
+		try {
+
+			UserBo user = this.userFacade.login(email, password);
+			if (user != null) {
+				context.getExternalContext().getSessionMap().put("user", user);
+				try {
+					context.getExternalContext().redirect("profile.xhtml");
+
+				} catch (IOException e) {
+					context.addMessage("#myform", new FacesMessage("Authentication Failed. Check username or password."));
+
+				}
+			} else {
+				// Send an error message on Login Failure
+				context.addMessage("#myform", new FacesMessage("Authentication Failed. Check username or password."));
+
+			}
+
+		} catch (ValidationException e1) {
+
+			context.addMessage("#myform", new FacesMessage("Authentication Failed. Check username or password."));
 		}
-		
-		
-		}
-		catch(NoExistingEmailException e) {
-			context.addMessage(null, new FacesMessage("Authentication Failed. Check username or password."));
-		}
-		
+
 	}
 
 	public void logout() {

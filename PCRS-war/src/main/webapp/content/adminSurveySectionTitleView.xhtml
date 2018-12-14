@@ -61,6 +61,10 @@
 						widgetVar="addSurveySectionTitleDialog" modal="true"
 						class="modalSM">
 						<p:outputPanel id="addSurveySectionTitleDetail">
+							<p:messages id="addEx" showDetail="false" closable="true"
+								globalOnly="true">
+								<p:autoUpdate />
+							</p:messages>
 							<div class="ui-g">
 								<div class="ui-g-4">
 									<p:outputLabel value="#{msgs['surveySectionTitle.title']}"></p:outputLabel>
@@ -88,6 +92,9 @@
 						widgetVar="editSurveySectionTitleDialog" modal="true"
 						class="modalSM">
 						<p:outputPanel id="editSurveySectionTitleDetail">
+							<p:messages id="errors" showDetail="false" closable="true">
+								<p:autoUpdate />
+							</p:messages>
 							<div class="ui-g">
 								<div class="ui-g-4">
 									<p:outputLabel value="#{msgs['surveySectionTitle.title']}"></p:outputLabel>

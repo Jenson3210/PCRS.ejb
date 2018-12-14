@@ -13,9 +13,7 @@ import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
 public class SurveySectionStrategyFacade implements Serializable, ISurveySectionStrategyFacade {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
 	@EJB

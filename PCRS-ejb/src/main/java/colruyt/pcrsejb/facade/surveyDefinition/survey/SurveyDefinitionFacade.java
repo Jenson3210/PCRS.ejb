@@ -7,8 +7,6 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveyDefinitionBo;
-import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionBo;
-import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionTitleBo;
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.converter.surveyDefinition.survey.SurveyDefinitionConverter;
 import colruyt.pcrsejb.converter.user.UserConverter;
@@ -29,12 +27,12 @@ public class SurveyDefinitionFacade implements Serializable, ISurveyDefinitionFa
 	private UserConverter userConv = new UserConverter();
 	
 	@Override
-	public SurveyDefinitionBo save(SurveyDefinitionBo entityBo) {
+	public SurveyDefinitionBo save(SurveyDefinitionBo entityBo) throws ValidationException {
 		return surveyDefinitionConverter.convertToBo(surveyDefinitionServiceBl.save(surveyDefinitionConverter.convertToEntity(entityBo)));
 	}
 
 	@Override
-	public SurveyDefinitionBo get(SurveyDefinitionBo entityBo) {
+	public SurveyDefinitionBo get(SurveyDefinitionBo entityBo) throws ValidationException {
 		return surveyDefinitionConverter.convertToBo(surveyDefinitionServiceBl.get(surveyDefinitionConverter.convertToEntity(entityBo)));
 	}
 

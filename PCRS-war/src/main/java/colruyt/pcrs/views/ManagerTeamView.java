@@ -136,7 +136,7 @@ public class ManagerTeamView implements Serializable {
 	}
 
 	public Integer getMemberSurveyPercentage(UserBo user) {
-	//TODO: vraag na 
+
 		try {
 			return this.getSurveyFacade().getPercentageCompleteForMemberSurvey(user);
 		} catch (NoSurveySetException e) {

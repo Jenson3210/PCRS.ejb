@@ -70,4 +70,12 @@ public class UserFacade implements Serializable, IUserFacade {
 		return userConverter.convertToBo(userServiceBl.getUserByEnrolment(enrolmentConverter.convertToEntity(enrolment)));
 	}
 
+	@Override
+	public UserBo login(String email, String password) throws ValidationException {
+		// TODO Auto-generated method stub
+		return this.userConverter.convertToBo(this.userServiceBl.login(email, password));
+	}
+	
+	
+
 }
