@@ -73,7 +73,7 @@ public class TeamFacade implements Serializable, ITeamFacade {
 	}
 
 	@Override
-	public EnrolmentBo addUserToTeam(TeamBo manipulatedTeamBo, UserBo user, String userPrivilege) throws MemberAlreadyHasATeamException {
+	public EnrolmentBo addUserToTeam(TeamBo manipulatedTeamBo, UserBo user, String userPrivilege) throws MemberAlreadyHasATeamException, ValidationException {
 		return enrolmentConv.convertToBo(teamBl.addUserToTeam(teamConv.convertToEntity(manipulatedTeamBo), userConv.convertToEntity(user), userPrivilege));
 	}
 
