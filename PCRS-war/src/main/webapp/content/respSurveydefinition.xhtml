@@ -214,7 +214,8 @@
 										<f:selectItems
 											value="#{respSurveyDefinitionView.activeTab.surveySections}"
 											var="sectionImpl"
-											itemLabel="#{sectionImpl.surveySectionDefinitionBo.surveySectionTitle.title}"
+											itemLabel="#{sectionImpl.surveySectionDefinitionBo.surveySectionTitle.title} - 
+											#{sectionImpl.surveySectionDefinitionBo.surveySectionStrategy.name} - #{sectionImpl.surveySectionRequirementLevelBo}"
 											itemValue="#{sectionImpl}" />
 									</p:selectOneMenu>
 								</div>
@@ -236,9 +237,10 @@
 		<h:form id="manageCompetences">
 			<div class="ui-g" id="manageCompetencesContainer">
 				<p:dialog header="#{msgs['respSurveyDefinition.manageCompetences']}"
-					widgetVar="manageCompetencesDialog" modal="true" draggable="false">
+					widgetVar="manageCompetencesDialog" modal="true" draggable="false" styleClass="width: 200px;">
 					<p:outputPanel id="manageCompetencesPanel">
-						<div class="ui-g-8">
+						<div class="ui-g">
+
 							<div class="ui-g-4">
 								<p:outputLabel
 									value="#{msgs['respSurveyDefinition.sectionToAddCompetenceTo']}" />
@@ -246,7 +248,8 @@
 							<div class="ui-g-8">
 								<p:autoComplete id="section"
 									completeMethod="#{respSurveyDefinitionView.completeSection}"
-									var="sectionImpl" itemLabel="#{sectionImpl.surveySectionDefinitionBo.surveySectionTitle.title}"
+									var="sectionImpl"
+									itemLabel="#{sectionImpl.surveySectionDefinitionBo.surveySectionTitle.title}"
 									itemValue="#{sectionImpl}" forceSelection="true"
 									emptyMessage="#{msgs['respSurveyDefinition.noResults']}"
 									value="#{respSurveyDefinitionView.selectedSectionDefinitionImpl}"
@@ -255,7 +258,8 @@
 								</p:autoComplete>
 							</div>
 						</div>
-						<div class="ui-g-8">
+						<div class="ui-g">
+
 							<div class="ui-g-4">
 								<p:outputLabel
 									value="#{msgs['respSurveyDefinition.competenceToAdd']}" />
@@ -268,30 +272,41 @@
 									emptyMessage="#{msgs['respSurveyDefinition.noResults']}"
 									value="#{respSurveyDefinitionView.selectedCompetence}"
 									converter="competenceBoConverter">
-									<p:ajax event="itemSelect" update="competenceDetails" />
+									<p:ajax event="itemSelect" update="competenceDetails" process="@this"/>
 								</p:autoComplete>
 							</div>
 						</div>
 						<p:outputPanel id="competenceDetails">
-							<div class="ui-g-8">
+							<div class="ui-g">
 								<div class="ui-g-4">
-									<p:outputLabel
-										value="#{msgs['respSurveyDefinition.selectedCompetenceDescription']}" />
+									<p:outputLabel value="#{msgs['competence.description']}" />
 								</div>
 								<div class="ui-g-8">
 									<p:inputTextarea
-										value="#{respSurveyDefinitionView.selectedCompetence.competenceDescription}" />
+										value="#{respSurveyDefinitionView.selectedCompetence.competenceDescription}"
+										disabled="#{not respSurveyDefinitionView.selectedSectionDefinitionImpl.surveySectionDefinitionBo.surveySectionStrategy.flexibleDescription}" />
 								</div>
 							</div>
-							<p:selectOneRadio
-								value="#{respSurveyDefinitionView.selectedMinLevel}"
-								converter="CompetenceLevelBoConverter" layout="pageDirection">
-								<f:selectItems
-									value="#{respSurveyDefinitionView.selectedCompetence.competenceLevels}"
-									var="level"
-									itemLabel="#{level.orderLevel}. #{level.description}"
-									itemValue="#{level}" />
-							</p:selectOneRadio>
+
+							
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['competence.minimumLevel']}"/>
+								</div>
+								<div class="ui-g-8">
+									<p:selectOneRadio
+										value="#{respSurveyDefinitionView.selectedMinLevel}"
+										converter="CompetenceLevelBoConverter" layout="pageDirection" 
+										disabled="#{respSurveyDefinitionView.selectedSectionDefinitionImpl.surveySectionDefinitionBo.surveySectionStrategy.hasMinimumLevel}">
+										<f:selectItems
+											value="#{respSurveyDefinitionView.selectedCompetence.competenceLevels}"
+											var="level"
+											itemLabel="#{level.orderLevel}. #{level.description}"
+											itemValue="#{level}"  />
+									</p:selectOneRadio> 
+								</div>
+							</div>
+
 						</p:outputPanel>
 						<div class="ui-g-8">
 							<p:commandButton value="#{msgs['respSurveyDefinition.add']}"

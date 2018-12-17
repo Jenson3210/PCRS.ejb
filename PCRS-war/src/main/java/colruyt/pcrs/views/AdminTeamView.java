@@ -12,6 +12,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import org.primefaces.PrimeFaces;
+
 import colruyt.pcrs.DTO.TeamEnrolmentBo;
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.team.EnrolmentBo;
@@ -19,11 +21,9 @@ import colruyt.pcrsejb.bo.user.team.TeamBo;
 import colruyt.pcrsejb.facade.user.IUserFacade;
 import colruyt.pcrsejb.facade.user.team.IEnrolmentFacade;
 import colruyt.pcrsejb.facade.user.team.ITeamFacade;
-import colruyt.pcrsejb.facade.user.team.TeamFacade;
 import colruyt.pcrsejb.util.exceptions.MemberAlreadyHasATeamException;
 import colruyt.pcrsejb.util.exceptions.NoExistingMemberException;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
-import org.primefaces.PrimeFaces;
 
 /**
  * The type Admin team view.
@@ -46,6 +46,9 @@ public class AdminTeamView implements Serializable {
 	private String userPrivilege;
 	private List<TeamEnrolmentBo> teamEnrolments = new ArrayList<>();
    
+	/**
+	 * Setup of the screen, loading the needed data
+	 */
 	@PostConstruct
 	private void fillList() {  
   		teams = teamFacade.getAll();
@@ -60,7 +63,6 @@ public class AdminTeamView implements Serializable {
 
 	/**
 	 * Gets teams.
-	 *
 	 * @return the teams
 	 */
 	public List<TeamBo> getTeams() {
@@ -69,7 +71,6 @@ public class AdminTeamView implements Serializable {
 
 	/**
 	 * Sets teams.
-	 *
 	 * @param teams the teams
 	 */
 	public void setTeams(List<TeamBo> teams) {
@@ -78,7 +79,6 @@ public class AdminTeamView implements Serializable {
 
 	/**
 	 * Gets manipulated enrolment bo.
-	 *
 	 * @return the manipulated enrolment bo
 	 */
 	public EnrolmentBo getManipulatedEnrolmentBo() {
@@ -87,7 +87,6 @@ public class AdminTeamView implements Serializable {
 
 	/**
 	 * Sets manipulated enrolment bo.
-	 *
 	 * @param manipulatedEnrolmentBo the manipulated enrolment bo
 	 */
 	public void setManipulatedEnrolmentBo(EnrolmentBo manipulatedEnrolmentBo) {
@@ -96,7 +95,6 @@ public class AdminTeamView implements Serializable {
 
 	/**
 	 * Gets manipulated team bo.
-	 *
 	 * @return the manipulated team bo
 	 */
 	public TeamBo getManipulatedTeamBo() {
@@ -105,7 +103,6 @@ public class AdminTeamView implements Serializable {
 
 	/**
 	 * Sets manipulated team bo.
-	 *
 	 * @param manipulatedTeamBo the manipulated team bo
 	 */
 	public void setManipulatedTeamBo(TeamBo manipulatedTeamBo) {
@@ -114,7 +111,6 @@ public class AdminTeamView implements Serializable {
 
 	/**
 	 * Gets user.
-	 *
 	 * @return the user
 	 */
 	public UserBo getUser() {
@@ -123,7 +119,6 @@ public class AdminTeamView implements Serializable {
 
 	/**
 	 * Sets user.
-	 *
 	 * @param user the user
 	 */
 	public void setUser(UserBo user) {
@@ -132,7 +127,6 @@ public class AdminTeamView implements Serializable {
 
 	/**
 	 * Gets user privilege.
-	 *
 	 * @return the user privilege
 	 */
 	public String getUserPrivilege() {
@@ -140,8 +134,7 @@ public class AdminTeamView implements Serializable {
 	}
 
 	/**
-	 * Sets user privilege.
-	 *
+	 * Sets user privilege.a
 	 * @param userPrivilege the user privilege
 	 */
 	public void setUserPrivilege(String userPrivilege) {
@@ -149,14 +142,14 @@ public class AdminTeamView implements Serializable {
 	}
 
 	/**
-	 * New team.
+	 * Create a new team.
 	 */
 	public void newTeam() {
 		manipulatedTeamBo = new TeamBo();
 	}
 
 	/**
-	 * Add team.
+	 * Add a team.
 	 */
 	public void addTeam() {
 		PrimeFaces pf = PrimeFaces.current();
@@ -169,50 +162,19 @@ public class AdminTeamView implements Serializable {
 			pf.ajax().addCallbackParam("validationSucces", false);
 			FacesContext.getCurrentInstance().addMessage("addForm", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 		}
-		teams.add(tf);
-		teamEnrolments.add(new TeamEnrolmentBo(manipulatedTeamBo));
+		if(tf != null) {
+			teams.add(tf);
+			teamEnrolments.add(new TeamEnrolmentBo(manipulatedTeamBo));
+		}
 	}
+	
 
 	/**
-	 * New enrolment.
+	 * Create a new enrolment.
 	 */
 	public void newEnrolment() {
  		manipulatedEnrolmentBo = new EnrolmentBo();
 
-	}
-
-	/**
-	 * Delete enrolment.
-	 */
-	public void deleteEnrolment() {
-		for (TeamBo team : teams) {
-			for (EnrolmentBo enrolment : team.getEnrolments()) {
-				if (enrolment.getId() == manipulatedEnrolmentBo.getId()) {
-					try {
-						teamFacade.deleteUserFromTeam(team, enrolment, user);
-					} catch (ValidationException e) {
-						FacesContext.getCurrentInstance().addMessage(null,
-								new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
-					}
-					removeTeamEnrolment(team, enrolment);
-				}
-			}
-		}
-	}
-
-	private void removeTeamEnrolment(TeamBo team, EnrolmentBo enrolment) {
-		for(TeamEnrolmentBo teb : teamEnrolments) {
-			if(teb.getTeam().equals(team)) {
-				Iterator<EnrolmentBo> iterator = teb.getEnrolmentMap().keySet().iterator();
-				
-				while (iterator.hasNext()) {
-					EnrolmentBo e = iterator.next();
-					if(enrolment.equals(e)) {
-						iterator.remove();
-					}
-				}
-			}
-		}
 	}
 
 	/**
@@ -235,10 +197,48 @@ public class AdminTeamView implements Serializable {
 
 		}
 	}
+	
+	/**
+	 * Delete an enrolment.
+	 */
+	public void deleteEnrolment() {
+		for (TeamBo team : teams) {
+			for (EnrolmentBo enrolment : team.getEnrolments()) {
+				if (enrolment.getId() == manipulatedEnrolmentBo.getId()) {
+					try {
+						teamFacade.deleteUserFromTeam(team, enrolment, user);
+					} catch (ValidationException e) {
+						FacesContext.getCurrentInstance().addMessage(null,
+								new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+					}
+					removeTeamEnrolment(team, enrolment);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Remove an enrolment
+	 * @param team
+	 * @param enrolment
+	 */
+	private void removeTeamEnrolment(TeamBo team, EnrolmentBo enrolment) {
+		for(TeamEnrolmentBo teb : teamEnrolments) {
+			if(teb.getTeam().equals(team)) {
+				Iterator<EnrolmentBo> iterator = teb.getEnrolmentMap().keySet().iterator();
+				
+				while (iterator.hasNext()) {
+					EnrolmentBo e = iterator.next();
+					if(enrolment.equals(e)) {
+						iterator.remove();
+					}
+				}
+			}
+		}
+	}
 
 	/**
 	 * Complete user list.
-	 *
 	 * @param query the query
 	 * @return the list
 	 */
@@ -248,7 +248,6 @@ public class AdminTeamView implements Serializable {
 
 	/**
 	 * Get user from enrolment user bo.
-	 *
 	 * @param enrolment the enrolment
 	 * @return the user bo
 	 */
@@ -265,7 +264,6 @@ public class AdminTeamView implements Serializable {
 
 	/**
 	 * Gets team enrolments.
-	 *
 	 * @return the team enrolments
 	 */
 	public List<TeamEnrolmentBo> getTeamEnrolments() {
@@ -274,7 +272,6 @@ public class AdminTeamView implements Serializable {
 
 	/**
 	 * Sets team enrolments.
-	 *
 	 * @param teamEnrolments the team enrolments
 	 */
 	public void setTeamEnrolments(List<TeamEnrolmentBo> teamEnrolments) {

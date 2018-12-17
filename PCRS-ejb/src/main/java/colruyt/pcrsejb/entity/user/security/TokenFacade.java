@@ -28,7 +28,7 @@ public class TokenFacade {
 	}
 	
 	public Token getTokenForUser(UserBo bo) {
-		
+		return null;
 	}
 	
 	
