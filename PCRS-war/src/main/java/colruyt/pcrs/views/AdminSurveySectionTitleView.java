@@ -9,16 +9,18 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import javax.persistence.PersistenceException;
 
 import org.primefaces.PrimeFaces;
 
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionTitleBo;
 import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveySectionDefinitionFacade;
 import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveySectionTitleFacade;
-import colruyt.pcrsejb.util.exceptions.validation.surveyDefinition.survey.SurveySectionTitleCantBeDeletedException;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
+/**
+ * ADMIN SURVEY SECTION TITLE VIEW
+ * @author jda1mbw
+ */
 @Named
 @ViewScoped
 public class AdminSurveySectionTitleView implements Serializable {
@@ -31,28 +33,56 @@ public class AdminSurveySectionTitleView implements Serializable {
 	@EJB
 	private ISurveySectionDefinitionFacade surveySectionDefinitionFacade;
 	
-	
+	/**
+	 * Setup of the screen, loading the needed data
+	 */
 	@PostConstruct 
 	private void fillSurveySectionTitles() {
 		surveySectionTitles = surveySectionTitleFacade.getAll();
 	}
 	
+	/**
+	 * Get the added survey section title
+	 * @return addedSurveySectionTitle
+	 */
 	public SurveySectionTitleBo getAddedSurveySectionTitle() {
 		return addedSurveySectionTitle;
 	}
 
+	/**
+	 * Set the added survey section title
+	 * @param addedSurveySectionTitle
+	 */
 	public void setAddedSurveySectionTitle(SurveySectionTitleBo addedSurveySectionTitle) {
 		this.addedSurveySectionTitle = addedSurveySectionTitle;
 	}
 
+	/**
+	 * Get a list of survey section titles
+	 * @return surveySectionTitles
+	 */
 	public List<SurveySectionTitleBo> getSurveySectionTitles() {
 		return surveySectionTitles;
 	}
 
+	/**
+	 * Set a list of survey section titles
+	 * @param surveySectionTitles
+	 */
 	public void setSurveySectionTitles(List<SurveySectionTitleBo> surveySectionTitles) {
 		this.surveySectionTitles = surveySectionTitles;
 	}
 
+	/**
+	 * Create a new survey section title
+	 */
+	public void newSurveySectionTitle() {
+        addedSurveySectionTitle = new SurveySectionTitleBo();
+    }
+	
+	/**
+	 * Add a survey section title
+	 */
 	public void addSurveySectionTitle()
 	{
 		PrimeFaces pf = PrimeFaces.current();
@@ -65,21 +95,18 @@ public class AdminSurveySectionTitleView implements Serializable {
 		}
 	}
 	
-	public void newSurveySectionTitle() {
-        addedSurveySectionTitle = new SurveySectionTitleBo();
-    }
-	
+	/**
+	 * Edit a survey section title
+	 */
 	public void editSurveySectionTitle() {
 		PrimeFaces pf = PrimeFaces.current();
-		
 		SurveySectionTitleBo t = null;
 		for (SurveySectionTitleBo title : surveySectionTitles) {
 			if (title.getId() == addedSurveySectionTitle.getId()) {
 				title.setTitle(addedSurveySectionTitle.getTitle());
 				t = title;
 			}
-		}
-		
+		}	
 		try {
 			surveySectionTitleFacade.save(t);
 			pf.ajax().addCallbackParam("validationSucces", true);
@@ -89,6 +116,9 @@ public class AdminSurveySectionTitleView implements Serializable {
 		} 
 	}
 	
+	/**
+	 * Delete a survey section title
+	 */
 	public void deleteSurveySectionTitle()
 	{
 		SurveySectionTitleBo t = null;

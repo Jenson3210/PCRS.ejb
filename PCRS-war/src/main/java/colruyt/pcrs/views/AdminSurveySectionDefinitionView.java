@@ -20,72 +20,126 @@ import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveySectionDefinitionFa
 import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveySectionTitleFacade;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
+/**
+ * ADMIN SURVEY SECTION DEFINITION VIEW
+ * @author jda1mbw
+ */
 @Named
 @SessionScoped
 public class AdminSurveySectionDefinitionView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
 	@EJB
 	private ISurveySectionDefinitionFacade surveySectionDefinitionFacade;
 	private SurveySectionDefinitionBo addedSurveySectionDefinition;
-
 	@EJB
 	private ISurveySectionTitleFacade surveySectionTitleFacade;
-
 	@EJB
 	private ISurveySectionStrategyFacade surveySectionStrategyFacade;
 	private List<SurveySectionDefinitionBo> surveySectionDefinitions;
 	private List<SurveySectionTitleBo> surveySectionTitles;
 	private List<SurveySectionStrategyBo> surveySectionStrategies;
 
+	/**
+	 * Setup of the screen, loading the needed data
+	 */
 	@PostConstruct
 	private void fillSurveySectionDefinitions() {
 		surveySectionDefinitions = surveySectionDefinitionFacade.getAll();
 	}
 
+	/**
+	 * Fill the survey section titles
+	 */
 	private void fillSurveySectionTitles() {
 		surveySectionTitles = surveySectionTitleFacade.getAll();
 	}
 
+	/**
+	 * Fill the survey section strategies
+	 */
 	private void fillSurveySectionStrategies() {
 		surveySectionStrategies = surveySectionStrategyFacade.getAll();
 	}
 
+	/**
+	 * Get a list of survey section definitions
+	 * @return surveySectionDefinition
+	 */
 	public List<SurveySectionDefinitionBo> getSurveySectionDefinitions() {
 		return surveySectionDefinitions;
 	}
 
+	/**
+	 * Set a list of survey section definitions
+	 * @param surveySectionDefinitions
+	 */
 	public void setSurveySectionDefinitions(List<SurveySectionDefinitionBo> surveySectionDefinitions) {
 		this.surveySectionDefinitions = surveySectionDefinitions;
 	}
 
+	/**
+	 * Get a list of survey section titles
+	 * @return surveySectionTitles
+	 */
 	public List<SurveySectionTitleBo> getSurveySectionTitles() {
 		return surveySectionTitles;
 	}
 
+	/**
+	 * Set a list of survey section titles
+	 * @param surveySectionTitles
+	 */
 	public void setSurveySectionTitles(List<SurveySectionTitleBo> surveySectionTitles) {
 		this.surveySectionTitles = surveySectionTitles;
 	}
 
+	/**
+	 * Get a list of survey section strategies
+	 * @return surveySectionStrategies
+	 */
 	public List<SurveySectionStrategyBo> getSurveySectionStrategies() {
 		return surveySectionStrategies;
 	}
 
+	/**
+	 * Set a list of survey section strategies
+	 * @param surveySectionStrategies
+	 */
 	public void setSurveySectionStrategies(List<SurveySectionStrategyBo> surveySectionStrategies) {
 		this.surveySectionStrategies = surveySectionStrategies;
 	}
 
+	/**
+	 * Get the added survey section definition
+	 * @return addedSurveySectionDefinition
+	 */
 	public SurveySectionDefinitionBo getAddedSurveySectionDefinition() {
 		return addedSurveySectionDefinition;
 	}
 
+	/**
+	 * Set the added survey section definition
+	 * @param addedSurveySectionDefinition
+	 */
 	public void setAddedSurveySectionDefinition(SurveySectionDefinitionBo addedSurveySectionDefinition) {
 		fillSurveySectionStrategies();
 		fillSurveySectionTitles();
 		this.addedSurveySectionDefinition = addedSurveySectionDefinition;
 	}
 
+	/**
+	 * Generate new survey section definition
+	 */
+	public void newSurveySectionDefinition() {
+		addedSurveySectionDefinition = new SurveySectionDefinitionBo();
+		fillSurveySectionTitles();
+		fillSurveySectionStrategies();
+	}
+	
+	/**
+	 * Add a survey section definition
+	 */
 	public void addSurveySectionDefinition() {
 		PrimeFaces pf = PrimeFaces.current();
 		try {
@@ -98,18 +152,13 @@ public class AdminSurveySectionDefinitionView implements Serializable {
 		}
 	}
 
-	public void newSurveySectionDefinition() {
-		addedSurveySectionDefinition = new SurveySectionDefinitionBo();
-		fillSurveySectionTitles();
-		fillSurveySectionStrategies();
-	}
-
+	/**
+	 * Edit a survey section definition
+	 */
 	public void editSurveySectionDefinition() {
 
 		PrimeFaces pf = PrimeFaces.current();
-
 		SurveySectionDefinitionBo d = null;
-
 		for (SurveySectionDefinitionBo definition : surveySectionDefinitions) {
 			if (definition.getId() == addedSurveySectionDefinition.getId()) {
 				definition.setSurveySectionTitle(addedSurveySectionDefinition.getSurveySectionTitle());
@@ -117,7 +166,6 @@ public class AdminSurveySectionDefinitionView implements Serializable {
 				d = definition;
 			}
 		}
-
 		try {
 			surveySectionDefinitionFacade.save(d);
 			pf.ajax().addCallbackParam("validationSuccess", true);
@@ -128,6 +176,9 @@ public class AdminSurveySectionDefinitionView implements Serializable {
 		}
 	}
 
+	/**
+	 * Delete a survey section definition
+	 */
 	public void deleteSurveySectionDefinition() {
 		SurveySectionDefinitionBo d = null;
 		for (SurveySectionDefinitionBo definition : surveySectionDefinitions) {
