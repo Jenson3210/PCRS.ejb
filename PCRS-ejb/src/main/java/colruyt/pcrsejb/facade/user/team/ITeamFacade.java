@@ -2,18 +2,17 @@ package colruyt.pcrsejb.facade.user.team;
 
 import java.util.List;
 
-import javax.ejb.Remote;
+import javax.ejb.Local;
 
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.team.EnrolmentBo;
 import colruyt.pcrsejb.bo.user.team.TeamBo;
-import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.facade.IFacade;
 import colruyt.pcrsejb.util.exceptions.MemberAlreadyHasATeamException;
 import colruyt.pcrsejb.util.exceptions.UserIsNotMemberOfTeamException;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
-@Remote
+@Local
 public interface ITeamFacade extends IFacade<TeamBo>  {
 	
 	
