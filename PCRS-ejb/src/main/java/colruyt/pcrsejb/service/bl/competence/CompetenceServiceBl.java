@@ -12,6 +12,7 @@ import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinitionImp
 import colruyt.pcrsejb.service.dl.competence.ICompetenceServiceDl;
 import colruyt.pcrsejb.util.exceptions.validation.competence.CompetenceAlreadyExistExeption;
 import colruyt.pcrsejb.util.exceptions.validation.competence.CompetenceDoesNotExistExeption;
+import colruyt.pcrsejb.util.exceptions.validation.competence.CompetenceNotEnterdValidation;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
@@ -32,6 +33,9 @@ public class CompetenceServiceBl implements Serializable, ICompetenceServiceBl {
                     throw new CompetenceAlreadyExistExeption("This is not a Competence already exists !");
                 }
             }
+        }
+        if(element.getName().equals("") || element.getCompetenceDescription().equals("")) {
+        	throw new CompetenceNotEnterdValidation("This is not enterd, please enter");
         }
 		competencedb.save(element);
 		return element;
