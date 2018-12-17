@@ -19,6 +19,7 @@ import colruyt.pcrsejb.bo.user.team.TeamBo;
 import colruyt.pcrsejb.facade.user.IUserFacade;
 import colruyt.pcrsejb.facade.user.team.IEnrolmentFacade;
 import colruyt.pcrsejb.facade.user.team.ITeamFacade;
+import colruyt.pcrsejb.facade.user.team.TeamFacade;
 import colruyt.pcrsejb.util.exceptions.MemberAlreadyHasATeamException;
 import colruyt.pcrsejb.util.exceptions.NoExistingMemberException;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
@@ -159,13 +160,16 @@ public class AdminTeamView implements Serializable {
 	 */
 	public void addTeam() {
 		PrimeFaces pf = PrimeFaces.current();
+		TeamBo tf = null;
 		try {
-			teams.add(teamFacade.save(manipulatedTeamBo));
+			tf = teamFacade.save(manipulatedTeamBo);
 			pf.ajax().addCallbackParam("validationSucces", true);
+
 		} catch (ValidationException e) {
 			pf.ajax().addCallbackParam("validationSucces", false);
 			FacesContext.getCurrentInstance().addMessage("addForm", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 		}
+		teams.add(tf);
 		teamEnrolments.add(new TeamEnrolmentBo(manipulatedTeamBo));
 	}
 
