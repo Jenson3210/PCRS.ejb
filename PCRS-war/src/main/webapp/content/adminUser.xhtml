@@ -11,7 +11,7 @@
 		<div class="ui-g-1" />
 		<div class="ui-g-10">
 			<h:form id="form">
-				<p:messages id="errors" showDetail="false" closable="true">
+				<p:messages id="errors" showDetail="false" closable="true" globalOnly="true">
 					<p:autoUpdate />
 				</p:messages>
 				<p:dataTable var="user" value="#{adminUserView.users}">
@@ -73,6 +73,10 @@
 					<p:dialog id="adduserFormTitle" header="#{msgs['user.add']}"
 						widgetVar="addUserDialog" modal="true">
 						<p:outputPanel id="addUserDetail">
+							<p:messages for="addForm" showDetail="false" closable="true"
+										globalOnly="false">
+								<p:autoUpdate />
+							</p:messages>
 							<div class="ui-g">
 								<div class="ui-g-4">
 									<p:outputLabel value="#{msgs['user.firstname']}"></p:outputLabel>
@@ -142,7 +146,7 @@
 							<div class="ui-g-2">
 								<p:commandButton value="#{msgs['user.add']}" update=":form"
 									action="#{adminUserView.addUser}"
-									oncomplete="PF('addUserDialog').hide();" />
+									oncomplete="if ( args.validationSucces ){PF('addUserDialog').hide();}" />
 							</div>
 						</p:outputPanel>
 					</p:dialog>
@@ -156,6 +160,10 @@
 					<p:dialog id="editUserFormTitle" header="Edit User"
 						widgetVar="editUserDialog" modal="true">
 						<p:outputPanel id="editUserDetail">
+							<p:messages for="editForm" showDetail="false" closable="true"
+										globalOnly="false">
+								<p:autoUpdate />
+							</p:messages>
 							<div class="ui-g">
 								<div class="ui-g-4">
 									<p:outputLabel value="#{msgs['user.firstname']}"></p:outputLabel>
@@ -216,7 +224,7 @@
 							<div class="ui-g-2">
 								<p:commandButton value="Wijzigen" update=":form"
 									action="#{adminUserView.editUser}"
-									oncomplete="PF('editUserDialog').hide();" />
+									oncomplete="if ( args.validationSucces ){PF('editUserDialog').hide();}" />
 							</div>
 						</p:outputPanel>
 					</p:dialog>
