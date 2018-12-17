@@ -49,7 +49,7 @@ public class DbCompetenceImplServiceDl implements ICompetenceImplServiceDl, Seri
 
     @Override
     public void delete(CompetenceImpl element) {
-        CompetenceImpl competenclevel = em.find(CompetenceImpl.class, element);
+        CompetenceImpl competenclevel = em.find(CompetenceImpl.class, element.getId());
         if(competenclevel != null) {
             em.remove(competenclevel);
         }
