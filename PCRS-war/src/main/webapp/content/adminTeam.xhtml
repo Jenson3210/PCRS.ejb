@@ -11,8 +11,8 @@
 		<div class="ui-g-1" />
 		<div class="ui-g-10">
 			<h:form id="form">
-				<p:messages id="errors" showDetail="false" closable="true">
-					<p:autoUpdate/>
+				<p:messages id="errors" showDetail="false" closable="true" globalOnly="true">
+					<p:autoUpdate />
 				</p:messages>
 				<p:dataTable var="team" value="#{adminTeamView.teamEnrolments}"
 					styleClass="teamOverviewTable" sortBy="#{team.team}"
@@ -84,7 +84,10 @@
 					<p:dialog class="modalSM" id="addTeamFormTitle"
 						header="#{msgs['team.add']}" widgetVar="addTeamDialog"
 						modal="true">
-						<p:messages id="errors" closable="true" autoUpdate="true" />
+						<p:messages for="addForm" showDetail="false" closable="true"
+									globalOnly="false">
+							<p:autoUpdate />
+						</p:messages>
 						<p:outputPanel id="addTeamDetail">
 							<div class="ui-g">
 								<div class="ui-g-4">
@@ -93,14 +96,13 @@
 								<div class="ui-g-8">
 									<p:inputText id="fn"
 										value="#{adminTeamView.manipulatedTeamBo.name}"
-										required="true"
 										requiredMessage="You need to fill in a team name." />
 								</div>
 							</div>
 							<div class="ui-g-2">
 								<p:commandButton value="#{msgs['team.add']}" update=":form"
 									action="#{adminTeamView.addTeam}"
-									oncomplete="if(!args.validationFailed) PF('addTeamDialog').hide();" />
+									oncomplete="if(args.validationSucces) PF('addTeamDialog').hide();" />
 							</div>
 						</p:outputPanel>
 					</p:dialog>
@@ -114,7 +116,10 @@
 					<p:dialog class="modalMM" id="addEnrolmentFormTitle"
 						header="#{msgs['enrolment.add']}" widgetVar="addEnrolmentDialog"
 						modal="true">
-						<p:messages id="errors" closable="true" autoUpdate="true" />
+						<p:messages for="editForm" showDetail="false" closable="true"
+									globalOnly="false">
+							<p:autoUpdate />
+						</p:messages>
 						<p:outputPanel id="addEnrolmentDetail">
 							<div class="ui-g">
 								<div class="ui-g-4">
@@ -143,7 +148,7 @@
 							<div class="ui-g-8">
 								<p:commandButton value="#{msgs['enrolment.add']}" update=":form"
 									action="#{adminTeamView.addEnrolment}"
-									oncomplete="PF('addEnrolmentDialog').hide();" />
+									oncomplete="if ( args.validationSucces ){PF('addEnrolmentDialog').hide();}" />
 							</div>
 						</p:outputPanel>
 					</p:dialog>
