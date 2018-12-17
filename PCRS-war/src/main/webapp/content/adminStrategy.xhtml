@@ -6,7 +6,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-
+	
 	<div class="ui-g">
 		<div class="ui-g-1" />
 		<div class="ui-g-10">
@@ -86,7 +86,9 @@
 					</div>
 				</div>
 			</h:form>
-
+<!-- *****************************************************************************************************************
+													ADD FORM																
+	 ***************************************************************************************************************** -->
 			<h:form id="addForm">
 				<div class="ui-g" id="addStrategyForm">
 					<p:dialog id="addStrategyFormTitle"
@@ -170,6 +172,9 @@
 					</p:dialog>
 				</div>
 			</h:form>
+<!-- *****************************************************************************************************************
+													EDIT FORM																
+	 ***************************************************************************************************************** -->
 			<h:form id="editForm">
 				<div class="ui-g" id="editStrategyForm">
 					<p:dialog id="editStrategyFormTitle"
@@ -253,6 +258,9 @@
 					</p:dialog>
 				</div>
 			</h:form>
+<!-- *****************************************************************************************************************
+													DELETE FORM																
+	 ***************************************************************************************************************** -->
 			<h:form id="deleteForm">
 				<div class="ui-g" id="deleteStrategyForm">
 					<p:dialog id="deleteStrategy" header="#{msgs['strategy.delete']}"

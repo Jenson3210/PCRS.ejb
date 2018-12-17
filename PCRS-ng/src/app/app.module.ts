@@ -5,12 +5,14 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { SurveyComponent } from './survey/survey.component';
 import { SurveySectionComponent } from './survey-section/survey-section.component';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SurveyOverviewComponent } from './survey-overview/survey-overview.component';
 import { FormsModule } from '@angular/forms';
 import { SurveyService } from './service/survey.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './reducers';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { LoginComponent } from './login/login.component';
     AppRoutingModule,
     FormsModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot(reducers, { metaReducers })
   ],
   providers: [
     SurveyService

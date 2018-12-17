@@ -19,6 +19,7 @@ import colruyt.pcrsejb.facade.competence.CompetenceLevelFacade;
 import colruyt.pcrsejb.facade.competence.ICompetenceFacade;
 import colruyt.pcrsejb.facade.competence.ICompetenceLevelFacade;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
+import org.primefaces.PrimeFaces;
 
 @Named
 @ViewScoped
@@ -46,11 +47,14 @@ public class AdminCompetenceView implements Serializable {
 	}
 
 	public void addCompetence() {
+		PrimeFaces pf = PrimeFaces.current();
 		competenceBo.setCompetenceLevels(levels);
 		try {
 			competences.add(competenceFacade.save(competenceBo));
+			pf.ajax().addCallbackParam("validationSucces", true);
 		} catch (ValidationException e) {
-			e.printStackTrace();
+			pf.ajax().addCallbackParam("validationSucces", false);
+			FacesContext.getCurrentInstance().addMessage("addForm", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 		}
 	}
 
@@ -64,10 +68,13 @@ public class AdminCompetenceView implements Serializable {
 			}
 			c = competence;
 		}
+		PrimeFaces pf = PrimeFaces.current();
 		try {
 			competenceFacade.save(c);
+			pf.ajax().addCallbackParam("validationSucces", true);
 		} catch (ValidationException e) {
-			e.printStackTrace();
+			pf.ajax().addCallbackParam("validationSucces", false);
+			FacesContext.getCurrentInstance().addMessage("editForm", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 		}
 	}
 
@@ -76,8 +83,10 @@ public class AdminCompetenceView implements Serializable {
 		try {
 			competenceFacade.delete(competenceBo);
 		} catch (ValidationException e) {
+			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "succesfully deleted", null));
 	}
 
 	private void newLevels() {
@@ -103,8 +112,8 @@ public class AdminCompetenceView implements Serializable {
 						try {
 							competenceLevelFacade.delete(level);
 						} catch (ValidationException e) {
-							FacesContext.getCurrentInstance().addMessage(null,
-									new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+							FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "not succesfully deleted", null));
+
 						}
 					}
 				}
