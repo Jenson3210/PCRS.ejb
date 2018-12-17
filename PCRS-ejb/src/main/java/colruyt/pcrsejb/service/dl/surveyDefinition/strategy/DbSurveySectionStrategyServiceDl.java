@@ -1,6 +1,7 @@
 package colruyt.pcrsejb.service.dl.surveyDefinition.strategy;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.List;
 
@@ -11,25 +12,24 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import colruyt.pcrsejb.entity.surveyDefinition.strategy.SurveySectionStrategy;
-
+import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinition;
+import colruyt.pcrsejb.service.dl.surveyDefinition.survey.DbSurveySectionDefinitionServiceDl;
+import colruyt.pcrsejb.util.exceptions.SurveySectionDefinitionServiceBl;
 
 @Stateless
-public class DbSurveySectionStrategyServiceDl implements Serializable, ISurveySectionStrategyServiceDL{
+public class DbSurveySectionStrategyServiceDl implements Serializable, ISurveySectionStrategyServiceDL {
 	@PersistenceContext(unitName = "PCRSEJB")
 	private EntityManager em;
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	public SurveySectionStrategy save(SurveySectionStrategy element) {
 		SurveySectionStrategy surveySectionStrategy;
-		if(element.getId()==null)
-		{
+		if (element.getId() == null) {
 			em.persist(element);
 			surveySectionStrategy = element;
-		}
-		else
-		{
+		} else {
 			surveySectionStrategy = em.merge(element);
 		}
 		return surveySectionStrategy;
@@ -46,22 +46,19 @@ public class DbSurveySectionStrategyServiceDl implements Serializable, ISurveySe
 
 	@Override
 	public List<SurveySectionStrategy> getAll() {
-		TypedQuery<SurveySectionStrategy> q = em.createNamedQuery("SURVEYSECTIONSTRATEGY.GETALL", SurveySectionStrategy.class);
+		TypedQuery<SurveySectionStrategy> q = em.createNamedQuery("SURVEYSECTIONSTRATEGY.GETALL",
+				SurveySectionStrategy.class);
 		List<SurveySectionStrategy> surveySectionStrategyList = q.getResultList();
 		return surveySectionStrategyList;
 	}
 
 	@Override
 	public void delete(SurveySectionStrategy element) {
-		element = em.merge(element);
-		if (element != null) {
-			em.remove(element);
-		}
-		else {
+		element = em.find(SurveySectionStrategy.class, element.getId());
+		if (element == null) {
 			throw new EmptyStackException();
 		}
+		else { em.remove(element); }
 	}
 
-	
-	
 }

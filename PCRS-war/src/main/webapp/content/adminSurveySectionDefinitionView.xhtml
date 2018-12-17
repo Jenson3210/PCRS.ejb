@@ -13,7 +13,7 @@
 
 		<div class="ui-g-10">
 			<h:form id="form">
-				<p:messages id="errors" showDetail="false" closable="true">
+				<p:messages id="errors" showDetail="false" closable="true" globalOnly="true">
 					<p:autoUpdate />
 				</p:messages>
 				<p:dataTable var="surveySectionDefinition"
@@ -70,6 +70,10 @@
 						widgetVar="addSurveySectionDefinitionDialog" modal="true"
 						class="modalSM">
 						<p:outputPanel id="addSurveySectionDefinitionDetail">
+							<p:messages for="addForm" showDetail="false" closable="true"
+								globalOnly="false">
+								<p:autoUpdate />
+							</p:messages>
 							<div class="ui-g">
 								<div class="ui-g-4">
 									<p:outputLabel
@@ -108,7 +112,7 @@
 								<p:commandButton value="#{msgs['surveySectionDefinition.add']}"
 									update=":form"
 									action="#{adminSurveySectionDefinitionView.addSurveySectionDefinition}"
-									oncomplete="PF('addSurveySectionDefinitionDialog').hide();" />
+									oncomplete=" if (args.validationSuccess) {PF('addSurveySectionDefinitionDialog').hide();}" />
 							</div>
 							<div class="ui-g-2" />
 						</p:outputPanel>
@@ -123,7 +127,10 @@
 						widgetVar="editSurveySectionDefinitionDialog" modal="true"
 						class="modalSM">
 						<p:outputPanel id="editSurveySectionDefinitionDetail">
-
+							<p:messages for="editForm" showDetail="false" closable="true"
+								globalOnly="false">
+								<p:autoUpdate />
+							</p:messages>
 							<div class="ui-g">
 								<div class="ui-g-4">
 									<p:outputLabel
@@ -161,7 +168,7 @@
 								<p:commandButton value="#{msgs['surveySectionDefinition.edit']}"
 									update=":form"
 									action="#{adminSurveySectionDefinitionView.editSurveySectionDefinition}"
-									oncomplete="PF('editSurveySectionDefinitionDialog').hide();" />
+									oncomplete="if ( args.validationSuccess ) {PF('editSurveySectionDefinitionDialog').hide();}" />
 							</div>
 							<div class="ui-g-2" />
 						</p:outputPanel>
