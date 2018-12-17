@@ -139,8 +139,8 @@ public class AdminSurveySectionDefinitionView implements Serializable {
 			surveySectionDefinitionFacade.delete(d);
 			surveySectionDefinitions.remove(d);
 		} catch (ValidationException e) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Succesfully deleted", null));
+			FacesContext.getCurrentInstance().addMessage("form",
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 		}
 	}
 }

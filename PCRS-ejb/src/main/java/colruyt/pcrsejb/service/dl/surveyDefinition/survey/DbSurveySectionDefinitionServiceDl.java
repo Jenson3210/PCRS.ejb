@@ -51,10 +51,11 @@ public class DbSurveySectionDefinitionServiceDl implements Serializable, ISurvey
 	}
 
 	@Override
-	public void delete(SurveySectionDefinition element) throws PersistenceException {
+	public void delete(SurveySectionDefinition element) {
 		element = em.find(SurveySectionDefinition.class, element.getId());
 		if (element != null) {
 			em.remove(element);
+			em.flush();
 		} else {
 			throw new EntityNotFoundException();
 		}
