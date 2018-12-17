@@ -18,6 +18,7 @@ import colruyt.pcrsejb.util.exceptions.MemberAlreadyHasATeamException;
 import colruyt.pcrsejb.util.exceptions.UserIsNotMemberOfTeamException;
 import colruyt.pcrsejb.util.exceptions.validation.Team.TeamAlreadyExistsExeption;
 import colruyt.pcrsejb.util.exceptions.validation.Team.TeamDoesNotExistExeption;
+import colruyt.pcrsejb.util.exceptions.validation.Team.TeamEmptyValidation;
 import colruyt.pcrsejb.util.exceptions.validation.Team.TeamhasAManagerExetion;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
@@ -51,6 +52,9 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
                 throw new TeamAlreadyExistsExeption("The team already exists");
             }
         }
+        if(element.getName().equals("")){
+        	throw new TeamEmptyValidation("Team name is empty");
+		}
 		//this.dlService.save(element);
 		return this.dlService.save(element);
 	}

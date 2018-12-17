@@ -1,7 +1,6 @@
 package colruyt.pcrsejb.service.dl.surveyDefinition.strategy;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.List;
 
@@ -12,9 +11,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import colruyt.pcrsejb.entity.surveyDefinition.strategy.SurveySectionStrategy;
-import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinition;
-import colruyt.pcrsejb.service.dl.surveyDefinition.survey.DbSurveySectionDefinitionServiceDl;
-import colruyt.pcrsejb.util.exceptions.SurveySectionDefinitionServiceBl;
 
 @Stateless
 public class DbSurveySectionStrategyServiceDl implements Serializable, ISurveySectionStrategyServiceDL {
@@ -56,7 +52,7 @@ public class DbSurveySectionStrategyServiceDl implements Serializable, ISurveySe
 	public void delete(SurveySectionStrategy element) {
 		element = em.find(SurveySectionStrategy.class, element.getId());
 		if (element == null) {
-			throw new EmptyStackException();
+			throw new EntityNotFoundException();
 		}
 		else { em.remove(element); }
 	}
