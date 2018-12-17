@@ -18,6 +18,7 @@ import colruyt.pcrsejb.util.exceptions.NoExistingMemberException;
 import colruyt.pcrsejb.util.exceptions.UserDoesNotExistException;
 import colruyt.pcrsejb.util.exceptions.UserEmailAddressAlreadyExistsException;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
+import colruyt.pcrsejb.util.general.UserUtils;
 
 @Stateless
 public class UserServiceBl implements IUserServiceBl {
@@ -34,13 +35,20 @@ public class UserServiceBl implements IUserServiceBl {
 	}
 
 	public User save(User user) throws ValidationException {
-		try {
-		return usersDb.save(user);
+		if (user.getShortName() == null) {
+			try {
+				String sn = UserUtils.getShortName(user.getFirstName(), user.getLastName());
+				System.out.println(sn);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
 		
-		}catch(Exception e) {	
-			
-			
-				throw new UserEmailAddressAlreadyExistsException();
+		try {
+			return usersDb.save(user);
+		} catch(Exception e) {	
+			throw new UserEmailAddressAlreadyExistsException();
 		}
 	}
 

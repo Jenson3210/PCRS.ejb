@@ -16,36 +16,63 @@ import colruyt.pcrsejb.bo.surveyDefinition.strategy.SurveySectionStrategyBo;
 import colruyt.pcrsejb.facade.surveyDefinition.strategy.ISurveySectionStrategyFacade;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
+/**
+ * Survey section strategy view
+ * @author jda1mbw
+ */
 @Named
 @ViewScoped
 public class SurveySectionStrategyView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
 	@EJB
 	private ISurveySectionStrategyFacade surveySectionStrategyFacade; 
 	private SurveySectionStrategyBo surveySectionStrategyBo;
-	
 	private List<SurveySectionStrategyBo> strategies;
 	
+	/**
+	 * Method to fill the List strategies
+	 */
 	@PostConstruct
 	private void fillStrategies() {
 		strategies = surveySectionStrategyFacade.getAll();
 	} 
  
+	/**
+	 * Method to get a SurveySectionStrategyBo
+	 * @return surveySectionStrategyBo
+	 */
 	public SurveySectionStrategyBo getSurveySectionStrategyBo() {
 		return surveySectionStrategyBo; 
 	}
+	
+	/**
+	 * Method to set SurveySectionStrategyBo
+	 * @param surveySectionStrategyBo
+	 */
 	public void setSurveySectionStrategyBo(SurveySectionStrategyBo surveySectionStrategyBo) {
 		this.surveySectionStrategyBo = surveySectionStrategyBo;
 	}
+	
+	/**
+	 * Method to get a list of Strategies
+	 * @return strategies
+	 */
 	public List<SurveySectionStrategyBo> getStrategies() {
 		return strategies;
 	}
+	
+	/**
+	 * Method to set a list of strategies
+	 * @param strategies
+	 */
 	public void setStrategies(List<SurveySectionStrategyBo> strategies) {
 		this.strategies = strategies;
 	}
  
+	/**
+	 * Method to add a SurveySectionStrategy
+	 */
 	public void addSurveySectionStrategy() {
 		PrimeFaces pf = PrimeFaces.current();
 		try {
@@ -57,10 +84,16 @@ public class SurveySectionStrategyView implements Serializable {
 		}	
 	}
 	
+	/**
+	 * Method to create a new SurveySectionStrategy
+	 */
 	public void newSurveySectionStrategy() {
         surveySectionStrategyBo = new SurveySectionStrategyBo();
     }
 	
+	/**
+	 * Method to edit a SurveySectionStrategy
+	 */
 	public void editSurveySectionStrategy() {
 		SurveySectionStrategyBo s = null;
 		for (SurveySectionStrategyBo strategy : strategies) {
@@ -85,6 +118,9 @@ public class SurveySectionStrategyView implements Serializable {
 		}
 	}
 	
+	/**
+	 * Method to delete a SurveySectionStrategy
+	 */
 	public void deleteSurveySectionStrategy()
 	{
 		SurveySectionStrategyBo s = null;

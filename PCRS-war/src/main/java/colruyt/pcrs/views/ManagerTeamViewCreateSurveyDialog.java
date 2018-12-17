@@ -37,7 +37,7 @@ public class ManagerTeamViewCreateSurveyDialog implements Serializable {
 	private SurveySectionDefinitionImplBo chosen = new SurveySectionDefinitionImplBo();
 	private List<SurveySectionDefinitionImplBo>  chosenList = new ArrayList<>();
 	private List<SurveySectionDefinitionImplBo>  allList = new ArrayList<>();
-	private DualListModel<SurveySectionDefinitionImplBo>  availableList;
+	private DualListModel<SurveySectionDefinitionImplBo>  availableList = new DualListModel<>(allList, chosenList);
 	
 	@EJB
 	private ISurveySetFacade surveyFacade;
@@ -64,6 +64,10 @@ public class ManagerTeamViewCreateSurveyDialog implements Serializable {
 	}
 	
 	
+	
+	
+
+
 	public DualListModel<SurveySectionDefinitionImplBo> getAvailableList() {
 		return availableList;
 	}
@@ -96,12 +100,10 @@ public class ManagerTeamViewCreateSurveyDialog implements Serializable {
 		this.teamMember = teamMember;
 	}
 
-	
-	
-	
-	  
+
 	public ManagerTeamViewCreateSurveyDialog() {
 		super();
+		System.out.println("hallo");
 	}
 
 	private void loadCompetences() {
