@@ -162,9 +162,12 @@ public class AdminTeamView implements Serializable {
 			pf.ajax().addCallbackParam("validationSucces", false);
 			FacesContext.getCurrentInstance().addMessage("addForm", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 		}
-		teams.add(tf);
-		teamEnrolments.add(new TeamEnrolmentBo(manipulatedTeamBo));
+		if(tf != null) {
+			teams.add(tf);
+			teamEnrolments.add(new TeamEnrolmentBo(manipulatedTeamBo));
+		}
 	}
+	
 
 	/**
 	 * Create a new enrolment.
