@@ -10,8 +10,8 @@
 		<div class="ui-g-1" />
 		<div class="ui-g-10">
 			<h:form id="form">
-				<p:messages id="errors" showDetail="false" closable="true">
-					<p:autoUpdate/>
+				<p:messages id="errors" showDetail="false" closable="true" globalOnly="true">
+					<p:autoUpdate />
 				</p:messages>
 				<p:dataTable var="competence"
 					value="#{adminCompetenceView.competences}"
@@ -60,6 +60,10 @@
 						header="#{msgs['competence.add']}" widgetVar="addCompetenceDialog"
 						modal="true">
 						<p:outputPanel id="addCompetenceDetail">
+							<p:messages for="addForm" showDetail="false" closable="true"
+										globalOnly="false">
+								<p:autoUpdate />
+							</p:messages>
 							<div class="ui-g">
 								<div class="ui-g-4">
 									<p:outputLabel value="#{msgs['competence.name']}" />
@@ -67,7 +71,7 @@
 								<div class="ui-g-8">
 									<p:inputText id="nm"
 										value="#{adminCompetenceView.competenceBo.name}"
-										required="true" />
+										/>
 								</div>
 							</div>
 							<div class="ui-g">
@@ -77,7 +81,7 @@
 								<div class="ui-g-8">
 									<p:inputTextarea id="ds"
 										value="#{adminCompetenceView.competenceBo.competenceDescription}"
-										required="true" />
+										 />
 								</div>
 							</div>
 							<div class="ui-g">
@@ -110,7 +114,7 @@
 											<p:outputLabel value="#{level.orderLevel}" />
 										</div>
 										<div class="ui-g-10">
-											<p:inputText value="#{level.description}" required="true" />
+											<p:inputText value="#{level.description}" />
 										</div>
 									</ui:repeat>
 								</div>
@@ -118,7 +122,7 @@
 							<div class="ui-g-2">
 								<p:commandButton value="#{msgs['competence.add']}"
 									update=":form" action="#{adminCompetenceView.addCompetence}"
-									oncomplete="PF('addCompetenceDialog').hide();" />
+									oncomplete="if ( args.validationSucces ){PF('addCompetenceDialog').hide();}" />
 							</div>
 						</p:outputPanel>
 					</p:dialog>
@@ -133,6 +137,10 @@
 						header="#{msgs['competence.edit']}"
 						widgetVar="editCompetenceDialog" modal="true">
 						<p:outputPanel id="editCompetenceDetail">
+							<p:messages for="editForm" showDetail="false" closable="true"
+										globalOnly="false">
+								<p:autoUpdate />
+							</p:messages>
 							<div class="ui-g">
 								<div class="ui-g-4">
 									<p:outputLabel value="#{msgs['competence.name']}" />
@@ -188,7 +196,7 @@
 							<div class="ui-g-2">
 								<p:commandButton value="#{msgs['competence.edit']}"
 									update=":form" action="#{adminCompetenceView.editCompetence}"
-									oncomplete="PF('editCompetenceDialog').hide();" />
+									oncomplete="if ( args.validationSucces ){PF('editCompetenceDialog').hide();}" />
 							</div>
 						</p:outputPanel>
 					</p:dialog>
