@@ -52,7 +52,7 @@ public class SurveySectionDefinitionServiceBl implements Serializable, ISurveySe
 			surveySectionDefinitionDb.delete(element);
 		} catch (EntityNotFoundException e) {
 			throw new SurveySectionDefinitionNotFoundException();
-		} catch (PersistenceException e) {
+		} catch (Exception e) {
 			throw new SurveySectionDefinitionCantBeDeletedException();
 		}
 	}

@@ -11,11 +11,12 @@
 		<div class="ui-g-1" />
 		<div class="ui-g-10">
 			<h:form id="form">
+			
+			<p:growl id="growl" for="messagegrowl" showDetail="true" sticky="false" />  
 				<p:dataTable var="team"
 					value="#{managerTeamView.getTeamEnrolments()}"
 					styleClass="teamOverviewTable" sortBy="#{team.getTeam().name}"
 					id="teamDetail">
-
 					<f:facet name="header">
 						<h:outputText value="#{msgs['team.header']}" />
 					</f:facet>
@@ -31,27 +32,20 @@
 									rendered="#{managerTeamView.isMe(enrolment.value)}" />
 							</p:column>
 							<p:column>
-
 								<h:outputText
 									value="#{enrolment.value.firstName}  #{enrolment.value.lastName}" />
-
 							</p:column>
-
 							<p:column>
 								<h:outputText
 									value="#{enrolment.key.userPrivilege.privilegeType.fullName}" />
 							</p:column>
-
 							<p:column>
 								<h:outputText
 									value="#{managerTeamView.getFunctionOf(enrolment.key)}"
 								rendered="#{managerTeamView.hasFunction(enrolment.key)}"
 									 />
 							</p:column>
-
-
 							<p:column>
-
 								<p:commandLink
 									action="#{managerTeamViewChangeFunction.init(enrolment.value,enrolment.key)}"
 									oncomplete="PF('changeFunction').show()"
@@ -59,48 +53,37 @@
 
 									<i class="fas fa-pencil-alt"> </i>
 								</p:commandLink>
-
 							</p:column>
-
 							<p:column>
 								<p:commandButton value="#{msgs['create.survey']}"
-									action="#{managerTeamViewDialog.initDialog(enrolment.value)}"
+									action="#{managerTeamView.initDialog(enrolment.value)}"
 									oncomplete="PF('createSurvey').show()" update=":createSurvey" 
 									rendered="#{managerTeamView.isMe(enrolment.value)}"
-									enabled="#{managerTeamView.hasFunction(enrolment.key)}"
-									
+									enabled="#{managerTeamView.hasFunction(enrolment.key)}"									
 									/>
-
-
 							</p:column>
-
 							<p:rowExpansion>
-
 								<p:panelGrid columns="2" widt="100%">
-
 									<h:outputText
 										value="#{enrolment.value.firstName}  #{enrolment.value.lastName}"></h:outputText>
 										
-		<!-- 								<div class="knob-container ui-corner-all">
-    <p:knob labelTemplate="{value}%" disabled="true" value="#{managerTeamView.getMemberSurveyPercentage(enrolment.value)}"/>
-</div> -->
+
 										
-								<p:progressBar id="progressBarEmployee"
+									<p:progressBar id="progressBarEmployee"
 										value="#{managerTeamView.getMemberSurveyPercentage(enrolment.value)}"
 										widgetVar="pbClient" style="width:300px" /> 
 									<h:outputText value="Jij"></h:outputText>
-		<!-- 					        <div class="knob-container ui-corner-all">
-    <p:knob labelTemplate="{value}%"  disabled="true" value="75"/>
-</div>
-			 -->
+
 									
 									<p:progressBar id="progressBarBoss" widgetVar="pbClient"
 										value="#{managerTeamView.getManagerSurveyPercentage(webUser.getUser())}"
 										style="width:300px" /> 
 
-									<h:outputText value=""></h:outputText>
-
-									<p:commandButton disabled="true" value="#{msgs['consensus.button']}" />
+									
+									<div>
+									<p:commandButton id="survey_button1" rendered="#{not managerTeamView.consensusReady(enrolment.value)}"  value="Fill in Survey" />
+									<p:commandButton id="survey_button2" rendered="#{managerTeamView.consensusReady(enrolment.value)}" value="#{msgs['consensus.button']}" />
+									</div>
 
 								</p:panelGrid>
 							</p:rowExpansion>
@@ -110,8 +93,9 @@
 			</h:form>
 		</div>
 	</div>
-
-
+<!-- *****************************************************************************************************************
+													CHANGE FUNCTION																
+	 ***************************************************************************************************************** -->
 	<p:dialog header="#{msgs['change.function']}" draggable="false" widgetVar="changeFunction"
 		modal="true" resizable="false" >
 		<p:panelGrid columns="2" id="display2" columnClasses="label,output">
@@ -119,46 +103,39 @@
 				<div class="ui-g">
 					<p:selectOneMenu value="#{managerTeamViewChangeFunction.function}"
 						converter="SurveyDefinitionBoConverter">
-
 						<f:selectItems
 							value="#{managerTeamViewChangeFunction.availableFunctionDefinitions}"
 							var="function" itemLabel="#{function.function}"
 							itemValue="#{function}" />
 					</p:selectOneMenu>
-
 					<p:commandButton action="#{managerTeamViewChangeFunction.submit}"
 						value="#{msgs['submit']}" oncomplete="PF('changeFunction').hide();"
 						update=":form" />
-
 				</div>
 			</h:form>
 		</p:panelGrid>
 	</p:dialog>
-
+<!-- *****************************************************************************************************************
+													CREATE SURVEY																
+	 ***************************************************************************************************************** -->
 	<h:form id="createSurvey">
+	
 		<p:dialog header="#{msgs['create.survey']}" widgetVar="createSurvey" draggable="false" modal="true"
 			resizable="false">
+			
+			
 			<p:panelGrid columns="1" id="display" columnClasses="label,output">
-	
+
 					<p:pickList id="pickList"
-						value="#{managerTeamViewDialog.availableList}" var="section"
+						value="#{managerTeamView.availableList}" var="section"
 						itemValue="#{section}"
 						itemLabel="#{section.surveySectionDefinitionBo.surveySectionTitle.title}"
 						converter="DefinitionImplBoConverter" />
-	
-					<p:commandButton action="#{managerTeamViewDialog.submit()}"
+
+						<p:commandButton action="#{managerTeamView.submit()}"
 						oncomplete="PF('createSurvey').hide();"
 						value="#{msgs['create.survey']}"></p:commandButton>
-	
 			</p:panelGrid>
 		</p:dialog>
 	</h:form>
-
-
 </ui:composition>
-
-
-
-
-
-

@@ -134,7 +134,8 @@ public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl {
 				}
 			}
 		}
-
+		
+		//Divide by Zero 
 		if (totaal > 0) {
 			return Math.round((beantwoord / totaal) * 100);
 		} else {
@@ -149,6 +150,8 @@ public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl {
 
 		Survey survey = set.getSurveyList().stream().filter(x -> x.getSurveyKind().equals(SurveyKind.TeamManager))
 				.findFirst().get();
+		
+		
 		if (survey != null)
 
 			return this.calculatePercentage(survey);

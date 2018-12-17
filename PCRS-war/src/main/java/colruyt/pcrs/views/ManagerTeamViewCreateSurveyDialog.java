@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -35,7 +37,7 @@ public class ManagerTeamViewCreateSurveyDialog implements Serializable {
 	private SurveySectionDefinitionImplBo chosen = new SurveySectionDefinitionImplBo();
 	private List<SurveySectionDefinitionImplBo>  chosenList = new ArrayList<>();
 	private List<SurveySectionDefinitionImplBo>  allList = new ArrayList<>();
-	private DualListModel<SurveySectionDefinitionImplBo>  availableList;
+	private DualListModel<SurveySectionDefinitionImplBo>  availableList = new DualListModel<>(allList, chosenList);
 	
 	@EJB
 	private ISurveySetFacade surveyFacade;
@@ -62,6 +64,10 @@ public class ManagerTeamViewCreateSurveyDialog implements Serializable {
 	}
 	
 	
+	
+	
+
+
 	public DualListModel<SurveySectionDefinitionImplBo> getAvailableList() {
 		return availableList;
 	}
@@ -94,12 +100,10 @@ public class ManagerTeamViewCreateSurveyDialog implements Serializable {
 		this.teamMember = teamMember;
 	}
 
-	
-	
-	
-	  
+
 	public ManagerTeamViewCreateSurveyDialog() {
 		super();
+		System.out.println("hallo");
 	}
 
 	private void loadCompetences() {
@@ -130,7 +134,12 @@ public class ManagerTeamViewCreateSurveyDialog implements Serializable {
 		try {
 			sections.add(surveySectionDefinitionImplFacade.get(section));
 		} catch (ValidationException e) {
-			//NOP
+			FacesContext context = FacesContext.getCurrentInstance();
+			String message= context.getApplication().evaluateExpressionGet(context, "#{msgs['error.general']}",
+					String.class);
+			
+			FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, null, message);
+			context.addMessage(null, myFacesMessage);
 		}
 	}	
 	
@@ -141,8 +150,12 @@ public class ManagerTeamViewCreateSurveyDialog implements Serializable {
 	try {
 		this.userFacade.save(this.teamMember);
 	} catch (ValidationException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		FacesContext context = FacesContext.getCurrentInstance();
+		String message= context.getApplication().evaluateExpressionGet(context, "#{msgs['error.general']}",
+				String.class);
+		
+		FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, null, message);
+		context.addMessage(null, myFacesMessage);
 	}
 	}
 
