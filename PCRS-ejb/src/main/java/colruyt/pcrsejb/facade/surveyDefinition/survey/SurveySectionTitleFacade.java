@@ -5,10 +5,12 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.PersistenceException;
 
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionTitleBo;
 import colruyt.pcrsejb.converter.surveyDefinition.survey.SurveySectionTitleConverter;
 import colruyt.pcrsejb.service.bl.surveyDefinition.survey.ISurveySectionTitleServiceBl;
+import colruyt.pcrsejb.util.exceptions.validation.surveyDefinition.survey.SurveySectionTitleCantBeDeletedException;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless

@@ -14,6 +14,9 @@ import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinitionImp
 import colruyt.pcrsejb.service.bl.competence.ICompetenceServiceBl;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
+/**
+ * The type Competence facade.
+ */
 @Stateless
 public class CompetenceFacade implements Serializable, ICompetenceFacade {
 	/**

@@ -11,6 +11,7 @@ import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionTitle;
+import colruyt.pcrsejb.util.exceptions.validation.surveyDefinition.survey.SurveySectionTitleCantBeDeletedException;
 
 @Stateless
 public class DbSurveySectionTitleServiceDl implements Serializable, ISurveySectionTitleServiceDl {
@@ -51,10 +52,17 @@ public class DbSurveySectionTitleServiceDl implements Serializable, ISurveySecti
 	}
 
 	@Override
-	public void delete(SurveySectionTitle element) throws PersistenceException{
+	public void delete(SurveySectionTitle element)/* throws SurveySectionTitleCantBeDeletedException */{
 		element = em.find(SurveySectionTitle.class, element.getId());
 		if (element != null) {
+//			try {
 			em.remove(element);
+			em.flush(); 
+//			}
+//			} catch(PersistenceException e)
+//			{
+//				throw new SurveySectionTitleCantBeDeletedException();
+//			}
 		} else {
 			throw new EntityNotFoundException();
 		}

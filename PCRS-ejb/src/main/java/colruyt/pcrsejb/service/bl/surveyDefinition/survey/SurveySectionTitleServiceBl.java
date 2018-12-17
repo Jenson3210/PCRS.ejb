@@ -54,10 +54,8 @@ public class SurveySectionTitleServiceBl implements ISurveySectionTitleServiceBl
 		} catch(EntityNotFoundException e)
 		{
 			throw new SurveySectionTitleNotFoundException();
-		} catch(PersistenceException e)
-		{
+		} catch(Exception e) {
 			throw new SurveySectionTitleCantBeDeletedException();
 		}
-		
 	}
 }

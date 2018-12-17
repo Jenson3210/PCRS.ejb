@@ -5,11 +5,13 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.PersistenceException;
 
 import colruyt.pcrsejb.entity.surveyDefinition.strategy.SurveySectionStrategy;
-import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinition;
 import colruyt.pcrsejb.service.dl.surveyDefinition.strategy.ISurveySectionStrategyServiceDL;
-import colruyt.pcrsejb.service.dl.surveyDefinition.survey.DbSurveySectionDefinitionServiceDl;
+import colruyt.pcrsejb.util.exceptions.validation.surveyDefinition.strategy.SurveySectionStrategyCantBeDeletedException;
+import colruyt.pcrsejb.util.exceptions.validation.surveyDefinition.strategy.SurveySectionStrategyNotFoundException;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 import colruyt.pcrsejb.util.validators.surveyDefinition.strategy.StrategyValidator;
 
@@ -32,8 +34,14 @@ public class SurveySectionStrategyServiceBl implements Serializable, ISurveySect
 	}
 
 	@Override
-	public SurveySectionStrategy get(SurveySectionStrategy element) {
+	public SurveySectionStrategy get(SurveySectionStrategy element) throws ValidationException {
+		try {
 		return surveySectionStrategyServiceDL.get(element);
+		}
+		catch(EntityNotFoundException e)
+		{
+			throw new SurveySectionStrategyNotFoundException();
+		}
 	}
 
 	@Override
@@ -43,15 +51,14 @@ public class SurveySectionStrategyServiceBl implements Serializable, ISurveySect
 
 	@Override
 	public void delete(SurveySectionStrategy element) throws ValidationException {
-		DbSurveySectionDefinitionServiceDl dbsdsdl = new DbSurveySectionDefinitionServiceDl();
-		List<SurveySectionDefinition> sdsList = dbsdsdl.getSurveySectionDefinitionsForStrategy(element);
-		if ( sdsList == null) {
+		try {
 			surveySectionStrategyServiceDL.delete(element);
-			System.out.println("+++++++ na delete +++++++++");
-		}
-		else {
-			System.out.println("++++++++++ komt in exception +++++++++");
-			throw new ValidationException("Can't remove survey strategy, still in use");
+		} catch(EntityNotFoundException e)
+		{
+			throw new SurveySectionStrategyNotFoundException();
+		} catch(PersistenceException e)
+		{
+			throw new SurveySectionStrategyCantBeDeletedException();
 		}
 	}
 }

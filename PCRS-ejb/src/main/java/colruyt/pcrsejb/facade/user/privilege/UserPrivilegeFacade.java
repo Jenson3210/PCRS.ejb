@@ -61,12 +61,12 @@ public class UserPrivilegeFacade implements Serializable, IUserPrivilegeFacade {
 	}
 
 	@Override
-	public void revokeUserPrivilegeFromUser(UserBo user, UserPrivilegeBo userPrivilege) {
+	public void revokeUserPrivilegeFromUser(UserBo user, UserPrivilegeBo userPrivilege) throws ValidationException {
 		userPrivilegeServiceBl.revokeUserPrivilegeToUser(userConverter.convertToEntity(user), userPrivilegeConverter.convertToEntity(userPrivilege));
 	}
 
 	@Override
-	public void revokeUserPrivilegeTypeFromUser(UserBo user, PrivilegeTypeBo privilegeType, SurveyDefinitionBo surveyDefinition) {
+	public void revokeUserPrivilegeTypeFromUser(UserBo user, PrivilegeTypeBo privilegeType, SurveyDefinitionBo surveyDefinition) throws ValidationException {
 		userPrivilegeServiceBl.revokeUserPrivilegeTypeToUser(userConverter.convertToEntity(user), privilegeTypeTranslator.convertToEntity(privilegeType), surveyDefinitionConverter.convertToEntity(surveyDefinition));
 	}
 	

@@ -14,6 +14,6 @@ import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 @Remote
 public interface IUserPrivilegeFacade extends IFacade<UserPrivilegeBo>{
 	public UserBo grantUserPrivilegeToUser(UserBo user, UserPrivilegeBo userPrivilege) throws ValidationException;
-	public void revokeUserPrivilegeFromUser(UserBo user, UserPrivilegeBo userPrivilege);
-	public void revokeUserPrivilegeTypeFromUser(UserBo manipulatedUserBo, PrivilegeTypeBo surveydefinitionresponsible, SurveyDefinitionBo manipulatedSurveyDefinitionBo);
+	public void revokeUserPrivilegeFromUser(UserBo user, UserPrivilegeBo userPrivilege) throws ValidationException;
+	public void revokeUserPrivilegeTypeFromUser(UserBo manipulatedUserBo, PrivilegeTypeBo surveydefinitionresponsible, SurveyDefinitionBo manipulatedSurveyDefinitionBo) throws ValidationException;
 }

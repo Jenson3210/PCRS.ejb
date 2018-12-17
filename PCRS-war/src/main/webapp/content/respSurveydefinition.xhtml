@@ -27,12 +27,9 @@
 									#{msgs['strategy.label']} = #{sectionImpl.surveySectionDefinitionBo.surveySectionStrategy.name}, #{msgs['strategy.labelRequired']} = 
 									#{sectionImpl.surveySectionRequirementLevelBo}" />
 							</f:facet>
-
 							<p:column headerText="#{msgs['competence.name']}">
 								<h:outputText value="#{comp.competence.name}" />
 							</p:column>
-
-
 							<p:column headerText="#{msgs['competence.description']}">
 								<h:outputText value="#{comp.competenceDescription}" />
 							</p:column>
@@ -41,7 +38,6 @@
 								style="text-alignment:center;">
 								<h:outputText value="#{comp.minLevel}" />
 							</p:column>
-
 
 							<p:column headerText="#{msgs['edit']}"
 								style="width:65px; text-align: center">
@@ -62,15 +58,11 @@
 										target="#{respSurveyDefinitionView.addedCompetenceImplBo}" />
 								</p:commandLink>
 							</p:column>
-
-
-
 						</p:dataTable>
 						<br />
 					</p:repeat>
 					<div class="ui-g" style="margin-top: 20px; float: right;">
 						<div class="ui-g-12">
-
 							<p:commandButton
 								value="#{msgs['respSurveyDefinition.manageSections']}"
 								styleClass="btn btn-outline-primary mx-1" process="@this"
@@ -80,7 +72,6 @@
 								<f:setPropertyActionListener value="#{def}"
 									target="#{respSurveyDefinitionView.activeTab}" />
 							</p:commandButton>
-
 							<p:commandButton
 								value="#{msgs['respSurveyDefinition.manageCompetences']}"
 								styleClass="btn btn-outline-primary mx-1" process="@this"
@@ -95,7 +86,9 @@
 				</p:tab>
 			</p:tabView>
 		</h:form>
-
+<!-- *****************************************************************************************************************
+													MANAGE SECTIONS																
+	 ***************************************************************************************************************** -->
 		<h:form id="manageSections">
 			<div class="ui-g" id="manageSectionsContainer">
 				<p:dialog header="#{msgs['respSurveyDefinition.manageSections']}"
@@ -124,14 +117,12 @@
 
 							</div>
 						</div>
-
 						<p:outputPanel
 							rendered="#{respSurveyDefinitionView.newExistingOrDeleteSection == 0}">
 							<div class="ui-g">
 								<div class="ui-g-4">
 									<p:outputLabel value="#{msgs['respSurveyDefinition.title']}"></p:outputLabel>
 								</div>
-
 								<div class="ui-g-8">
 									<p:selectOneMenu
 										value="#{respSurveyDefinitionView.addedSurveySectionDefinition.surveySectionTitle}"
@@ -144,7 +135,6 @@
 
 								</div>
 							</div>
-
 							<div class="ui-g">
 								<div class="ui-g-4">
 									<p:outputLabel
@@ -162,7 +152,6 @@
 
 								</div>
 							</div>
-
 							<div class="ui-g">
 								<div class="ui-g-4">
 									<p:outputLabel
@@ -178,14 +167,12 @@
 								</div>
 							</div>
 						</p:outputPanel>
-
 						<p:outputPanel
 							rendered="#{respSurveyDefinitionView.newExistingOrDeleteSection == 1}">
 							<div class="ui-g">
 								<div class="ui-g-4">
 									<p:outputLabel value="#{msgs['respSurveyDefinition.title']}"></p:outputLabel>
 								</div>
-
 								<div class="ui-g-8">
 									<p:selectOneMenu
 										value="#{respSurveyDefinitionView.addedSurveySectionDefinition}"
@@ -197,7 +184,6 @@
 									</p:selectOneMenu>
 								</div>
 							</div>
-
 							<div class="ui-g">
 								<div class="ui-g-4">
 									<p:outputLabel
@@ -214,7 +200,6 @@
 								</div>
 							</div>
 						</p:outputPanel>
-
 						<p:outputPanel
 							rendered="#{respSurveyDefinitionView.newExistingOrDeleteSection == 2}">
 							<div class="ui-g">
@@ -235,7 +220,6 @@
 								</div>
 							</div>
 						</p:outputPanel>
-
 						<div class="ui-g-2">
 							<p:commandButton value="#{msgs['respSurveyDefinition.add']}"
 								update=":form"
@@ -246,13 +230,14 @@
 				</p:dialog>
 			</div>
 		</h:form>
-
+<!-- *****************************************************************************************************************
+													MANAGE COMPETENCES																
+	 ***************************************************************************************************************** -->
 		<h:form id="manageCompetences">
 			<div class="ui-g" id="manageCompetencesContainer">
 				<p:dialog header="#{msgs['respSurveyDefinition.manageCompetences']}"
 					widgetVar="manageCompetencesDialog" modal="true" draggable="false">
 					<p:outputPanel id="manageCompetencesPanel">
-
 						<div class="ui-g-8">
 							<div class="ui-g-4">
 								<p:outputLabel
@@ -270,7 +255,6 @@
 								</p:autoComplete>
 							</div>
 						</div>
-
 						<div class="ui-g-8">
 							<div class="ui-g-4">
 								<p:outputLabel
@@ -288,7 +272,6 @@
 								</p:autoComplete>
 							</div>
 						</div>
-
 						<p:outputPanel id="competenceDetails">
 							<div class="ui-g-8">
 								<div class="ui-g-4">
@@ -300,7 +283,6 @@
 										value="#{respSurveyDefinitionView.selectedCompetence.competenceDescription}" />
 								</div>
 							</div>
-
 							<p:selectOneRadio
 								value="#{respSurveyDefinitionView.selectedMinLevel}"
 								converter="CompetenceLevelBoConverter" layout="pageDirection">
@@ -310,9 +292,7 @@
 									itemLabel="#{level.orderLevel}. #{level.description}"
 									itemValue="#{level}" />
 							</p:selectOneRadio>
-
 						</p:outputPanel>
-
 						<div class="ui-g-8">
 							<p:commandButton value="#{msgs['respSurveyDefinition.add']}"
 								update=":form"
@@ -323,15 +303,15 @@
 				</p:dialog>
 			</div>
 		</h:form>
-
+<!-- *****************************************************************************************************************
+													EDIT FORM																
+	 ***************************************************************************************************************** -->
 		<h:form id="editForm">
 			<div class="ui-g" id="editCompetenceImplForm">
 				<p:dialog id="editCompetenceImplTitle"
 					header="#{msgs['surveyDefinition.edit']}"
 					widgetVar="editCompetenceImplDialog" modal="true" draggable="false">
 					<p:outputPanel id="editCompetenceImpl">
-
-
 						<div class="ui-g-2">
 							<p:commandButton value="#{msgs['surveyDefinition.edit']}"
 								update=":form"
@@ -343,7 +323,9 @@
 				</p:dialog>
 			</div>
 		</h:form>
-
+<!-- *****************************************************************************************************************
+													DELETE FORM																
+	 ***************************************************************************************************************** -->
 		<h:form id="deleteForm">
 			<div class="ui-g" id="deleteCompetenceImplForm">
 				<p:dialog id="deleteCompetenceImplTitle"
@@ -374,13 +356,8 @@
 
 					</div>
 				</p:dialog>
-
 			</div>
 		</h:form>
-
-
 	</div>
-
 	<div class="ui-g-1"></div>
-
 </ui:composition>
