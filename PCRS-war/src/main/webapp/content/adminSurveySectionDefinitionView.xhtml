@@ -11,7 +11,7 @@
 		<div class="ui-g-1" />
 		<div class="ui-g-10">
 			<h:form id="form">
-				<p:messages id="errors" showDetail="false" closable="true" globalOnly="true">
+				<p:messages for="form" showDetail="false" closable="true" globalOnly="true">
 					<p:autoUpdate />
 				</p:messages>
 				<p:dataTable var="surveySectionDefinition"
@@ -205,7 +205,7 @@
 							<p:commandButton styleClass="btn btn-primary" update=":form"
 								value="#{msgs['general.button.yes']}"
 								action="#{adminSurveySectionDefinitionView.deleteSurveySectionDefinition}"
-								oncomplete="PF('deleteSurveySectionDefinitionDialog').hide();" />
+								onclick="PF('deleteSurveySectionDefinitionDialog').hide();" />
 						</div>
 						<div class="ui-g-2">
 							<p:commandButton styleClass="btn btn-link"

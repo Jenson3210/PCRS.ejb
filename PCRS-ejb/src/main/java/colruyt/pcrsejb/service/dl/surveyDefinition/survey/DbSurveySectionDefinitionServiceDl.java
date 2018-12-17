@@ -1,7 +1,6 @@
 package colruyt.pcrsejb.service.dl.surveyDefinition.survey;
 
 import java.io.Serializable;
-import java.util.EmptyStackException;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -13,7 +12,6 @@ import javax.persistence.TypedQuery;
 
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinition;
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionTitle;
-import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
 public class DbSurveySectionDefinitionServiceDl implements Serializable, ISurveySectionDefinitionServiceDl {
@@ -53,10 +51,11 @@ public class DbSurveySectionDefinitionServiceDl implements Serializable, ISurvey
 	}
 
 	@Override
-	public void delete(SurveySectionDefinition element) throws PersistenceException {
+	public void delete(SurveySectionDefinition element) {
 		element = em.find(SurveySectionDefinition.class, element.getId());
 		if (element != null) {
 			em.remove(element);
+			em.flush();
 		} else {
 			throw new EntityNotFoundException();
 		}

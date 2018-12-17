@@ -34,8 +34,14 @@ public class SurveySectionStrategyServiceBl implements Serializable, ISurveySect
 	}
 
 	@Override
-	public SurveySectionStrategy get(SurveySectionStrategy element) {
+	public SurveySectionStrategy get(SurveySectionStrategy element) throws ValidationException {
+		try {
 		return surveySectionStrategyServiceDL.get(element);
+		}
+		catch(EntityNotFoundException e)
+		{
+			throw new SurveySectionStrategyNotFoundException();
+		}
 	}
 
 	@Override
