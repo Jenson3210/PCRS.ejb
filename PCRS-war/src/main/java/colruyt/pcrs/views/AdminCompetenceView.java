@@ -111,6 +111,9 @@ public class AdminCompetenceView implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "succesfully deleted", null));
 	}
 
+	/**
+	 * Create new levels
+	 */
 	private void newLevels() {
 		levels = new HashSet<>();
 		for (int i = 1; i <= 2; i++) {
@@ -119,7 +122,7 @@ public class AdminCompetenceView implements Serializable {
 	}
 
 	/**
-	 * New level.
+	 * Create new level.
 	 */
 	public void newLevel() {
 		levels.add(new CompetenceLevelBo("", levels.size() + 1));
