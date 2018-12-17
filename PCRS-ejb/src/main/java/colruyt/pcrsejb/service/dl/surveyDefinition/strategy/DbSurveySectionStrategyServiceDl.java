@@ -52,7 +52,7 @@ public class DbSurveySectionStrategyServiceDl implements Serializable, ISurveySe
 	public void delete(SurveySectionStrategy element) {
 		element = em.find(SurveySectionStrategy.class, element.getId());
 		if (element == null) {
-			throw new EmptyStackException();
+			throw new EntityNotFoundException();
 		}
 		else { em.remove(element); }
 	}
