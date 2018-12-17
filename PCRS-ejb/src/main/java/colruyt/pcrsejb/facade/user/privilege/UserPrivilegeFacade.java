@@ -16,6 +16,7 @@ import colruyt.pcrsejb.converter.user.UserConverter;
 import colruyt.pcrsejb.converter.user.privilege.PrivilegeTypeTranslator;
 import colruyt.pcrsejb.converter.user.privilege.UserPrivilegeConverter;
 import colruyt.pcrsejb.service.bl.user.privilege.IUserPrivilegeServiceBl;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
 public class UserPrivilegeFacade implements Serializable, IUserPrivilegeFacade {
@@ -55,7 +56,7 @@ public class UserPrivilegeFacade implements Serializable, IUserPrivilegeFacade {
 	}
 
 	@Override
-	public UserBo grantUserPrivilegeToUser(UserBo user, UserPrivilegeBo userPrivilege) {
+	public UserBo grantUserPrivilegeToUser(UserBo user, UserPrivilegeBo userPrivilege) throws ValidationException {
 		return userConverter.convertToBo(userPrivilegeServiceBl.grantUserPrivilegeToUser(userConverter.convertToEntity(user), userPrivilegeConverter.convertToEntity(userPrivilege)));
 	}
 
