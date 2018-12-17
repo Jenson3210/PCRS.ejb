@@ -1,7 +1,6 @@
 package colruyt.pcrsejb.service.dl.surveyDefinition.survey;
 
 import java.io.Serializable;
-import java.util.EmptyStackException;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -13,7 +12,6 @@ import javax.persistence.TypedQuery;
 
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinition;
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionTitle;
-import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
 public class DbSurveySectionDefinitionServiceDl implements Serializable, ISurveySectionDefinitionServiceDl {
