@@ -11,6 +11,8 @@
 		<div class="ui-g-1" />
 		<div class="ui-g-10">
 			<h:form id="form">
+			
+			<p:growl id="growl" for="messagegrowl" showDetail="true" sticky="false" />  
 				<p:dataTable var="team"
 					value="#{managerTeamView.getTeamEnrolments()}"
 					styleClass="teamOverviewTable" sortBy="#{team.getTeam().name}"
@@ -64,7 +66,7 @@
 
 							<p:column>
 								<p:commandButton value="#{msgs['create.survey']}"
-									action="#{managerTeamViewDialog.initDialog(enrolment.value)}"
+									action="#{managerTeamView.initDialog(enrolment.value)}"
 									oncomplete="PF('createSurvey').show()" update=":createSurvey" 
 									rendered="#{managerTeamView.isMe(enrolment.value)}"
 									enabled="#{managerTeamView.hasFunction(enrolment.key)}"
@@ -81,27 +83,23 @@
 									<h:outputText
 										value="#{enrolment.value.firstName}  #{enrolment.value.lastName}"></h:outputText>
 										
-		<!-- 								<div class="knob-container ui-corner-all">
-    <p:knob labelTemplate="{value}%" disabled="true" value="#{managerTeamView.getMemberSurveyPercentage(enrolment.value)}"/>
-</div> -->
+
 										
-								<p:progressBar id="progressBarEmployee"
+									<p:progressBar id="progressBarEmployee"
 										value="#{managerTeamView.getMemberSurveyPercentage(enrolment.value)}"
 										widgetVar="pbClient" style="width:300px" /> 
 									<h:outputText value="Jij"></h:outputText>
-		<!-- 					        <div class="knob-container ui-corner-all">
-    <p:knob labelTemplate="{value}%"  disabled="true" value="75"/>
-</div>
-			 -->
+	
 									
 									<p:progressBar id="progressBarBoss" widgetVar="pbClient"
 										value="#{managerTeamView.getManagerSurveyPercentage(webUser.getUser())}"
 										style="width:300px" /> 
 
-									<h:outputText value=""></h:outputText>
-
-									<p:commandButton disabled="true" value="#{msgs['consensus.button']}" />
-
+									
+									<div>
+									<p:commandButton id="sleg1" rendered="#{not managerTeamView.consensusReady(enrolment.value)}"  value="Fill in Survey" />
+									<p:commandButton id="sleg2" rendered="#{managerTeamView.consensusReady(enrolment.value)}" value="#{msgs['consensus.button']}" />
+									</div>
 								</p:panelGrid>
 							</p:rowExpansion>
 						</p:dataTable>
@@ -136,17 +134,20 @@
 	</p:dialog>
 
 	<h:form id="createSurvey">
+	
 		<p:dialog header="#{msgs['create.survey']}" widgetVar="createSurvey" draggable="false" modal="true"
 			resizable="false">
+			
+			
 			<p:panelGrid columns="1" id="display" columnClasses="label,output">
-	
+		
 					<p:pickList id="pickList"
-						value="#{managerTeamViewDialog.availableList}" var="section"
+						value="#{managerTeamView.availableList}" var="section"
 						itemValue="#{section}"
 						itemLabel="#{section.surveySectionDefinitionBo.surveySectionTitle.title}"
 						converter="DefinitionImplBoConverter" />
 	
-					<p:commandButton action="#{managerTeamViewDialog.submit()}"
+					<p:commandButton action="#{managerTeamView.submit()}"
 						oncomplete="PF('createSurvey').hide();"
 						value="#{msgs['create.survey']}"></p:commandButton>
 	

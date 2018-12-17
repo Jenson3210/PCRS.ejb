@@ -69,12 +69,13 @@ public class DbSurveySetServiceDl implements Serializable, ISurveySetServiceDl {
 
 		try {
 			User u = em.find(User.class, user.getId());
-
+			
 			TeamMemberUserPrivilege privi = (TeamMemberUserPrivilege) u.getPrivileges().stream()
 					.filter(x -> x.getPrivilegeType().equals(PrivilegeType.TEAMMEMBER) && x.isActive()).findFirst()
 					.get();
 
 			TreeSet<SurveySet> tree = new TreeSet<>(privi.getSurveySetTreeSet());
+		
 
 			return tree.first();
 
