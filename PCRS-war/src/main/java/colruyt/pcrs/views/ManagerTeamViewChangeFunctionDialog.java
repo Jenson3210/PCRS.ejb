@@ -89,6 +89,7 @@ public class ManagerTeamViewChangeFunctionDialog implements Serializable {
 				FacesContext context = FacesContext.getCurrentInstance();
 				String message= context.getApplication().evaluateExpressionGet(context, "#{msgs['error.general']}",
 						String.class);
+				
 				FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, null, message);
 				context.addMessage(null, myFacesMessage);
 			}
