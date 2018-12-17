@@ -167,6 +167,7 @@ public class AdminTeamView implements Serializable {
 			teamEnrolments.add(new TeamEnrolmentBo(manipulatedTeamBo));
 		}
 	}
+	
 
 	/**
 	 * Create a new enrolment.
