@@ -16,6 +16,10 @@ import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.facade.user.IUserFacade;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
+/**
+ * ADMIN USER VIEW
+ * @author jda1mbw
+ */
 @Named
 @ViewScoped
 public class AdminUserView implements Serializable{
@@ -26,23 +30,42 @@ public class AdminUserView implements Serializable{
 	private List<UserBo> users; 
 	private Boolean adminSelected;
 
+	/**
+	 * Setup of the screen, loading the needed data
+	 */
 	@PostConstruct 
 	private void fillusers() {
 		users = userFacade.getAll();
 	}
 
+	/**
+	 * Get a list of users
+	 * @return users
+	 */
 	public List<UserBo> getUsers() {
 		return users;
 	}
 	
+	/**
+	 * Set a list of users
+	 * @param users
+	 */
 	public void setUsers(List<UserBo> users) {
 		this.users = users;
 	}
 
+	/**
+	 * Get the added user
+	 * @return addedUser
+	 */
 	public UserBo getAddedUser() {
 		return addedUser;
 	}
 
+	/**
+	 * Set the added user
+	 * @param addedUser
+	 */
 	public void setAddedUser(UserBo addedUser) {
 		this.addedUser = addedUser;
 		adminSelected = false;
@@ -53,7 +76,19 @@ public class AdminUserView implements Serializable{
 		}
 	}
 
-	public void addUser() {
+	/**
+	 * Create new user
+	 */
+	public void newUser() {
+        addedUser = new UserBo(); 
+        adminSelected = false;
+    }
+	
+	/**
+	 * Add user
+	 * @throws ValidationException 
+	 */
+	public void addUser() throws ValidationException {
 		Set<UserPrivilegeBo> privs = new HashSet<UserPrivilegeBo>();
 		if (adminSelected) {
 			privs.add(new UserPrivilegeBo(PrivilegeTypeBo.ADMINISTRATOR, true));
@@ -62,7 +97,11 @@ public class AdminUserView implements Serializable{
 		users.add(userFacade.save(addedUser));
     }
 	
-	public void editUser() {
+	/**
+	 * Edit user
+	 * @throws ValidationException 
+	 */
+	public void editUser() throws ValidationException {
 		UserBo u = null;
 		for (UserBo user : users) {
 			if (user.getId() == addedUser.getId()) {
@@ -97,6 +136,9 @@ public class AdminUserView implements Serializable{
 		userFacade.save(u); 
 	}
 	
+	/**
+	 * Delete user
+	 */
 	public void deleteUser() {
 		UserBo u = null;
 		for (UserBo user : users) {
@@ -113,20 +155,28 @@ public class AdminUserView implements Serializable{
 		adminSelected = false;
 	}
 	
+	/**
+	 * Method to show if there's an admin privilege
+	 * @param userBo
+	 * @return boolean
+	 */
 	public Boolean hasAdminPrivilege(UserBo userBo)
 	{
 		return userFacade.hasPrivilege(userBo, PrivilegeTypeBo.ADMINISTRATOR, true);
 	}
 
-	public void newUser() {
-        addedUser = new UserBo(); 
-        adminSelected = false;
-    }
-
+	/**
+	 * Method to show admin selected
+	 * @return adminSelected
+	 */
 	public Boolean getAdminSelected() {
 		return adminSelected;
 	}
 
+	/**
+	 * Set the admin selected
+	 * @param adminSelected
+	 */
 	public void setAdminSelected(Boolean adminSelected) {
 		this.adminSelected = adminSelected;
 	} 

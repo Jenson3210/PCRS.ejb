@@ -17,7 +17,7 @@ import colruyt.pcrsejb.facade.surveyDefinition.strategy.ISurveySectionStrategyFa
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 /**
- * 
+ * Survey section strategy view
  * @author jda1mbw
  */
 @Named
