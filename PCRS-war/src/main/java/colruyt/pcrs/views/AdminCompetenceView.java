@@ -13,13 +13,13 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import org.primefaces.PrimeFaces;
+
 import colruyt.pcrsejb.bo.competence.CompetenceBo;
 import colruyt.pcrsejb.bo.competence.CompetenceLevelBo;
-import colruyt.pcrsejb.facade.competence.CompetenceLevelFacade;
 import colruyt.pcrsejb.facade.competence.ICompetenceFacade;
 import colruyt.pcrsejb.facade.competence.ICompetenceLevelFacade;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
-import org.primefaces.PrimeFaces;
 
 /**
  * The type Admin competence view.
@@ -36,11 +36,15 @@ public class AdminCompetenceView implements Serializable {
 	private CompetenceLevelBo level;
 	private List<CompetenceBo> competences;
 	private Set<CompetenceLevelBo> levels = new HashSet<>();
+	
 	/**
 	 * The Context.
 	 */
 	FacesContext context = FacesContext.getCurrentInstance();
 
+	/**
+	 * Setup of the screen, loading the needed data
+	 */
 	@PostConstruct
 	private void fillCompetences() {
 		competences = competenceFacade.getAll();
@@ -150,7 +154,6 @@ public class AdminCompetenceView implements Serializable {
 				j = j + 1;
 			}
 		}
-
 	}
 
 	/**

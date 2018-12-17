@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -17,38 +16,38 @@ import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveyDefinitionBo;
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
 import colruyt.pcrsejb.bo.user.privilege.SurveyDefinitionResponsibleUserPrivilegeBo;
-import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.facade.surveyDefinition.survey.ISurveyDefinitionFacade;
 import colruyt.pcrsejb.facade.user.IUserFacade;
 import colruyt.pcrsejb.facade.user.privilege.IUserPrivilegeFacade;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
+/**
+ * ADMIN SURVEY DEFINITION VIEW
+ * @author jda1mbw
+ */
 @Named
 @ViewScoped
 public class AdminSurveyDefinitionView implements Serializable {
 
 	private static final long serialVersionUID = 5L;
-
 	@EJB
 	private IUserFacade userFacade;
 	@EJB
 	private ISurveyDefinitionFacade surveyDefinitionFacade;
 	@EJB
 	private IUserPrivilegeFacade userPrivilegeFacade;
-
 	private Map<SurveyDefinitionBo, UserBo> surveyDefinitions = new HashMap<>();
-
 	private SurveyDefinitionBo manipulatedSurveyDefinitionBo;
 	private UserBo manipulatedUserBo;
 
 	/**
-	 * mandatory empty constructor
+	 * Mandatory empty constructor
 	 */
 	public AdminSurveyDefinitionView() {
 	}
 
 	/**
-	 * setup of the screen, loading the needed data
+	 * Setup of the screen, loading the needed data
 	 */
 	@PostConstruct
 	public void setup() {
@@ -58,12 +57,19 @@ public class AdminSurveyDefinitionView implements Serializable {
 		}
 	}
 
+	/**
+	 * Generate new SurveyDefinition
+	 */
 	public void newSurveyDefinition() {
 		manipulatedSurveyDefinitionBo = new SurveyDefinitionBo();
 		manipulatedUserBo = new UserBo();
 	}
 
-	public void addSurveyDefinition() {
+	/**
+	 * Add SurveyDefinition
+	 * @throws ValidationException 
+	 */
+	public void addSurveyDefinition() throws ValidationException {
 		// SAVE THE SURVEYDEFINITION
 		manipulatedSurveyDefinitionBo = surveyDefinitionFacade.save(manipulatedSurveyDefinitionBo);
 		// MAKE SOMEONE RESPONSIBLE
@@ -87,8 +93,9 @@ public class AdminSurveyDefinitionView implements Serializable {
 
 	/**
 	 * deletes the survey definition from the List and from the DB
+	 * @throws ValidationException 
 	 */
-	public void deleteSurveyDefinition() {
+	public void deleteSurveyDefinition() throws ValidationException {
 		// REMOVE FROM LOCAL LIST
 		surveyDefinitions.remove(manipulatedSurveyDefinitionBo);
 		// REMOVE THE RESPONSIBLES PRIVILEGE
@@ -105,8 +112,9 @@ public class AdminSurveyDefinitionView implements Serializable {
 
 	/**
 	 * modifies the survey definition and sets a new name and/or new responsible
+	 * @throws ValidationException 
 	 */
-	public void editSurveyDefinition() {
+	public void editSurveyDefinition() throws ValidationException {
 		// REMOVE THE CURRENT RESPONSIBLES PRIVILEGE
 		userPrivilegeFacade.revokeUserPrivilegeTypeFromUser(
 				surveyDefinitionFacade.getResponsible(manipulatedSurveyDefinitionBo),
@@ -126,32 +134,51 @@ public class AdminSurveyDefinitionView implements Serializable {
 		}
 	}
 
-	/*
-	 * Getters and Setters
+	/**
+	 * Get a map of SurveyDefinitions
+	 * @return serveyDefinition
 	 */
-
 	public Map<SurveyDefinitionBo, UserBo> getSurveyDefinitions() {
 		return this.surveyDefinitions;
 	}
 
+	/**
+	 * Set a map of SurveyDefinitions
+	 * @param surveyDefinitions
+	 */
 	public void setSurveyDefinitions(Map<SurveyDefinitionBo, UserBo> surveyDefinitions) {
 		this.surveyDefinitions = surveyDefinitions;
 	}
 
+	/**
+	 * Get a manipulated SurveyDefinition
+	 * @return manipulatedSurveyDefinitionBo
+	 */
 	public SurveyDefinitionBo getManipulatedSurveyDefinitionBo() {
 		return manipulatedSurveyDefinitionBo;
 	}
 
+	/**
+	 * Set a manipulated SurveyDefinition
+	 * @param manipulatedSurveyDefinition
+	 */
 	public void setManipulatedSurveyDefinitionBo(SurveyDefinitionBo manipulatedSurveyDefinition) {
 		this.manipulatedSurveyDefinitionBo = manipulatedSurveyDefinition;
 	}
 
+	/**
+	 * Get a manipulated User bo
+	 * @return manipulatedUserBo
+	 */
 	public UserBo getManipulatedUserBo() {
 		return manipulatedUserBo;
 	}
 
+	/**
+	 * Set a manipulated User bo
+	 * @param manipulatedUser
+	 */
 	public void setManipulatedUserBo(UserBo manipulatedUser) {
 		this.manipulatedUserBo = manipulatedUser;
 	}
-
 }
