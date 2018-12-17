@@ -35,14 +35,14 @@ public class UserServiceBl implements IUserServiceBl {
 	}
 
 	public User save(User user) throws ValidationException {
-		if (user.getShortName() == null) {
+		String sn = user.getShortName();
+		if (null == sn || sn.isEmpty()) {
 			try {
-				String sn = UserUtils.getShortName(user.getFirstName(), user.getLastName());
-				System.out.println(sn);
+				sn = UserUtils.getShortName(user.getFirstName(), user.getLastName());
+				user.setShortName(sn);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
 		}
 		
 		try {
