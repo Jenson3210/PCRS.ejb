@@ -7,6 +7,10 @@ import javax.faces.convert.FacesConverter;
 
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionBo;
 
+/**
+ * SURVEY SECTION DEFINITION BO CONVERTER
+ * @author jda1mbw
+ */
 @FacesConverter("SurveySectionDefinitionBoConverter")
 public class SurveySectionDefinitionBoConverter implements Converter {
 

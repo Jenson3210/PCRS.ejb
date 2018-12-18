@@ -7,6 +7,10 @@ import javax.faces.convert.FacesConverter;
 
 import colruyt.pcrsejb.bo.competence.CompetenceLevelBo;
 
+/**
+ * COMPETENCE LEVEL BO CONVERTER
+ * @author jda1mbw
+ */
 @FacesConverter("CompetenceLevelBoConverter")
 public class CompetenceLevelBoConverter implements Converter {
 

@@ -7,6 +7,10 @@ import javax.faces.convert.FacesConverter;
 
 import colruyt.pcrsejb.bo.user.UserBo;
 
+/**
+ * USER BO CONVERTER
+ * @author jda1mbw
+ */
 @FacesConverter("userBoConverter")
 public class UserBoConverter implements Converter {
 

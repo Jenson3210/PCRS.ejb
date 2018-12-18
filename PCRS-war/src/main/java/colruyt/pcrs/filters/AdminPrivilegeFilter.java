@@ -6,6 +6,7 @@ import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
  * @author jda1mbw
  */
 public class AdminPrivilegeFilter extends PrivilegeFilter {
+	
 	/**
 	 * Constructor
 	 */

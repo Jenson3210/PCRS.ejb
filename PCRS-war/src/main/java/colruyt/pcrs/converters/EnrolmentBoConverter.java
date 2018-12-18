@@ -5,14 +5,18 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.bo.user.team.EnrolmentBo;
 
+/**
+ * ENROLMENT BO CONVERTER
+ * @author jda1mbw
+ */
 @FacesConverter("enrolmentBoConverter")
 public class EnrolmentBoConverter implements Converter {
 
+	
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object obj) {
 		EnrolmentBo enrolment = (EnrolmentBo) obj;
