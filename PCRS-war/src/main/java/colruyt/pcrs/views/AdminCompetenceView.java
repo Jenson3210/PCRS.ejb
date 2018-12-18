@@ -17,6 +17,7 @@ import org.primefaces.PrimeFaces;
 
 import colruyt.pcrsejb.bo.competence.CompetenceBo;
 import colruyt.pcrsejb.bo.competence.CompetenceLevelBo;
+import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionTitleBo;
 import colruyt.pcrsejb.facade.competence.ICompetenceFacade;
 import colruyt.pcrsejb.facade.competence.ICompetenceLevelFacade;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
@@ -101,14 +102,22 @@ public class AdminCompetenceView implements Serializable {
 	 * Delete competence.
 	 */
 	public void deleteCompetence() {
-		competences.remove(competenceBo);
-		try {
-			competenceFacade.delete(competenceBo);
-		} catch (ValidationException e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
+		
+		CompetenceBo t = null;
+		for (CompetenceBo  title :competences) {
+			if (title.getId() == competenceBo.getId()) {
+				t = title;
+			}
 		}
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "succesfully deleted", null));
+		try {
+			competenceFacade.delete(t);
+			competences.remove(t);
+		} catch(ValidationException e)
+		{
+			FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+		}
+		
+		
 	}
 
 	/**
