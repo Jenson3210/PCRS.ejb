@@ -16,15 +16,26 @@ import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
 import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 
-
+/**
+ * PRIVILEGE FILTER
+ * @author jda1mbw
+ */
 public abstract class PrivilegeFilter implements Filter {
 	
 	private PrivilegeTypeBo minimumPrivilege;
 
+	/**
+	 * Get minimum privilege
+	 * @return minimumPrivilege
+	 */
 	public PrivilegeTypeBo getMinimumPrivilege() {
 		return minimumPrivilege;
 	}
 
+	/**
+	 * Set minimum privilege
+	 * @param minimumPrivilege
+	 */
 	public void setMinimumPrivilege(PrivilegeTypeBo minimumPrivilege) {
 		this.minimumPrivilege = minimumPrivilege;
 	}
@@ -49,15 +60,18 @@ public abstract class PrivilegeFilter implements Filter {
 
 	@Override
 	public final void init(FilterConfig arg0) throws ServletException {
-
-		
 	}
 	
 	@Override
 	public final void destroy() {
-		
 	}
 	
+	/**
+	 * Check if there is a privilege
+	 * @param user
+	 * @param privilegeType
+	 * @return boolean
+	 */
 	private final boolean hasPrivilege(UserBo user, PrivilegeTypeBo privilegeType) {
 		boolean hasPrivilege = false;
 		for (UserPrivilegeBo privilege : user.getPrivileges()) {
