@@ -51,11 +51,17 @@ public class AdminSurveyDefinitionView implements Serializable {
 	 */
 	@PostConstruct
 	public void setup() {
-		List<SurveyDefinitionBo> sd = surveyDefinitionFacade.getAll();
-		for (SurveyDefinitionBo bo : sd) {
-			surveyDefinitions.put(bo, surveyDefinitionFacade.getResponsible(bo));
+		
+		try {
+			List<SurveyDefinitionBo> sd = surveyDefinitionFacade.getAll();
+			for (SurveyDefinitionBo bo : sd) {
+				surveyDefinitions.put(bo, surveyDefinitionFacade.getResponsible(bo));
+			}
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 		}
-	}
+	} 
 
 	/**
 	 * Generate new SurveyDefinition
