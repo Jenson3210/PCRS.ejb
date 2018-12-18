@@ -10,7 +10,9 @@
 	<ul>
 		<h:panelGroup rendered="#{webUser.hasUser()}">
 			
-<!-- TEAM MEMBERTEAM MEMBERTEAM MEMBERTEAM MEMBERTEAM MEMBERTEAM MEMBERTEAM MEMBERTEAM MEMBERTEAM MEMBERTEAM MEMBER	-->
+<!-- ***************************************************************************************************************************** 
+	 ** TEAM MEMBER TEAM MEMBER TEAM MEMBER TEAM MEMBER TEAM MEMBER TEAM MEMBER TEAM MEMBER TEAM MEMBER TEAM MEMBER TEAM MEMBER	**
+	 ***************************************************************************************************************************** -->
 			
 			<h:panelGroup rendered="#{webUser.hasPrivilege('Team member')}">
 				<li class="#{view.viewId.contains('overview') ? 'c-active' : ''}">
@@ -42,7 +44,9 @@
 				</li>
 			</h:panelGroup>
 			
-<!-- SURVEY DEFINITION RESPONSIBLE SURVEY DEFINITION RESPONSIBLE SURVEY DEFINITION RESPONSIBLE SURVEY DEFINITION RESPONSIBLE-->
+<!-- *****************************************************************************************************************************
+	 ** SURVEY DEFINITION RESPONSIBLE SURVEY DEFINITION RESPONSIBLE SURVEY DEFINITION RESPONSIBLE SURVEY DEFINITION RESPONSIBLE **
+	 ***************************************************************************************************************************** -->
 			
 			<h:panelGroup rendered="#{webUser.hasPrivilege('Survey Definition Responsible')}">
 				<li>
@@ -56,7 +60,9 @@
 				</li>
 			</h:panelGroup>
 			
-<!-- ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN -->
+<!-- *****************************************************************************************************************************
+	 ** ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN **
+	 ***************************************************************************************************************************** -->
 			
 			<h:panelGroup rendered="#{webUser.hasPrivilege('Administrator')}">
 				<li>
