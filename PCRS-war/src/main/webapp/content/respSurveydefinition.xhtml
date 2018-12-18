@@ -34,8 +34,7 @@
 								<h:outputText value="#{comp.competenceDescription}" />
 							</p:column>
 
-							<p:column headerText="#{msgs['competence.minimumLevel']}"
-								style="text-alignment:center;">
+							<p:column headerText="#{msgs['competence.minimumLevel']}" rendered="#{sectionImpl.surveySectionDefinitionBo.surveySectionStrategy.hasMinimumLevel}">
 								<h:outputText value="#{comp.minLevel}" />
 							</p:column>
 
@@ -46,6 +45,9 @@
 									<i class="fas fa-pencil-alt"></i>
 									<f:setPropertyActionListener value="#{comp}"
 										target="#{respSurveyDefinitionView.addedCompetenceImplBo}" />
+									<f:setPropertyActionListener value="#{sectionImpl}"
+										target="#{respSurveyDefinitionView.selectedSectionDefinitionImpl}" />
+										
 								</p:commandLink>
 							</p:column>
 
@@ -56,6 +58,8 @@
 									<i class="fas fa-trash-alt"></i>
 									<f:setPropertyActionListener value="#{comp}"
 										target="#{respSurveyDefinitionView.addedCompetenceImplBo}" />
+									<f:setPropertyActionListener value="#{sectionImpl}"
+										target="#{respSurveyDefinitionView.selectedSectionDefinitionImpl}" />
 								</p:commandLink>
 							</p:column>
 						</p:dataTable>
@@ -297,7 +301,7 @@
 									<p:selectOneRadio
 										value="#{respSurveyDefinitionView.selectedMinLevel}"
 										converter="CompetenceLevelBoConverter" layout="pageDirection" 
-										disabled="#{respSurveyDefinitionView.selectedSectionDefinitionImpl.surveySectionDefinitionBo.surveySectionStrategy.hasMinimumLevel}">
+										disabled="#{not respSurveyDefinitionView.selectedSectionDefinitionImpl.surveySectionDefinitionBo.surveySectionStrategy.hasMinimumLevel}">
 										<f:selectItems
 											value="#{respSurveyDefinitionView.selectedCompetence.competenceLevels}"
 											var="level"
@@ -327,13 +331,65 @@
 					header="#{msgs['surveyDefinition.edit']}"
 					widgetVar="editCompetenceImplDialog" modal="true" draggable="false">
 					<p:outputPanel id="editCompetenceImpl">
-						<div class="ui-g-2">
+						
+						<div class="ui-g">
+
+							<div class="ui-g-4">
+								<p:outputLabel
+									value="#{msgs['respSurveyDefinition.sectionToAddCompetenceTo']}" />
+							</div>
+							<div class="ui-g-8">
+								<p:inputText value="#{respSurveyDefinitionView.selectedSectionDefinitionImpl.surveySectionDefinitionBo.surveySectionTitle.title}"
+									disabled="true"/>
+							</div>
+						</div>
+						
+						<div class="ui-g">
+
+							<div class="ui-g-4">
+								<p:outputLabel
+									value="#{msgs['respSurveyDefinition.competenceToAdd']}" />
+							</div>
+							<div class="ui-g-8">
+								<p:inputText disabled="true" value="#{respSurveyDefinitionView.addedCompetenceImplBo.competence.name}"/>
+							</div>
+						</div>
+						
+						<div class="ui-g">
+							<div class="ui-g-4">
+								<p:outputLabel value="#{msgs['competence.description']}" />
+							</div>
+							<div class="ui-g-8">
+								<p:inputTextarea
+									value="#{respSurveyDefinitionView.addedCompetenceImplBo.competenceDescription}"
+									disabled="#{not respSurveyDefinitionView.selectedSectionDefinitionImpl.surveySectionDefinitionBo.surveySectionStrategy.flexibleDescription}" />
+							</div>
+						</div>
+
+							
+						<div class="ui-g">
+							<div class="ui-g-4">
+								<p:outputLabel value="#{msgs['competence.minimumLevel']}"/>
+							</div>
+							<div class="ui-g-8">
+								<!-- <p:selectOneRadio
+									value="#{respSurveyDefinitionView.addedCompetenceImplBo.minLevel}"
+									converter="CompetenceLevelBoConverter" layout="pageDirection" 
+									disabled="#{not respSurveyDefinitionView.selectedSectionDefinitionImpl.surveySectionDefinitionBo.surveySectionStrategy.hasMinimumLevel}">
+									<f:selectItems
+										value="#{respSurveyDefinitionView.addedCompetenceImplBo.competence.competenceLevels}"
+										var="level" itemLabel="#{level.orderLevel}. #{level.description}"
+										itemValue="#{level}"/>
+								</p:selectOneRadio> -->
+							</div>
+						</div>
+							
+						
 							<p:commandButton value="#{msgs['surveyDefinition.edit']}"
 								update=":form"
 								oncomplete="PF('editCompetenceImplDialog').hide();"
-								action="#{adminSurveyDefinitionView.editSurveyDefinition}"
+								action="#{respSurveyDefinitionView.editCompetenceImpl}"
 								validateClient="true" />
-						</div>
 					</p:outputPanel>
 				</p:dialog>
 			</div>
@@ -367,7 +423,7 @@
 						<p:commandButton styleClass="btn btn-primary" update=":form"
 							value="#{msgs['general.button.yes']}"
 							oncomplete="PF('deleteCompetenceImplDialog').hide();"
-							action="#{adminSurveyDefinitionView.deleteSurveyDefinition}" />
+							action="#{respSurveyDefinitionView.deleteCompetenceImpl}" />
 
 					</div>
 				</p:dialog>
