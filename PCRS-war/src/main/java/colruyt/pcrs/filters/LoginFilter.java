@@ -11,7 +11,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+/**
+ * LOGIN FILTER
+ * @author jda1mbw
+ */
 public class LoginFilter implements Filter {
 
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
