@@ -1,14 +1,11 @@
 package colruyt.pcrsejb.facade.user.team;
 
-import javax.ejb.Remote;
+import javax.ejb.Local;
 
-import colruyt.pcrsejb.bo.user.privilege.UserPrivilegeBo;
 import colruyt.pcrsejb.bo.user.team.EnrolmentBo;
-import colruyt.pcrsejb.bo.user.team.TeamBo;
-import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 import colruyt.pcrsejb.facade.IFacade;
 
-@Remote
+@Local
 public interface IEnrolmentFacade extends IFacade<EnrolmentBo>{
 	
 	
