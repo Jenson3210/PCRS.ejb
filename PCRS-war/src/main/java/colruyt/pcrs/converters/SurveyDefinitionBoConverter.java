@@ -9,9 +9,12 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveyDefinitionBo;
-import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionBo;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionImplBo;
 
+/**
+ * SURVEY DEFINITION BO CONVERTER
+ * @author jda1mbw
+ */
 @FacesConverter("SurveyDefinitionBoConverter")
 public class SurveyDefinitionBoConverter implements Converter {
 

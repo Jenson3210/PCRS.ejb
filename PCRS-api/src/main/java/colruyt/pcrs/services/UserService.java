@@ -44,7 +44,8 @@ public class UserService {
 		if (email != null && password != null) {
 			try {
 				UserBo userbo = this.userFacade.login(email, password);
-				resp = Response.status(Response.Status.OK).entity(userbo).build();
+				users.add(userbo);
+				resp = Response.status(Response.Status.OK).entity(users).build();
 			}
 			catch(Exception e) {
 				resp = Response.status(Response.Status.FORBIDDEN)

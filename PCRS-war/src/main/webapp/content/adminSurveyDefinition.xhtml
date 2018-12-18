@@ -12,7 +12,7 @@
 		<div class="ui-g-10">
 			<h:form id="form">
 				<p:messages id="errors" showDetail="false" closable="true">
-					<p:autoUpdate/>
+					<p:autoUpdate />
 				</p:messages>
 				<p:dataTable var="surveyDefinition"
 					value="#{adminSurveyDefinitionView.surveyDefinitions}">
@@ -71,7 +71,7 @@
 					</div>
 				</div>
 			</h:form>
-<!-- *****************************************************************************************************************
+			<!-- *****************************************************************************************************************
 													ADD FORM																
 	 ***************************************************************************************************************** -->
 			<h:form id="addForm">
@@ -85,12 +85,18 @@
 								<div class="ui-g-4">
 									<p:outputLabel value="#{msgs['surveyDefinition.title']}"></p:outputLabel>
 								</div>
-								<div class="ui-g-8">
-									<p:inputText id="surveyTitle"
-										value="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo.name}"
-										required="true" />
-									<p:message for="surveyTitle" />
-								</div>
+
+								<p:column headerText="#{msgs['surveyDefinition.function']}">
+									<p:inputText value="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo.function}" required="true"/>
+								</p:column>
+
+								<p:column headerText="#{msgs['surveyDefinition.operatingUnit']}">
+									<p:inputText value="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo.operatingUnit}" required="true" />
+								</p:column>
+
+								<p:column headerText="#{msgs['surveyDefinition.country']}">
+									<p:inputText value="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo.country}" required="true"/>
+								</p:column>
 							</div>
 
 							<div class="ui-g">
@@ -120,7 +126,7 @@
 					</p:dialog>
 				</div>
 			</h:form>
-<!-- *****************************************************************************************************************
+			<!-- *****************************************************************************************************************
 													EDIT FORM																
 	 ***************************************************************************************************************** -->
 			<h:form id="editForm">
@@ -171,7 +177,7 @@
 					</p:dialog>
 				</div>
 			</h:form>
-<!-- *****************************************************************************************************************
+			<!-- *****************************************************************************************************************
 													DELETE FORM																
 	 ***************************************************************************************************************** -->
 			<h:form id="deleteForm">
