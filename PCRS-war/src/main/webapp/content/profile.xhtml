@@ -46,12 +46,15 @@
 <!-- *****************************************************************************************************************
 													CHANGE PASSWORD																
 	 ***************************************************************************************************************** -->	
+	 <h:form id="form1">
 	 <p:dialog class="modalSM" header="#{msgs['profile.changepass']}" widgetVar="dlg3" modal="true" >
-   		<h:form id="form1">
+   		
 	 		<div class="ui-g">
-	 		<p:messages id="errors"  showDetail="false" closable="true">
-   				<p:autoUpdate />
-   			</p:messages>
+   		    <p:messages for="form1" showDetail="false" closable="true">
+								
+								<p:autoUpdate />
+							</p:messages>
+   			
    			</div>
 	   		<div class="ui-g">
 				<div class="ui-g-4, popupTextMsgs" >
@@ -68,7 +71,7 @@
    					<p>#{msgs['profile.newpass']}</p>
    				</div>
    				<div class="ui-g-8, popupTextInput">
-   					<p:password id="newpass" value="#{userProfileView.newpassword}"
+   					<p:password id="newpass" value="#{userProfileView.newPassword}"
 	   			 		maxlength="14">
 	   				</p:password>
 	   			</div>
@@ -78,7 +81,7 @@
    					<p>#{msgs['profile.repeatnewpass']}</p>
    				</div>
    				<div class="ui-g-8, popupTextInput">
-   					<p:password id="repeatpass" value="#{userProfileView.repeatpassword}"
+   					<p:password id="repeatpass" value="#{userProfileView.repeatPassword}"
 	   			 		maxlength="14">
 	   				</p:password>
 	   			</div>
@@ -86,12 +89,14 @@
    			<div class="ui-g">
    				<div class="ui-g-4"/>
    				<div class="ui-g-4">
-   					<p:commandButton value="#{msgs['msgs.cancel']}" styleClass="btn btn-outline-primary" ajax="false" onclick="PF('dlg3').hide();"/>
+   					<p:commandButton value="#{msgs['msgs.cancel']}" styleClass="btn btn-outline-primary"  onclick="PF('dlg3').hide();"/>
    				</div>
    				<div class="ui-g-4">
-   					<p:commandButton value="#{msgs['msgs.ok']}"  ajax="true" action="#{userProfileView.changePassword}" oncompleted="PF('dlg3').hide();" />
+   					<p:commandButton value="#{msgs['msgs.ok']}" ajax="true"  action="#{userProfileView.changePassword}"  oncompleted="PF('dlg3').hide();" />
    				</div>
    			</div>
-   		</h:form>
+   		
 	</p:dialog>
+	</h:form>
+	
 </ui:composition>
