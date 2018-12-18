@@ -43,7 +43,7 @@ public class Competence extends AbstractEntity implements Serializable {
     private String name;
     @Column(name="DESCRIPTION",table="COMPETENCEDESCRIPTIONS", length = 1337)
     private String competenceDescription;
-    @OneToMany(cascade= {CascadeType.PERSIST,CascadeType.REMOVE})
+    @OneToMany(cascade= {CascadeType.PERSIST,CascadeType.REMOVE, CascadeType.MERGE})
     @JoinColumn(name="COMPETENCES_ID")
     private Set<CompetenceLevel> competenceLevels = new HashSet<>();
 	/*
