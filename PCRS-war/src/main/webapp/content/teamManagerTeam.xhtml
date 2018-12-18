@@ -10,9 +10,11 @@
 	<div class="ui-g">
 		<div class="ui-g-1" />
 		<div class="ui-g-10">
+		
 			<h:form id="form">
 			
-			<p:growl id="growl" for="messagegrowl" showDetail="true" sticky="false" />  
+			<p:growl id="growl" for="form" globalOnly="true" showDetail="true" sticky="false" />  
+			
 				<p:dataTable var="team"
 					value="#{managerTeamView.getTeamEnrolments()}"
 					styleClass="teamOverviewTable" sortBy="#{team.getTeam().name}"
@@ -80,10 +82,10 @@
 										style="width:300px" /> 
 
 									
-									<div>
+									
 									<p:commandButton id="survey_button1" rendered="#{not managerTeamView.consensusReady(enrolment.value)}"  value="Fill in Survey" />
 									<p:commandButton id="survey_button2" rendered="#{managerTeamView.consensusReady(enrolment.value)}" value="#{msgs['consensus.button']}" />
-									</div>
+									
 
 								</p:panelGrid>
 							</p:rowExpansion>
@@ -130,8 +132,18 @@
 						value="#{managerTeamView.availableList}" var="section"
 						itemValue="#{section}"
 						itemLabel="#{section.surveySectionDefinitionBo.surveySectionTitle.title}"
-						converter="DefinitionImplBoConverter" />
-
+						converter="DefinitionImplBoConverter" >
+						
+						 <f:facet name="sourceCaption">Available</f:facet>
+        				 <f:facet name="targetCaption">Starting</f:facet>
+						
+						
+						
+						 <p:ajax event="transfer" listener="#{managerTeamView.onTransfer}"  />
+					
+						
+						</p:pickList>
+							
 						<p:commandButton action="#{managerTeamView.submit()}"
 						oncomplete="PF('createSurvey').hide();"
 						value="#{msgs['create.survey']}"></p:commandButton>

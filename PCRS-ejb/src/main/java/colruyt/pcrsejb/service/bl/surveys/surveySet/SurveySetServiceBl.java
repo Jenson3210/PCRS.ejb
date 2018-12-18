@@ -1,7 +1,7 @@
 package colruyt.pcrsejb.service.bl.surveys.surveySet;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.List;
@@ -73,7 +73,7 @@ public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl {
 			surveys.add(createSurvey(kind, sections));
 		}
 		surveySet.setSurveyList(surveys);
-		surveySet.setSurveyYear(LocalDate.now());
+		surveySet.setSurveyYear(LocalDateTime.now());
 		surveySet = this.save(surveySet);
 		return surveySet;
 	}
@@ -120,7 +120,7 @@ public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl {
 			return 0;
 	}
 
-	private Integer calculatePercentage(Survey surv) {
+	private Integer calculatePercentage(Survey surv) { 
 
 		int totaal = 0;
 		int beantwoord = 0;

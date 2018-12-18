@@ -9,16 +9,15 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
 
 import colruyt.pcrs.DTO.TeamEnrolmentBo;
 import colruyt.pcrs.utillibs.WebUser;
-import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveyDefinitionBo;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionImplBo;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionRequirementLevelBo;
 import colruyt.pcrsejb.bo.user.UserBo;
@@ -209,7 +208,7 @@ public class ManagerTeamView implements Serializable {
 	}
 	
 	
-	// Dialog Create Survye
+	// Dialog Create Survey
 
 	private UserBo teamMember;
 	
@@ -252,15 +251,53 @@ public class ManagerTeamView implements Serializable {
 		this.setTeamMember(user);
 		this.loadCompetences();
 	}
-	
+ 	
 	private void loadCompetences() {
 		this.allList = this.surveyFacade.getPossibleSections(this.getTeamMember());
 		List<SurveySectionDefinitionImplBo> lijst = this.allList.stream().filter(x->x.getSurveySectionRequirementLevelBo().equals(SurveySectionRequirementLevelBo.OBLIGATED)).collect(Collectors.toList());
 		this.chosenList.addAll(lijst);
+		
 		this.allList.removeAll(this.chosenList);
 		availableList.setSource(getAllList());
 		availableList.setTarget(getChosenList());
+		
 	}
+	
+	public void onTransfer(TransferEvent event) {
+		
+		
+		
+		List<SurveySectionDefinitionImplBo> chosenOption = (List<SurveySectionDefinitionImplBo>)event.getItems();
+		
+		
+		for(SurveySectionDefinitionImplBo x : chosenOption) {
+			
+			try {
+				SurveySectionDefinitionImplBo impl = this.surveySectionDefinitionImplFacade.get(x);
+				if(impl.getSurveySectionRequirementLevelBo().equals(SurveySectionRequirementLevelBo.OBLIGATED)) {
+					
+					System.out.println("hellooooooooooo" + impl.toString());
+					
+					this.getAvailableList().getSource().remove(impl);
+					this.getAvailableList().getTarget().add(impl);
+					
+					
+				}
+				else {
+					//NOP
+					System.out.println("ELSE" + impl.toString());
+				}
+				
+			} catch (ValidationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		
+		
+		}
+		
+    }
 	
 	
 	
@@ -286,7 +323,7 @@ public class ManagerTeamView implements Serializable {
 					String.class);
 			
 			FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, null, message);
-			context.addMessage(null, myFacesMessage);
+			context.addMessage("form", myFacesMessage); 
 		}
 	}	
 	
@@ -302,7 +339,7 @@ public class ManagerTeamView implements Serializable {
 				String.class);
 		
 		FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, null, message);
-		context.addMessage(null, myFacesMessage);
+		context.addMessage("form", myFacesMessage);
 	}
 	
 	
@@ -310,8 +347,8 @@ public class ManagerTeamView implements Serializable {
 	String message= context.getApplication().evaluateExpressionGet(context, "Succes!!",
 			String.class);
 	FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, null, message);
-	context.addMessage("messagegrowl", myFacesMessage);
-	
+	context.addMessage("form", myFacesMessage);
+	this.availableList.setTarget(new ArrayList<SurveySectionDefinitionImplBo>());
 	
 	}
 	

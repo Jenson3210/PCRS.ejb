@@ -1,7 +1,7 @@
 package colruyt.pcrsejb.bo.surveys.surveySet;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +14,7 @@ public class SurveySetBo extends AbstractBo implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
     private Integer id;
-    private LocalDate surveyYear;
+    private LocalDateTime surveyYear;
     private List<SurveyBo> surveyList = new ArrayList<>();
     /*
      * CONSTRUCTORS
@@ -22,11 +22,11 @@ public class SurveySetBo extends AbstractBo implements Serializable{
     public SurveySetBo() {
     	super();
     }
-    public SurveySetBo(LocalDate surveyYear, List<SurveyBo> surveySet) {
+    public SurveySetBo(LocalDateTime surveyYear, List<SurveyBo> surveySet) {
         this.surveyYear = surveyYear;
         this.surveyList = surveySet;
     }
-	public SurveySetBo(Integer id, LocalDate surveyYear, List<SurveyBo> surveyList) {
+	public SurveySetBo(Integer id, LocalDateTime surveyYear, List<SurveyBo> surveyList) {
 		super();
 		this.id = id;
 		this.surveyYear = surveyYear;
@@ -41,10 +41,10 @@ public class SurveySetBo extends AbstractBo implements Serializable{
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public LocalDate getSurveyYear() {
+	public LocalDateTime getSurveyYear() {
 		return surveyYear;
 	}
-	public void setSurveyYear(LocalDate surveyYear) {
+	public void setSurveyYear(LocalDateTime surveyYear) {
 		this.surveyYear = surveyYear;
 	}
 	public List<SurveyBo> getSurveyList() {
