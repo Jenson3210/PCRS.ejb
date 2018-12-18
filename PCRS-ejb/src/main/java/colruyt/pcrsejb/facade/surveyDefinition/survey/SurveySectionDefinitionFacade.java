@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import colruyt.pcrsejb.bo.competence.CompetenceImplBo;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionBo;
 import colruyt.pcrsejb.converter.surveyDefinition.survey.SurveySectionDefinitionConverter;
 import colruyt.pcrsejb.service.bl.surveyDefinition.survey.ISurveySectionDefinitionServiceBl;
@@ -21,6 +22,7 @@ import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionBo;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionTitleBo;
 import colruyt.pcrsejb.converter.surveyDefinition.survey.SurveySectionDefinitionConverter;
 import colruyt.pcrsejb.converter.surveyDefinition.survey.SurveySectionTitleConverter;
+import colruyt.pcrsejb.facade.competence.ICompetenceImplFacade;
 import colruyt.pcrsejb.service.bl.surveyDefinition.survey.ISurveySectionDefinitionServiceBl;
 
 @Stateless
@@ -32,9 +34,12 @@ public class SurveySectionDefinitionFacade implements Serializable,ISurveySectio
 	
 	@EJB
 	private ISurveySectionDefinitionServiceBl sdserv; 
+	@EJB
+	private ICompetenceImplFacade competenceImplFacade;
 	
 	private SurveySectionDefinitionConverter sdconv = new SurveySectionDefinitionConverter();
 	private SurveySectionTitleConverter sstconv = new SurveySectionTitleConverter();
+	
 
 	@Override
 	public SurveySectionDefinitionBo save(SurveySectionDefinitionBo entityBo) throws ValidationException {
@@ -60,6 +65,20 @@ public class SurveySectionDefinitionFacade implements Serializable,ISurveySectio
 	@Override
 	public List<SurveySectionDefinitionBo> getSurveySectionDefinitionsForTitle(SurveySectionTitleBo t) {
 		return sdconv.convertToBos(sdserv.getSurveySectionDefinitionsForTitle(sstconv.convertToEntity(t)));
+	}
+
+	@Override
+	public SurveySectionDefinitionBo addCompetenceImpl(SurveySectionDefinitionBo section, CompetenceImplBo competence) throws ValidationException {
+		section.getSurveySectionCompetences().add(competence);
+		return this.save(section);
+	}
+
+	@Override
+	public SurveySectionDefinitionBo removeCompetenceImpl(SurveySectionDefinitionBo section,
+			CompetenceImplBo competence) throws ValidationException {
+		section.getSurveySectionCompetences().remove(competence);
+		competenceImplFacade.delete(competence);
+		return this.save(section);
 	}
 
 

@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -25,10 +26,12 @@ import colruyt.pcrsejb.entity.AbstractEntity;
 (
 	{
 			@NamedQuery(name = "SURVEYDEFINITION.GETALL", query = "SELECT sd FROM SurveyDefinition sd"),
-			@NamedQuery(name = "SURVEYDEFINITION.GETRESPONSIBLE", query = "SELECT u FROM User u join u.privileges p WHERE p.privilegeType = :pt AND p.active = true AND TREAT(p AS SurveyUserPrivilege).surveyDefinition = :sd")
+			@NamedQuery(name = "SURVEYDEFINITION.GETRESPONSIBLE", query = "SELECT u FROM User u join u.privileges p WHERE p.privilegeType = :pt AND p.active = true AND TREAT(p AS SurveyUserPrivilege).surveyDefinition = :sd"),
+			@NamedQuery(name = "SURVEYDEFINITION.GETALLFORUSER", query = "select sd from SurveyDefinition sd, User u inner join u.privileges up where u.id = :u_id and up.privilegeType = :p_id and sd.id = TREAT(up AS SurveyUserPrivilege).surveyDefinition.id")
 	}
 	
 )
+
 public class SurveyDefinition extends AbstractEntity implements Serializable {
 	/*
 	 * PROPERTIES

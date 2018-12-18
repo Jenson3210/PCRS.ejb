@@ -13,7 +13,7 @@
 		
 			<h:form id="form">
 			
-			<p:growl id="growl" for="form" globalOnly="true" showDetail="true" sticky="false" />  
+		
 			
 				<p:dataTable var="team"
 					value="#{managerTeamView.getTeamEnrolments()}"
@@ -122,6 +122,10 @@
 	 ***************************************************************************************************************** -->
 	<h:form id="createSurvey">
 	
+		<p:growl id="growl"  showDetail="true" sticky="false" >
+				<p:autoUpdate/>
+			</p:growl>  
+	
 		<p:dialog header="#{msgs['create.survey']}" widgetVar="createSurvey" draggable="false" modal="true"
 			resizable="false">
 			
@@ -132,10 +136,14 @@
 						value="#{managerTeamView.availableList}" var="section"
 						itemValue="#{section}"
 						itemLabel="#{section.surveySectionDefinitionBo.surveySectionTitle.title}"
-						converter="DefinitionImplBoConverter" >
-						
-						 <f:facet name="sourceCaption">Available</f:facet>
-        				 <f:facet name="targetCaption">Starting</f:facet>
+						converter="DefinitionImplBoConverter" 
+						itemDisabled="#{managerTeamView.isDisabled(section)}"
+						>
+					    
+					    
+					    
+						 <f:facet name="sourceCaption">#{msgs['create.survey.available']}</f:facet>
+        				 <f:facet name="targetCaption">#{msgs['create.survey.chosen']}</f:facet>
 						
 						
 						
