@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     this.errors = [];
     this.userService.getUser(this.email, this.password).subscribe(
       x => {
-        this.userService.login(x.body);
+        this.userService.login(x.body[0]);
         this.router.navigate(['survey']);
       }, (error) => {
         switch (error.status) {

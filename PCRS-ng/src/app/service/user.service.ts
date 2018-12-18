@@ -19,8 +19,8 @@ export class UserService {
     this.user = null;
     return true;
   }
-  getUser(email: string, password: string): Observable<HttpResponse<IUser>> {
-    return this.http.get<IUser>(this.baseUrl + 'users', {
+  getUser(email: string, password: string): Observable<HttpResponse<IUser[]>> {
+    return this.http.get<IUser[]>(this.baseUrl + 'users', {
       params: {
         email : email,
         password: password
