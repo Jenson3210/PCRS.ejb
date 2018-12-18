@@ -13,6 +13,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
 
 import colruyt.pcrs.DTO.TeamEnrolmentBo;
@@ -352,6 +353,8 @@ public class ManagerTeamView implements Serializable {
 		}
 		return false;
 	}
+	
+	// Dialog Create Survey
 
 	/**
 	 * Set teamMember and load the competences
@@ -361,18 +364,63 @@ public class ManagerTeamView implements Serializable {
 		this.setTeamMember(user);
 		this.loadCompetences();
 	}
-	
+
 	/**
 	 * Load competences
 	 */
+
 	private void loadCompetences() {
 		this.allList = this.surveyFacade.getPossibleSections(this.getTeamMember());
 		List<SurveySectionDefinitionImplBo> lijst = this.allList.stream().filter(x->x.getSurveySectionRequirementLevelBo().equals(SurveySectionRequirementLevelBo.OBLIGATED)).collect(Collectors.toList());
 		this.chosenList.addAll(lijst);
+		
 		this.allList.removeAll(this.chosenList);
 		availableList.setSource(getAllList());
 		availableList.setTarget(getChosenList());
+		
 	}
+	
+	public void onTransfer(TransferEvent event) {
+		
+		
+		
+		List<SurveySectionDefinitionImplBo> chosenOption = (List<SurveySectionDefinitionImplBo>)event.getItems();
+		
+		
+		for(SurveySectionDefinitionImplBo x : chosenOption) {
+			
+			try {
+				SurveySectionDefinitionImplBo impl = this.surveySectionDefinitionImplFacade.get(x);
+				if(impl.getSurveySectionRequirementLevelBo().equals(SurveySectionRequirementLevelBo.OBLIGATED)) {
+					
+					System.out.println("hellooooooooooo" + impl.toString());
+					
+					this.getAvailableList().getSource().remove(impl);
+					this.getAvailableList().getTarget().add(impl);
+					
+					
+				}
+				else {
+					//NOP
+					System.out.println("ELSE" + impl.toString());
+				}
+				
+			} catch (ValidationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		
+		
+		}
+		
+    }
+	
+	
+	
+	
+	
+
 
 	/**
 	 * Submit method
@@ -403,12 +451,16 @@ public class ManagerTeamView implements Serializable {
 			String message= context.getApplication().evaluateExpressionGet(context, "#{msgs['error.general']}",
 					String.class);			
 			FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, null, message);
-			context.addMessage(null, myFacesMessage);
-		}	
-		FacesContext context = FacesContext.getCurrentInstance();
-		String message= context.getApplication().evaluateExpressionGet(context, "Succes!!",
-				String.class);
-		FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, null, message);
-		context.addMessage("messagegrowl", myFacesMessage);
-	}
+
+			context.addMessage("form", myFacesMessage); 
+		}
+	}	
+	
+	
+	
+	
+	
+
+	
+
 }

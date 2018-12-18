@@ -6,6 +6,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
+/**
+ * COMPETENCE BO CONVERTER
+ * @author jda1mbw
+ */
 @FacesConverter("competenceBoConverter")
 public class CompetenceBoConvertor implements Converter {
 

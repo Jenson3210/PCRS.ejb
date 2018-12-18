@@ -1,7 +1,7 @@
 package colruyt.pcrsejb.entity.surveys.surveySet;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +21,7 @@ import javax.persistence.Table;
 
 import colruyt.pcrsejb.entity.AbstractEntity;
 import colruyt.pcrsejb.entity.surveys.survey.Survey;
-import colruyt.pcrsejb.util.general.LocalDateAttributeConverter;
+import colruyt.pcrsejb.util.general.LocalDateTimeAttributeConverter;
 
 @Entity
 @Table(name="SURVEYSETS")
@@ -38,8 +38,8 @@ public class SurveySet  extends AbstractEntity implements Serializable,Comparabl
     private Integer id;
 	@Column(name="YEAR")
 	
-	@Convert(converter = LocalDateAttributeConverter.class)
-    private LocalDate surveyYear;
+	@Convert(converter = LocalDateTimeAttributeConverter.class)
+    private LocalDateTime surveyYear;
     @OneToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(name="SURVEYSET_ID")
 
@@ -50,11 +50,11 @@ public class SurveySet  extends AbstractEntity implements Serializable,Comparabl
     public SurveySet() {
     	super();
     }
-    public SurveySet(LocalDate surveyYear, List<Survey> surveySet) {
+    public SurveySet(LocalDateTime surveyYear, List<Survey> surveySet) {
         this.surveyYear = surveyYear;
         this.surveyList = surveySet;
     }
-	public SurveySet(Integer id, LocalDate surveyYear, List<Survey> surveyList) {
+	public SurveySet(Integer id, LocalDateTime surveyYear, List<Survey> surveyList) {
 		super();
 		this.id = id;
 		this.surveyYear = surveyYear;
@@ -69,10 +69,10 @@ public class SurveySet  extends AbstractEntity implements Serializable,Comparabl
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public LocalDate getSurveyYear() {
+	public LocalDateTime getSurveyYear() {
 		return surveyYear;
 	}
-	public void setSurveyYear(LocalDate surveyYear) {
+	public void setSurveyYear(LocalDateTime surveyYear) {
 		this.surveyYear = surveyYear;
 	}
 	public List<Survey> getSurveyList() {

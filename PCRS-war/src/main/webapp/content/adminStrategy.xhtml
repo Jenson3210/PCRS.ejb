@@ -93,7 +93,7 @@
 				<div class="ui-g" id="addStrategyForm">
 					<p:dialog id="addStrategyFormTitle"
 						header="#{msgs['strategy.add']}" widgetVar="addStrategyDialog"
-						modal="true">
+						modal="true" dynamic="true">
 						<p:outputPanel id="addStrategyDetail">
 							<p:messages for="addForm" showDetail="false" closable="true"
 								globalOnly="false">
@@ -101,7 +101,7 @@
 							</p:messages>
 							<div class="ui-g">
 								<div class="ui-g-4">
-									<p:outputLabel value="#{msgs['strategy.name']}"></p:outputLabel>
+									<p:outputLabel value="#{msgs['strategy.name']}"/>
 								</div>
 								<div class="ui-g-8">
 									<p:inputText id="name"
@@ -111,7 +111,7 @@
 							</div>
 							<div class="ui-g">
 								<div class="ui-g-4">
-									<p:outputLabel value="#{msgs['strategy.amountOfLevels']}"></p:outputLabel>
+									<p:outputLabel value="#{msgs['strategy.amountOfLevels']}"/>
 								</div>
 								<div class="ui-g-8">
 									<p:inputText id="amount"
@@ -120,7 +120,7 @@
 							</div>
 							<div class="ui-g">
 								<div class="ui-g-4">
-									<p:outputLabel value="#{msgs['strategy.energyRated']}"></p:outputLabel>
+									<p:outputLabel value="#{msgs['strategy.energyRated']}"/>
 								</div>
 								<div class="ui-g-8">
 									<p:inputSwitch
@@ -129,7 +129,7 @@
 							</div>
 							<div class="ui-g">
 								<div class="ui-g-4">
-									<p:outputLabel value="#{msgs['strategy.interestRated']}"></p:outputLabel>
+									<p:outputLabel value="#{msgs['strategy.interestRated']}"/>
 								</div>
 								<div class="ui-g-8">
 									<p:inputSwitch
@@ -138,7 +138,7 @@
 							</div>
 							<div class="ui-g">
 								<div class="ui-g-4">
-									<p:outputLabel value="#{msgs['strategy.descriptionRequired']}"></p:outputLabel>
+									<p:outputLabel value="#{msgs['strategy.descriptionRequired']}"/>
 								</div>
 								<div class="ui-g-8">
 									<p:inputSwitch
@@ -147,7 +147,7 @@
 							</div>
 							<div class="ui-g">
 								<div class="ui-g-4">
-									<p:outputLabel value="#{msgs['strategy.hasMinimumLevel']}"></p:outputLabel>
+									<p:outputLabel value="#{msgs['strategy.hasMinimumLevel']}"/>
 								</div>
 								<div class="ui-g-8">
 									<p:inputSwitch
@@ -156,7 +156,7 @@
 							</div>
 							<div class="ui-g">
 								<div class="ui-g-4">
-									<p:outputLabel value="#{msgs['strategy.flexibleDescription']}"></p:outputLabel>
+									<p:outputLabel value="#{msgs['strategy.flexibleDescription']}"/>
 								</div>
 								<div class="ui-g-8">
 									<p:inputSwitch
@@ -179,7 +179,7 @@
 				<div class="ui-g" id="editStrategyForm">
 					<p:dialog id="editStrategyFormTitle"
 						header="#{msgs['strategy.edit']}" widgetVar="editStrategyDialog"
-						modal="true">
+						modal="true" dynamic="true">
 						<p:outputPanel id="editStrategyDetail">
 							<p:messages for="editForm" showDetail="false" closable="true"
 								globalOnly="false">

@@ -7,6 +7,10 @@ import javax.faces.convert.FacesConverter;
 
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionTitleBo;
 
+/**
+ * SURVEY SECTION TITLE CONVERTER
+ * @author jda1mbw
+ */
 @FacesConverter("surveySectionTitleConverter")
 public class SurveySectionTitleConverter implements Converter {
 
@@ -25,5 +29,4 @@ public class SurveySectionTitleConverter implements Converter {
 		String s = sst.getId() + ";" + sst.getTitle() + ";";
 		return s;
 	}
-
 }

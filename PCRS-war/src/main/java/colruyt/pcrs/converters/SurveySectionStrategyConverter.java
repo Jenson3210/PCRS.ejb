@@ -7,10 +7,13 @@ import javax.faces.convert.FacesConverter;
 
 import colruyt.pcrsejb.bo.surveyDefinition.strategy.SurveySectionStrategyBo;
 
+/**
+ * SURVEY SECTION STRATEGY CONVERTER
+ * @author jda1mbw
+ */
 @FacesConverter("SurveySectionStrategyConverter")
 public class SurveySectionStrategyConverter implements Converter {
 
-	
 	@Override
 	public SurveySectionStrategyBo getAsObject(FacesContext context, UIComponent component, String value) {
 		SurveySectionStrategyBo sssb = new SurveySectionStrategyBo();
@@ -41,5 +44,4 @@ public class SurveySectionStrategyConverter implements Converter {
 		
 		return stringBuilder.toString();
 	}
-
 }

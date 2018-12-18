@@ -12,7 +12,7 @@
 		<div class="ui-g-10">
 			<h:form id="form">
 				<p:messages id="errors" showDetail="false" closable="true">
-					<p:autoUpdate/>
+					<p:autoUpdate />
 				</p:messages>
 				<p:dataTable var="surveyDefinition"
 					value="#{adminSurveyDefinitionView.surveyDefinitions}">
@@ -83,20 +83,31 @@
 						<p:outputPanel id="addSurveyDefinition">
 							<div class="ui-g">
 								<div class="ui-g-4">
-									<p:outputLabel value="#{msgs['surveyDefinition.title']}"></p:outputLabel>
+									<p:outputLabel value="#{msgs['surveyDefinition.function']}"/>
 								</div>
 								<div class="ui-g-8">
-									<p:inputText id="surveyTitle"
-										value="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo.name}"
-										required="true" />
-									<p:message for="surveyTitle" />
+									<p:inputText value="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo.function}" required="true"/>
 								</div>
 							</div>
-
 							<div class="ui-g">
 								<div class="ui-g-4">
-									<p:outputLabel value="#{msgs['user.shortName']}">
-									</p:outputLabel>
+									<p:outputLabel value="#{msgs['surveyDefinition.operatingUnit']}"/>
+								</div>
+								<div class="ui-g-8">
+									<p:inputText value="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo.operatingUnit}" required="true"/>
+								</div>
+							</div>
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['surveyDefinition.country']}"/>
+								</div>
+								<div class="ui-g-8">
+									<p:inputText value="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo.country}" required="true"/>
+								</div>
+							</div>
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['user.shortName']}"/>
 								</div>
 								<div class="ui-g-8">
 									<p:autoComplete id="shortName"
@@ -109,12 +120,14 @@
 									<p:message for="shortName" />
 								</div>
 							</div>
-
-							<div class="ui-g-2">
-								<p:commandButton value="#{msgs['surveyDefinition.add']}"
-									update=":form"
-									action="#{adminSurveyDefinitionView.addSurveyDefinition}"
-									oncomplete="PF('addSurveyDefinitionDialog').hide();" />
+							<div class="ui-g">
+								<div class="ui-g-8"></div>
+								<div class="ui-g-4">
+									<p:commandButton value="#{msgs['surveyDefinition.add']}"
+										update=":form"
+										action="#{adminSurveyDefinitionView.addSurveyDefinition}"
+										oncomplete="PF('addSurveyDefinitionDialog').hide();" />
+								</div>
 							</div>
 						</p:outputPanel>
 					</p:dialog>
