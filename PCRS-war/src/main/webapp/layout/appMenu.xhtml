@@ -60,17 +60,6 @@
 			
 			<h:panelGroup rendered="#{webUser.hasPrivilege('Administrator')}">
 				<li>
-					<div>#{msgs['menu.craftadmin']}</div>
-					<ul>
-						<li
-							class="#{request.getParameter('target') == 'craftmanagement' ? 'c-active' : ''}">
-							<h:link value="#{msgs['menu.craftmanagement']}" outcome="/admin/adminCompetenceImp.xhtml" />
-						</li>
-					</ul>
-				</li>
-			</h:panelGroup>
-			<h:panelGroup rendered="#{webUser.hasPrivilege('Administrator')}">
-				<li>
 					<div>#{msgs['menu.dbadmin']}</div>
 					<ul>
 						<li
