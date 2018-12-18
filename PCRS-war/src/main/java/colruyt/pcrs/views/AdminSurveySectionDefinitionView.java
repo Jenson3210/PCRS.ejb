@@ -143,6 +143,8 @@ public class AdminSurveySectionDefinitionView implements Serializable {
 	public void addSurveySectionDefinition() {
 		PrimeFaces pf = PrimeFaces.current();
 		try {
+			
+			addedSurveySectionDefinition.setAdministratorCreated(true);
 			surveySectionDefinitions.add(surveySectionDefinitionFacade.save(addedSurveySectionDefinition));
 			pf.ajax().addCallbackParam("validationSuccess", true);
 		} catch (ValidationException e) {
