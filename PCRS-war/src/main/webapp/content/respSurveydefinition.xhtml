@@ -9,6 +9,9 @@
 	<div class="ui-g-1"></div>
 	<div class="ui-g-10">
 		<h:form id="form">
+				<p:messages for="form" showDetail="false" closable="true" globalOnly="false">
+					<p:autoUpdate />
+				</p:messages>
 			<p:tabView
 				value="#{respSurveyDefinitionView.assignedSurveyDefinitionList}"
 				var="def">
@@ -34,8 +37,8 @@
 								<h:outputText value="#{comp.competenceDescription}" />
 							</p:column>
 
-							<p:column headerText="#{msgs['competence.minimumLevel']}" rendered="#{sectionImpl.surveySectionDefinitionBo.surveySectionStrategy.hasMinimumLevel}">
-								<h:outputText value="#{comp.minLevel}" />
+							<p:column headerText="#{msgs['competence.minimumLevel']}">
+								<h:outputText value="#{sectionImpl.surveySectionDefinitionBo.surveySectionStrategy.hasMinimumLevel ? comp.minLevel : 0}" />
 							</p:column>
 
 							<p:column headerText="#{msgs['edit']}"
@@ -99,6 +102,10 @@
 					widgetVar="manageSectionsDialog" modal="true" draggable="false"
 					style="width: 200px; height: 200px;">
 					<p:outputPanel id="manageSectionsPanel">
+						<p:messages for="manageSections" showDetail="false" closable="true"
+								globalOnly="false">
+								<p:autoUpdate />
+						</p:messages>
 						<div class="ui-g">
 							<div class="ui-g-4">
 								<p:outputLabel
@@ -111,9 +118,6 @@
 									<f:selectItem
 										itemLabel="#{msgs['respSurveyDefinition.addNew']}"
 										itemValue="0" />
-									<f:selectItem
-										itemLabel="#{msgs['respSurveyDefinition.addExisting']}"
-										itemValue="1" />
 									<f:selectItem
 										itemLabel="#{msgs['respSurveyDefinition.delete']}"
 										itemValue="2" />
@@ -172,39 +176,6 @@
 							</div>
 						</p:outputPanel>
 						<p:outputPanel
-							rendered="#{respSurveyDefinitionView.newExistingOrDeleteSection == 1}">
-							<div class="ui-g">
-								<div class="ui-g-4">
-									<p:outputLabel value="#{msgs['respSurveyDefinition.title']}"></p:outputLabel>
-								</div>
-								<div class="ui-g-8">
-									<p:selectOneMenu
-										value="#{respSurveyDefinitionView.addedSurveySectionDefinition}"
-										converter="SurveySectionDefinitionBoConverter">
-										<f:selectItems
-											value="#{respSurveyDefinitionView.existingSurveySectionDefinitionList}"
-											var="section" itemLabel="#{section.surveySectionTitle.title}"
-											itemValue="#{section}" />
-									</p:selectOneMenu>
-								</div>
-							</div>
-							<div class="ui-g">
-								<div class="ui-g-4">
-									<p:outputLabel
-										value="#{msgs['respSurveyDefinition.sectionRequirementLevel']}" />
-								</div>
-								<div class="ui-g-8">
-									<p:selectOneMenu
-										value="#{respSurveyDefinitionView.requirementLevel}">
-										<f:selectItems
-											value="#{respSurveyDefinitionView.surveySectionRequirementLevels}"
-											var="level" itemLabel="#{level}" itemValue="#{level}" />
-									</p:selectOneMenu>
-
-								</div>
-							</div>
-						</p:outputPanel>
-						<p:outputPanel
 							rendered="#{respSurveyDefinitionView.newExistingOrDeleteSection == 2}">
 							<div class="ui-g">
 								<div class="ui-g-4">
@@ -226,7 +197,7 @@
 							</div>
 						</p:outputPanel>
 						<div class="ui-g-2">
-							<p:commandButton value="#{msgs['respSurveyDefinition.add']}"
+							<p:commandButton value="#{respSurveyDefinitionView.newExistingOrDeleteSection == 0? msgs['add'] : msgs['delete']}"
 								update=":form"
 								action="#{respSurveyDefinitionView.sectionChangeListener}"
 								oncomplete="PF('manageSectionsDialog').hide();" />
@@ -240,9 +211,13 @@
 	 ***************************************************************************************************************** -->
 		<h:form id="manageCompetences">
 			<div class="ui-g" id="manageCompetencesContainer">
-				<p:dialog header="#{msgs['respSurveyDefinition.manageCompetences']}"
-					widgetVar="manageCompetencesDialog" modal="true" draggable="false" styleClass="width: 200px;">
+				<p:dialog header="#{msgs['respSurveyDefinition.manageCompetences']}" class="modalBM"
+					widgetVar="manageCompetencesDialog" modal="true" styleClass="width: 200px;">
 					<p:outputPanel id="manageCompetencesPanel">
+						<p:messages for="manageCompetences" showDetail="false" closable="true"
+								globalOnly="false">
+								<p:autoUpdate />
+						</p:messages>
 						<div class="ui-g">
 
 							<div class="ui-g-4">
@@ -255,7 +230,7 @@
 									var="sectionImpl"
 									itemLabel="#{sectionImpl.surveySectionDefinitionBo.surveySectionTitle.title}"
 									itemValue="#{sectionImpl}" forceSelection="true"
-									emptyMessage="#{msgs['respSurveyDefinition.noResults']}"
+									emptyMessage="#{msgs['surveyDefinition.noResults']}"
 									value="#{respSurveyDefinitionView.selectedSectionDefinitionImpl}"
 									converter="DefinitionImplBoConverter">
 									<p:ajax event="itemSelect" update="competenceDetails" />
@@ -273,7 +248,7 @@
 									completeMethod="#{respSurveyDefinitionView.completeCompetence}"
 									var="competence" itemLabel="#{competence.name}"
 									itemValue="#{competence}" forceSelection="true"
-									emptyMessage="#{msgs['respSurveyDefinition.noResults']}"
+									emptyMessage="#{msgs['surveyDefinition.noResults']}"
 									value="#{respSurveyDefinitionView.selectedCompetence}"
 									converter="competenceBoConverter">
 									<p:ajax event="itemSelect" update="competenceDetails" process="@this"/>
@@ -287,7 +262,7 @@
 								</div>
 								<div class="ui-g-8">
 									<p:inputTextarea
-										value="#{respSurveyDefinitionView.selectedCompetence.competenceDescription}"
+										value="#{respSurveyDefinitionView.selectedCompetence.competenceDescription}" class="modalSM"
 										disabled="#{not respSurveyDefinitionView.selectedSectionDefinitionImpl.surveySectionDefinitionBo.surveySectionStrategy.flexibleDescription}" />
 								</div>
 							</div>
@@ -331,7 +306,10 @@
 					header="#{msgs['surveyDefinition.edit']}"
 					widgetVar="editCompetenceImplDialog" modal="true" draggable="false">
 					<p:outputPanel id="editCompetenceImpl">
-						
+						<p:messages for="editForm" showDetail="false" closable="true"
+								globalOnly="false">
+								<p:autoUpdate />
+						</p:messages>
 						<div class="ui-g">
 
 							<div class="ui-g-4">
@@ -361,7 +339,7 @@
 							</div>
 							<div class="ui-g-8">
 								<p:inputTextarea
-									value="#{respSurveyDefinitionView.addedCompetenceImplBo.competenceDescription}"
+									value="#{respSurveyDefinitionView.addedCompetenceImplBo.competenceDescription}" class="modalSM"
 									disabled="#{not respSurveyDefinitionView.selectedSectionDefinitionImpl.surveySectionDefinitionBo.surveySectionStrategy.flexibleDescription}" />
 							</div>
 						</div>
@@ -403,6 +381,10 @@
 					header="#{msgs['surveyDefinition.delete']}"
 					widgetVar="deleteCompetenceImplDialog" modal="true"
 					draggable="false">
+					<p:messages for="deleteForm" showDetail="false" closable="true"
+								globalOnly="false">
+								<p:autoUpdate />
+						</p:messages>
 					<f:facet name="header">
 						<h:outputText value="#{msgs['surveyDefinition.delete']}" />
 					</f:facet>

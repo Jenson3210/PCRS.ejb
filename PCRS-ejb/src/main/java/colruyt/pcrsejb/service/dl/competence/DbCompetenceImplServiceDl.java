@@ -4,6 +4,7 @@ import colruyt.pcrsejb.entity.competence.CompetenceImpl;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.io.Serializable;
@@ -52,6 +53,9 @@ public class DbCompetenceImplServiceDl implements ICompetenceImplServiceDl, Seri
         CompetenceImpl competenclevel = em.find(CompetenceImpl.class, element.getId());
         if(competenclevel != null) {
             em.remove(competenclevel);
-        }
+            em.flush();
+        } else {
+			throw new EntityNotFoundException();
+		}
     }
 }

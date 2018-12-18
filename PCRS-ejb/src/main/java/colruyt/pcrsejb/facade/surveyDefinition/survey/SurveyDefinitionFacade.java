@@ -7,6 +7,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveyDefinitionBo;
+import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionImplBo;
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.converter.surveyDefinition.survey.SurveyDefinitionConverter;
 import colruyt.pcrsejb.converter.user.UserConverter;
@@ -21,6 +22,9 @@ public class SurveyDefinitionFacade implements Serializable, ISurveyDefinitionFa
 
 	@EJB
 	private ISurveyDefinitionServiceBl surveyDefinitionServiceBl;
+	
+	@EJB 
+	private ISurveySectionDefinitionImplFacade implFacade;
 	
 	private SurveyDefinitionConverter surveyDefinitionConverter = new SurveyDefinitionConverter();
 	
@@ -48,13 +52,28 @@ public class SurveyDefinitionFacade implements Serializable, ISurveyDefinitionFa
 
 	@Override
 	public List<SurveyDefinitionBo> getSurveyDefinitionsOfUser(UserBo user) {
-		
 		return surveyDefinitionConverter.convertToBos(this.surveyDefinitionServiceBl.getSurveyDefinitionsOfUser(this.userConv.convertToEntity(user)));
 	}
 
 	@Override
 	public UserBo getResponsible(SurveyDefinitionBo bo) {
 		return userConv.convertToBo(surveyDefinitionServiceBl.getResponsible(surveyDefinitionConverter.convertToEntity(bo)));
+	}
+
+	@Override
+	public SurveyDefinitionBo addCompetenceImpl(SurveyDefinitionBo surveyDefinition,
+			SurveySectionDefinitionImplBo def) throws ValidationException {
+		surveyDefinition.getSurveySections().add(def);
+		return this.save(surveyDefinition);
+	}
+
+	@Override
+	public SurveyDefinitionBo removeCompetenceImpl(SurveyDefinitionBo surveyDefinition,
+			SurveySectionDefinitionImplBo def) throws ValidationException {
+		surveyDefinition.getSurveySections().remove(def);
+		implFacade.delete(def);
+		
+		return this.save(surveyDefinition);
 	}
 	
 	
