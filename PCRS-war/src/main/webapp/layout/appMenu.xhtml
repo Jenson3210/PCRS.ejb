@@ -64,8 +64,7 @@
 					<ul>
 						<li
 							class="#{request.getParameter('target') == 'craftmanagement' ? 'c-active' : ''}">
-							<h:link value="#{msgs['menu.craftmanagement']}"
-								outcome="/admin/adminCompetenceImp.xhtml" />
+							<h:link value="#{msgs['menu.craftmanagement']}" outcome="/admin/adminCompetenceImp.xhtml" />
 						</li>
 					</ul>
 				</li>
@@ -76,8 +75,11 @@
 					<ul>
 						<li
 							class="#{request.getParameter('target') == 'competences' ? 'c-active' : ''}">
-							<h:link value="#{msgs['menu.competences']}"
-									outcome="/admin/adminCompetence.xhtml" />
+							<h:link value="#{msgs['menu.competences']}" outcome="/admin/adminCompetence.xhtml" />
+						</li>
+						<li
+							class="#{request.getParameter('target') == 'users' ? 'c-active' : ''}">
+							<h:link value="#{msgs['menu.adminSurveySectionDefinition']}" outcome="/admin/adminSurveySectionDefinitionView.xhtml" />
 						</li>
 						<li
 							class="#{request.getParameter('target') == 'adminstrategy' ? 'c-active' : ''}">
@@ -85,8 +87,7 @@
 						</li>
 						<li
 							class="#{request.getParameter('target') == 'surveyDefinitionresponsibles' ? 'c-active' : ''}">
-							<h:link value="#{msgs['menu.surveyDefinition']}"
-								outcome="/admin/adminSurveyDefinition.xhtml" />
+							<h:link value="#{msgs['menu.surveyDefinition']}" outcome="/admin/adminSurveyDefinition.xhtml" />
 						</li>
 						<li
 							class="#{request.getParameter('target') == 'teamsOfManager' ? 'c-active' : ''}">
@@ -100,15 +101,9 @@
 							class="#{request.getParameter('target') == 'users' ? 'c-active' : ''}">
 							<h:link value="#{msgs['menu.users']}" outcome="/admin/adminUser.xhtml" />
 						</li>
-						<li
-							class="#{request.getParameter('target') == 'users' ? 'c-active' : ''}">
-							<h:link value="#{msgs['menu.adminSurveySectionDefinition']}" outcome="/admin/adminSurveySectionDefinitionView.xhtml" />
-						</li>
 					</ul>
 				</li>
 			</h:panelGroup>
 		</h:panelGroup>
 	</ul>
-
-
 </ui:composition>

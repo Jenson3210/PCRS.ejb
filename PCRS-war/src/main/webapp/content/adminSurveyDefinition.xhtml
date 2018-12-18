@@ -71,7 +71,7 @@
 					</div>
 				</div>
 			</h:form>
-			<!-- *****************************************************************************************************************
+<!-- *****************************************************************************************************************
 													ADD FORM																
 	 ***************************************************************************************************************** -->
 			<h:form id="addForm">
@@ -83,26 +83,31 @@
 						<p:outputPanel id="addSurveyDefinition">
 							<div class="ui-g">
 								<div class="ui-g-4">
-									<p:outputLabel value="#{msgs['surveyDefinition.title']}"></p:outputLabel>
+									<p:outputLabel value="#{msgs['surveyDefinition.function']}"/>
 								</div>
-
-								<p:column headerText="#{msgs['surveyDefinition.function']}">
+								<div class="ui-g-8">
 									<p:inputText value="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo.function}" required="true"/>
-								</p:column>
-
-								<p:column headerText="#{msgs['surveyDefinition.operatingUnit']}">
-									<p:inputText value="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo.operatingUnit}" required="true" />
-								</p:column>
-
-								<p:column headerText="#{msgs['surveyDefinition.country']}">
-									<p:inputText value="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo.country}" required="true"/>
-								</p:column>
+								</div>
 							</div>
-
 							<div class="ui-g">
 								<div class="ui-g-4">
-									<p:outputLabel value="#{msgs['user.shortName']}">
-									</p:outputLabel>
+									<p:outputLabel value="#{msgs['surveyDefinition.operatingUnit']}"/>
+								</div>
+								<div class="ui-g-8">
+									<p:inputText value="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo.operatingUnit}" required="true"/>
+								</div>
+							</div>
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['surveyDefinition.country']}"/>
+								</div>
+								<div class="ui-g-8">
+									<p:inputText value="#{adminSurveyDefinitionView.manipulatedSurveyDefinitionBo.country}" required="true"/>
+								</div>
+							</div>
+							<div class="ui-g">
+								<div class="ui-g-4">
+									<p:outputLabel value="#{msgs['user.shortName']}"/>
 								</div>
 								<div class="ui-g-8">
 									<p:autoComplete id="shortName"
@@ -115,18 +120,20 @@
 									<p:message for="shortName" />
 								</div>
 							</div>
-
-							<div class="ui-g-2">
-								<p:commandButton value="#{msgs['surveyDefinition.add']}"
-									update=":form"
-									action="#{adminSurveyDefinitionView.addSurveyDefinition}"
-									oncomplete="PF('addSurveyDefinitionDialog').hide();" />
+							<div class="ui-g">
+								<div class="ui-g-8"></div>
+								<div class="ui-g-4">
+									<p:commandButton value="#{msgs['surveyDefinition.add']}"
+										update=":form"
+										action="#{adminSurveyDefinitionView.addSurveyDefinition}"
+										oncomplete="PF('addSurveyDefinitionDialog').hide();" />
+								</div>
 							</div>
 						</p:outputPanel>
 					</p:dialog>
 				</div>
 			</h:form>
-			<!-- *****************************************************************************************************************
+<!-- *****************************************************************************************************************
 													EDIT FORM																
 	 ***************************************************************************************************************** -->
 			<h:form id="editForm">
@@ -177,7 +184,7 @@
 					</p:dialog>
 				</div>
 			</h:form>
-			<!-- *****************************************************************************************************************
+<!-- *****************************************************************************************************************
 													DELETE FORM																
 	 ***************************************************************************************************************** -->
 			<h:form id="deleteForm">

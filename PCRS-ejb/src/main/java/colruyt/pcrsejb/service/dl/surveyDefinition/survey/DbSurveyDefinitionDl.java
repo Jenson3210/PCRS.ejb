@@ -78,8 +78,9 @@ public class DbSurveyDefinitionDl implements Serializable, ISurveyDefinitionDl {
 
 	@Override
 	public List<SurveyDefinition> getSurveyDefinitionsOfUser(User user) {
-		TypedQuery<SurveyDefinition> q = em.createNamedQuery("SURVEYDEFINITION.GETBYRESPONSIBLE", SurveyDefinition.class);
-		q.setParameter("responsibleUser", user);
+		TypedQuery<SurveyDefinition> q = em.createNamedQuery("SURVEYDEFINITION.GETALLFORUSER", SurveyDefinition.class);
+		q.setParameter("p_id", PrivilegeType.SURVEYDEFINITIONRESPONSIBLE);
+		q.setParameter("u_id", user.getId());
 		List<SurveyDefinition> listOfSurveyDefinitions = q.getResultList();
 		return listOfSurveyDefinitions;
 
