@@ -10,11 +10,11 @@ import { AlertType } from '../model/alert-type.enum';
 import { IUser } from '../model/Interfaces/IUser';
 
 @Component({
-  selector: 'app-managersurvey',
-  templateUrl: './manager-survey.component.html',
-  styleUrls: ['./manager-survey.component.css']
+  selector: 'app-consensussurvey',
+  templateUrl: './consensus-survey.component.html',
+  styleUrls: ['./consensus-survey.component.css']
 })
-export class ManagerSurveyComponent implements OnInit {
+export class ConsensusSurveyComponent implements OnInit {
   survey$: ISurvey;
   private errors: IAlert[];
   subjectUser: IUser;
@@ -27,7 +27,7 @@ export class ManagerSurveyComponent implements OnInit {
       x => {
         this.subjectUser = x.body[0];
         
-        this.surveyService.getSurveyForUser(this.subjectUser, SurveyKind.TeamManager).subscribe(
+        this.surveyService.getSurveyForUser(this.subjectUser, SurveyKind.Consensus).subscribe(
           x => {
             this.survey$ = x.body;
           },

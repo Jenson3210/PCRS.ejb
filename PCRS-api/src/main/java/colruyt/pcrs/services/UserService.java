@@ -61,16 +61,17 @@ public class UserService {
 			}
 		}
 		else {
-			if(userId == null) {
-				UserBo userbo = new UserBo();
+			if(userId != null) {
+				UserBo userBo = new UserBo();
 				
-				userbo.setId(userId);
+				userBo.setId(Integer.valueOf(userId));
 				try {
-					userbo = this.userFacade.get(userbo);
-					users.add(userbo);
+					userBo = this.userFacade.get(userBo);
+					users.add(userBo);
 					resp = Response.status(Response.Status.OK).header("AUTHORIZATION", "Bearer " + tokenFacade.issueToken(users.get(0)).getToken()).entity(users).build();
 					
 				} catch (ValidationException e) {
+					System.out.println(e.getMessage());
 					resp = Response.status(Response.Status.FORBIDDEN)
 							.entity(e.getMessage())
 							.build();

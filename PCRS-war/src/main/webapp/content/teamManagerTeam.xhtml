@@ -10,11 +10,7 @@
 	<div class="ui-g">
 		<div class="ui-g-1" />
 		<div class="ui-g-10">
-		
 			<h:form id="form">
-			
-		
-			
 				<p:dataTable var="team"
 					value="#{managerTeamView.getTeamEnrolments()}"
 					styleClass="teamOverviewTable" sortBy="#{team.getTeam().name}"
@@ -30,63 +26,49 @@
 					<p:column>
 						<p:dataTable var="enrolment" value="#{team.getEnrolmentMap()}">
 							<p:column style="width: 32px">
-								<p:rowToggler
-									rendered="#{managerTeamView.isMe(enrolment.value)}" />
+								<p:rowToggler rendered="#{managerTeamView.isMe(enrolment.value)}" />
 							</p:column>
 							<p:column>
-								<h:outputText
-									value="#{enrolment.value.firstName}  #{enrolment.value.lastName}" />
+								<h:outputText value="#{enrolment.value.firstName}  #{enrolment.value.lastName}" />
 							</p:column>
 							<p:column>
-								<h:outputText
-									value="#{enrolment.key.userPrivilege.privilegeType.fullName}" />
+								<h:outputText value="#{enrolment.key.userPrivilege.privilegeType.fullName}" />
 							</p:column>
 							<p:column>
-								<h:outputText
-									value="#{managerTeamView.getFunctionOf(enrolment.key)}"
-								rendered="#{managerTeamView.hasFunction(enrolment.key)}"
-									 />
+								<h:outputText value="#{managerTeamView.getFunctionOf(enrolment.key)}"
+											  rendered="#{managerTeamView.hasFunction(enrolment.key)}" />
 							</p:column>
 							<p:column>
-								<p:commandLink
-									action="#{managerTeamViewChangeFunction.init(enrolment.value,enrolment.key)}"
-									oncomplete="PF('changeFunction').show()"
-									rendered="#{managerTeamView.isMe(enrolment.value)}">
-
+								<p:commandLink action="#{managerTeamViewChangeFunction.init(enrolment.value,enrolment.key)}"
+											   oncomplete="PF('changeFunction').show()"
+											   rendered="#{managerTeamView.isMe(enrolment.value)}">
 									<i class="fas fa-pencil-alt"> </i>
 								</p:commandLink>
 							</p:column>
 							<p:column>
 								<p:commandButton value="#{msgs['create.survey']}"
-									action="#{managerTeamView.initDialog(enrolment.value)}"
-									oncomplete="PF('createSurvey').show()" update=":createSurvey" 
-									rendered="#{managerTeamView.isMe(enrolment.value)}"
-									enabled="#{managerTeamView.hasFunction(enrolment.key)}"									
-									/>
+												 action="#{managerTeamView.initDialog(enrolment.value)}"
+												 oncomplete="PF('createSurvey').show()" update=":createSurvey" 
+												 rendered="#{managerTeamView.isMe(enrolment.value)}"
+												 enabled="#{managerTeamView.hasFunction(enrolment.key)}" />
 							</p:column>
 							<p:rowExpansion>
 								<p:panelGrid columns="2" widt="100%">
-									<h:outputText
-										value="#{enrolment.value.firstName}  #{enrolment.value.lastName}"></h:outputText>
-										
-
-										
+									<h:outputText value="#{enrolment.value.firstName}  #{enrolment.value.lastName}"/>
 									<p:progressBar id="progressBarEmployee"
-										value="#{managerTeamView.getMemberSurveyPercentage(enrolment.value)}"
-										widgetVar="pbClient" style="width:300px" /> 
-									<h:outputText value="Jij"></h:outputText>
-
-									
-									<p:progressBar id="progressBarBoss" widgetVar="pbClient"
-										value="#{managerTeamView.getManagerSurveyPercentage(enrolment.value)}"
+												   value="#{managerTeamView.getMemberSurveyPercentage(enrolment.value)}"
+												   widgetVar="pbClient" style="width:300px" /> 
+									<h:outputText value="#{msgs['you']}"/>
+									<p:progressBar id="progressBarBoss" widgetVar="pbClient" value="#{managerTeamView.getManagerSurveyPercentage(enrolment.value)}"
 										style="width:300px" /> 
+									
 
+										
 									
 									
 									<p:commandButton id="survey_button1" rendered="#{not managerTeamView.consensusReady(enrolment.value)}"  value="Fill in Survey" />
 									<p:commandButton id="survey_button2" rendered="#{managerTeamView.consensusReady(enrolment.value)}" value="#{msgs['consensus.button']}" />
 									
-
 								</p:panelGrid>
 							</p:rowExpansion>
 						</p:dataTable>
@@ -96,7 +78,7 @@
 		</div>
 	</div>
 <!-- *****************************************************************************************************************
-													CHANGE FUNCTION																
+													EDIT FUNCTION																
 	 ***************************************************************************************************************** -->
 	<p:dialog header="#{msgs['change.function']}" draggable="false" widgetVar="changeFunction"
 		modal="true" resizable="false" >
@@ -104,15 +86,14 @@
 			<h:form id="functionForm">
 				<div class="ui-g">
 					<p:selectOneMenu value="#{managerTeamViewChangeFunction.function}"
-						converter="SurveyDefinitionBoConverter">
-						<f:selectItems
-							value="#{managerTeamViewChangeFunction.availableFunctionDefinitions}"
-							var="function" itemLabel="#{function.function}"
-							itemValue="#{function}" />
+									 converter="SurveyDefinitionBoConverter">
+						<f:selectItems value="#{managerTeamViewChangeFunction.availableFunctionDefinitions}"
+									   var="function" itemLabel="#{function.function}"
+									   itemValue="#{function}" />
 					</p:selectOneMenu>
 					<p:commandButton action="#{managerTeamViewChangeFunction.submit}"
-						value="#{msgs['submit']}" oncomplete="PF('changeFunction').hide();"
-						update=":form" />
+									 value="#{msgs['submit']}" oncomplete="PF('changeFunction').hide();"
+									 update=":form" />
 				</div>
 			</h:form>
 		</p:panelGrid>
@@ -121,40 +102,28 @@
 													CREATE SURVEY																
 	 ***************************************************************************************************************** -->
 	<h:form id="createSurvey">
-	
+		<p:growl id="growl"  showDetail="true" sticky="false" >
+			<p:autoUpdate/>
+		</p:growl>	
 		<p:messages id="growl"  showDetail="true" sticky="false" >
 				<p:autoUpdate/>
-			</p:messages>  
-	
+			</p:messages>
 		<p:dialog header="#{msgs['create.survey']}" widgetVar="createSurvey" draggable="false" modal="true"
-			resizable="false">
-			
-			
+				  resizable="false">
 			<p:panelGrid columns="1" id="display" columnClasses="label,output">
-
 					<p:pickList id="pickList"
-						value="#{managerTeamView.availableList}" var="section"
-						itemValue="#{section}"
-						itemLabel="#{section.surveySectionDefinitionBo.surveySectionTitle.title}"
-						converter="DefinitionImplBoConverter" 
-						itemDisabled="#{managerTeamView.isDisabled(section)}"
-						>
-					    
-					    
-					    
-						 <f:facet name="sourceCaption">#{msgs['create.survey.available']}</f:facet>
-        				 <f:facet name="targetCaption">#{msgs['create.survey.chosen']}</f:facet>
-						
-						
-						
-						 <p:ajax event="transfer" listener="#{managerTeamView.onTransfer}"  />
-					
-						
-						</p:pickList>
-							
+								value="#{managerTeamView.availableList}" var="section"
+								itemValue="#{section}"
+								itemLabel="#{section.surveySectionDefinitionBo.surveySectionTitle.title}"
+								converter="DefinitionImplBoConverter" 
+								itemDisabled="#{managerTeamView.isDisabled(section)}">
+						<f:facet name="sourceCaption">#{msgs['create.survey.available']}</f:facet>
+        				<f:facet name="targetCaption">#{msgs['create.survey.chosen']}</f:facet>
+						<p:ajax event="transfer" listener="#{managerTeamView.onTransfer}"  />
+					</p:pickList>
 						<p:commandButton action="#{managerTeamView.submit()}"
-						oncomplete="PF('createSurvey').hide();"
-						value="#{msgs['create.survey']}"></p:commandButton>
+										 oncomplete="PF('createSurvey').hide();"
+										 value="#{msgs['create.survey']}"/>
 			</p:panelGrid>
 		</p:dialog>
 	</h:form>
