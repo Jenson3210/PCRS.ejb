@@ -1,7 +1,6 @@
 package colruyt.pcrsejb.service.dl.surveyDefinition.strategy;
 
 import java.io.Serializable;
-import java.util.EmptyStackException;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -51,10 +50,9 @@ public class DbSurveySectionStrategyServiceDl implements Serializable, ISurveySe
 	@Override
 	public void delete(SurveySectionStrategy element) {
 		element = em.find(SurveySectionStrategy.class, element.getId());
-		if (element == null) {
-			throw new EntityNotFoundException();
-		}
-		else { em.remove(element); }
+        if(element != null) {
+            em.remove(element);
+        }
 	}
 
 }

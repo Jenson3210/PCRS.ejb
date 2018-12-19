@@ -129,14 +129,16 @@ public class SurveySectionStrategyView implements Serializable {
 				s = strategy;
 			}
 		}
-		strategies.remove(s);
+//		strategies.remove(s);
 		try {
 			surveySectionStrategyFacade.delete(s);
+			strategies.remove(s);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "succesfully deleted", null));
 		} catch (ValidationException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
- 			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 		}
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "succesfully deleted", null));
+//		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "succesfully deleted", null));
 	}
 }
