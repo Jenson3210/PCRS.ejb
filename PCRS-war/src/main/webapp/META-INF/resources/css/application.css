@@ -86,3 +86,8 @@ body .ui-datatable .ui-datatable-data > tr:last-child {
 body .ui-button {
 	margin: 0.5rem;
 }	
+#c-header-menubar>ul>li>div:after {
+	font-weight: bold;
+	text-rendering:auto;
+	color: white;
+} 

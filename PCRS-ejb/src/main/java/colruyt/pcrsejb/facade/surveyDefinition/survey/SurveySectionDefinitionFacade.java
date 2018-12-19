@@ -69,7 +69,9 @@ public class SurveySectionDefinitionFacade implements Serializable,ISurveySectio
 
 	@Override
 	public SurveySectionDefinitionBo addCompetenceImpl(SurveySectionDefinitionBo section, CompetenceImplBo competence) throws ValidationException {
-		section.getSurveySectionCompetences().add(competence);
+		if (competence.getId() == null) {
+			section.getSurveySectionCompetences().add(competence);
+		}
 		return this.save(section);
 	}
 

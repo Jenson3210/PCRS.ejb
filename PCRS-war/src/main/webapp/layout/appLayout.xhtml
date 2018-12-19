@@ -29,9 +29,9 @@
 	
 		<h:body id="c-layout">
 	
-			<!-- *********************************************************************************************************************
-				**                                                      HEADERS
-				********************************************************************************************************************* -->
+		<!-- *********************************************************************************************************************
+			 **                                                      HEADERS													**
+			 ********************************************************************************************************************* -->
 		<div id="c-header">
 			<!-- Colruyt Group header -->
 			<div id="c-header-mainbar" class="#{appContext.promotionLevel}">
@@ -63,9 +63,8 @@
 						<div class="c-header-profile">
 							<i class="fa fa-user"></i>
 							<div>
-								<h:outputText
-									value="#{webUser.getUser().firstName.concat(' ').concat(webUser.getUser().lastName)}"
-									rendered="#{webUser.hasUser()}"></h:outputText>
+								<h:outputText value="#{webUser.getUser().firstName.concat(' ').concat(webUser.getUser().lastName)}"
+									rendered="#{webUser.hasUser()}"/>
 							</div>
 							<i class="fa fa-angle-down"></i>
 							<div class="c-header-dropdown">

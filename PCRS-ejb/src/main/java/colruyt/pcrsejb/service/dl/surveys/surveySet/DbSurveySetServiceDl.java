@@ -75,7 +75,6 @@ public class DbSurveySetServiceDl implements Serializable, ISurveySetServiceDl {
 					.get();
 
 			TreeSet<SurveySet> tree = new TreeSet<>(privi.getSurveySetTreeSet());
-		
 
 			return tree.last();
 

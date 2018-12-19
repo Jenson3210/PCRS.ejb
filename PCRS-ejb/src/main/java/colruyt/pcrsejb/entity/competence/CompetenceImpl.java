@@ -20,7 +20,7 @@ public class CompetenceImpl extends AbstractEntity implements Serializable {
     @SequenceGenerator(sequenceName = "COMPETENCEIMPLEMENTATIONS_SEQ", allocationSize = 1, name = "COMPETENCEIMPLEMENTATIONS_SEQ")
     @Column(name="ID")
     private Integer id;
-    @ManyToOne(cascade= {CascadeType.REMOVE})
+    @ManyToOne
     private Competence competence;
     @Column(name="DESCRIPTION",table="COMPETENCEIMPLDESCRIPTIONS", length = 1337)
     private String competenceDescription;
