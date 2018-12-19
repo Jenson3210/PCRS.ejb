@@ -21,8 +21,8 @@ public class TokenFacade {
 
 	private UserConverter userconvert = new UserConverter();
 	
-	@EJB
-	private TokenDlService dl;
+	 
+	private TokenDlService dl = new TokenDlService();
 	
 	
     private KeyGenerator keyGenerator;
