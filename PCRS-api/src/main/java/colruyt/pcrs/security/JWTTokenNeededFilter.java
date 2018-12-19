@@ -58,7 +58,7 @@ public class JWTTokenNeededFilter implements ContainerRequestFilter {
     @PostConstruct
     private void init() {
        	try {
-    			keyGenerator = KeyGenerator.getInstance("DES");
+    			keyGenerator = KeyGenerator.getInstance("HS512");
     		} catch (NoSuchAlgorithmException e) {
     			// TODO Auto-generated catch block
     			e.printStackTrace();
