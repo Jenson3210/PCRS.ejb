@@ -10,9 +10,9 @@ import { AlertType } from '../model/alert-type.enum';
 import { IUser } from '../model/Interfaces/IUser';
 
 @Component({
-  selector: 'app-survey',
-  templateUrl: './survey.component.html',
-  styleUrls: ['./survey.component.css']
+  selector: 'app-managersurvey',
+  templateUrl: './manager-survey.component.html',
+  styleUrls: ['./manager-survey.component.css']
 })
 export class ManagerSurveyComponent implements OnInit {
   survey$: ISurvey;
@@ -25,7 +25,7 @@ export class ManagerSurveyComponent implements OnInit {
     this.errors = [];
     this.userService.getUserById(this.route.snapshot.queryParamMap.get("userId")).subscribe(
       x => {
-        this.subjectUser = x.body;
+        this.subjectUser = x.body[0];
         
         this.surveyService.getSurveyForUser(this.subjectUser, SurveyKind.TeamManager).subscribe(
           x => {

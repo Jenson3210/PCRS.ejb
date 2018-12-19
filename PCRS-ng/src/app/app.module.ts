@@ -11,12 +11,14 @@ import { FormsModule } from '@angular/forms';
 import { SurveyService } from './service/survey.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
+import { ManagerSurveyComponent } from './manager-survey/manager-survey.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     SurveyComponent,
+    ManagerSurveyComponent,
     SurveySectionComponent,
     SurveyOverviewComponent,
     LoginComponent
