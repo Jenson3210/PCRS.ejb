@@ -62,8 +62,8 @@
 									<p:progressBar id="progressBarBoss" widgetVar="pbClient" value="#{managerTeamView.getManagerSurveyPercentage(enrolment.value)}"
 										style="width:300px" /> 
 										
-									<p:commandButton id="survey_button1" disabled="#{not managerTeamView.consensusReady(enrolment.value)}"  value="#{msgs['survey.button']}" />
-									<p:commandButton id="survey_button2" disabled="#{managerTeamView.consensusReady(enrolment.value)}" value="#{msgs['consensus.button']}" />
+									<p:commandButton id="survey_button1" disabled="#{managerTeamView.consensusReady(enrolment.value)}"  value="#{msgs['survey.button']}" />
+									<p:commandButton id="survey_button2" disabled="#{not managerTeamView.consensusReady(enrolment.value)}" value="#{msgs['consensus.button']}" />
 									
 
 								</p:panelGrid>
