@@ -16,9 +16,9 @@ public interface ISurveyDefinitionFacade extends IFacade<SurveyDefinitionBo> {
 	List<SurveyDefinitionBo> getSurveyDefinitionsOfUser(UserBo user);
 	UserBo getResponsible(SurveyDefinitionBo bo);
 	
-	SurveyDefinitionBo addCompetenceImpl(SurveyDefinitionBo surveyDefinition, SurveySectionDefinitionImplBo def) throws ValidationException;
+	SurveyDefinitionBo addSurveySectionDefinitionImpl(SurveyDefinitionBo surveyDefinition, SurveySectionDefinitionImplBo def) throws ValidationException;
 	
-	SurveyDefinitionBo removeCompetenceImpl(SurveyDefinitionBo surveyDefinition, SurveySectionDefinitionImplBo def) throws ValidationException;
+	SurveyDefinitionBo removeSurveySectionDefinitionImpl(SurveyDefinitionBo surveyDefinition, SurveySectionDefinitionImplBo def) throws ValidationException;
 	
 	
 }
