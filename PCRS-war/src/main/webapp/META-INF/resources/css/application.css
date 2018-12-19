@@ -90,4 +90,8 @@ body .ui-button {
 	font-weight: bold;
 	text-rendering:auto;
 	color: white;
+}
+.ui-button.btn.btn-outline-primary {
+    background-color: white;
+    color: #3397a1;
 } 

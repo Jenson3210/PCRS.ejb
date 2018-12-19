@@ -38,7 +38,7 @@ public class CompetenceServiceBl implements Serializable, ICompetenceServiceBl {
                 }
             }
         }
-        if(element.getName().equals("") || element.getCompetenceDescription().equals("")) {
+        if(element.getName().equals(" ") || element.getCompetenceDescription().equals(" ")) {
         	throw new CompetenceNotEnterdValidation("This is not enterd, please enter");
         }
 		competencedb.save(element);

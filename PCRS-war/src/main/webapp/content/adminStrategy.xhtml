@@ -69,8 +69,9 @@
 						style="width:65px; text-align: center">
 						<p:commandLink id="delete"
 							update=":deleteForm:deleteStrategyDetail"
-							oncomplete="PF('deleteStrategyDialog').show()">
-							<i class="fas fa-trash-alt"></i>
+							oncomplete="PF('deleteStrategyDialog').show()"
+							disabled="#{!surveySectionStrategyView.isSurveySectionStrategyUsed(strategy)?'false':'true'}">
+							<i class='fas fa-trash-alt'></i>
 							<f:setPropertyActionListener value="#{strategy}"
 								target="#{surveySectionStrategyView.surveySectionStrategyBo}" />
 						</p:commandLink>
@@ -115,7 +116,7 @@
 								</div>
 								<div class="ui-g-8">
 									<p:inputText id="amount"
-										value="#{surveySectionStrategyView.surveySectionStrategyBo.amountOfLevels}" />
+										value="#{surveySectionStrategyView.surveySectionStrategyBo.amountOfLevels}"/>
 								</div>
 							</div>
 							<div class="ui-g">
@@ -200,7 +201,8 @@
 								</div>
 								<div class="ui-g-8">
 									<p:inputText id="amount"
-										value="#{surveySectionStrategyView.surveySectionStrategyBo.amountOfLevels}" />
+										value="#{surveySectionStrategyView.surveySectionStrategyBo.amountOfLevels}"
+										disabled="#{!surveySectionStrategyView.isSurveySectionStrategyUsed(surveySectionStrategyView.surveySectionStrategyBo)?'false':'true'}" />
 								</div>
 							</div>
 							<div class="ui-g">

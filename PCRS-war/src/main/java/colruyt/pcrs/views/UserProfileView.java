@@ -50,7 +50,7 @@ public class UserProfileView implements Serializable {
 		this.setRepeatPassword("");
 		this.setNewPassword("");
 
-	}
+	}	
 
 	/**
 	 * Method to check if the user has a team

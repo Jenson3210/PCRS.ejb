@@ -8,4 +8,5 @@ import colruyt.pcrsejb.facade.IFacade;
 @Local
 public interface ISurveySectionDefinitionImplFacade extends IFacade<SurveySectionDefinitionImplBo> {
 
-}
+} 
+ 
