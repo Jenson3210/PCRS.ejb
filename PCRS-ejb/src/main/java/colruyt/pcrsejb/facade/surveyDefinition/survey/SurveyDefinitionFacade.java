@@ -61,18 +61,18 @@ public class SurveyDefinitionFacade implements Serializable, ISurveyDefinitionFa
 	}
 
 	@Override
-	public SurveyDefinitionBo addCompetenceImpl(SurveyDefinitionBo surveyDefinition,
+	public SurveyDefinitionBo addSurveySectionDefinitionImpl(SurveyDefinitionBo surveyDefinition,
 			SurveySectionDefinitionImplBo def) throws ValidationException {
+		surveyDefinitionServiceBl.validateSectionDefinitionImpl(surveyDefinition, def);
 		surveyDefinition.getSurveySections().add(def);
 		return this.save(surveyDefinition);
 	}
 
 	@Override
-	public SurveyDefinitionBo removeCompetenceImpl(SurveyDefinitionBo surveyDefinition,
+	public SurveyDefinitionBo removeSurveySectionDefinitionImpl(SurveyDefinitionBo surveyDefinition,
 			SurveySectionDefinitionImplBo def) throws ValidationException {
-		surveyDefinition.getSurveySections().remove(def);
 		implFacade.delete(def);
-		
+		surveyDefinition.getSurveySections().remove(def);
 		return this.save(surveyDefinition);
 	}
 	
