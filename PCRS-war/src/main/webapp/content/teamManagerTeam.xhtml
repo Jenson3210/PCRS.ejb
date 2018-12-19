@@ -66,7 +66,7 @@
 										
 									
 									
-									<p:commandButton id="survey_button1" rendered="#{not managerTeamView.consensusReady(enrolment.value)}"  value="Fill in Survey" />
+									<p:commandButton id="survey_button1" rendered="#{not managerTeamView.consensusReady(enrolment.value)}"  value="#{msgs['survey.button']}" />
 									<p:commandButton id="survey_button2" rendered="#{managerTeamView.consensusReady(enrolment.value)}" value="#{msgs['consensus.button']}" />
 									
 								</p:panelGrid>
