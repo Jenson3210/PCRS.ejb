@@ -1,12 +1,9 @@
 package colruyt.pcrsejb.util.general;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
-
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;  
 

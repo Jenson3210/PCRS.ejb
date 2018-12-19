@@ -1,22 +1,32 @@
 package colruyt.pcrs.services;
 
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.crypto.KeyGenerator;
 import javax.ejb.EJB;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import colruyt.pcrs.security.JWTTokenNeeded;
-import colruyt.pcrs.security.TokenFacade;
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.facade.user.IUserFacade;
+import colruyt.pcrsejb.facade.user.security.ITokenFacade;
+import colruyt.pcrsejb.util.exceptions.NoExistingEmailException;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
+import io.jsonwebtoken.Jwts;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -29,7 +39,7 @@ public class UserService {
 	private IUserFacade userFacade;
 	
 	@EJB
-	private TokenFacade tokenFacade;
+	private ITokenFacade tokenFacade;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -68,7 +78,7 @@ public class UserService {
 				try {
 					userBo = this.userFacade.get(userBo);
 					users.add(userBo);
-					resp = Response.status(Response.Status.OK).header("AUTHORIZATION", "Bearer " + tokenFacade.issueToken(users.get(0)).getToken()).entity(users).build();
+					resp = Response.status(Response.Status.OK).header(HttpHeaders.AUTHORIZATION, "Bearer " + tokenFacade.issueToken(users.get(0),this.generateToken(users.get(0).getEmail())).getToken()).entity(users).build();
 					
 				} catch (ValidationException e) {
 					System.out.println(e.getMessage());
@@ -90,12 +100,55 @@ public class UserService {
 	@Path("token")
 	public Response getTokenTest(@QueryParam("email") String email, @QueryParam("password") String password){
 		
-		UserBo bo = new UserBo();
-		bo.setEmail(email);
-		bo.setPassword(password);
+		UserBo bo = null;
 		
-		return Response.ok().header("AUTHORIZATION", "Bearer " + tokenFacade.issueToken(bo).getToken()).build();
+		try {
+			bo = this.userFacade.getUserByEmail(email);
+		} catch (NoExistingEmailException e) {
+	
+			e.printStackTrace(); 
+		}
+		return Response.ok().header(HttpHeaders.AUTHORIZATION, "Bearer " + tokenFacade.issueToken(bo,this.generateToken(bo.getEmail())).getToken()).build();
+		
 		
 	}
+	
+	
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("me")
+	@JWTTokenNeeded
+	public Response getTokenTest(@Context HttpHeaders request){
+		
+		List<String> authHeaders = request.getRequestHeader(HttpHeaders.AUTHORIZATION);
+		String token = authHeaders.get(0).substring("Bearer".length()).trim();
+		
+		return Response.ok().entity(this.tokenFacade.getUserByToken(token)).build();
+		
+	}
+	
+	
+	private String generateToken(String user) {
+		KeyGenerator keyGenerator = null;
+		
+	
+		try {
+			keyGenerator = KeyGenerator.getInstance("HmacSHA256");
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	  Key key = keyGenerator.generateKey();
+	  String jwtToken = Jwts.builder()
+                .setSubject(user)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date((LocalDateTime.now().plusMinutes(60).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli())))
+                .signWith(key)
+                .compact();
+	  
+       return jwtToken;
 
 } 
+	
+}
