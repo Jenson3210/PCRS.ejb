@@ -23,6 +23,7 @@ export class ManagerSurveyComponent implements OnInit {
 
   ngOnInit() {
     this.errors = [];
+    console.log(this.route.snapshot.queryParamMap);
     this.userService.getUserById(this.route.snapshot.queryParamMap.get("userId")).subscribe(
       x => {
         this.subjectUser = x.body[0];
