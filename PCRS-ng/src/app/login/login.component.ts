@@ -28,11 +28,11 @@ export class LoginComponent implements OnInit {
       }, (error) => {
         switch (error.status) {
           case 403: {
-              this.errors.push({message: error.statusText, type: AlertType.DANGER});
+              this.errors.push({message: error.error, type: AlertType.DANGER});
             break;
           }
           default: {
-            this.errors.push({message: error.statusText, type: AlertType.DANGER});
+            this.errors.push({message: error.error, type: AlertType.DANGER});
             break;
           }
         }
