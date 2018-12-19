@@ -25,7 +25,7 @@ import colruyt.pcrsejb.entity.AbstractEntity;
 @Table(name="COMPETENCES")
 @SecondaryTable(name="COMPETENCEDESCRIPTIONS")
 @NamedQueries({
-	@NamedQuery(name="COMPETENCE.GETALL", query="SELECT c FROM Competence c"),
+	@NamedQuery(name="COMPETENCE.GETALL", query="SELECT c FROM Competence c ORDER BY UPPER(c.name)"),
 	@NamedQuery(name="COMPETENCE.GETALLBYSECTION", query="SELECT c FROM Competence c WHERE size(c.competenceLevels) = :size")
 })
 

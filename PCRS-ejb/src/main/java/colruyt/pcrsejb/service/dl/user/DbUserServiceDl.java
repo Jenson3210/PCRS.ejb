@@ -26,7 +26,7 @@ public class DbUserServiceDl implements Serializable, IUserServiceDl {
 	public User save(User element) {
 		
 		User user = em.merge(element);
-		em.flush();
+		//em.flush();
 		return user;
 		
 	}

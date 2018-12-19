@@ -40,7 +40,7 @@ public class UserProfileView implements Serializable {
 	private ISurveySetFacade surveyFacade;
 	private boolean hasTeam = true;
 
-	/**
+	/**		
 	 * Setup of the screen, loading the needed data
 	 */
 	@PostConstruct

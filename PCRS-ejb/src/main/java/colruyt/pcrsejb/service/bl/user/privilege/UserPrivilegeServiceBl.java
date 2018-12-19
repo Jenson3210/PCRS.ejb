@@ -73,11 +73,11 @@ public class UserPrivilegeServiceBl implements Serializable, IUserPrivilegeServi
 	}
 
 	@Override
-	public UserPrivilege setUserPrivilege(User user, String userPrivilege) throws MemberAlreadyHasATeamException, ValidationException {
+	public UserPrivilege setUserPrivilege(User user, String userPrivilege) throws ValidationException {
 		UserPrivilege privilege = null;
 		SurveyDefinition surveyDefinition = null;
 		user = userServiceBl.get(user);
-		
+			
 		if(PrivilegeType.TEAMMEMBER.getShortName().equals(userPrivilege)) {
     		List<TeamMemberUserPrivilege> memberPrivs = new ArrayList<>();
     			for (UserPrivilege p : user.getPrivileges()) {
