@@ -26,7 +26,7 @@ public class SurveySectionStrategyView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@EJB
-	private ISurveySectionStrategyFacade surveySectionStrategyFacade; 
+	private ISurveySectionStrategyFacade surveySectionStrategyFacade;
 	private SurveySectionStrategyBo surveySectionStrategyBo;
 	private List<SurveySectionStrategyBo> strategies;
 	
@@ -52,6 +52,10 @@ public class SurveySectionStrategyView implements Serializable {
 	 */
 	public void setSurveySectionStrategyBo(SurveySectionStrategyBo surveySectionStrategyBo) {
 		this.surveySectionStrategyBo = surveySectionStrategyBo;
+	}
+	
+	public Boolean isSurveySectionStrategyUsed(SurveySectionStrategyBo surveySectionStrategyBo) {
+		return surveySectionStrategyFacade.isSurveySectionStrategyUsed(surveySectionStrategyBo);
 	}
 	
 	/**
@@ -129,16 +133,13 @@ public class SurveySectionStrategyView implements Serializable {
 				s = strategy;
 			}
 		}
-//		strategies.remove(s);
 		try {
 			surveySectionStrategyFacade.delete(s);
 			strategies.remove(s);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "succesfully deleted", null));
 		} catch (ValidationException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 		}
-//		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "succesfully deleted", null));
 	}
 }
