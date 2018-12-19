@@ -39,7 +39,7 @@
 											  rendered="#{managerTeamView.hasFunction(enrolment.key)}" />
 							</p:column>
 							<p:column>
-								<p:commandLink action="#{managerTeamViewChangeFunction.init(enrolment.value,enrolment.key)}"
+								<p:commandLink action="#{managerTeamViewChangeFunctionDialog.init(enrolment.value,enrolment.key)}"
 											   oncomplete="PF('changeFunction').show()"
 											   rendered="#{managerTeamView.isMe(enrolment.value)}">
 									<i class="fas fa-pencil-alt"> </i>
@@ -80,15 +80,23 @@
 		<p:panelGrid columns="2" id="display2" columnClasses="label,output">
 			<h:form id="functionForm">
 				<div class="ui-g">
-					<p:selectOneMenu value="#{managerTeamViewChangeFunction.function}"
+					<p:selectOneMenu value="#{managerTeamViewChangeFunctionDialog.function}"
 									 converter="SurveyDefinitionBoConverter">
-						<f:selectItems value="#{managerTeamViewChangeFunction.availableFunctionDefinitions}"
-									   var="function" itemLabel="#{function.function}"
+						<f:selectItems value="#{managerTeamViewChangeFunctionDialog.availableFunctionDefinitions}"
+									   var="function" itemLabel="#{function.function} - #{function.operatingUnit} - #{function.country}"
 									   itemValue="#{function}" />
 					</p:selectOneMenu>
-					<p:commandButton action="#{managerTeamViewChangeFunction.submit}"
-									 value="#{msgs['submit']}" oncomplete="PF('changeFunction').hide();"
-									 update=":form" />
+					<div class="ui-g-12">
+						<div class="ui-g-8">
+						</div>
+						<div class="ui-g-4">
+							<p:commandButton action="#{managerTeamViewChangeFunctionDialog.submit}"
+										 value="#{msgs['submit']}" oncomplete="PF('changeFunction').hide();"
+										 update=":form" />
+						</div>
+						
+					</div>
+					
 				</div>
 			</h:form>
 		</p:panelGrid>

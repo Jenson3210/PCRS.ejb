@@ -45,7 +45,7 @@ public class ManagerTeamViewChangeFunctionDialog implements Serializable {
 	private UserBo userBo;
 	private List<SurveyDefinitionBo> availableFunctionDefinitions;
 	
-	/**
+	/**	
 	 * Get function
 	 * @return function
 	 */
