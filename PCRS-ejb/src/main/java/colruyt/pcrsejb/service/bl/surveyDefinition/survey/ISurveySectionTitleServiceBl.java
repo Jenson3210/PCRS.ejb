@@ -7,5 +7,6 @@ import colruyt.pcrsejb.service.bl.IServiceBl;
 
 @Local
 public interface ISurveySectionTitleServiceBl extends IServiceBl<SurveySectionTitle>{
+	public Boolean isSurveySectionTitleUsed(SurveySectionTitle surveySectionTitle);
 
 }

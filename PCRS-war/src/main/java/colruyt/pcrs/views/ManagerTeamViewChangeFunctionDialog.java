@@ -45,7 +45,7 @@ public class ManagerTeamViewChangeFunctionDialog implements Serializable {
 	private UserBo userBo;
 	private List<SurveyDefinitionBo> availableFunctionDefinitions;
 	
-	/**
+	/**	
 	 * Get function
 	 * @return function
 	 */
@@ -90,6 +90,8 @@ public class ManagerTeamViewChangeFunctionDialog implements Serializable {
 		if (en.getUserPrivilege() instanceof SurveyUserPrivilegeBo) {
 			this.function = ((SurveyUserPrivilegeBo) en.getUserPrivilege()).getSurveyDefinition();
 		}
+		
+			
 	} 
 
 	/**

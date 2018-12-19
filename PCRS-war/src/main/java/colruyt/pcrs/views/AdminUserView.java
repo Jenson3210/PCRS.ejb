@@ -7,8 +7,12 @@ import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+
+import org.primefaces.PrimeFaces;
 
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.bo.user.privilege.PrivilegeTypeBo;
@@ -88,13 +92,20 @@ public class AdminUserView implements Serializable{
 	 * Add user
 	 * @throws ValidationException 
 	 */
-	public void addUser() throws ValidationException {
+	public void addUser() {
+		PrimeFaces pf = PrimeFaces.current();
 		Set<UserPrivilegeBo> privs = new HashSet<UserPrivilegeBo>();
 		if (adminSelected) {
 			privs.add(new UserPrivilegeBo(PrivilegeTypeBo.ADMINISTRATOR, true));
 		}
 		addedUser.setPrivileges(privs);
-		users.add(userFacade.save(addedUser));
+		try {
+			users.add(userFacade.save(addedUser));
+			pf.ajax().addCallbackParam("validationSucces", true);
+		} catch (ValidationException e) {
+			pf.ajax().addCallbackParam("validationSucces", false);
+			FacesContext.getCurrentInstance().addMessage("addForm", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+		}
     }
 	
 	/**

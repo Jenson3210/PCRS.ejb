@@ -27,9 +27,7 @@
 							var="comp">
 							<f:facet name="header">
 								<p:outputLabel
-									value="#{msgs['section.label']} = #{sectionImpl.surveySectionDefinitionBo.surveySectionTitle.title}, 
-									#{msgs['strategy.label']} = #{sectionImpl.surveySectionDefinitionBo.surveySectionStrategy.name}, #{msgs['strategy.labelRequired']} = 
-									#{sectionImpl.surveySectionRequirementLevelBo}" />
+									value="#{sectionImpl.surveySectionDefinitionBo.surveySectionTitle.title.toUpperCase()}, #{sectionImpl.surveySectionRequirementLevelBo}"/>
 							</f:facet>
 							<p:column headerText="#{msgs['competence.name']}">
 								<h:outputText value="#{comp.competence.name}" />
@@ -52,6 +50,8 @@
 										target="#{respSurveyDefinitionView.addedCompetenceImplBo}" />
 									<f:setPropertyActionListener value="#{sectionImpl}"
 										target="#{respSurveyDefinitionView.selectedSectionDefinitionImpl}" />
+									<f:setPropertyActionListener value="#{def}"
+										target="#{respSurveyDefinitionView.activeTab}" />
 
 								</p:commandLink>
 							</p:column>
@@ -65,6 +65,8 @@
 										target="#{respSurveyDefinitionView.addedCompetenceImplBo}" />
 									<f:setPropertyActionListener value="#{sectionImpl}"
 										target="#{respSurveyDefinitionView.selectedSectionDefinitionImpl}" />
+									<f:setPropertyActionListener value="#{def}"
+										target="#{respSurveyDefinitionView.activeTab}" />
 								</p:commandLink>
 							</p:column>
 						</p:dataTable>
@@ -76,7 +78,7 @@
 						<div class="ui-g-12">
 							<p:commandButton
 								value="#{msgs['respSurveyDefinition.manageSections']}"
-								styleClass="btn btn-outline-primary mx-1" process="@this"
+								styleClass="btn btn-outline-primary" process="@this"
 								action="#{respSurveyDefinitionView.manageSectionsClickListener}"
 								update=":manageSections:manageSectionsPanel"
 								oncomplete="PF('manageSectionsDialog').show();">
@@ -85,7 +87,7 @@
 							</p:commandButton>
 							<p:commandButton
 								value="#{msgs['respSurveyDefinition.manageCompetences']}"
-								styleClass="btn btn-outline-primary mx-1" process="@this"
+								process="@this"
 								action="#{respSurveyDefinitionView.manageCompetencesClickListener}"
 								update=":manageCompetences:manageCompetencesPanel"
 								oncomplete="PF('manageCompetencesDialog').show();">
@@ -205,7 +207,7 @@
 								value="#{respSurveyDefinitionView.newExistingOrDeleteSection == 0? msgs['add'] : msgs['delete']}"
 								update=":form"
 								action="#{respSurveyDefinitionView.sectionChangeListener}"
-								oncomplete="PF('manageSectionsDialog').hide();" />
+								oncomplete="if (args.validateSucces) { PF('manageSectionsDialog').hide();}" />
 						</div>
 					</p:outputPanel>
 				</p:dialog>
@@ -231,13 +233,17 @@
 									value="#{msgs['respSurveyDefinition.sectionToAddCompetenceTo']}" />
 							</div>
 							<div class="ui-g-8">
-								<p:autoComplete id="section"
+								<p:autoComplete 
+									id="section"
+									class="modalSM"
 									completeMethod="#{respSurveyDefinitionView.completeSection}"
 									var="sectionImpl"
 									itemLabel="#{sectionImpl.surveySectionDefinitionBo.surveySectionTitle.title}"
 									itemValue="#{sectionImpl}" forceSelection="true"
 									emptyMessage="#{msgs['surveyDefinition.noResults']}"
 									value="#{respSurveyDefinitionView.selectedSectionDefinitionImpl}"
+									scrollHeight="200"
+									dropdown="true"
 									converter="DefinitionImplBoConverter">
 									<p:ajax event="itemSelect" update="competenceDetails" />
 								</p:autoComplete>
@@ -250,12 +256,16 @@
 									value="#{msgs['respSurveyDefinition.competenceToAdd']}" />
 							</div>
 							<div class="ui-g-8">
-								<p:autoComplete id="competence"
+								<p:autoComplete 
+									id="competence"
+									class="modalSM"
 									completeMethod="#{respSurveyDefinitionView.completeCompetence}"
 									var="competence" itemLabel="#{competence.name}"
 									itemValue="#{competence}" forceSelection="true"
 									emptyMessage="#{msgs['surveyDefinition.noResults']}"
 									value="#{respSurveyDefinitionView.selectedCompetence}"
+									scrollHeight="200"
+									dropdown="true"
 									converter="competenceBoConverter">
 									<p:ajax event="itemSelect" update="competenceDetails"
 										process="@this" />

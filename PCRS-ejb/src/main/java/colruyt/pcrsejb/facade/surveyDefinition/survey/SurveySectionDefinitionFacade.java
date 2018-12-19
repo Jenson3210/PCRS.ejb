@@ -8,7 +8,10 @@ import javax.ejb.Stateless;
 
 import colruyt.pcrsejb.bo.competence.CompetenceImplBo;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionBo;
+import colruyt.pcrsejb.converter.competence.CompetenceConverter;
+import colruyt.pcrsejb.converter.competence.CompetenceImplConverter;
 import colruyt.pcrsejb.converter.surveyDefinition.survey.SurveySectionDefinitionConverter;
+import colruyt.pcrsejb.service.bl.competence.ICompetenceImplServiceBl;
 import colruyt.pcrsejb.service.bl.surveyDefinition.survey.ISurveySectionDefinitionServiceBl;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
@@ -36,9 +39,12 @@ public class SurveySectionDefinitionFacade implements Serializable,ISurveySectio
 	private ISurveySectionDefinitionServiceBl sdserv; 
 	@EJB
 	private ICompetenceImplFacade competenceImplFacade;
+	@EJB
+	private ICompetenceImplServiceBl competenceImplBl;
 	
 	private SurveySectionDefinitionConverter sdconv = new SurveySectionDefinitionConverter();
 	private SurveySectionTitleConverter sstconv = new SurveySectionTitleConverter();
+	private CompetenceImplConverter competenceConv = new CompetenceImplConverter();
 	
 
 	@Override
@@ -69,6 +75,7 @@ public class SurveySectionDefinitionFacade implements Serializable,ISurveySectio
 
 	@Override
 	public SurveySectionDefinitionBo addCompetenceImpl(SurveySectionDefinitionBo section, CompetenceImplBo competence) throws ValidationException {
+		competenceImplBl.validateCompetenceImpl(competenceConv.convertToEntity(competence));
 		if (competence.getId() == null) {
 			section.getSurveySectionCompetences().add(competence);
 		}
@@ -78,8 +85,8 @@ public class SurveySectionDefinitionFacade implements Serializable,ISurveySectio
 	@Override
 	public SurveySectionDefinitionBo removeCompetenceImpl(SurveySectionDefinitionBo section,
 			CompetenceImplBo competence) throws ValidationException {
-		section.getSurveySectionCompetences().remove(competence);
 		competenceImplFacade.delete(competence);
+		section.getSurveySectionCompetences().remove(competence);
 		return this.save(section);
 	}
 

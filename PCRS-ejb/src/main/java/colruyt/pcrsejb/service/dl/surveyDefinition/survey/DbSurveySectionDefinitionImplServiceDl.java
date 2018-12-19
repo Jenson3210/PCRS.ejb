@@ -53,6 +53,7 @@ public class DbSurveySectionDefinitionImplServiceDl implements ISurveySectionDef
 		element = em.merge(element);
 		if(element != null){
 			em.remove(element);
+			em.flush();
 		}
 		else {
 			throw new EmptyStackException();

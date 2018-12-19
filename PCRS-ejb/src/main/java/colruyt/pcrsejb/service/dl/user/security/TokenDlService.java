@@ -1,15 +1,17 @@
-package colruyt.pcrs.security;
+package colruyt.pcrsejb.service.dl.user.security;
 
 import java.util.List;
 
+import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import colruyt.pcrsejb.entity.user.security.Token;
 import colruyt.pcrsejb.service.dl.IDbService;
 
 @Stateless
-public class TokenDlService implements IDbService<Token>{
+public class TokenDlService implements ITokenDlService{
 
 	@PersistenceContext(unitName = "PCRSEJB")
 	private EntityManager em;
@@ -36,5 +38,7 @@ public class TokenDlService implements IDbService<Token>{
 		em.remove(element);
 		
 	}
+	
+	
 
 }

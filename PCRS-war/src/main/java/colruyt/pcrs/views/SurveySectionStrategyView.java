@@ -54,6 +54,11 @@ public class SurveySectionStrategyView implements Serializable {
 		this.surveySectionStrategyBo = surveySectionStrategyBo;
 	}
 	
+	/**
+	 * to check whether a strategy is already used
+	 * @param surveySectionStrategyBo
+	 * @return
+	 */
 	public Boolean isSurveySectionStrategyUsed(SurveySectionStrategyBo surveySectionStrategyBo) {
 		return surveySectionStrategyFacade.isSurveySectionStrategyUsed(surveySectionStrategyBo);
 	}
