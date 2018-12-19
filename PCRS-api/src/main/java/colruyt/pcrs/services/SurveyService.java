@@ -59,9 +59,12 @@ public class SurveyService {
 		} catch (ValidationException e) {
 			return Response.status(Response.Status.NOT_FOUND)
 					.entity("No user found!")
-					.build();
+					.build(); 
 		}
 	}
+	
+	
+	
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)

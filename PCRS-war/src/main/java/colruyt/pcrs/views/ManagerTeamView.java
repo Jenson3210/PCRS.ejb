@@ -339,7 +339,7 @@ public class ManagerTeamView implements Serializable {
 	 * @return boolean
 	 */
 	public Boolean consensusReady(UserBo user) { 
-		return this.getManagerSurveyPercentage(this.currentUser.getUser()) == 100 && this.getMemberSurveyPercentage(user) == 100;
+		return (this.getManagerSurveyPercentage(user) == 100 && this.getMemberSurveyPercentage(user) == 100);
 	}
 
 	/**
@@ -441,6 +441,18 @@ public class ManagerTeamView implements Serializable {
 		//Try to save the teamMember
 		try {
 			this.userFacade.save(this.teamMember);
+						
+			FacesContext context = FacesContext.getCurrentInstance();
+			String message= context.getApplication().evaluateExpressionGet(context, "#{msgs['success.create.survey.titel']}",
+					String.class);			
+			
+			String titel = context.getApplication().evaluateExpressionGet(context, "#{msgs['success.create.survey.body']}",
+					String.class);			
+			FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, titel, message);
+
+			context.addMessage(null, myFacesMessage); 
+			
+		} catch (ValidationException e) {
 			
 			FacesContext context = FacesContext.getCurrentInstance();
 			String message= context.getApplication().evaluateExpressionGet(context, "#{msgs['error.general']}",
@@ -449,20 +461,7 @@ public class ManagerTeamView implements Serializable {
 			String titel = context.getApplication().evaluateExpressionGet(context, "#{msgs['error.create.survey.titel']}",
 					String.class);	
 			
-			
 			FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, titel, message);
-
-			context.addMessage(null, myFacesMessage); 
-			
-		} catch (ValidationException e) {
-			FacesContext context = FacesContext.getCurrentInstance();
-			String message= context.getApplication().evaluateExpressionGet(context, "#{msgs['succes.create.survey.titel']}",
-					String.class);			
-			
-			String titel = context.getApplication().evaluateExpressionGet(context, "#{msgs['success.create.survey.body']}",
-					String.class);			
-			FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, titel, message);
-
 			context.addMessage(null, myFacesMessage); 
 		}
 		

@@ -7,5 +7,5 @@ import colruyt.pcrsejb.facade.IFacade;
 
 @Local
 public interface ISurveySectionStrategyFacade extends IFacade<SurveySectionStrategyBo> {
-	
+	public Boolean isSurveySectionStrategyUsed(SurveySectionStrategyBo surveySectionStrategyBo);
 }
