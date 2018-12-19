@@ -101,7 +101,10 @@
 	<h:form id="createSurvey">
 		<p:growl id="growl"  showDetail="true" sticky="false" >
 			<p:autoUpdate/>
-		</p:growl>  
+		</p:growl>	
+		<p:messages id="growl"  showDetail="true" sticky="false" >
+				<p:autoUpdate/>
+			</p:messages>
 		<p:dialog header="#{msgs['create.survey']}" widgetVar="createSurvey" draggable="false" modal="true"
 				  resizable="false">
 			<p:panelGrid columns="1" id="display" columnClasses="label,output">

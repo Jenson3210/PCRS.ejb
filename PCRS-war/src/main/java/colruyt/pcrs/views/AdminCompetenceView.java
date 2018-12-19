@@ -17,7 +17,6 @@ import org.primefaces.PrimeFaces;
 
 import colruyt.pcrsejb.bo.competence.CompetenceBo;
 import colruyt.pcrsejb.bo.competence.CompetenceLevelBo;
-import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionTitleBo;
 import colruyt.pcrsejb.facade.competence.ICompetenceFacade;
 import colruyt.pcrsejb.facade.competence.ICompetenceLevelFacade;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;

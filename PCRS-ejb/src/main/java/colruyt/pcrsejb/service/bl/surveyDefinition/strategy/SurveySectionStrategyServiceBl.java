@@ -1,15 +1,17 @@
 package colruyt.pcrsejb.service.bl.surveyDefinition.strategy;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityNotFoundException;
-import javax.persistence.PersistenceException;
 
 import colruyt.pcrsejb.entity.surveyDefinition.strategy.SurveySectionStrategy;
+import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinition;
 import colruyt.pcrsejb.service.dl.surveyDefinition.strategy.ISurveySectionStrategyServiceDL;
+import colruyt.pcrsejb.service.dl.surveyDefinition.survey.ISurveySectionDefinitionServiceDl;
 import colruyt.pcrsejb.util.exceptions.validation.surveyDefinition.strategy.SurveySectionStrategyCantBeDeletedException;
 import colruyt.pcrsejb.util.exceptions.validation.surveyDefinition.strategy.SurveySectionStrategyNotFoundException;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
@@ -24,6 +26,9 @@ public class SurveySectionStrategyServiceBl implements Serializable, ISurveySect
 	
 	@EJB
 	private ISurveySectionStrategyServiceDL surveySectionStrategyServiceDL;
+	
+	@EJB
+	private ISurveySectionDefinitionServiceDl surveySectionDefinitionServiceDl;
 	
 	private StrategyValidator strategyValidator = new StrategyValidator();
 
@@ -51,14 +56,14 @@ public class SurveySectionStrategyServiceBl implements Serializable, ISurveySect
 
 	@Override
 	public void delete(SurveySectionStrategy element) throws ValidationException {
-		try {
-			surveySectionStrategyServiceDL.delete(element);
-		} catch(EntityNotFoundException e)
-		{
-			throw new SurveySectionStrategyNotFoundException();
-		} catch(PersistenceException e)
-		{
-			throw new SurveySectionStrategyCantBeDeletedException();
+		List<SurveySectionDefinition> ssDefList = new ArrayList<>();
+		ssDefList = surveySectionDefinitionServiceDl.getAll();
+		for (SurveySectionDefinition ssd: ssDefList) {
+			if (ssd.getSurveySectionStrategy().getId() == element.getId()) {
+				throw new SurveySectionStrategyCantBeDeletedException();
+			}
+			
 		}
+		surveySectionStrategyServiceDL.delete(element);
 	}
 }
