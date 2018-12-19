@@ -11,6 +11,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import colruyt.pcrs.security.JWTTokenNeeded;
 import colruyt.pcrs.security.TokenFacade;
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.entity.user.User;
@@ -37,8 +38,9 @@ public class UserService {
 			@ApiResponse(code = 200, message = "Users found", response = User[].class),
 			@ApiResponse(code = 404, message = "Users not found"),
 			@ApiResponse(code = 403, message = "Provided password incorrect")})
+	
 	public Response allUsersGet(
-			@ApiParam(value = "Id of the user", required = false) @QueryParam("id") String userId,
+			@ApiParam(value = "id of the user", required = false) @QueryParam("id") Integer userId,
 			@ApiParam(value = "Email of the user", required = false) @QueryParam("email") String email, 
 			@ApiParam(value = "Password of the user", required = false) @QueryParam("password") String password) {
 		
@@ -66,7 +68,7 @@ public class UserService {
 				try {
 					userBo = this.userFacade.get(userBo);
 					users.add(userBo);
-					resp = Response.status(Response.Status.OK).entity(users).build();
+					resp = Response.status(Response.Status.OK).header("AUTHORIZATION", "Bearer " + tokenFacade.issueToken(users.get(0)).getToken()).entity(users).build();
 					
 				} catch (ValidationException e) {
 					System.out.println(e.getMessage());
@@ -92,7 +94,7 @@ public class UserService {
 		bo.setEmail(email);
 		bo.setPassword(password);
 		
-		return Response.ok().header("AUTHORIZATION", "Bearer " + tokenFacade.issueToken(bo)).build();
+		return Response.ok().header("AUTHORIZATION", "Bearer " + tokenFacade.issueToken(bo).getToken()).build();
 		
 	}
 

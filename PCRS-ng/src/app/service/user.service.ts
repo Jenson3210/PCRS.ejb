@@ -44,8 +44,8 @@ export class UserService {
     }
     return surveySets;
   }
-  getUserById(userId: string): Observable<HttpResponse<IUser>> {
-    return this.http.get<IUser>(this.baseUrl + 'users', {
+  getUserById(userId: string): Observable<HttpResponse<IUser[]>> {
+    return this.http.get<IUser[]>(this.baseUrl + 'users', {
       params: {
         id: userId
       },

@@ -2,14 +2,13 @@ package colruyt.pcrs.security;
 
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
-import javax.annotation.PostConstruct;
 import javax.crypto.KeyGenerator;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import colruyt.pcrsejb.bo.user.UserBo;
@@ -21,8 +20,9 @@ import io.jsonwebtoken.Jwts;
 public class TokenFacade {
 
 	private UserConverter userconvert = new UserConverter();
-	private SecureRandom random = new SecureRandom();
-	private TokenDlService dl = new TokenDlService();
+	
+	@EJB
+	private TokenDlService dl;
 	
 	
     private KeyGenerator keyGenerator;
@@ -31,32 +31,29 @@ public class TokenFacade {
 	public Token issueToken(UserBo u) {
 		
 		Token to =  new Token(this.generateToken(u.getEmail()), LocalDate.now(), userconvert.convertToEntity(u));
-		this.dl.save(to);
+		//this.dl.save(to);
 		
 		return to;
 		
 		
 	}
     
-    @PostConstruct
-    public void init() {
-    	
-    	try {
-			keyGenerator = KeyGenerator.getInstance("DES");
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+   
     	
     	
     	
-    }
+   
 	
 	
 	
 	
 	private String generateToken(String user) {
-		
+			try {
+				keyGenerator = KeyGenerator.getInstance("HmacSHA256");
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		  Key key = keyGenerator.generateKey();
 		  String jwtToken = Jwts.builder()
 	                .setSubject(user)

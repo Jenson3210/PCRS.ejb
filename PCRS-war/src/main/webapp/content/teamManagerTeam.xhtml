@@ -59,13 +59,11 @@
 												   value="#{managerTeamView.getMemberSurveyPercentage(enrolment.value)}"
 												   widgetVar="pbClient" style="width:300px" /> 
 									<h:outputText value="#{msgs['you']}"/>
-									<p:progressBar id="progressBarBoss" widgetVar="pbClient"
-												   value="#{managerTeamView.getManagerSurveyPercentage(webUser.getUser())}"
-										           style="width:300px" /> 
-									<p:commandButton id="survey_button1" rendered="#{not managerTeamView.consensusReady(enrolment.value)}"  
-													 value="Fill in Survey" />
-									<p:commandButton id="survey_button2" rendered="#{managerTeamView.consensusReady(enrolment.value)}" 
-													 value="#{msgs['consensus.button']}" />
+									<p:progressBar id="progressBarBoss" widgetVar="pbClient" value="#{managerTeamView.getManagerSurveyPercentage(enrolment.value)}"
+										style="width:300px" /> 
+									<p:commandButton id="survey_button1" rendered="#{not managerTeamView.consensusReady(enrolment.value)}"  value="#{msgs['survey.button']}" />
+									<p:commandButton id="survey_button2" rendered="#{managerTeamView.consensusReady(enrolment.value)}" value="#{msgs['consensus.button']}" />
+									
 								</p:panelGrid>
 							</p:rowExpansion>
 						</p:dataTable>
@@ -102,9 +100,7 @@
 		<p:growl id="growl"  showDetail="true" sticky="false" >
 			<p:autoUpdate/>
 		</p:growl>	
-		<p:messages id="growl"  showDetail="true" sticky="false" >
-				<p:autoUpdate/>
-			</p:messages>
+		
 		<p:dialog header="#{msgs['create.survey']}" widgetVar="createSurvey" draggable="false" modal="true"
 				  resizable="false">
 			<p:panelGrid columns="1" id="display" columnClasses="label,output">
