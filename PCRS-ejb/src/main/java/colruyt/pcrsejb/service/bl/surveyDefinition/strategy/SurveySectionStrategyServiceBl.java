@@ -10,8 +10,9 @@ import javax.persistence.EntityNotFoundException;
 
 import colruyt.pcrsejb.entity.surveyDefinition.strategy.SurveySectionStrategy;
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinition;
+import colruyt.pcrsejb.service.bl.surveyDefinition.survey.ISurveySectionDefinitionServiceBl;
+import colruyt.pcrsejb.service.bl.surveyDefinition.survey.SurveySectionDefinitionServiceBl;
 import colruyt.pcrsejb.service.dl.surveyDefinition.strategy.ISurveySectionStrategyServiceDL;
-import colruyt.pcrsejb.service.dl.surveyDefinition.survey.ISurveySectionDefinitionServiceDl;
 import colruyt.pcrsejb.util.exceptions.validation.surveyDefinition.strategy.SurveySectionStrategyCantBeDeletedException;
 import colruyt.pcrsejb.util.exceptions.validation.surveyDefinition.strategy.SurveySectionStrategyNotFoundException;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
@@ -28,7 +29,8 @@ public class SurveySectionStrategyServiceBl implements Serializable, ISurveySect
 	private ISurveySectionStrategyServiceDL surveySectionStrategyServiceDL;
 	
 	@EJB
-	private ISurveySectionDefinitionServiceDl surveySectionDefinitionServiceDl;
+	private ISurveySectionDefinitionServiceBl surveySectionDefinitionServiceBl;
+
 	
 	private StrategyValidator strategyValidator = new StrategyValidator();
 
@@ -57,7 +59,7 @@ public class SurveySectionStrategyServiceBl implements Serializable, ISurveySect
 	@Override
 	public void delete(SurveySectionStrategy element) throws ValidationException {
 		List<SurveySectionDefinition> ssDefList = new ArrayList<>();
-		ssDefList = surveySectionDefinitionServiceDl.getAll();
+		ssDefList = surveySectionDefinitionServiceBl.getAll();
 		for (SurveySectionDefinition ssd: ssDefList) {
 			if (ssd.getSurveySectionStrategy().getId() == element.getId()) {
 				throw new SurveySectionStrategyCantBeDeletedException();
@@ -65,5 +67,18 @@ public class SurveySectionStrategyServiceBl implements Serializable, ISurveySect
 			
 		}
 		surveySectionStrategyServiceDL.delete(element);
+	}
+	
+	public Boolean isSurveySectionStrategyUsed(SurveySectionStrategy surveySectionStrategy) {
+		Boolean strategyUsed = false;
+		List<SurveySectionDefinition> ssDefList = new ArrayList<>();
+		ssDefList = surveySectionDefinitionServiceBl.getAll();
+		for(SurveySectionDefinition ssd: ssDefList) {
+			if(ssd.getSurveySectionStrategy().getId() == surveySectionStrategy.getId()) {
+				strategyUsed = true;
+			}	
+		}
+		return strategyUsed;
+
 	}
 }

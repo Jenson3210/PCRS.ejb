@@ -40,4 +40,8 @@ public class SurveySectionStrategyFacade implements Serializable, ISurveySection
 	public void delete(SurveySectionStrategyBo entityBo) throws ValidationException {
 		surveySectionStrategyServiceBl.delete(surveySectionStrategyConverter.convertToEntity(entityBo));
 	}
+	
+	public Boolean isSurveySectionStrategyUsed(SurveySectionStrategyBo surveySectionStrategyBo) {
+		return surveySectionStrategyServiceBl.isSurveySectionStrategyUsed(surveySectionStrategyConverter.convertToEntity(surveySectionStrategyBo));
+	}
 }
