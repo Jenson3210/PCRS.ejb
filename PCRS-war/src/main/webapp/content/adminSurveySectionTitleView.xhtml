@@ -34,7 +34,8 @@
 					<p:column headerText="#{msgs['delete']}"
 						style="width:100px; text-align: center">
 						<p:commandLink id="delete"
-							oncomplete="PF('deleteSurveySectionTitleDialog').show()">
+							oncomplete="PF('deleteSurveySectionTitleDialog').show()"
+							disabled="#{!adminSurveySectionTitleView.isSurveySectionTitleUsed(surveySectionTitle)?'false':'true'}">
 							<i class="fas fa-trash-alt"></i>
 							<f:setPropertyActionListener value="#{surveySectionTitle}"
 								target="#{adminSurveySectionTitleView.addedSurveySectionTitle}" />

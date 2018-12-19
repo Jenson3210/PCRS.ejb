@@ -90,6 +90,8 @@ public class ManagerTeamViewChangeFunctionDialog implements Serializable {
 		if (en.getUserPrivilege() instanceof SurveyUserPrivilegeBo) {
 			this.function = ((SurveyUserPrivilegeBo) en.getUserPrivilege()).getSurveyDefinition();
 		}
+		
+			
 	} 
 
 	/**

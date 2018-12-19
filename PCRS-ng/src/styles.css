@@ -28,3 +28,23 @@ ol {
 .navigation__menu {
   min-height: 3.75rem;
 }
+.ratingLevel div {
+  display: inline-block;
+}
+.ratingLevel div:last-child {
+  text-align: left;
+}
+.ratingLevel div:first-child {
+  text-align: right;
+}
+.ratingLevel div.icon{  
+  width: 40%;
+}
+.ratingLevel div.level{
+  text-align: center;
+  width: 20%;
+}
+.icon {
+  position: relative;
+  top: -0.2em;
+}

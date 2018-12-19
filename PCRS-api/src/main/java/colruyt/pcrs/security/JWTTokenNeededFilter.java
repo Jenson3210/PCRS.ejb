@@ -14,6 +14,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
+import colruyt.pcrsejb.facade.user.security.TokenFacade;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.IOException;
 
@@ -58,7 +59,7 @@ public class JWTTokenNeededFilter implements ContainerRequestFilter {
     @PostConstruct
     private void init() {
        	try {
-    			keyGenerator = KeyGenerator.getInstance("HS512");
+    			keyGenerator = KeyGenerator.getInstance("HmacSHA256");
     		} catch (NoSuchAlgorithmException e) {
     			// TODO Auto-generated catch block
     			e.printStackTrace();

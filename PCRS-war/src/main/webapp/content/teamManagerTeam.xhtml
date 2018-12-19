@@ -59,11 +59,16 @@
 												   value="#{managerTeamView.getMemberSurveyPercentage(enrolment.value)}"
 												   widgetVar="pbClient" style="width:300px" /> 
 									<h:outputText value="#{msgs['you']}"/>
-									<p:progressBar id="progressBarBoss" widgetVar="pbClient" value="#{managerTeamView.getManagerSurveyPercentage(enrolment.value)}"
-										style="width:300px" /> 
-									<p:button href="#{'http://localhost:4200/managersurvey?userId='.concat(enrolment.value.id)}" target="_blank" value="#{msgs['survey.button']}" styleClass="btn btn-outline-primary"/>
-									<p:button href="#{'http://localhost:4200/consensussurvey?userId='.concat(enrolment.value.id)}" target="_blank" value="#{msgs['consensus.button']}" styleClass="btn btn-outline-primary"/>						
+									<p:progressBar id="progressBarBoss" widgetVar="pbClient" value="#{managerTeamView.getManagerSurveyPercentage(enrolment.value)}" style="width:300px" /> 
 
+										
+										
+									
+
+									<p:button disabled="#{managerTeamView.consensusReady(enrolment.value)}"  href="#{'http://localhost:4200/managersurvey?userId='.concat(enrolment.value.id)}" target="_blank" value="#{msgs['survey.button']}" styleClass="btn btn-outline-primary"/>
+									<p:button disabled="#{not managerTeamView.consensusReady(enrolment.value)}" href="#{'http://localhost:4200/consensussurvey?userId='.concat(enrolment.value.id)}" target="_blank" value="#{msgs['consensus.button']}" styleClass="btn btn-outline-primary"/>						
+
+									
 								</p:panelGrid>
 							</p:rowExpansion>
 						</p:dataTable>
