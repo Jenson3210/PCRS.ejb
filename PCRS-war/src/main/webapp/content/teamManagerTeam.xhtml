@@ -63,9 +63,6 @@
 
 										
 										
-									<p:commandButton id="survey_button1"  value="#{msgs['survey.button']}" />
-									<p:commandButton id="survey_button2"  value="#{msgs['consensus.button']}" />
-									
 									
 
 									<p:button disabled="#{managerTeamView.consensusReady(enrolment.value)}"  href="#{'http://localhost:4200/managersurvey?userId='.concat(enrolment.value.id)}" target="_blank" value="#{msgs['survey.button']}" styleClass="btn btn-outline-primary"/>
