@@ -8,10 +8,12 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.PrimeFaces;
 
+import colruyt.pcrs.utillibs.WebUser;
 import colruyt.pcrsejb.bo.surveyDefinition.strategy.SurveySectionStrategyBo;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionDefinitionBo;
 import colruyt.pcrsejb.bo.surveyDefinition.survey.SurveySectionTitleBo;
@@ -143,7 +145,6 @@ public class AdminSurveySectionDefinitionView implements Serializable {
 	public void addSurveySectionDefinition() {
 		PrimeFaces pf = PrimeFaces.current();
 		try {
-			
 			addedSurveySectionDefinition.setAdministratorCreated(true);
 			surveySectionDefinitions.add(surveySectionDefinitionFacade.save(addedSurveySectionDefinition));
 			pf.ajax().addCallbackParam("validationSuccess", true);

@@ -38,9 +38,9 @@ public class LogonView implements Serializable {
 	@PostConstruct
 	private void fillDb() {
 		createScript.fillCompetencesDb(false);
-		if (userFacade.getAll().isEmpty()) {
+		/*if (userFacade.getAll().isEmpty()) {
 			createScript.fillDb();
-		}
+		}*/
 	}
 	
 	/**
