@@ -46,7 +46,7 @@ export class ConsensusSurveyComponent implements OnInit {
         }
       }
     );
-  }
+  } 
 
   finished(): boolean {
     let finished = true;
