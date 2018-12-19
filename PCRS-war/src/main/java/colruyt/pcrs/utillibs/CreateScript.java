@@ -42,7 +42,7 @@ public class CreateScript implements Serializable {
 
 	public void fillCompetencesDb(Boolean createCompetences) {
 		/** Filling the Solution Analists **/
-
+		if(createCompetences) {
 		HashSet<CompetenceLevelBo> competenceLevels_SA_15 = new HashSet<CompetenceLevelBo>();
 		competenceLevels_SA_15.add (new CompetenceLevelBo(" ik begrijp waarvoor de PCLC staat, maar het blijft ver van mijn bed-show. Ik gebruik die niet als gids.", 1));
 		competenceLevels_SA_15.add (new CompetenceLevelBo(" ik begrijp waarvoor de PCLC staat, maar gebruik die eerder zelden", 2));
@@ -6429,7 +6429,7 @@ public class CreateScript implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		}
 
 	}
 
@@ -6466,6 +6466,7 @@ public class CreateScript implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	
 	}
 	
 	private void additionalSetup() {
