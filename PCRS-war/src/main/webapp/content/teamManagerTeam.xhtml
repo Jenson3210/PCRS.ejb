@@ -61,14 +61,11 @@
 									<h:outputText value="#{msgs['you']}"/>
 									<p:progressBar id="progressBarBoss" widgetVar="pbClient" value="#{managerTeamView.getManagerSurveyPercentage(enrolment.value)}"
 										style="width:300px" /> 
-<<<<<<< HEAD
+										
 									<p:commandButton id="survey_button1" disabled="#{not managerTeamView.consensusReady(enrolment.value)}"  value="#{msgs['survey.button']}" />
 									<p:commandButton id="survey_button2" disabled="#{managerTeamView.consensusReady(enrolment.value)}" value="#{msgs['consensus.button']}" />
 									
-=======
-									<p:commandButton id="survey_button1" rendered="#{not managerTeamView.consensusReady(enrolment.value)}"  value="#{msgs['survey.button']}" />
-									<p:commandButton id="survey_button2" rendered="#{managerTeamView.consensusReady(enrolment.value)}" value="#{msgs['consensus.button']}" />	
->>>>>>> branch 'master' of https://github.com/Jenson3210/PCRS.ejb.git
+
 								</p:panelGrid>
 							</p:rowExpansion>
 						</p:dataTable>
