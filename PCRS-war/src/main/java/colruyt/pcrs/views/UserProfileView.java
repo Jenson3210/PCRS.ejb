@@ -30,7 +30,7 @@ public class UserProfileView implements Serializable {
 
 	@Inject
 	private WebUser webuser;
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L; 
 	private String newPassword, repeatPassword, currentPassword;
 	@EJB
 	private IUserFacade userfac;

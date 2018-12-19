@@ -103,6 +103,8 @@ public class RespSurveyDefinitionView implements Serializable {
 	// selected or created survey section definition when adding a section
 	private SurveySectionDefinitionBo addedSurveySectionDefinition;
 	
+	private CompetenceLevelBo selectedCompetenceLevel;
+	
 	/**
 	 * Default constructor
 	 */
@@ -118,6 +120,7 @@ public class RespSurveyDefinitionView implements Serializable {
 		this.activeTab = this.assignedSurveyDefinitionList.get(0);
 	}
 	
+
 	/**
 	 * Called when the Manage Sections button is clicked
 	 */
@@ -137,6 +140,7 @@ public class RespSurveyDefinitionView implements Serializable {
 		selectedSectionDefinitionImpl = new SurveySectionDefinitionImplBo();
 		selectedCompetence = new CompetenceBo();
 		addedCompetenceImplBo = new CompetenceImplBo();
+		selectedMinLevel = new CompetenceLevelBo();
 	}
 	
 	/**
@@ -152,6 +156,11 @@ public class RespSurveyDefinitionView implements Serializable {
 	public void newCompetence() {
 		selectedCompetence = new CompetenceBo();
 	}
+	
+	
+	/************************************************************************************************************************
+	 *  													MANAGE COMPETENCE IMPLEMENTATIONS												*
+	 ************************************************************************************************************************/
 	
 	/**
 	 * Create new implementation of the competence with the selected attributes
@@ -197,6 +206,123 @@ public class RespSurveyDefinitionView implements Serializable {
 		}
 	}
 		
+	/**
+	 * edit existing competenceImpl
+	 */
+	public void editCompetenceImpl() {
+		PrimeFaces pf = PrimeFaces.current();
+	
+		int index = getSection();
+		int tabIndex = getActiveIndex();
+		
+		this.addedCompetenceImplBo.setMinLevel(this.getSelectedCompetenceLevel().getOrderLevel());
+		
+		SurveySectionDefinitionBo newBo;
+		
+		try {
+			newBo = surveySectionDefinitionFacade.addCompetenceImpl(assignedSurveyDefinitionList.get(tabIndex).getSurveySections()
+					.get(index).getSurveySectionDefinitionBo(), this.addedCompetenceImplBo);
+			
+			// add the competence implementation to the correct section 
+			assignedSurveyDefinitionList.get(tabIndex).getSurveySections().get(index).setSurveySectionDefinitionBo(newBo);
+			pf.ajax().addCallbackParam("validationSucces", true);
+		} catch (ValidationException e) {
+			pf.ajax().addCallbackParam("validationSucces", false);
+			FacesContext.getCurrentInstance().addMessage("manageCompetences", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+		}
+	}
+
+	
+	/**
+	 * delete competence implementation belonging to a certain section
+	 */
+	public void deleteCompetenceImpl() {
+		PrimeFaces pf = PrimeFaces.current();
+		
+		int index = getSection();
+		int tabIndex = getActiveIndex();
+		
+		SurveySectionDefinitionBo newBo;
+		try {
+			
+			newBo = surveySectionDefinitionFacade.removeCompetenceImpl(assignedSurveyDefinitionList.get(tabIndex).getSurveySections()
+					.get(index).getSurveySectionDefinitionBo(), addedCompetenceImplBo);
+			
+			assignedSurveyDefinitionList.get(tabIndex).getSurveySections().get(index).setSurveySectionDefinitionBo(newBo);
+			pf.ajax().addCallbackParam("validationSucces", true);
+		} catch (ValidationException e) {
+			pf.ajax().addCallbackParam("validationSucces", false);
+			FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+		}
+	}
+	
+	
+	/************************************************************************************************************************
+	 *  													MANAGE SECTIONS											*
+	 ************************************************************************************************************************/
+	
+	/**
+	 * Method listener
+	 */
+	public void sectionChangeListener() {
+		switch(newExistingOrDeleteSection) {
+			case 0:
+				addNewSection();
+				break;
+			case 2:
+				deleteSection();
+				break;
+			default:
+		}
+	}
+	
+	
+	/**
+	 * create new implementation of a section definition
+	 * OK
+	 */
+	private void addNewSection() {
+		PrimeFaces pf = PrimeFaces.current();
+		
+		// save the survey definition and update the list
+		SurveyDefinitionBo newBo;
+		
+		try {
+			//create new implementation of the survey section definition
+			SurveySectionDefinitionImplBo impl = new SurveySectionDefinitionImplBo(requirementLevel, addedSurveySectionDefinition);
+			
+			newBo = surveyDefinitionFacade.addSurveySectionDefinitionImpl(assignedSurveyDefinitionList.get(getActiveIndex()), impl);
+			
+			assignedSurveyDefinitionList.set(getActiveIndex(), newBo);
+			pf.ajax().addCallbackParam("validationSucces", true);
+		} catch (ValidationException e) {
+			pf.ajax().addCallbackParam("validationSucces", false);
+			FacesContext.getCurrentInstance().addMessage("manageSections", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+		}
+	}
+		
+	
+	/**
+	 * Delete section
+	 * OK
+	 */	
+	private void deleteSection() {
+		PrimeFaces pf = PrimeFaces.current();
+		
+		int tabIndex = getActiveIndex();
+		SurveyDefinitionBo newBo;
+		try {
+			newBo = surveyDefinitionFacade.removeSurveySectionDefinitionImpl(assignedSurveyDefinitionList.get(tabIndex), 
+					surveySectionDefinitionImplFacade.get(implToDelete));
+			assignedSurveyDefinitionList.set(tabIndex, newBo);
+			pf.ajax().addCallbackParam("validationSucces", true);
+		} catch (ValidationException e) {
+			pf.ajax().addCallbackParam("validationSucces", false);
+			FacesContext.getCurrentInstance().addMessage("manageSections", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+		}			
+	}
+	
+	
 	
 	/**
 	 * Complete method for autocomplete textbox
@@ -234,119 +360,6 @@ public class RespSurveyDefinitionView implements Serializable {
 	}
 
 	
-	/**
-	 * Method listener
-	 */
-	public void sectionChangeListener() {
-		switch(newExistingOrDeleteSection) {
-			case 0:
-				addNewSection();
-				break;
-			case 2:
-				deleteSection();
-				break;
-			default:
-		}
-	}
-	
-
-	/**
-	 * create new implementation of a section definition
-	 * OK
-	 */
-	private void addNewSection() {
-		PrimeFaces pf = PrimeFaces.current();
-		
-		// save the survey definition and update the list
-		SurveyDefinitionBo newBo;
-		
-		try {
-			//create new implementation of the survey section definition
-			SurveySectionDefinitionImplBo impl = new SurveySectionDefinitionImplBo(requirementLevel, addedSurveySectionDefinition);
-			
-			newBo = surveyDefinitionFacade.addCompetenceImpl(assignedSurveyDefinitionList.get(getActiveIndex()), impl);
-			
-			assignedSurveyDefinitionList.set(getActiveIndex(), newBo);
-			pf.ajax().addCallbackParam("validationSucces", true);
-		} catch (ValidationException e) {
-			pf.ajax().addCallbackParam("validationSucces", false);
-			FacesContext.getCurrentInstance().addMessage("manageSections", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
-		}
-	}
-
-
-	/**
-	 * Delete section
-	 * OK
-	 */	
-	private void deleteSection() {
-		PrimeFaces pf = PrimeFaces.current();
-		
-		SurveyDefinitionBo newBo;
-		try {
-			newBo = surveyDefinitionFacade.removeCompetenceImpl(assignedSurveyDefinitionList.get(getActiveIndex()), 
-					surveySectionDefinitionImplFacade.get(implToDelete));
-			assignedSurveyDefinitionList.set(getActiveIndex(), newBo);
-			pf.ajax().addCallbackParam("validationSucces", true);
-		} catch (ValidationException e) {
-			pf.ajax().addCallbackParam("validationSucces", false);
-			FacesContext.getCurrentInstance().addMessage("manageSections", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
-		}			
-	}
-	
-	
-	private void editCompetenceImpl() {
-		PrimeFaces pf = PrimeFaces.current();
-		CompetenceImplBo bo = new CompetenceImplBo();
-	
-		//for (CompetenceImplBo bos : )
-		
-		int index = getSection();
-		
-		// loop over the competence in the this list
-		for(CompetenceImplBo bos : assignedSurveyDefinitionList.get(getActiveIndex()).getSurveySections().get(index).
-				getSurveySectionDefinitionBo().getSurveySectionCompetences()) {
-			if (bos.getId().equals(addedCompetenceImplBo.getId())) {
-				bos.setCompetenceDescription(addedCompetenceImplBo.getCompetenceDescription());
-				bos.setMinLevel(addedCompetenceImplBo.getMinLevel());
-			}
-			bo = bos;
-		}
-		
-		try {
-			competenceImplFacade.save(bo);
-			pf.ajax().addCallbackParam("validationSucces", true);
-		} catch (ValidationException e) {
-			pf.ajax().addCallbackParam("validationSucces", false);
-			FacesContext.getCurrentInstance().addMessage("editForm", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
-		}
-		
-	}
-
-
-	/**
-	 * delete competence implementation belonging to a certain section
-	 */
-	public void deleteCompetenceImpl() {
-		PrimeFaces pf = PrimeFaces.current();
-		
-		int index = getSection();
-		
-		SurveySectionDefinitionBo newBo;
-		try {
-			
-			newBo = surveySectionDefinitionFacade.removeCompetenceImpl(assignedSurveyDefinitionList.get(getActiveIndex()).getSurveySections()
-					.get(index).getSurveySectionDefinitionBo(), addedCompetenceImplBo);
-			
-			assignedSurveyDefinitionList.get(getActiveIndex()).getSurveySections().get(index).setSurveySectionDefinitionBo(newBo);
-			pf.ajax().addCallbackParam("validationSucces", true);
-		} catch (ValidationException e) {
-			pf.ajax().addCallbackParam("validationSucces", false);
-			FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
-		}
-	}
-	
-
 	/**
 	 * Get the index of the tab (= survey definition ) which is active
 	 * @return index
@@ -586,8 +599,14 @@ public class RespSurveyDefinitionView implements Serializable {
 	 */
 	public void setAddedCompetenceImplBo(CompetenceImplBo addedCompetenceImplBo) {
 		this.addedCompetenceImplBo = addedCompetenceImplBo;
-	}
-
+		this.selectedCompetenceLevel = null;
+		for(CompetenceLevelBo level : addedCompetenceImplBo.getCompetence().getCompetenceLevels()) {
+			if (level.getOrderLevel().equals(addedCompetenceImplBo.getMinLevel())) {
+				this.selectedCompetenceLevel = level;
+			}
+		}
+	}				
+					
 	/**
 	 * Get selected minimum level
 	 * @return selectedMinLevel
@@ -628,6 +647,7 @@ public class RespSurveyDefinitionView implements Serializable {
 			this.selectedSectionDefinitionImpl = selectedSectionDefinitionImpl;
 		}
 	}
+
 	
 	/**
 	 * Get selected int
@@ -669,6 +689,16 @@ public class RespSurveyDefinitionView implements Serializable {
 	public void setAdminSurveySectionDefinitionList(List<SurveySectionDefinitionBo> adminSurveySectionDefinitionList) {
 		this.adminSurveySectionDefinitionList = adminSurveySectionDefinitionList;
 	}
+
+	public CompetenceLevelBo getSelectedCompetenceLevel() {
+		// set competence level of the selected competence
+		return selectedCompetenceLevel;
+	}
+
+	public void setSelectedCompetenceLevel(CompetenceLevelBo levelBo) {
+		this.selectedCompetenceLevel = levelBo;
+	}
+	
 	
 	
 }

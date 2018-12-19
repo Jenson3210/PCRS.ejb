@@ -67,7 +67,7 @@
 					</p:column>
 					<p:column headerText="#{msgs['delete']}"
 						style="width:65px; text-align: center">
-						<p:commandLink id="delete"
+						<p:commandLink id="delete" rendered="#{!surveySectionStrategyView.isSurveySectionStrategyUsed(strategy)}"
 							update=":deleteForm:deleteStrategyDetail"
 							oncomplete="PF('deleteStrategyDialog').show()">
 							<i class="fas fa-trash-alt"></i>

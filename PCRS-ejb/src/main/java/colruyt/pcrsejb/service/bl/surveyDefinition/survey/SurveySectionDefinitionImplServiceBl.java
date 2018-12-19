@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.EntityNotFoundException;
 
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinitionImpl;
 import colruyt.pcrsejb.entity.user.User;
@@ -13,6 +14,10 @@ import colruyt.pcrsejb.entity.user.privilege.PrivilegeType;
 import colruyt.pcrsejb.entity.user.privilege.SurveyUserPrivilege;
 import colruyt.pcrsejb.entity.user.privilege.UserPrivilege;
 import colruyt.pcrsejb.service.dl.surveyDefinition.survey.ISurveySectionDefinitionImplServiceDl;
+import colruyt.pcrsejb.util.exceptions.validation.surveyDefinition.survey.SurveySectionDefinitionImplAlreadyUsedException;
+import colruyt.pcrsejb.util.exceptions.validation.surveyDefinition.survey.SurveySectionDefinitionNotFoundException;
+import colruyt.pcrsejb.util.exceptions.validation.surveyDefinition.survey.SurveySectionTitleCantBeDeletedException;
+import colruyt.pcrsejb.util.exceptions.validation.surveyDefinition.survey.SurveySectionTitleNotFoundException;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
@@ -41,7 +46,13 @@ public class SurveySectionDefinitionImplServiceBl implements ISurveySectionDefin
 
 	@Override
 	public void delete(SurveySectionDefinitionImpl element) throws ValidationException {
-		surveySectionDefinitionImplServiceDl.delete(element);
+		try {
+			surveySectionDefinitionImplServiceDl.delete(element);
+		} catch(EntityNotFoundException e) {
+			throw new SurveySectionDefinitionNotFoundException();
+		} catch(Exception e) {
+			throw new SurveySectionDefinitionImplAlreadyUsedException("Survey section cannot be deleted since it is still used.");
+		}
 	}
 	
 	@Override

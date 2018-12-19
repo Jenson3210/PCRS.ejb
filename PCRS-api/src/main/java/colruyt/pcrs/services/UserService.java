@@ -10,11 +10,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.StatusType;
 
+import colruyt.pcrs.security.JWTTokenNeeded;
+import colruyt.pcrs.security.TokenFacade;
 import colruyt.pcrsejb.bo.user.UserBo;
 import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.facade.user.IUserFacade;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -25,6 +27,9 @@ public class UserService {
 
 	@EJB
 	private IUserFacade userFacade;
+	
+	@EJB
+	private TokenFacade tokenFacade;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -33,7 +38,9 @@ public class UserService {
 			@ApiResponse(code = 200, message = "Users found", response = User[].class),
 			@ApiResponse(code = 404, message = "Users not found"),
 			@ApiResponse(code = 403, message = "Provided password incorrect")})
+	
 	public Response allUsersGet(
+			@ApiParam(value = "id of the user", required = false) @QueryParam("id") Integer userId,
 			@ApiParam(value = "Email of the user", required = false) @QueryParam("email") String email, 
 			@ApiParam(value = "Password of the user", required = false) @QueryParam("password") String password) {
 		
@@ -41,7 +48,7 @@ public class UserService {
 		
 		Response resp = Response.status(Response.Status.FORBIDDEN).entity("Password & E-mail is must be filled in!").build();
 		
-		if (email != null && password != null) {
+		if (userId == null && email != null && password != null) {
 			try {
 				UserBo userbo = this.userFacade.login(email, password);
 				users.add(userbo);
@@ -53,7 +60,42 @@ public class UserService {
 						.build();
 			}
 		}
+		else {
+			if(userId != null) {
+				UserBo userBo = new UserBo();
+				
+				userBo.setId(Integer.valueOf(userId));
+				try {
+					userBo = this.userFacade.get(userBo);
+					users.add(userBo);
+					resp = Response.status(Response.Status.OK).header("AUTHORIZATION", "Bearer " + tokenFacade.issueToken(users.get(0)).getToken()).entity(users).build();
+					
+				} catch (ValidationException e) {
+					System.out.println(e.getMessage());
+					resp = Response.status(Response.Status.FORBIDDEN)
+							.entity(e.getMessage())
+							.build();
+				}
+				
+				
+			}
+			
+		}
 		return resp;
+	}
+	
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("token")
+	public Response getTokenTest(@QueryParam("email") String email, @QueryParam("password") String password){
+		
+		UserBo bo = new UserBo();
+		bo.setEmail(email);
+		bo.setPassword(password);
+		
+		return Response.ok().header("AUTHORIZATION", "Bearer " + tokenFacade.issueToken(bo).getToken()).build();
+		
 	}
 
 } 

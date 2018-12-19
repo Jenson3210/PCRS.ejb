@@ -6,11 +6,11 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<div class="ui-g-1"/>
+	<div class="ui-g-1"/> 
 	<div class="ui-g-10">
 		<div class="ui-g-4">
-			<img width="300px" height="300px"
-				src="https://www.babybytes.nl/ckeup/20151217-597.jpg" alt="Profiel Foto"></img>
+			<img src="#{'./images/profo/profo'.concat(webUser.getUser().id).concat('.png')}" 
+				alt="Profiel Foto" width="300px" height="390px"/>
 		</div>
 		<div class="ui-g-8">
 			<p:tabView>
