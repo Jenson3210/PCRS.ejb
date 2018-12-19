@@ -29,9 +29,9 @@
           <input
             type="radio"
             [attr.name]="'competence' + rating.id"
-            value="level.orderLevel"
             [title]="level.description"
             (click)="rating.level = level.orderLevel"
+            [checked]="rating.level == level.orderLevel"
           />
         </td>
         <td align="center" *ngIf="surveySection.surveySectionDefinition.surveySectionDefinitionBo.surveySectionStrategy.energyRated">
