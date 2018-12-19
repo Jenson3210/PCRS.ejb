@@ -8,12 +8,15 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
 import colruyt.pcrsejb.entity.user.User;
 import colruyt.pcrsejb.entity.user.privilege.PrivilegeType;
 import colruyt.pcrsejb.entity.user.team.Team;
+import colruyt.pcrsejb.util.exceptions.TeamHasNoManagerException;
 import colruyt.pcrsejb.util.exceptions.UserIsNotMemberOfTeamException;
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
 public class DbTeamServiceDl implements ITeamServiceDl {
@@ -61,17 +64,18 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 	}
 
 	@Override
-	public User getManagerForUser(User user) throws UserIsNotMemberOfTeamException{
+	public User getManagerForUser(User user) throws ValidationException{
 		Team team = this.getTeamForUser(user);
 		return this.getManagerOfTeam(team);
 	}
 
 	@Override
-	public Team getTeamForUser(User user) throws UserIsNotMemberOfTeamException{
+	public Team getTeamForUser(User user) throws ValidationException{
 		
 		TypedQuery<Team> q = em.createNamedQuery("TEAM.GETTEAMFORUSER", Team.class);
 		q.setParameter("member", user);
 		q.setParameter("isActive", true);
+	
 		try {
 			
 		List<Team> teams = 	q.getResultList();
@@ -89,7 +93,6 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 	}
 	
 	private boolean checkUserMetPrivilege(Team team,PrivilegeType type) {
-		Team team2 = team;
 		return team.getEnrolments().stream()
 				.filter(x->x.getUserPrivilege().getPrivilegeType().equals(type) && x.isActive())
 				.collect(Collectors.toList()).size() > 0;
@@ -110,14 +113,20 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 	}
 
 	@Override
-	public User getManagerOfTeam(Team team) {
+	public User getManagerOfTeam(Team team) throws ValidationException {
 		TypedQuery<User> q = em.createNamedQuery("TEAM.GETMANAGEROFTEAM", User.class);
 		
 		q.setParameter("userPrivilegeType", PrivilegeType.TEAMMANAGER);
 		q.setParameter("team", team);
 		
+		User user;
+		try {
+			user = q.getSingleResult(); 
+		} catch(PersistenceException e) {
+			throw new TeamHasNoManagerException();
+		}
 		
-		return q.getSingleResult();
+		return user;
 		
 	}
 

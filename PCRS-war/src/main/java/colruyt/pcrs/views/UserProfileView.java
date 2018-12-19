@@ -12,6 +12,7 @@ import javax.inject.Named;
 
 import colruyt.pcrs.utillibs.WebUser;
 import colruyt.pcrsejb.bo.user.UserBo;
+import colruyt.pcrsejb.bo.user.team.TeamBo;
 import colruyt.pcrsejb.facade.surveys.surveySet.ISurveySetFacade;
 import colruyt.pcrsejb.facade.user.IUserFacade;
 import colruyt.pcrsejb.facade.user.team.ITeamFacade;
@@ -162,8 +163,10 @@ public class UserProfileView implements Serializable {
 	 */
 	public String getTeamName() {
 		try {
-			return this.teamFacade.getTeamForUser(this.getUser()).getName();
-		} catch (UserIsNotMemberOfTeamException e) {
+			TeamBo team = this.teamFacade.getTeamForUser(this.getUser());  
+			System.out.println(team.getName());
+			return team.getName();
+		} catch (ValidationException e) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			this.setHasTeam(false);
 			return context.getApplication().evaluateExpressionGet(context, "#{msgs['error.noteam']}", String.class);
@@ -283,7 +286,7 @@ public class UserProfileView implements Serializable {
 	public Integer getManagerSurveyPercentage() {
 		try {
 			return this.getSurveyFacade().getPercentageCompleteForManagerSurvey(webuser.getUser());
-		} catch (NoSurveySetException e) {
+		} catch (ValidationException e) {
 			return 0;
 		}
 	}
@@ -297,9 +300,7 @@ public class UserProfileView implements Serializable {
 		try {
 			return this.getSurveyFacade()
 					.getPercentageCompleteForMemberSurvey(this.teamFacade.getManagerForUser(webuser.getUser()));
-		} catch (NoSurveySetException e) {
-			return 0;
-		} catch (UserIsNotMemberOfTeamException e) {
+		} catch (ValidationException e) {
 			return 0;
 		}
 	}
@@ -313,7 +314,7 @@ public class UserProfileView implements Serializable {
 	public Integer getConsensusSurveyPercentage(UserBo user) {
 		try {
 			return this.getSurveyFacade().getPercentageCompleteForConsensusSurvey(user);
-		} catch (NoSurveySetException e) {
+		} catch (ValidationException e) {
 			return 0;
 		}
 	}

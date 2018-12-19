@@ -52,12 +52,12 @@ public class TeamFacade implements Serializable, ITeamFacade {
 	}
 
 	@Override
-	public UserBo getManagerForUser(UserBo user)  throws UserIsNotMemberOfTeamException{
+	public UserBo getManagerForUser(UserBo user)  throws ValidationException {
 		return this.userConv.convertToBo(this.teamBl.getManagerForUser(this.userConv.convertToEntity(user)));
 	}
 
 	@Override
-	public TeamBo getTeamForUser(UserBo user) throws UserIsNotMemberOfTeamException{
+	public TeamBo getTeamForUser(UserBo user) throws ValidationException{
 		return this.teamConv.convertToBo(this.teamBl.getTeamForUser(this.userConv.convertToEntity(user)));
 	}
 

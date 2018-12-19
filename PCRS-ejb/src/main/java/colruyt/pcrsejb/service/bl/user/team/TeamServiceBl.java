@@ -80,12 +80,12 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
 	}
 
 	@Override
-	public User getManagerForUser(User user) throws UserIsNotMemberOfTeamException {
+	public User getManagerForUser(User user) throws ValidationException {
 		return this.dlService.getManagerForUser(user);
 	}
 
 	@Override
-	public Team getTeamForUser(User user) throws UserIsNotMemberOfTeamException{
+	public Team getTeamForUser(User user) throws ValidationException{
 		return this.dlService.getTeamForUser(user);
 	}
 
@@ -111,25 +111,20 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
 	@Override
 	public Enrolment addUserToTeam(Team team, User user, String userPrivilege) throws ValidationException {
 		UserPrivilege enrolmentUserPrivilege = userPrivilegeServiceBl.setUserPrivilege(user, userPrivilege);
-		int j = 0;
-		for(Enrolment e : team.getEnrolments()){
-			if(e.getUserPrivilege().getPrivilegeType() == PrivilegeType.TEAMMANAGER ){
-				j++;
-				if(j <=1) {
-					throw new TeamhasAManagerException();
-				}
-			}
+		
+		User manager = null;
+		Enrolment enrolment = null;
+		if (userPrivilege.equalsIgnoreCase(PrivilegeType.TEAMMANAGER.getShortName())) {
+			 manager = dlService.getManagerOfTeam(team);
 		}
-
-
-    	Enrolment enrolment = new Enrolment();
+		enrolment = new Enrolment();
     	enrolment.setUserPrivilege(enrolmentUserPrivilege);
     	enrolment.setActive(true);
     	
     	team.getEnrolments().add(enrolment);
     	
     	save(team);
-    	return enrolment;
+		return enrolment;
 	} 
 
 	@Override

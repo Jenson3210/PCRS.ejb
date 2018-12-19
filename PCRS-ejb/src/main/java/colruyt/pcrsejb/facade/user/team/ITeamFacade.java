@@ -16,11 +16,11 @@ import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 public interface ITeamFacade extends IFacade<TeamBo>  {
 	
 	
-	UserBo getManagerForUser(UserBo user) throws UserIsNotMemberOfTeamException;
-	TeamBo getTeamForUser(UserBo user) throws UserIsNotMemberOfTeamException;
+	UserBo getManagerForUser(UserBo user) throws  ValidationException;
+	TeamBo getTeamForUser(UserBo user) throws ValidationException;
 	List<TeamBo> getTeamsOfManager(UserBo manager);
 	void deleteUserFromTeam(TeamBo manipulatedTeamBo, EnrolmentBo enrolment, UserBo user) throws ValidationException;
-	EnrolmentBo addUserToTeam(TeamBo manipulatedTeamBo, UserBo user, String userPrivilege) throws MemberAlreadyHasATeamException, ValidationException;
+	EnrolmentBo addUserToTeam(TeamBo manipulatedTeamBo, UserBo user, String userPrivilege) throws ValidationException;
 	List<UserBo> getUsersOfTeam(TeamBo team);
 
 }
