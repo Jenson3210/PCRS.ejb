@@ -33,7 +33,7 @@ public class CompetenceServiceBl implements Serializable, ICompetenceServiceBl {
         List<Competence> allCompeteces = this.getAll();
         if(!allCompeteces.isEmpty()){
             for(Competence c : allCompeteces){
-                if(c.equals(element)){
+                if(c.getName().equals(element.getName()) && c.getCompetenceDescription().equals(element.getCompetenceDescription())){
                     throw new CompetenceAlreadyExistExeption("This is not a Competence already exists !");
                 }
             }
