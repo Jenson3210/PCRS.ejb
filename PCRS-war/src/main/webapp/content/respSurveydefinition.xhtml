@@ -233,13 +233,17 @@
 									value="#{msgs['respSurveyDefinition.sectionToAddCompetenceTo']}" />
 							</div>
 							<div class="ui-g-8">
-								<p:autoComplete id="section"
+								<p:autoComplete 
+									id="section"
+									class="modalSM"
 									completeMethod="#{respSurveyDefinitionView.completeSection}"
 									var="sectionImpl"
 									itemLabel="#{sectionImpl.surveySectionDefinitionBo.surveySectionTitle.title}"
 									itemValue="#{sectionImpl}" forceSelection="true"
 									emptyMessage="#{msgs['surveyDefinition.noResults']}"
 									value="#{respSurveyDefinitionView.selectedSectionDefinitionImpl}"
+									scrollHeight="200"
+									dropdown="true"
 									converter="DefinitionImplBoConverter">
 									<p:ajax event="itemSelect" update="competenceDetails" />
 								</p:autoComplete>
@@ -252,12 +256,16 @@
 									value="#{msgs['respSurveyDefinition.competenceToAdd']}" />
 							</div>
 							<div class="ui-g-8">
-								<p:autoComplete id="competence"
+								<p:autoComplete 
+									id="competence"
+									class="modalSM"
 									completeMethod="#{respSurveyDefinitionView.completeCompetence}"
 									var="competence" itemLabel="#{competence.name}"
 									itemValue="#{competence}" forceSelection="true"
 									emptyMessage="#{msgs['surveyDefinition.noResults']}"
 									value="#{respSurveyDefinitionView.selectedCompetence}"
+									scrollHeight="200"
+									dropdown="true"
 									converter="competenceBoConverter">
 									<p:ajax event="itemSelect" update="competenceDetails"
 										process="@this" />
