@@ -62,8 +62,7 @@
 									<p:progressBar id="progressBarBoss" widgetVar="pbClient" value="#{managerTeamView.getManagerSurveyPercentage(enrolment.value)}"
 										style="width:300px" /> 
 									<p:commandButton id="survey_button1" rendered="#{not managerTeamView.consensusReady(enrolment.value)}"  value="#{msgs['survey.button']}" />
-									<p:commandButton id="survey_button2" rendered="#{managerTeamView.consensusReady(enrolment.value)}" value="#{msgs['consensus.button']}" />
-									
+									<p:commandButton id="survey_button2" rendered="#{managerTeamView.consensusReady(enrolment.value)}" value="#{msgs['consensus.button']}" />	
 								</p:panelGrid>
 							</p:rowExpansion>
 						</p:dataTable>
@@ -99,8 +98,7 @@
 	<h:form id="createSurvey">
 		<p:growl id="growl"  showDetail="true" sticky="false" >
 			<p:autoUpdate/>
-		</p:growl>	
-		
+		</p:growl>		
 		<p:dialog header="#{msgs['create.survey']}" widgetVar="createSurvey" draggable="false" modal="true"
 				  resizable="false">
 			<p:panelGrid columns="1" id="display" columnClasses="label,output">
