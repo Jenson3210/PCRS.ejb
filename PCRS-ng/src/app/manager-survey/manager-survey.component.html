@@ -12,7 +12,7 @@
           Click submit to submit your survey.
         </h1>
         <h1 align="center" *ngIf="survey$.dateCompleted == null && !finished()">
-          Please fill in your survey.
+          Please fill in the survey for {{ subjectUser.firstName }} {{ subjectUser.lastName }}.
         </h1>
         <h1 align="center" *ngIf="survey$.dateCompleted != null">
           Your survey was submitted.
