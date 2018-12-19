@@ -1,3 +1,9 @@
+<ng-container *ngFor="let error of errors">
+  <ngb-alert [type]="error.type" >
+    {{error.message}}
+  </ngb-alert>
+</ng-container>
+
 <div class="container content" *ngIf="survey$">
   <div class="row">
     <div class="col-md-12">
