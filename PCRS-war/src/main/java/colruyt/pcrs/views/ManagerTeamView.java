@@ -339,7 +339,7 @@ public class ManagerTeamView implements Serializable {
 	 * @return boolean
 	 */
 	public Boolean consensusReady(UserBo user) { 
-		return this.getManagerSurveyPercentage(this.currentUser.getUser()) == 100 && this.getMemberSurveyPercentage(user) == 100;
+		return this.getManagerSurveyPercentage(user) == 100 && this.getMemberSurveyPercentage(user) == 100;
 	}
 
 	/**
