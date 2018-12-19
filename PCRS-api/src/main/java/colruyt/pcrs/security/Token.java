@@ -1,4 +1,4 @@
-package colruyt.pcrsejb.entity.user.security;
+package colruyt.pcrs.security;
 
 import java.time.LocalDate;
 
