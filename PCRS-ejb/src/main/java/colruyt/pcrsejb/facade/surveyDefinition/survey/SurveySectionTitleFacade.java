@@ -39,4 +39,8 @@ public class SurveySectionTitleFacade implements Serializable, ISurveySectionTit
 	public void delete(SurveySectionTitleBo entityBo) throws ValidationException {
 		surveySectionTitleServiceBl.delete(surveySectionTitleConverter.convertToEntity(entityBo));
 	}
+	
+	public Boolean isSurveySectionTitleUsed(SurveySectionTitleBo surveySectionTitleBo) {
+		return surveySectionTitleServiceBl.isSurveySectionTitleUsed(surveySectionTitleConverter.convertToEntity(surveySectionTitleBo));
+	}
 }

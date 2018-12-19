@@ -1,13 +1,14 @@
 package colruyt.pcrsejb.service.bl.surveyDefinition.survey;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityNotFoundException;
-import javax.persistence.PersistenceException;
 
+import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionDefinition;
 import colruyt.pcrsejb.entity.surveyDefinition.survey.SurveySectionTitle;
 import colruyt.pcrsejb.service.dl.surveyDefinition.survey.ISurveySectionTitleServiceDl;
 import colruyt.pcrsejb.util.exceptions.validation.surveyDefinition.survey.SurveySectionTitleCantBeDeletedException;
@@ -22,6 +23,9 @@ public class SurveySectionTitleServiceBl implements ISurveySectionTitleServiceBl
 	private static final long serialVersionUID = 1L;
 	@EJB
 	private ISurveySectionTitleServiceDl surveySectionTitleDb;
+	
+	@EJB
+	private ISurveySectionDefinitionServiceBl surveySectionDefinitionServiceBl;
 
 	private SurveySectionTitleValidator surveySectionTitleValidator = new SurveySectionTitleValidator();
 	
@@ -57,5 +61,18 @@ public class SurveySectionTitleServiceBl implements ISurveySectionTitleServiceBl
 		} catch(Exception e) {
 			throw new SurveySectionTitleCantBeDeletedException();
 		}
+	}
+	
+	public Boolean isSurveySectionTitleUsed(SurveySectionTitle surveySectionTitle) {
+		Boolean titleUsed = false;
+		List<SurveySectionDefinition> ssDefList = new ArrayList<>();
+		ssDefList = surveySectionDefinitionServiceBl.getAll();
+		for(SurveySectionDefinition ssd: ssDefList) {
+			if(ssd.getSurveySectionTitle().getId() == surveySectionTitle.getId()) {
+				titleUsed = true;
+			}	
+		}
+		return titleUsed;
+
 	}
 }

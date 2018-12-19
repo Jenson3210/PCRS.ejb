@@ -56,6 +56,15 @@ public class AdminSurveySectionTitleView implements Serializable {
 	public void setAddedSurveySectionTitle(SurveySectionTitleBo addedSurveySectionTitle) {
 		this.addedSurveySectionTitle = addedSurveySectionTitle;
 	}
+	
+	/**
+	 * to check whether a Title is already used
+	 * @param surveySectionStrategyBo
+	 * @return
+	 */
+	public Boolean isSurveySectionTitleUsed(SurveySectionTitleBo addedSurveySectionTitle) {
+		return surveySectionTitleFacade.isSurveySectionTitleUsed(addedSurveySectionTitle);
+	}
 
 	/**
 	 * Get a list of survey section titles
