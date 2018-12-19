@@ -67,7 +67,7 @@ public class CreateScript implements Serializable {
 		try {
 		        compFacade.save(competenceBo_SE_16);
 		    } catch (ValidationException e) {
-		        // TODO Auto-generated catch block
+
 		        e.printStackTrace();
 		    }
 		HashSet<CompetenceLevelBo> competenceLevels_SE_17 = new HashSet<CompetenceLevelBo>();
@@ -81,7 +81,7 @@ public class CreateScript implements Serializable {
 		try {
 		        compFacade.save(competenceBo_SE_17);
 		    } catch (ValidationException e) {
-		        // TODO Auto-generated catch block
+
 		        e.printStackTrace();
 		    }
 		HashSet<CompetenceLevelBo> competenceLevels_SE_18 = new HashSet<CompetenceLevelBo>();
@@ -96,7 +96,7 @@ public class CreateScript implements Serializable {
 		try {
 		        compFacade.save(competenceBo_SE_18);
 		    } catch (ValidationException e) {
-		        // TODO Auto-generated catch block
+
 		        e.printStackTrace();
 		    }
 		HashSet<CompetenceLevelBo> competenceLevels_SE_19 = new HashSet<CompetenceLevelBo>();
@@ -110,7 +110,7 @@ public class CreateScript implements Serializable {
 		try {
 		        compFacade.save(competenceBo_SE_19);
 		    } catch (ValidationException e) {
-		        // TODO Auto-generated catch block
+
 		        e.printStackTrace();
 		    }
 		}
