@@ -1,6 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SurveyKind } from '../model/survey-kind.enum';
 import { ISurveySection } from '../model/Interfaces/ISurveySection';
+import { ISurvey } from '../model/Interfaces/ISurvey';
+import { ISurveySet } from '../model/Interfaces/ISurveySet';
+import { IRating } from '../model/Interfaces/IRating';
 
 @Component({
   selector: 'app-survey-section',
@@ -12,6 +15,10 @@ export class SurveySectionComponent implements OnInit {
   surveySection: ISurveySection;
   @Input()
   surveyKind: SurveyKind;
+  @Input()
+  userSurvey: ISurvey;
+  @Input()
+  managerSurvey: ISurvey;
   levelWidth: number;
 
   constructor() {
@@ -38,9 +45,31 @@ export class SurveySectionComponent implements OnInit {
   }
   isConsensus() {
     let consensus = false;
-    if (this.surveyKind === SurveyKind.Consensus) {
+    if (SurveyKind[this.surveyKind] == SurveyKind.Consensus.toString()) {
       consensus = true;
     }
     return consensus;
+  }
+
+  userSelected(rating: IRating) {
+    return this.findRating(rating, this.userSurvey).level;
+  }
+  managerSelected(rating: IRating) {
+    return this.findRating(rating, this.managerSurvey).level;
+  }
+  findRating(rating: IRating, survey: ISurvey): IRating {
+    let r: IRating = {} as IRating;
+    let found = false;
+    for(let section of survey.surveySections) {
+      if (!found) {
+        for (let rat of section.ratings){
+          if (rat.competence.id == rating.competence.id) {
+            r = rat;
+            found = true;
+          }
+        }
+      }
+    }
+    return r;
   }
 }

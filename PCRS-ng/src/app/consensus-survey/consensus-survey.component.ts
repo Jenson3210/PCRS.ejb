@@ -15,9 +15,11 @@ import { IUser } from '../model/Interfaces/IUser';
   styleUrls: ['./consensus-survey.component.css']
 })
 export class ConsensusSurveyComponent implements OnInit {
-  survey$: ISurvey;
+  survey$: ISurvey = {} as ISurvey;
   private errors: IAlert[];
   subjectUser: IUser;
+  userSurvey: ISurvey = {} as ISurvey;
+  managerSurvey: ISurvey = {} as ISurvey;
 
   constructor(public surveyService: SurveyService, private userService: UserService, private router: Router, private route: ActivatedRoute) {}
 
@@ -27,23 +29,9 @@ export class ConsensusSurveyComponent implements OnInit {
       x => {
         this.subjectUser = x.body[0];
         
-        this.surveyService.getSurveyForUser(this.subjectUser, SurveyKind.Consensus).subscribe(
-          x => {
-            this.survey$ = x.body;
-          },
-          (error) => {
-            switch (error.status) {
-              case 404: {
-                this.errors.push({message: error.error, type: AlertType.DANGER});
-                break;
-              }
-              default: {
-                this.errors.push({message: error.error, type: AlertType.DANGER});
-                break;
-              }
-            }
-          }
-        );
+        this.setSurvey(this.survey$, SurveyKind.Consensus);
+        this.setSurvey(this.userSurvey, SurveyKind.TeamMember);
+        this.setSurvey(this.managerSurvey, SurveyKind.TeamManager);
       },
       (error) => {
         switch (error.status) {
@@ -93,5 +81,28 @@ export class ConsensusSurveyComponent implements OnInit {
   }
   saveSurvey() {
     this.surveyService.save(this.survey$);
+  }
+
+  setSurvey(target: ISurvey, kind: SurveyKind) {
+    this.surveyService.getSurveyForUser(this.subjectUser, kind).subscribe(
+      x => {
+        target.id = x.body.id;
+        target.dateCompleted = x.body.dateCompleted;
+        target.surveyKind = x.body.surveyKind;
+        target.surveySections = x.body.surveySections;
+      },
+      (error) => {
+        switch (error.status) {
+          case 404: {
+            this.errors.push({message: error.error, type: AlertType.DANGER});
+            break;
+          }
+          default: {
+            this.errors.push({message: error.error, type: AlertType.DANGER});
+            break;
+          }
+        }
+      }
+    );
   }
 }

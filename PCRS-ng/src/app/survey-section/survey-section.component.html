@@ -25,14 +25,18 @@
           <i class="fas fa-info"></i>
         </td>
         <td>{{ rating.competence.competence.name }}</td>
-        <td align="center" *ngFor="let level of rating.competence.competence.competenceLevels">
-          <input
-            type="radio"
-            [attr.name]="'competence' + rating.id"
-            [title]="level.description"
-            (click)="rating.level = level.orderLevel"
-            [checked]="rating.level == level.orderLevel"
-          />
+        <td *ngFor="let level of rating.competence.competence.competenceLevels">
+          <div class="ratingLevel">
+            <div class="icon"><i *ngIf="isConsensus() && userSelected(rating) == level.orderLevel" class="fas fa-user"></i></div>
+            <div class="level"><input
+              type="radio"
+              [attr.name]="'competence' + rating.id"
+              [title]="level.description"
+              (click)="rating.level = level.orderLevel"
+              [checked]="rating.level == level.orderLevel"
+              /></div>
+            <div class="icon"><i *ngIf="isConsensus() && managerSelected(rating) == level.orderLevel" class="fas fa-user-tie"></i></div>
+          </div>
         </td>
         <td align="center" *ngIf="surveySection.surveySectionDefinition.surveySectionDefinitionBo.surveySectionStrategy.energyRated">
           <select [(ngModel)]="rating.energy">
