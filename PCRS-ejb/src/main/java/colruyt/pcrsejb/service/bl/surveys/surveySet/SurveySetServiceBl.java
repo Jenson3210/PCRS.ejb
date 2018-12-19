@@ -52,7 +52,7 @@ public class SurveySetServiceBl implements Serializable, ISurveySetServiceBl {
 
 	@Override
 	public List<SurveySet> getAll() {
-		return surveySetServiceDb.getAll();
+		return surveySetServiceDb.getAll();   
 	}
 
 	@Override

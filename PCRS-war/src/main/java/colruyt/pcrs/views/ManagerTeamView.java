@@ -361,6 +361,8 @@ public class ManagerTeamView implements Serializable {
 	 * @param user
 	 */
 	public void initDialog(UserBo user) { 
+		
+		this.availableList.getTarget().clear();
 		this.setTeamMember(user);
 		this.loadCompetences();
 	}
@@ -370,51 +372,44 @@ public class ManagerTeamView implements Serializable {
 	 */
 
 	private void loadCompetences() {
+		
+		
+		
+		
+		this.allList.clear();
+		this.chosenList.clear();
+		
+		
 		this.allList = this.surveyFacade.getPossibleSections(this.getTeamMember());
 		List<SurveySectionDefinitionImplBo> lijst = this.allList.stream().filter(x->x.getSurveySectionRequirementLevelBo().equals(SurveySectionRequirementLevelBo.OBLIGATED)).collect(Collectors.toList());
 		this.chosenList.addAll(lijst);
 		
 		this.allList.removeAll(this.chosenList);
 		availableList.setSource(getAllList());
-		availableList.setTarget(getChosenList());
+		this.availableList.setTarget(this.getChosenList());
+		
 		
 	}
 	
-	public void onTransfer(TransferEvent event) {
-		
-		
-		
-		List<SurveySectionDefinitionImplBo> chosenOption = (List<SurveySectionDefinitionImplBo>)event.getItems();
-		
-		
-		for(SurveySectionDefinitionImplBo x : chosenOption) {
+	
+
 			
-			try {
-				SurveySectionDefinitionImplBo impl = this.surveySectionDefinitionImplFacade.get(x);
-				if(impl.getSurveySectionRequirementLevelBo().equals(SurveySectionRequirementLevelBo.OBLIGATED)) {
-					
-					System.out.println("hellooooooooooo" + impl.toString());
-					
-					this.getAvailableList().getSource().remove(impl);
-					this.getAvailableList().getTarget().add(impl);
-					
-					
-				}
-				else {
-					//NOP
-					System.out.println("ELSE" + impl.toString());
-				}
-				
-			} catch (ValidationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			
+	public Boolean isDisabled(SurveySectionDefinitionImplBo bo) {
 		
-		
+		try {
+			return this.surveySectionDefinitionImplFacade.get(bo).getSurveySectionRequirementLevelBo().equals(SurveySectionRequirementLevelBo.OBLIGATED);
+		} catch (ValidationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return false;
 		
-    }
+	}
+	
+	
+		
+    
 	
 	
 	
@@ -446,14 +441,32 @@ public class ManagerTeamView implements Serializable {
 		//Try to save the teamMember
 		try {
 			this.userFacade.save(this.teamMember);
-		} catch (ValidationException e) {
+			
 			FacesContext context = FacesContext.getCurrentInstance();
 			String message= context.getApplication().evaluateExpressionGet(context, "#{msgs['error.general']}",
 					String.class);			
-			FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, null, message);
+			
+			String titel = context.getApplication().evaluateExpressionGet(context, "#{msgs['error.create.survey.titel']}",
+					String.class);	
+			
+			
+			FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, titel, message);
 
-			context.addMessage("form", myFacesMessage); 
+			context.addMessage(null, myFacesMessage); 
+			
+		} catch (ValidationException e) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			String message= context.getApplication().evaluateExpressionGet(context, "#{msgs['succes.create.survey.titel']}",
+					String.class);			
+			
+			String titel = context.getApplication().evaluateExpressionGet(context, "#{msgs['success.create.survey.body']}",
+					String.class);			
+			FacesMessage myFacesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, titel, message);
+
+			context.addMessage(null, myFacesMessage); 
 		}
+		
+		
 	}	
 	
 	

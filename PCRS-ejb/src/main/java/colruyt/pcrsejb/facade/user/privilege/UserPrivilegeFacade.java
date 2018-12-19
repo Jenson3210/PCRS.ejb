@@ -2,7 +2,6 @@ package colruyt.pcrsejb.facade.user.privilege;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Optional;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

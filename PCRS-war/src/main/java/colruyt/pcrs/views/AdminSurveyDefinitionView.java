@@ -51,11 +51,17 @@ public class AdminSurveyDefinitionView implements Serializable {
 	 */
 	@PostConstruct
 	public void setup() {
-		List<SurveyDefinitionBo> sd = surveyDefinitionFacade.getAll();
-		for (SurveyDefinitionBo bo : sd) {
-			surveyDefinitions.put(bo, surveyDefinitionFacade.getResponsible(bo));
+		
+		try {
+			List<SurveyDefinitionBo> sd = surveyDefinitionFacade.getAll();
+			for (SurveyDefinitionBo bo : sd) {
+				surveyDefinitions.put(bo, surveyDefinitionFacade.getResponsible(bo));
+			}
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 		}
-	}
+	} 
 
 	/**
 	 * Generate new SurveyDefinition
@@ -96,14 +102,16 @@ public class AdminSurveyDefinitionView implements Serializable {
 	 * @throws ValidationException 
 	 */
 	public void deleteSurveyDefinition() throws ValidationException {
-		// REMOVE FROM LOCAL LIST
-		surveyDefinitions.remove(manipulatedSurveyDefinitionBo);
-		// REMOVE THE RESPONSIBLES PRIVILEGE
-		userPrivilegeFacade.revokeUserPrivilegeTypeFromUser(userFacade.get(manipulatedUserBo),
-				PrivilegeTypeBo.SURVEYDEFINITIONRESPONSIBLE, manipulatedSurveyDefinitionBo);
-		// DELETE THE SURVEYDEFINITION
+
 		try {
+			// REMOVE THE RESPONSIBLES PRIVILEGE
+			userPrivilegeFacade.revokeUserPrivilegeTypeFromUser(userFacade.get(manipulatedUserBo),
+					PrivilegeTypeBo.SURVEYDEFINITIONRESPONSIBLE, manipulatedSurveyDefinitionBo);
 			surveyDefinitionFacade.delete(manipulatedSurveyDefinitionBo);
+			// REMOVE FROM LOCAL LIST
+			surveyDefinitions.remove(manipulatedSurveyDefinitionBo);
+
+			// DELETE THE SURVEYDEFINITION
 		} catch (ValidationException e) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
