@@ -71,16 +71,19 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 
 	@Override
 	public Team getTeamForUser(User user) throws ValidationException{
+
+		/*
+		select t From Team t, User u join t.enrolments e join e.userPrivilege up where up.active = :isActive and " +
+			"e.active = :isActive and u = :member and up.privilegeType = :privilagetype
+		 */
 		
 		TypedQuery<Team> q = em.createNamedQuery("TEAM.GETTEAMFORUSER", Team.class);
-		q.setParameter("member", user);
-		q.setParameter("isActive", true);
-	
+		q.setParameter("u_id", user.getId());
+		q.setParameter("p_type", PrivilegeType.TEAMMEMBER);
 		try {
+			Team t = q.getSingleResult();
 			
-		List<Team> teams = 	q.getResultList();
-		Team team = teams.stream().filter(x-> this.checkUserMetPrivilege(x, PrivilegeType.TEAMMEMBER)).findFirst().get();
-		return team;
+		return t;
 		}
 		catch(NoSuchElementException e) {
 			throw new UserIsNotMemberOfTeamException();
