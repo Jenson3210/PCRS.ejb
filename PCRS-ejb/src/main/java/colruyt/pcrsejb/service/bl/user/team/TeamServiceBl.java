@@ -86,7 +86,11 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
 
 	@Override
 	public Team getTeamForUser(User user) throws ValidationException{
-		return this.dlService.getTeamForUser(user);
+		Team t = this.dlService.getTeamForUser(user);
+		if (t == null) {
+			throw new UserIsNotMemberOfTeamException();
+		} 
+		return t;
 	}
 
 	@Override

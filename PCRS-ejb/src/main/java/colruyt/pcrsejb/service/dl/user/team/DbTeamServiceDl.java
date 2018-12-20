@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
@@ -70,38 +71,22 @@ public class DbTeamServiceDl implements ITeamServiceDl {
 	}
 
 	@Override
-	public Team getTeamForUser(User user) throws ValidationException{
+	public Team getTeamForUser(User user){
 
 		/*
 		select t From Team t, User u join t.enrolments e join e.userPrivilege up where up.active = :isActive and " +
 			"e.active = :isActive and u = :member and up.privilegeType = :privilagetype
 		 */
-		
+		Team t = null;
 		TypedQuery<Team> q = em.createNamedQuery("TEAM.GETTEAMFORUSER", Team.class);
 		q.setParameter("u_id", user.getId());
 		q.setParameter("p_type", PrivilegeType.TEAMMEMBER);
-		try {
-			Team t = q.getSingleResult();
-			
+		List resultList = q.getResultList();
+		if (resultList != null && !resultList.isEmpty()) {
+			t = (Team) resultList.get(0);     
+	    }
 		return t;
-		}
-		catch(NoSuchElementException e) {
-			throw new UserIsNotMemberOfTeamException();
-		}
-		
-		catch(NonUniqueResultException ex) {
-			throw new IllegalArgumentException("User mag maar in 1 team zitten");
-		}
-		
 	}
-	
-	private boolean checkUserMetPrivilege(Team team,PrivilegeType type) {
-		return team.getEnrolments().stream()
-				.filter(x->x.getUserPrivilege().getPrivilegeType().equals(type) && x.isActive())
-				.collect(Collectors.toList()).size() > 0;
-	}
-	
-	
 
 	@Override
 	public List<Team> getTeamsOfManager(User manager) {
