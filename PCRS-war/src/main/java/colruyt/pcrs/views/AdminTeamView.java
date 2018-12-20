@@ -191,9 +191,9 @@ public class AdminTeamView implements Serializable {
 				}
 			}
 			pf.ajax().addCallbackParam("validationSucces", true);
-    	} catch (MemberAlreadyHasATeamException | ValidationException ex) {
+    	} catch (ValidationException ex) {
 			pf.ajax().addCallbackParam("validationSucces", false);
-			FacesContext.getCurrentInstance().addMessage("addForm", new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), null));
+			FacesContext.getCurrentInstance().addMessage("addEnrolmentForm", new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), null));
 
 		}
 	}
@@ -243,7 +243,8 @@ public class AdminTeamView implements Serializable {
 	 * @return the list
 	 */
 	public List<UserBo> completeUser(String query) {
-		return userFacade.getUsersByShortName("%" + query + "%");
+		List<UserBo> users = userFacade.getUsersByShortName("%" + query + "%");
+		return users;
 	}
 
 	/**

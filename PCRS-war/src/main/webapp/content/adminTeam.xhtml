@@ -116,7 +116,7 @@
 					<p:dialog class="modalMM" id="addEnrolmentFormTitle"
 						header="#{msgs['enrolment.add']}" widgetVar="addEnrolmentDialog"
 						modal="true">
-						<p:messages for="editForm" showDetail="false" closable="true"
+						<p:messages for="addEnrolmentForm" showDetail="false" closable="true"
 									globalOnly="false">
 							<p:autoUpdate />
 						</p:messages>
@@ -128,8 +128,10 @@
 								<div class="ui-g-8">
 									<p:autoComplete class="popupTextInput" id="user"
 										value="#{adminTeamView.user}" maxResults="5"
+										maxlength="5" emptyMessage="#{msgs['surveyDefinition.noResults']}"
 										completeMethod="#{adminTeamView.completeUser}" var="user"
 										itemLabel="#{user.firstName} #{user.lastName}"
+										itemValue="#{user}"
 										forceSelection="true" converter="userBoConverter" />
 								</div>
 							</div>

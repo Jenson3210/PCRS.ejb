@@ -1,6 +1,8 @@
 package colruyt.pcrsejb.util.exceptions;
 
-public class NoSurveySetException extends Exception {
+import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
+
+public class NoSurveySetException extends ValidationException {
 
 	private static final long serialVersionUID = 1L;
 

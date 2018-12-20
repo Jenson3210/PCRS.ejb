@@ -29,7 +29,7 @@
           </ngb-tab>
           <ngb-tab [id]="surveySection.id" *ngFor="let surveySection of survey$.surveySections" [title]="surveySection.surveySectionDefinition.surveySectionDefinitionBo.surveySectionTitle.title">
             <ng-template ngbTabContent>
-              <app-survey-section [surveySection]="surveySection" [surveyKind]="survey$.surveyKind"></app-survey-section>
+              <app-survey-section [surveySection]="surveySection" [surveyKind]="survey$.surveyKind" [userSurvey]="userSurvey" [managerSurvey]="managerSurvey"></app-survey-section>
             </ng-template>
           </ngb-tab>
       </ngb-tabset>

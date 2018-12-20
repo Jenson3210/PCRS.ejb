@@ -58,17 +58,17 @@ public class SurveySetFacade implements Serializable,ISurveySetFacade{
 	}
 
 	@Override
-	public Integer getPercentageCompleteForMemberSurvey(UserBo user) throws NoSurveySetException {
+	public Integer getPercentageCompleteForMemberSurvey(UserBo user) throws ValidationException {
 		return this.surveySetServiceBl.getPercentageCompleteForMemberSurvey(this.userConverter.convertToEntity(user));
 	}
 
 	@Override
-	public Integer getPercentageCompleteForManagerSurvey(UserBo user) throws NoSurveySetException{
+	public Integer getPercentageCompleteForManagerSurvey(UserBo user) throws ValidationException{
 		return this.surveySetServiceBl.getPercentageCompleteForManagerSurvey(this.userConverter.convertToEntity(user));
 	}
 
 	@Override
-	public Integer getPercentageCompleteForConsensusSurvey(UserBo user) throws NoSurveySetException{ 
+	public Integer getPercentageCompleteForConsensusSurvey(UserBo user) throws ValidationException{ 
 		return this.surveySetServiceBl.getPercentageCompleteForConsensusSurvey(this.userConverter.convertToEntity(user));
 	}
 
@@ -83,7 +83,7 @@ public class SurveySetFacade implements Serializable,ISurveySetFacade{
 	}
 
 	@Override
-	public SurveyBo getSurveyForUser(UserBo user, SurveyKindBo surveyKind) throws NoSurveySetException {
+	public SurveyBo getSurveyForUser(UserBo user, SurveyKindBo surveyKind) throws ValidationException {
 		return surveyConverter.convertToBo(surveySetServiceBl.getSurveyForUser(userConverter.convertToEntity(user), SurveyKindTranslator.convertToEntity(surveyKind)));
 	}
 

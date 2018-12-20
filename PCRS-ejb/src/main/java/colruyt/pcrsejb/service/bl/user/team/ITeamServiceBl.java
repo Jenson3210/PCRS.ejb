@@ -15,10 +15,10 @@ import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 @Local
 public interface ITeamServiceBl extends IServiceBl<Team>{
 
-	User getManagerForUser(User user) throws UserIsNotMemberOfTeamException;
-	Team getTeamForUser(User user) throws UserIsNotMemberOfTeamException;
+	User getManagerForUser(User user) throws  ValidationException;
+	Team getTeamForUser(User user) throws ValidationException;
 	List<Team> getTeamsOfManager(User manager);
 	void removeUserFromTeam(Team team, Enrolment enrolment, User user) throws ValidationException;
-	Enrolment addUserToTeam(Team team, User user, String userPrivilege) throws MemberAlreadyHasATeamException, ValidationException;
+	Enrolment addUserToTeam(Team team, User user, String userPrivilege) throws  ValidationException;
 	List<User> getUsersOfTeam(Team team);
 }

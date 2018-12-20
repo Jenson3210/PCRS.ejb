@@ -253,7 +253,7 @@ public class ManagerTeamView implements Serializable {
 	public Integer getManagerSurveyPercentage(UserBo user) {
 		try {
 			return this.getSurveyFacade().getPercentageCompleteForManagerSurvey(user);
-		} catch (NoSurveySetException e) {
+		} catch (ValidationException e) {
 			return 0;
 		}
 	}
@@ -266,7 +266,7 @@ public class ManagerTeamView implements Serializable {
 	public Integer getMemberSurveyPercentage(UserBo user) {
 		try {
 			return this.getSurveyFacade().getPercentageCompleteForMemberSurvey(user);
-		} catch (NoSurveySetException e) {
+		} catch (ValidationException e) {
 			return 0;
 		}
 	}
@@ -279,7 +279,7 @@ public class ManagerTeamView implements Serializable {
 	public Integer getConsensusSurveyPercentage(UserBo user) {
 		try {
 		    return this.getSurveyFacade().getPercentageCompleteForConsensusSurvey(user);
-		} catch (NoSurveySetException e) {
+		} catch (ValidationException e) {
 			return 0;
 		}
 	}

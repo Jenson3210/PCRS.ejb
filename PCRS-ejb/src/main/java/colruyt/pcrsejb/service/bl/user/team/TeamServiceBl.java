@@ -19,7 +19,7 @@ import colruyt.pcrsejb.util.exceptions.UserIsNotMemberOfTeamException;
 import colruyt.pcrsejb.util.exceptions.validation.Team.TeamAlreadyExistsExeption;
 import colruyt.pcrsejb.util.exceptions.validation.Team.TeamDoesNotExistExeption;
 import colruyt.pcrsejb.util.exceptions.validation.Team.TeamEmptyValidation;
-import colruyt.pcrsejb.util.exceptions.validation.Team.TeamhasAManagerExetion;
+import colruyt.pcrsejb.util.exceptions.validation.Team.TeamhasAManagerException;
 import colruyt.pcrsejb.util.exceptions.validations.ValidationException;
 
 @Stateless
@@ -46,16 +46,16 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
 
 	@Override
 	public Team save(Team element) throws ValidationException{
-
-        for (Team team : this.getAll()){
-            if(element.getName().equals(team.getName())){
-                throw new TeamAlreadyExistsExeption("The team already exists");
-            }
-        }
-        if(element.getName().equals("")){
-        	throw new TeamEmptyValidation("Team name is empty");
+		if (element.getId() == null) {
+			for (Team team : this.getAll()){
+	            if(element.getName().equals(team.getName())){
+	                throw new TeamAlreadyExistsExeption("The team already exists");
+	            }
+	        }
+	        if(element.getName().equals("")){
+	        	throw new TeamEmptyValidation("Team name is empty");
+			}
 		}
-		//this.dlService.save(element);
 		return this.dlService.save(element);
 	}
 
@@ -80,12 +80,12 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
 	}
 
 	@Override
-	public User getManagerForUser(User user) throws UserIsNotMemberOfTeamException {
+	public User getManagerForUser(User user) throws ValidationException {
 		return this.dlService.getManagerForUser(user);
 	}
 
 	@Override
-	public Team getTeamForUser(User user) throws UserIsNotMemberOfTeamException{
+	public Team getTeamForUser(User user) throws ValidationException{
 		return this.dlService.getTeamForUser(user);
 	}
 
@@ -109,27 +109,22 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
 	}
 
 	@Override
-	public Enrolment addUserToTeam(Team team, User user, String userPrivilege) throws MemberAlreadyHasATeamException, ValidationException {
+	public Enrolment addUserToTeam(Team team, User user, String userPrivilege) throws ValidationException {
 		UserPrivilege enrolmentUserPrivilege = userPrivilegeServiceBl.setUserPrivilege(user, userPrivilege);
-		int j = 0;
-		for(Enrolment e : team.getEnrolments()){
-			if(e.getUserPrivilege().getPrivilegeType() == PrivilegeType.TEAMMANAGER ){
-				j++;
-						if(j <=1) {
-							throw new TeamhasAManagerExetion("Team has a mannager");
-						}
-			}
+		
+		User manager = null;
+		Enrolment enrolment = null;
+		if (userPrivilege.equalsIgnoreCase(PrivilegeType.TEAMMANAGER.getShortName())) {
+			 manager = dlService.getManagerOfTeam(team);
 		}
-
-
-    	Enrolment enrolment = new Enrolment();
+		enrolment = new Enrolment();
     	enrolment.setUserPrivilege(enrolmentUserPrivilege);
     	enrolment.setActive(true);
     	
     	team.getEnrolments().add(enrolment);
     	
     	save(team);
-    	return enrolment;
+		return enrolment;
 	} 
 
 	@Override
