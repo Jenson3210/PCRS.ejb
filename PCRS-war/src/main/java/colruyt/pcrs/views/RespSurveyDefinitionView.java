@@ -335,9 +335,14 @@ public class RespSurveyDefinitionView implements Serializable {
 		query = query.toLowerCase();
 		for (CompetenceBo bo : filteredResults) {
 			// filter on name and description
-			if (bo.getName().toLowerCase().contains(query) || 
-					bo.getCompetenceDescription().toLowerCase().contains(query)) {
-				newResults.add(bo);
+			if (bo.getName() != null && bo.getCompetenceDescription() != null) {
+				if (bo.getName().toLowerCase().contains(query) || bo.getCompetenceDescription().toLowerCase().contains(query)) {
+					newResults.add(bo);
+				}
+			} else if (bo.getName() != null && bo.getCompetenceDescription() == null) {
+				if (bo.getName().toLowerCase().contains(query)) {
+					newResults.add(bo);
+				}
 			}
 		}
 		return newResults;
