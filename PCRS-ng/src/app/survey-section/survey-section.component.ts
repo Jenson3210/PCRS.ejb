@@ -4,6 +4,7 @@ import { ISurveySection } from '../model/Interfaces/ISurveySection';
 import { ISurvey } from '../model/Interfaces/ISurvey';
 import { ISurveySet } from '../model/Interfaces/ISurveySet';
 import { IRating } from '../model/Interfaces/IRating';
+import { EnergyOrInterestOption } from '../model/energy-or-interest-option.enum';
 
 @Component({
   selector: 'app-survey-section',
@@ -20,6 +21,7 @@ export class SurveySectionComponent implements OnInit {
   @Input()
   managerSurvey: ISurvey;
   levelWidth: number;
+  energyOrInterestOption = EnergyOrInterestOption;
 
   constructor() {
   }
