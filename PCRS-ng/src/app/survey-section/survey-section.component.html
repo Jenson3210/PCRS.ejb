@@ -41,9 +41,9 @@
         <td align="center" *ngIf="surveySection.surveySectionDefinition.surveySectionDefinitionBo.surveySectionStrategy.energyRated">
           <select [(ngModel)]="rating.energy">
             <option selected disabled>Energy</option>
-            <option [ngValue]="-1">Neen</option>
-            <option [ngValue]="1">Ja</option>
-            <option [ngValue]="0">Ik weet niet</option>
+            <option [ngValue]="energyOrInterestOption[-1]">Neen</option>
+            <option [ngValue]="energyOrInterestOption[1]">Ja</option>
+            <option [ngValue]="energyOrInterestOption[0]">Ik weet niet</option>
           </select>
         </td>
         <td align="center" *ngIf="surveySection.surveySectionDefinition.surveySectionDefinitionBo.surveySectionStrategy.interestRated">
