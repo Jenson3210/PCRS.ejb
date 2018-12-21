@@ -16,7 +16,8 @@ public class SurveyUserPrivilege extends UserPrivilege implements Serializable {
 	 * PROPERTIES
 	 */
 	private static final long serialVersionUID = 1L;
-	@ManyToOne(cascade= {CascadeType.MERGE})
+	//@ManyToOne(cascade= {CascadeType.MERGE})
+	@ManyToOne
 	private SurveyDefinition surveyDefinition;
 	/*
 	 * CONSTRUCTORS

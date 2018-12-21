@@ -100,7 +100,9 @@ public class ManagerTeamViewChangeFunctionDialog implements Serializable {
 	public void submit() {
 		
 		((TeamMemberUserPrivilegeBo) enrol.getUserPrivilege()).setSurveyDefinition(function);
-		((TeamMemberUserPrivilegeBo) enrol.getUserPrivilege()).setStartDateCurrentSurveyDefinition(LocalDate.now());
+		//Thomas, Thomas, Thomas... Wat is dit?
+		//((TeamMemberUserPrivilegeBo) enrol.getUserPrivilege()).setStartDateCurrentSurveyDefinition(LocalDate.now());
+		
 			
 		userBo.getPrivileges().add(enrol.getUserPrivilege());
 		

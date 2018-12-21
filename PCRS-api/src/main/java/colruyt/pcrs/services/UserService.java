@@ -147,7 +147,7 @@ public class UserService {
                 .signWith(key)
                 .compact();
 	  
-       return jwtToken;
+       return jwtToken; 
 
 } 
 	

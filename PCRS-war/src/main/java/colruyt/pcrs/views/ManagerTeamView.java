@@ -380,7 +380,12 @@ public class ManagerTeamView implements Serializable {
 		this.chosenList.clear();
 		
 		
-		this.allList = this.surveyFacade.getPossibleSections(this.getTeamMember());
+		try {
+			this.allList = this.surveyFacade.getPossibleSections(userFacade.get(this.getTeamMember()));
+		} catch (ValidationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		List<SurveySectionDefinitionImplBo> lijst = this.allList.stream().filter(x->x.getSurveySectionRequirementLevelBo().equals(SurveySectionRequirementLevelBo.OBLIGATED)).collect(Collectors.toList());
 		this.chosenList.addAll(lijst);
 		

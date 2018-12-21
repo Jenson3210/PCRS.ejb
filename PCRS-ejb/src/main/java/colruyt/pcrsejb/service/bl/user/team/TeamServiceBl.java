@@ -15,6 +15,7 @@ import colruyt.pcrsejb.service.bl.user.IUserServiceBl;
 import colruyt.pcrsejb.service.bl.user.privilege.IUserPrivilegeServiceBl;
 import colruyt.pcrsejb.service.dl.user.team.ITeamServiceDl;
 import colruyt.pcrsejb.util.exceptions.MemberAlreadyHasATeamException;
+import colruyt.pcrsejb.util.exceptions.TeamHasNoManagerException;
 import colruyt.pcrsejb.util.exceptions.UserIsNotMemberOfTeamException;
 import colruyt.pcrsejb.util.exceptions.validation.Team.TeamAlreadyExistsExeption;
 import colruyt.pcrsejb.util.exceptions.validation.Team.TeamDoesNotExistExeption;
@@ -119,8 +120,22 @@ public class TeamServiceBl implements Serializable,ITeamServiceBl {
 		User manager = null;
 		Enrolment enrolment = null;
 		if (userPrivilege.equalsIgnoreCase(PrivilegeType.TEAMMANAGER.getShortName())) {
-			 manager = dlService.getManagerOfTeam(team);
+			 try {
+				manager = dlService.getManagerOfTeam(team);
+			} catch (TeamHasNoManagerException e) {
+				
+			}
+			
+			 
 		}
+		
+		 if(manager != null) {
+				throw new TeamhasAManagerException();
+				
+		 }
+		
+		
+		
 		enrolment = new Enrolment();
     	enrolment.setUserPrivilege(enrolmentUserPrivilege);
     	enrolment.setActive(true);
